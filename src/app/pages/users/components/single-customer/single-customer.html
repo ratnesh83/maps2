@@ -1,0 +1,44 @@
+<div class="widgets">
+    <div class="container notification-page">
+        <div *ngIf="newUserData" class="col-xs-12">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">Name</div>
+                <div class="col-md-6 col-sm-6 col-xs-12">{{newUserData.name}}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">User Name</div>
+                <div class="col-md-6 col-sm-6 col-xs-12">{{newUserData.userName}}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">isEmailVerified</div>
+                <div class="col-md-6 col-sm-6 col-xs-12">{{newUserData.isEmailVerified}}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">isAdminVerified</div>
+                <div class="col-md-6 col-sm-6 col-xs-12">{{newUserData.isAdminVerified}}</div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">isDeleted</div>
+                <div class="col-md-6 col-sm-6 col-xs-12">{{newUserData.isDeleted}}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">isBlocked</div>
+                <div class="col-md-6 col-sm-6 col-xs-12">{{newUserData.isBlocked}}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-xs-12">mobile</div>
+                <div class="col-md-6 col-sm-6 col-xs-12">{{newUserData.contacts[0].mobile}}</div>
+            </div>
+
+
+        </div>
+    </div>
+
+</div>

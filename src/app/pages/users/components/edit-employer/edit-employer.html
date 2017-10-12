@@ -1,0 +1,909 @@
+<div class="widgets">
+    <div class="container">
+
+        <div *ngIf="activeEmployer" class="col-xs-12 animated bounceInUp">
+
+            <div *ngIf="isEditable == true">
+                <div class="form-group row">
+                    <div class="col-sm-9">
+                        <h2>Edit Employer</h2>
+                    </div>
+                    <div class="col-sm-3 text-right">
+                        <div>
+                            <button type="button" md-icon-button (click)="goBack()">
+                                    <i class="fa fa-chevron-circle-left"></i>
+                                </button>
+                        </div>
+                    </div>
+                </div>
+                <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+                    <md-tab-group>
+                        <md-tab label="Edit Details">
+
+                            <div class="tabs-content col-md-12 col-sm-12 col-xs-12">
+                                <md-card class="example-card">
+                                    <md-card-header>
+                                        <md-card-title>Official Details</md-card-title>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <div class="row">
+                                            <div class="tabs-content col-md-6 col-sm-6 col-xs-12">
+
+                                                <div class="row picture-div">
+
+                                                    <div class="initial-picture">
+                                                        <span class="file-image-upload" *ngIf="fileUploading">
+                                                            <i class="fa fa-spin fa-spinner image-upload-spinner"></i>
+                                                        </span>
+                                                        <img (click)="bringFileSelector(1)" style="cursor: pointer" class="profile-pic" [src]="profilePicture ? profilePicture : 'assets/img/default-profile.jpg'">
+                                                    </div>
+                                                    <div [hidden]="true">
+                                                        <input #imageProfile type="file" (change)="selectProfileImage($event)">
+                                                    </div>
+
+                                                </div>
+                                                <div class="tabs-content row">
+                                                    <md-input-container class="col-sm-12">
+                                                        <input mdInput [formControl]="name" type="text" id="inputName3" placeholder="Name">
+                                                        <md-error *ngIf="form.controls['name'].errors?.required && !form.controls['name'].pristine">
+                                                            Name is required
+                                                        </md-error>
+                                                        <md-error *ngIf="form.controls['name'].errors?.minlength && !form.controls['name'].pristine">
+                                                            Min length must be 4
+                                                        </md-error>
+                                                    </md-input-container>
+                                                </div>
+
+                                                <div class="row">
+                                                    <md-input-container class="col-sm-12">
+                                                        <input mdInput [formControl]="email" type="email" id="email" placeholder="Email">
+                                                        <md-error *ngIf="form.controls['email'].errors?.required && !form.controls['email'].pristine">
+                                                            Email is required
+                                                        </md-error>
+                                                        <md-error *ngIf="form.controls['email'].errors?.invalid && !form.controls['email'].pristine">
+                                                            Invalid email
+                                                        </md-error>
+                                                    </md-input-container>
+                                                </div>
+                                            </div>
+                                            <div class="tabs-content-right col-md-6 col-sm-6 col-xs-12">
+                                                <div class="row">
+                                                    <md-input-container md-no-float class="col-sm-3">
+                                                        <input type="text" placeholder="Country Code" mdInput [formControl]="countryCode" [mdAutocomplete]="auto" maxlength="5" (keypress)="_keyPressCountryCode($event)">
+                                                        <md-autocomplete #auto="mdAutocomplete">
+                                                            <md-option *ngFor="let country of countries | async" [value]="'+' + country.phone_code">
+                                                                {{ '+' + country.phone_code }}
+                                                                <span style="color: rgba(0, 0, 0, 0.3)">
+                                                                    {{ country.country_code }}
+                                                                </span>
+                                                            </md-option>
+                                                        </md-autocomplete>
+                                                    </md-input-container>
+                                                    <!-- <md-input-container class="col-sm-3">
+                                                        <input mdInput [formControl]="countryCode" type="text" id="countryCode" placeholder="Country Code" maxlength="4" (keypress)="_keyPressCountryCode($event)">
+                                                        <md-error *ngIf="form.controls['countryCode'].errors?.required && !form.controls['countryCode'].pristine">
+                                                            Required
+                                                        </md-error>
+                                                    </md-input-container> -->
+                                                    <md-input-container class="col-sm-9">
+                                                        <input mdInput [formControl]="mobile" type="tel" id="mobile" placeholder="Phone Number" (keypress)="_keyPressNumber($event)">
+                                                        <md-error *ngIf="form.controls['mobile'].errors?.required && !form.controls['mobile'].pristine">
+                                                            Phone Number is required
+                                                        </md-error>
+                                                    </md-input-container>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+                                <md-card class="example-card">
+                                    <md-card-header>
+                                        <md-card-title>Organisation Details</md-card-title>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <div class="row">
+                                            <div class="tabs-content col-md-6 col-sm-6 col-xs-12">
+
+                                                <div class="row picture-div-org">
+                                                    <div class="initial-picture-org">
+                                                        <span class="file-image-upload" *ngIf="fileOrgUploading">
+                                                            <i class="fa fa-spin fa-spinner image-upload-spinner"></i>
+                                                        </span>
+                                                        <img (click)="bringFileSelector(2)" style="cursor: pointer" class="organisation-pic" [src]="organisationPicture ? organisationPicture : 'assets/img/placeholder.gif'">
+                                                    </div>
+                                                    <div [hidden]="true">
+                                                        <input #imageOrg type="file" (change)="selectOrganisationImage($event)">
+                                                    </div>
+                                                </div>
+                                                <div class="tabs-content row">
+                                                    <md-input-container class="col-sm-12">
+                                                        <input mdInput [formControl]="organisationName" id="organisationName" type="text" placeholder="Organisation Name">
+                                                        <md-error *ngIf="form.controls['organisationName'].errors?.required && !form.controls['organisationName'].pristine">
+                                                            Organisation Name is required
+                                                        </md-error>
+                                                        <md-error *ngIf="form.controls['organisationName'].errors?.minlength && !form.controls['organisationName'].pristine">
+                                                            Min length must be 4
+                                                        </md-error>
+                                                    </md-input-container>
+                                                </div>
+
+                                                <div class="row">
+                                                    <md-input-container class="col-sm-12">
+                                                        <input mdInput [formControl]="organisationEmail" id="organisationEmail" type="email" placeholder="Organisation Email">
+                                                        <md-error *ngIf="form.controls['organisationEmail'].errors?.required && !form.controls['organisationEmail'].pristine">
+                                                            Email is required
+                                                        </md-error>
+                                                        <md-error *ngIf="form.controls['organisationEmail'].errors?.valid && !form.controls['organisationEmail'].pristine">
+                                                            Invalid email
+                                                        </md-error>
+                                                    </md-input-container>
+                                                </div>
+
+                                                <div class="row">
+                                                    <md-input-container class="col-sm-8">
+                                                        <input ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)" mdInput [formControl]="locationAddress"
+                                                            id="locationAddress" type="text" placeholder="Location Address">
+                                                        <md-error *ngIf="organisationAddress.controls['locationAddress'].errors?.required && !organisationAddress.controls['locationAddress'].pristine">
+                                                            Required
+                                                        </md-error>
+                                                    </md-input-container>
+                                                    <md-input-container class="col-sm-4">
+                                                        <input mdInput [formControl]="locationName" id="locationName" type="text" placeholder="Location Name">
+                                                        <md-error *ngIf="organisationAddress.controls['locationName'].errors?.required && !organisationAddress.controls['locationName'].pristine">
+                                                            Required
+                                                        </md-error>
+                                                    </md-input-container>
+
+                                                </div>
+
+                                                <div class="hidden hidden-sm-up">
+                                                    <input [formControl]="latitude" id="latitude" type="hidden" placeholder="Latitude">
+                                                    <input [formControl]="longitude" id="longitude" type="hidden" placeholder="Longitude">
+                                                </div>
+
+                                                <div class="row">
+
+                                                    <md-input-container class="col-sm-5">
+                                                        <input mdInput [formControl]="city" id="city" type="text" placeholder="City">
+                                                        <md-error *ngIf="organisationAddress.controls['city'].errors?.required && !organisationAddress.controls['city'].pristine">
+                                                            Required
+                                                        </md-error>
+                                                    </md-input-container>
+                                                    <md-input-container class="col-sm-4">
+                                                        <input mdInput [formControl]="state" id="state" type="text" placeholder="State">
+                                                        <md-error *ngIf="organisationAddress.controls['state'].errors?.required && !organisationAddress.controls['state'].pristine">
+                                                            Required
+                                                        </md-error>
+                                                    </md-input-container>
+                                                    <md-input-container class="col-sm-3">
+                                                        <input mdInput [formControl]="zipCode" id="zipCode" type="text" placeholder="Zip Code">
+                                                        <md-error *ngIf="organisationAddress.controls['zipCode'].errors?.required && !organisationAddress.controls['zipCode'].pristine">
+                                                            Required
+                                                        </md-error>
+                                                    </md-input-container>
+                                                </div>
+
+                                            </div>
+                                            <div class="tabs-content-right-org col-md-6 col-sm-6 col-xs-12">
+                                                <div class="row">
+                                                    <md-input-container class="col-sm-12">
+                                                        <input mdInput [formControl]="contactName" id="contactName" type="text" placeholder="Contact Name">
+                                                        <md-error *ngIf="form.controls['contactName'].errors?.required && !form.controls['contactName'].pristine">
+                                                            Contact Name is required
+                                                        </md-error>
+                                                        <md-error *ngIf="form.controls['contactName'].errors?.minlength && !form.controls['contactName'].pristine">
+                                                            Min length must be 4
+                                                        </md-error>
+                                                    </md-input-container>
+                                                </div>
+                                                <div class="row">
+                                                    <md-input-container md-no-float class="col-sm-3">
+                                                        <input type="text" placeholder="Country Code" mdInput [formControl]="organisationCountryCode" [mdAutocomplete]="autoC" maxlength="5" (keypress)="_keyPressCountryCode($event)">
+                                                        <md-autocomplete #autoC="mdAutocomplete">
+                                                            <md-option *ngFor="let country of organisationCountries | async" [value]="'+' + country.phone_code">
+                                                                {{ '+' + country.phone_code }}
+                                                                <span style="color: rgba(0, 0, 0, 0.3)">
+                                                                    {{ country.country_code }}
+                                                                </span>
+                                                            </md-option>
+                                                        </md-autocomplete>
+                                                    </md-input-container>
+                                                    <!-- <md-input-container class="col-sm-3">
+                                                        <input mdInput [formControl]="organisationCountryCode" id="organisationCountryCode" type="text" placeholder="Country Code"
+                                                            maxlength="4" (keypress)="_keyPressCountryCode($event)">
+                                                        <md-error *ngIf="form.controls['organisationCountryCode'].errors?.required && !form.controls['organisationCountryCode'].pristine">
+                                                            Required
+                                                        </md-error>
+                                                    </md-input-container> -->
+                                                    <md-input-container class="col-sm-9">
+                                                        <input mdInput [formControl]="organisationMobile" id="organisationMobile" type="tel" placeholder="Organisation Phone Number"
+                                                            (keypress)="_keyPressNumber($event)">
+                                                        <md-error *ngIf="form.controls['organisationMobile'].errors?.required && !form.controls['organisationMobile'].pristine">
+                                                            Phone Number is required
+                                                        </md-error>
+                                                    </md-input-container>
+                                                </div>
+                                                <div class="row">
+                                                    <md-input-container class="col-sm-12">
+                                                        <input mdInput [formControl]="about" id="about" type="text" placeholder="About">
+                                                        <md-error *ngIf="form.controls['about'].errors?.required && !form.controls['about'].pristine">
+                                                            Required
+                                                        </md-error>
+                                                    </md-input-container>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+
+                                <md-card class="example-card">
+                                    <md-card-header>
+                                        <md-card-title>Previous Project Details</md-card-title>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                                <div class="row">
+                                                    <md-input-container class="col-sm-12">
+                                                        <input mdInput [formControl]="projectName" id="projectName" type="text" placeholder="Project Name">
+                                                        <md-error *ngIf="previousProject.controls['name'].errors?.required && !previousProject.controls['name'].pristine">
+                                                            Project Name is required
+                                                        </md-error>
+                                                    </md-input-container>
+                                                </div>
+
+                                                <div class="row">
+                                                    <md-input-container class="col-sm-6">
+
+                                                        <input mdInput readonly [(ngModel)]="startDt" [formControl]="startDate" [max]="minDate" [mdDatepicker]="pickerStart" placeholder="Start Date">
+                                                        <button mdSuffix [mdDatepickerToggle]="pickerStart"></button>
+
+                                                    </md-input-container>
+                                                    <md-datepicker #pickerStart></md-datepicker>
+
+                                                    <md-input-container class="col-sm-6">
+                                                        <input mdInput readonly [formControl]="endDate" [min]="startDt" [mdDatepicker]="pickerEnd" placeholder="End Date">
+                                                        <button mdSuffix [mdDatepickerToggle]="pickerEnd"></button>
+
+                                                    </md-input-container>
+                                                    <md-datepicker #pickerEnd></md-datepicker>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                                <div class="row">
+
+                                                    <md-input-container class="col-sm-12">
+                                                        <input mdInput [formControl]="dollarValue" id="dollarValue" type="text" placeholder="Dollar Value">
+                                                        <md-error *ngIf="previousProject.controls['dollarValue'].errors?.required && !previousProject.controls['dollarValue'].pristine">
+                                                            Value is required
+                                                        </md-error>
+                                                    </md-input-container>
+
+                                                    <md-input-container class="col-sm-12">
+                                                        <input ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getProjectAddress($event)" mdInput [formControl]="location"
+                                                            id="location" type="text" placeholder="Location Address">
+                                                        <md-error *ngIf="previousProject.controls['location'].errors?.required && !previousProject.controls['location'].pristine">
+                                                            Required
+                                                        </md-error>
+                                                    </md-input-container>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+
+                            </div>
+
+                        </md-tab>
+                        <md-tab label="Edit Documents">
+                            <div class="tabs-content col-md-12 col-sm-12 col-xs-12">
+                                <div class="panel-body" *ngIf="activeEmployer.employerID && activeEmployer.employerID.organisationID">
+                                    <table class="table table-striped table-bordered table-list table-responsive table-resp">
+                                        <thead>
+                                            <tr>
+                                                <th>Document</th>
+                                                <th>Document Name</th>
+                                                <th>Number</th>
+                                                <th>Expiry Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="document-td">
+                                                    <div [hidden]="true">
+                                                        <input #stateBuilding type="file" (change)="selectStateBuildingLicence($event)">
+                                                    </div>
+                                                    <div class="initial-doc">
+                                                        <span class="file-image-upload" *ngIf="stateBuildingLicenceUploading">
+                                                            <i class="fa fa-spin fa-spinner image-upload-spinner"></i>
+                                                        </span>
+                                                        <img (click)="bringFileSelector(3)" *ngIf="stateBuildingLicenceFile && stateBuildingLicenceFile.indexOf('.pdf') == -1" class="document-pic"
+                                                            [src]="stateBuildingLicenceFile ? stateBuildingLicenceFile : ''">
+                                                        <md-chip-list *ngIf="stateBuildingLicenceFile && stateBuildingLicenceFile.indexOf('.pdf') != -1">
+                                                            <md-chip style="cursor: pointer" (click)="bringFileSelector(3)">{{stateBuildingLicenceFile.substring(stateBuildingLicenceFile.lastIndexOf('/') + 1, stateBuildingLicenceFile.length)}}</md-chip>
+                                                        </md-chip-list>
+                                                        <div *ngIf="!stateBuildingLicenceFile">
+                                                            <span class="user-table-button">
+                                                                <button type="button" class="btn btn-primary" md-button (click)="bringFileSelector(3)">
+                                                                    Browse
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="td-left-align">
+                                                    State Building Licence
+                                                </td>
+                                                <td class="td-left-align">
+                                                    <md-input-container>
+                                                        <input mdInput [formControl]="stateBuildingLicenceNumber" id="stateBuildingLicenceNumber" type="text" placeholder="Document Number">
+
+                                                    </md-input-container>
+                                                </td>
+                                                <td class="td-left-align">
+                                                    <md-input-container *ngIf="activeEmployer.employerID && activeEmployer.employerID.organisationID && activeEmployer.employerID.organisationID.stateBuildingLicence && activeEmployer.employerID.organisationID.stateBuildingLicence.expiryDate">
+                                                        <input mdInput readonly [formControl]="stateBuildingLicenceExpiry" id="stateBuildingLicenceExpiry" [mdDatepicker]="pickerstateBuildingLicence"
+                                                            placeholder="Document Expiry Date">
+                                                        <button mdSuffix [mdDatepickerToggle]="pickerstateBuildingLicence"></button>
+                                                    </md-input-container>
+                                                    <md-datepicker #pickerstateBuildingLicence></md-datepicker>
+                                                    {{activeEmployer.employerID && activeEmployer.employerID.organisationID && activeEmployer.employerID.organisationID.stateBuildingLicence && activeEmployer.employerID.organisationID.stateBuildingLicence.expiryDate ? null : 'Not Applicable'}}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="document-td">
+                                                    <div [hidden]="true">
+                                                        <input #incomeProtection type="file" (change)="selectIncomeProtectionCertificate($event, incomeProtectionCertificateFiles.length)">
+                                                    </div>
+                                                    <div class="initial-doc">
+                                                        <span class="file-image-upload" *ngIf="incomeProtectionCertificateUploading">
+                                                            <i class="fa fa-spin fa-spinner image-upload-spinner"></i>
+                                                        </span>
+                                                        <div *ngFor="let file of incomeProtectionCertificateFiles; let i = index">
+                                                            <div [hidden]="true">
+                                                                <input #incomeProtections type="file" (change)="selectIncomeProtectionCertificateMulti($event, i)">
+                                                            </div>
+                                                            <img (click)="bringFilesSelector(i, 1)" *ngIf="file && file.indexOf('.pdf') == -1" class="document-pic" [src]="file ? file : ''">
+                                                            <md-chip-list *ngIf="file && file.indexOf('.pdf') != -1">
+                                                                <md-chip (click)="bringFilesSelector(i, 1)" style="cursor: pointer">{{file.substring(file.lastIndexOf('/') + 1, file.length)}}</md-chip>
+                                                            </md-chip-list>
+                                                        </div>
+                                                        <div *ngIf="incomeProtectionCertificateFiles && incomeProtectionCertificateFiles.length == 0">
+                                                            <span class="user-table-button">
+                                                                <button type="button" class="btn btn-primary" md-button (click)="bringFileSelector(4)">
+                                                                    Browse
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                        <div *ngIf="incomeProtectionCertificateFiles && incomeProtectionCertificateFiles.length > 0">
+                                                            <span class="user-table-button">
+                                                                <button type="button" class="btn btn-primary" md-button (click)="bringFileSelector(4)">
+                                                                    Add
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="td-left-align">
+                                                    Income Protection Certificate
+                                                </td>
+                                                <td class="td-left-align">
+                                                    <md-input-container>
+                                                        <input mdInput [formControl]="incomeProtectionCertificateNumber" id="incomeProtectionCertificateNumber" type="text" placeholder="Document Number">
+
+                                                    </md-input-container>
+                                                </td>
+                                                <td class="td-left-align">
+                                                    <md-input-container>
+                                                        <input mdInput readonly [formControl]="incomeProtectionCertificateExpiry" id="incomeProtectionCertificateExpiry" [mdDatepicker]="pickerincomeProtectionCertificate"
+                                                            placeholder="Document Expiry Date">
+                                                        <button mdSuffix [mdDatepickerToggle]="pickerincomeProtectionCertificate"></button>
+                                                    </md-input-container>
+                                                    <md-datepicker #pickerincomeProtectionCertificate></md-datepicker>
+                                                </td>
+
+                                            </tr>
+
+                                            <tr>
+                                                <td class="document-td">
+                                                    <div [hidden]="true">
+                                                        <input #publicLiability type="file" (change)="selectPublicLiabilityInsuranceCertificate($event, publicLiabilityInsuranceCertificateFiles.length)">
+                                                    </div>
+                                                    <div class="initial-doc">
+                                                        <span class="file-image-upload" *ngIf="publicLiabilityInsuranceCertificateUploading">
+                                                            <i class="fa fa-spin fa-spinner image-upload-spinner"></i>
+                                                        </span>
+                                                        <div *ngFor="let file of publicLiabilityInsuranceCertificateFiles; let i = index">
+                                                            <div [hidden]="true">
+                                                                <input #publicLiabilitys type="file" (change)="selectPublicLiabilityInsuranceCertificateMulti($event, i)">
+                                                            </div>
+                                                            <img (click)="bringFilesSelector(i, 2)" *ngIf="file && file.indexOf('.pdf') == -1" class="document-pic" [src]="file ? file : ''">
+                                                            <md-chip-list *ngIf="file && file.indexOf('.pdf') != -1">
+                                                                <md-chip (click)="bringFilesSelector(i, 2)" style="cursor: pointer">{{file.substring(file.lastIndexOf('/') + 1, file.length)}}</md-chip>
+                                                            </md-chip-list>
+                                                        </div>
+                                                        <div *ngIf="publicLiabilityInsuranceCertificateFiles && publicLiabilityInsuranceCertificateFiles.length == 0">
+                                                            <span class="user-table-button">
+                                                                <button type="button" class="btn btn-primary" md-button (click)="bringFileSelector(5)">
+                                                                    Browse
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                        <div *ngIf="publicLiabilityInsuranceCertificateFiles && publicLiabilityInsuranceCertificateFiles.length > 0">
+                                                            <span class="user-table-button">
+                                                                <button type="button" class="btn btn-primary" md-button (click)="bringFileSelector(5)">
+                                                                    Add
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="td-left-align">
+                                                    Public Liability Insurance Certificate
+                                                </td>
+                                                <td class="td-left-align">
+                                                    Not Applicable
+                                                </td>
+                                                <td class="td-left-align">
+                                                    <md-input-container>
+                                                        <input mdInput readonly readonly [formControl]="publicLiabilityInsuranceCertificateExpiry" id="publicLiabilityInsuranceCertificateExpiry"
+                                                            [mdDatepicker]="pickerpublicLiabilityInsuranceCertificate" placeholder="Document Expiry Date">
+                                                        <button mdSuffix [mdDatepickerToggle]="pickerpublicLiabilityInsuranceCertificate"></button>
+                                                    </md-input-container>
+                                                    <md-datepicker #pickerpublicLiabilityInsuranceCertificate></md-datepicker>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="document-td">
+                                                    <div [hidden]="true">
+                                                        <input #SWMSInput type="file" (change)="selectSWMS($event)">
+                                                    </div>
+                                                    <div class="initial-doc">
+                                                        <span class="file-image-upload" *ngIf="SWMSUploading">
+                                                            <i class="fa fa-spin fa-spinner image-upload-spinner"></i>
+                                                        </span>
+                                                        <img (click)="bringFileSelector(6)" *ngIf="SWMSFile && SWMSFile.indexOf('.pdf') == -1" class="document-pic" [src]="SWMSFile ? SWMSFile : ''">
+                                                        <md-chip-list *ngIf="SWMSFile && SWMSFile.indexOf('.pdf') != -1">
+                                                            <md-chip (click)="bringFileSelector(6)" style="cursor: pointer">{{SWMSFile.substring(SWMSFile.lastIndexOf('/') + 1, SWMSFile.length)}}</md-chip>
+                                                        </md-chip-list>
+                                                        <div *ngIf="!SWMSFile">
+                                                            <span class="user-table-button">
+                                                                <button type="button" class="btn btn-primary" md-button (click)="bringFileSelector(6)">
+                                                                    Browse
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="td-left-align">
+                                                    SWMS
+                                                </td>
+                                                <td class="td-left-align">
+                                                    Not Applicable
+                                                </td>
+                                                <td class="td-left-align">
+                                                    Not Applicable
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td class="document-td">
+                                                    <div [hidden]="true">
+                                                        <input #ABNInput type="file" (change)="selectABN($event)">
+                                                    </div>
+                                                    <div class="initial-doc">
+                                                        <span class="file-image-upload" *ngIf="ABNUploading">
+                                                            <i class="fa fa-spin fa-spinner image-upload-spinner"></i>
+                                                        </span>
+                                                        <img (click)="bringFileSelector(7)" *ngIf="ABNFile && ABNFile.indexOf('.pdf') == -1" class="document-pic" [src]="ABNFile ? ABNFile : ''">
+                                                        <md-chip-list *ngIf="ABNFile && ABNFile.indexOf('.pdf') != -1">
+                                                            <md-chip (click)="bringFileSelector(7)" style="cursor: pointer">{{ABNFile.substring(ABNFile.lastIndexOf('/') + 1, ABNFile.length)}}</md-chip>
+                                                        </md-chip-list>
+                                                        <div *ngIf="!ABNFile">
+                                                            <span class="user-table-button">
+                                                                <button type="button" class="btn btn-primary" md-button (click)="bringFileSelector(7)">
+                                                                    Browse
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="td-left-align">
+                                                    ABN
+                                                </td>
+                                                <td class="td-left-align">
+                                                    <md-input-container>
+                                                        <input mdInput [formControl]="ABNNumber" id="ABNNumber" type="text" placeholder="Document Number" maxlength="11">
+
+                                                    </md-input-container>
+                                                </td>
+                                                <td class="td-left-align">
+                                                    Not Applicable
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </md-tab>
+
+                    </md-tab-group>
+                    <div class="form-group row text-center">
+                        <div class="tabs-content col-md-12 col-sm-12 col-xs-12">
+                            <button md-button [disabled]="updateLoading" type="submit" class="btn-success">
+                                <i *ngIf="updateLoading" class="fa fa-spinner fa-spin"></i>
+                                Update
+                            </button>
+                            <button md-button type="button" class="btn-danger" (click)="closeEdit()">Cancel</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <div *ngIf="isEditable == false">
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <h2>Employer Details</h2>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <div>
+                            <button *ngIf="activeEmployer.hasCompletedRegistration" type="button" md-icon-button (click)="openEdit()">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                            <button type="button" md-icon-button (click)="goBack()">
+                                <i class="fa fa-chevron-circle-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <md-tab-group>
+                    <md-tab label="Persional Details">
+                        <div class="tabs-content col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group row">
+                                <img class="profile-pic" [src]="activeEmployer.employerID ? activeEmployer.employerID.profilePic ? activeEmployer.employerID.profilePic : 'assets/img/default-profile.jpg' : 'assets/img/default-profile.jpg'">
+                            </div>
+                            <div class="tabs-content form-group row">
+                                <div class="col-md-6 col-sm-6 col-xs-12">Name</div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.name}}</div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-6 col-sm-6 col-xs-12">Email</div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.email}}</div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-6 col-sm-6 col-xs-12">Phone Number</div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <span *ngIf="activeEmployer.contacts && activeEmployer.contacts.length > 0">
+                                        {{activeEmployer.contacts[0].countryCode}} {{activeEmployer.contacts[0].mobile}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </md-tab>
+                    <md-tab label="Official Details">
+                        <div class="tabs-content col-md-12 col-sm-12 col-xs-12">
+                            <md-card class="example-card">
+                                <md-card-header>
+                                    <md-card-title>Employer Official Details</md-card-title>
+                                </md-card-header>
+                                <md-card-content>
+                                    <div class="form-group row">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">Employer ID</div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.userCode}}</div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">Registered On</div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.createdAt | date: 'medium'}}</div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">Updated On</div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.updatedAt | date: 'medium'}}</div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">Is Email Verified</div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.isEmailVerified ? 'Yes' : 'No'}}</div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">Is Admin Verified</div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.isAdminVerified ? 'Yes' : 'No'}}</div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">Is Blocked</div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.isBlocked ? 'Yes' : 'No'}}</div>
+                                    </div>
+                                </md-card-content>
+                            </md-card>
+                            <div *ngIf="activeEmployer.employerID && activeEmployer.employerID.ABN">
+                                <md-card class="example-card">
+                                    <md-card-header>
+                                        <md-card-title>ABN Details</md-card-title>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <div class="form-group row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">ABN Number</div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.employerID.ABN.number}}</div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div *ngIf="activeEmployer.employerID && activeEmployer.employerID.organisationID">
+                                <md-card class="example-card">
+                                    <md-card-header>
+                                        <md-card-title>Organisation Details</md-card-title>
+                                    </md-card-header>
+                                    <img md-card-image [src]="activeEmployer.employerID.organisationID.organisationPic">
+                                    <md-card-content>
+                                        <div class="form-group row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">Organisation Name</div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.employerID.organisationID.organisationName}}</div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">Mobile</div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.employerID.organisationID.organisationCountryCode}} {{activeEmployer.employerID.organisationID.organisationMobile}}</div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">Email</div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.employerID.organisationID.organisationEmail}}</div>
+                                        </div>
+                                        <div *ngIf="activeEmployer.employerID.organisationID.organisationAddress">
+                                            <div class="form-group row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">Address</div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.employerID.organisationID.organisationAddress.locationAddress}}</div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">Location</div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.employerID.organisationID.organisationAddress.locationName}}</div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">State</div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.employerID.organisationID.organisationAddress.state}}</div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">City</div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.employerID.organisationID.organisationAddress.city}}</div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">Zip Code</div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.employerID.organisationID.organisationAddress.zipCode}}</div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">About</div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.employerID.organisationID.about}}</div>
+                                            </div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+                                <div *ngIf="activeEmployer.employerID.organisationID.previousProject">
+                                    <md-card class="example-card">
+                                        <md-card-header>
+                                            <md-card-title>Previous Project Details</md-card-title>
+                                        </md-card-header>
+                                        <md-card-content>
+                                            <div class="form-group row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">Project Name</div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.employerID.organisationID.previousProject.name}}</div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">Duration</div>
+                                                <div *ngIf="activeEmployer.employerID.organisationID.previousProject.projectDate" class="col-md-6 col-sm-6 col-xs-12">
+                                                    {{activeEmployer.employerID.organisationID.previousProject.projectDate.startDate | date: 'mediumDate'}} - {{activeEmployer.employerID.organisationID.previousProject.projectDate.endDate | date: 'mediumDate'}}
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">Dollar Value</div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.employerID.organisationID.previousProject.dollarValue}}</div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">Location</div>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">{{activeEmployer.employerID.organisationID.previousProject.location}}</div>
+                                            </div>
+                                        </md-card-content>
+                                    </md-card>
+                                </div>
+
+                            </div>
+                        </div>
+                    </md-tab>
+                    <md-tab label="Official Documents">
+                        <div class="tabs-content col-md-12 col-sm-12 col-xs-12">
+                            <div class="panel-body" *ngIf="activeEmployer.employerID && activeEmployer.employerID.organisationID">
+                                <table class="table table-striped table-bordered table-list table-responsive table-resp">
+                                    <thead>
+                                        <tr>
+                                            <th>Document</th>
+                                            <th>Document Name</th>
+                                            <th>Document Number</th>
+                                            <th>Expiry Date</th>
+                                            <th>Approval</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="activeEmployer.employerID.organisationID.stateBuildingLicence">
+                                            <td class="document-td">
+                                                <img *ngIf="activeEmployer.employerID.organisationID.stateBuildingLicence.document && activeEmployer.employerID.organisationID.stateBuildingLicence.document.indexOf('.pdf') == -1"
+                                                    (click)="openDocument(activeEmployer.employerID.organisationID.stateBuildingLicence.document)"
+                                                    class="document-pic" [src]="activeEmployer.employerID.organisationID.stateBuildingLicence.document ? activeEmployer.employerID.organisationID.stateBuildingLicence.document: ''">
+                                                <md-chip-list *ngIf="activeEmployer.employerID.organisationID.stateBuildingLicence.document && activeEmployer.employerID.organisationID.stateBuildingLicence.document.indexOf('.pdf') != -1">
+                                                    <md-chip><a href="{{activeEmployer.employerID.organisationID.stateBuildingLicence.document}}"
+                                                            target="_blank">{{activeEmployer.employerID.organisationID.stateBuildingLicence.document.substring(activeEmployer.employerID.organisationID.stateBuildingLicence.document.lastIndexOf('/') + 1, activeEmployer.employerID.organisationID.stateBuildingLicence.document.length)}}</a></md-chip>
+                                                </md-chip-list>
+                                                <div *ngIf="!activeEmployer.employerID.organisationID.stateBuildingLicence.document">
+                                                    No Document
+                                                </div>
+                                            </td>
+                                            <td class="td-left-align">
+                                                State Building Licence
+                                            </td>
+
+                                            <td class="td-left-align">
+                                                {{activeEmployer.employerID.organisationID.stateBuildingLicence.number ? activeEmployer.employerID.organisationID.stateBuildingLicence.number : 'Not Applicable'}}
+                                            </td>
+                                            <td>
+                                                {{activeEmployer.employerID.organisationID.stateBuildingLicence.expiryDate ? (activeEmployer.employerID.organisationID.stateBuildingLicence.expiryDate | date: 'mediumDate') : 'Not Applicable'}}
+                                            </td>
+                                            <td>
+                                                <button *ngIf="activeEmployer.employerID.organisationID.stateBuildingLicence.isRejected == true || (activeEmployer.employerID.organisationID.stateBuildingLicence.isRejected == false && activeEmployer.employerID.organisationID.stateBuildingLicence.isReuploaded == true)"
+                                                    md-button [disabled]="activeEmployer.employerID.isRegisteredByAdmin && !activeEmployer.hasCompletedRegistration" type="button" class="btn-success" (click)="approveDocument(activeEmployer.employerID.organisationID.stateBuildingLicence, 'stateBuildingLicence', 'State Building Licence')">Approve</button>
+                                                <!-- <md-chip-list *ngIf="activeEmployer.employerID.organisationID.stateBuildingLicence.isRejected == false && activeEmployer.employerID.organisationID.stateBuildingLicence.isReuploaded == false">
+                                                    <md-chip>Verified</md-chip>
+                                                </md-chip-list> -->
+                                                <button *ngIf="activeEmployer.employerID.organisationID.stateBuildingLicence.isRejected == false && activeEmployer.employerID.organisationID.stateBuildingLicence.isReuploaded == false"
+                                                    md-button [disabled]="activeEmployer.employerID.isRegisteredByAdmin && !activeEmployer.hasCompletedRegistration" type="button" class="btn-danger" (click)="rejectDocument(activeEmployer.employerID.organisationID.stateBuildingLicence, 'stateBuildingLicence', 'State Building Licence')">Reject</button>
+                                            </td>
+
+                                        </tr>
+                                        <tr *ngIf="activeEmployer.employerID.organisationID.incomeProtectionCertificate">
+                                            <td class="document-td">
+                                                <div *ngFor="let file of activeEmployer.employerID.organisationID.incomeProtectionCertificate.document; let i = index">
+                                                    <img *ngIf="file && file.indexOf('.pdf') == -1" (click)="openDocument(file)" class="document-pic" [src]="file ? file: ''">
+                                                    <md-chip-list *ngIf="file && file.indexOf('.pdf') != -1">
+                                                        <md-chip><a href="{{file}}" target="_blank">{{file.substring(file.lastIndexOf('/') + 1, file.length)}}</a></md-chip>
+                                                    </md-chip-list>
+                                                </div>
+                                                <div *ngIf="activeEmployer.employerID.organisationID.incomeProtectionCertificate.document && activeEmployer.employerID.organisationID.incomeProtectionCertificate.document.length == 0">
+                                                    No Document
+                                                </div>
+                                            </td>
+                                            <td class="td-left-align">
+                                                Income Protection Certificate
+                                            </td>
+                                            <td class="td-left-align">
+                                                {{activeEmployer.employerID.organisationID.incomeProtectionCertificate.number ? activeEmployer.employerID.organisationID.incomeProtectionCertificate.number : 'Not Applicable'}}
+                                            </td>
+                                            <td>
+                                                {{activeEmployer.employerID.organisationID.incomeProtectionCertificate.expiryDate | date: 'mediumDate'}}
+                                            </td>
+                                            <td>
+                                                <button *ngIf="activeEmployer.employerID.organisationID.incomeProtectionCertificate.isRejected == true || (activeEmployer.employerID.organisationID.incomeProtectionCertificate.isRejected == false && activeEmployer.employerID.organisationID.incomeProtectionCertificate.isReuploaded == true)"
+                                                    md-button [disabled]="activeEmployer.employerID.isRegisteredByAdmin && !activeEmployer.hasCompletedRegistration" type="button" class="btn-success" (click)="approveDocument(activeEmployer.employerID.organisationID.incomeProtectionCertificate, 'incomeProtectionCertificate', 'Income Protection Certificate')">Approve</button>
+                                                <!-- <md-chip-list *ngIf="activeEmployer.employerID.organisationID.incomeProtectionCertificate.isRejected == false && activeEmployer.employerID.organisationID.incomeProtectionCertificate.isReuploaded == false">
+                                                    <md-chip>Verified</md-chip>
+                                                </md-chip-list> -->
+                                                <button *ngIf="activeEmployer.employerID.organisationID.incomeProtectionCertificate.isRejected == false && activeEmployer.employerID.organisationID.incomeProtectionCertificate.isReuploaded == false"
+                                                    md-button [disabled]="activeEmployer.employerID.isRegisteredByAdmin && !activeEmployer.hasCompletedRegistration" type="button" class="btn-danger" (click)="rejectDocument(activeEmployer.employerID.organisationID.incomeProtectionCertificate, 'incomeProtectionCertificate', 'Income Protection Certificate')">Reject</button>
+                                            </td>
+
+                                        </tr>
+                                        <tr *ngIf="activeEmployer.employerID.organisationID.publicLiabilityInsuranceCertificate">
+                                            <td class="document-td">
+                                                <div *ngFor="let file of activeEmployer.employerID.organisationID.publicLiabilityInsuranceCertificate.document; let i = index">
+                                                    <img *ngIf="file && file.indexOf('.pdf') == -1" (click)="openDocument(file)" class="document-pic" [src]="file ? file: ''">
+                                                    <md-chip-list *ngIf="file && file.indexOf('.pdf') != -1">
+                                                        <md-chip><a href="{{file}}" target="_blank">{{file.substring(file.lastIndexOf('/') + 1, file.length)}}</a></md-chip>
+                                                    </md-chip-list>
+                                                </div>
+                                                <div *ngIf="activeEmployer.employerID.organisationID.publicLiabilityInsuranceCertificate.document && activeEmployer.employerID.organisationID.publicLiabilityInsuranceCertificate.document.length == 0">
+                                                    No Document
+                                                </div>
+                                            </td>
+                                            <td class="td-left-align">
+                                                Public Liability Insurance Certificate
+                                            </td>
+                                            <td class="td-left-align">
+                                                {{activeEmployer.employerID.organisationID.publicLiabilityInsuranceCertificate.number ? activeEmployer.employerID.organisationID.publicLiabilityInsuranceCertificate.number : 'Not Applicable'}}
+                                            </td>
+                                            <td>
+                                                {{activeEmployer.employerID.organisationID.publicLiabilityInsuranceCertificate.expiryDate | date: 'mediumDate'}}
+                                            </td>
+                                            <td>
+                                                <button *ngIf="activeEmployer.employerID.organisationID.publicLiabilityInsuranceCertificate.isRejected == true || (activeEmployer.employerID.organisationID.publicLiabilityInsuranceCertificate.isRejected == false && activeEmployer.employerID.organisationID.publicLiabilityInsuranceCertificate.isReuploaded == true)"
+                                                    md-button [disabled]="activeEmployer.employerID.isRegisteredByAdmin && !activeEmployer.hasCompletedRegistration" type="button" class="btn-success" (click)="approveDocument(activeEmployer.employerID.organisationID.publicLiabilityInsuranceCertificate, 'publicLiabilityInsuranceCertificate', 'Public Liability Insurance Certificate')">Approve</button>
+                                                <!-- <md-chip-list *ngIf="activeEmployer.employerID.organisationID.publicLiabilityInsuranceCertificate.isRejected == false && activeEmployer.employerID.organisationID.publicLiabilityInsuranceCertificate.isReuploaded == false">
+                                                    <md-chip>Verified</md-chip>
+                                                </md-chip-list> -->
+                                                <button *ngIf="activeEmployer.employerID.organisationID.publicLiabilityInsuranceCertificate.isRejected == false && activeEmployer.employerID.organisationID.publicLiabilityInsuranceCertificate.isReuploaded == false"
+                                                    md-button [disabled]="activeEmployer.employerID.isRegisteredByAdmin && !activeEmployer.hasCompletedRegistration" type="button" class="btn-danger" (click)="rejectDocument(activeEmployer.employerID.organisationID.publicLiabilityInsuranceCertificate, 'publicLiabilityInsuranceCertificate', 'Public Liability Insurance Certificate')">Reject</button>
+                                            </td>
+                                        </tr>
+
+                                        <tr *ngIf="activeEmployer.employerID.organisationID.SWMS">
+                                            <td class="document-td">
+                                                <img *ngIf="activeEmployer.employerID.organisationID.SWMS.document && activeEmployer.employerID.organisationID.SWMS.document.indexOf('.pdf') == -1"
+                                                    (click)="openDocument(activeEmployer.employerID.organisationID.SWMS.document)"
+                                                    class="document-pic" [src]="activeEmployer.employerID.organisationID.SWMS.document ? activeEmployer.employerID.organisationID.SWMS.document: ''">
+                                                <md-chip-list *ngIf="activeEmployer.employerID.organisationID.SWMS.document && activeEmployer.employerID.organisationID.SWMS.document.indexOf('.pdf') != -1">
+                                                    <md-chip><a href="{{activeEmployer.employerID.organisationID.SWMS.document}}"
+                                                            target="_blank">{{activeEmployer.employerID.organisationID.SWMS.document.substring(activeEmployer.employerID.organisationID.SWMS.document.lastIndexOf('/') + 1, activeEmployer.employerID.organisationID.SWMS.document.length)}}</a></md-chip>
+                                                </md-chip-list>
+                                                <div *ngIf="!activeEmployer.employerID.organisationID.SWMS.document">
+                                                    No Document
+                                                </div>
+                                            </td>
+                                            <td class="td-left-align">
+                                                SWMS
+                                            </td>
+                                            <td class="td-left-align">
+                                                {{activeEmployer.employerID.organisationID.SWMS.number ? activeEmployer.employerID.organisationID.SWMS.number : 'Not Applicable'}}
+                                            </td>
+                                            <td>
+                                                Not Applicable
+                                            </td>
+                                            <td>
+                                                <button *ngIf="activeEmployer.employerID.organisationID.SWMS.isRejected == true || (activeEmployer.employerID.organisationID.SWMS.isRejected == false && activeEmployer.employerID.organisationID.SWMS.isReuploaded == true)"
+                                                    md-button [disabled]="activeEmployer.employerID.isRegisteredByAdmin && !activeEmployer.hasCompletedRegistration" type="button" class="btn-success" (click)="approveDocument(activeEmployer.employerID.organisationID.SWMS, 'SWMS', 'SWMS')">Approve</button>
+                                                <button *ngIf="activeEmployer.employerID.organisationID.SWMS.isRejected == false && activeEmployer.employerID.organisationID.SWMS.isReuploaded == false"
+                                                    md-button [disabled]="activeEmployer.employerID.isRegisteredByAdmin && !activeEmployer.hasCompletedRegistration" type="button" class="btn-danger" (click)="rejectDocument(activeEmployer.employerID.organisationID.SWMS, 'SWMS', 'SWMS')">Reject</button>
+                                            </td>
+                                        </tr>
+
+                                        <tr *ngIf="activeEmployer.employerID.ABN">
+                                            <td class="document-td">
+                                                <img *ngIf="activeEmployer.employerID.ABN.document && activeEmployer.employerID.ABN.document.indexOf('.pdf') == -1" (click)="openDocument(activeEmployer.employerID.ABN.document)"
+                                                    class="document-pic" [src]="activeEmployer.employerID.ABN.document ? activeEmployer.employerID.ABN.document: ''">
+                                                <md-chip-list *ngIf="activeEmployer.employerID.ABN.document && activeEmployer.employerID.ABN.document.indexOf('.pdf') != -1">
+                                                    <md-chip><a href="{{activeEmployer.employerID.ABN.document}}" target="_blank">{{activeEmployer.employerID.ABN.document.substring(activeEmployer.employerID.ABN.document.lastIndexOf('/') + 1, activeEmployer.employerID.ABN.document.length)}}</a></md-chip>
+                                                </md-chip-list>
+                                                <div *ngIf="!activeEmployer.employerID.ABN.document">
+                                                    No Document
+                                                </div>
+                                            </td>
+                                            <td class="td-left-align">
+                                                ABN
+                                            </td>
+                                            <td class="td-left-align">
+                                                {{activeEmployer.employerID.ABN.number ? activeEmployer.employerID.ABN.number : 'Not Applicable'}}
+                                            </td>
+                                            <td>
+                                                {{activeEmployer.employerID.ABN.expiryDate ? ( activeEmployer.employerID.ABN.expiryDate | date: 'mediumDate' ) : 'Not Applicable'}}
+                                            </td>
+                                            <td>
+                                                <button *ngIf="activeEmployer.employerID.ABN.isRejected == true || (activeEmployer.employerID.ABN.isRejected == false && activeEmployer.employerID.ABN.isReuploaded == true)"
+                                                    md-button [disabled]="activeEmployer.employerID.isRegisteredByAdmin && !activeEmployer.hasCompletedRegistration" type="button" class="btn-success" (click)="approveDocument(activeEmployer.employerID.ABN, 'ABN', 'ABN')">Approve</button>
+
+                                                <button *ngIf="activeEmployer.employerID.ABN.isRejected == false && activeEmployer.employerID.ABN.isReuploaded == false"
+                                                    md-button [disabled]="activeEmployer.employerID.isRegisteredByAdmin && !activeEmployer.hasCompletedRegistration" type="button" class="btn-danger" (click)="rejectDocument(activeEmployer.employerID.ABN, 'ABN', 'ABN')">Reject</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="tabs-content form-group row text-center">
+                                    <div class="tabs-content col-md-12 col-sm-12 col-xs-12">
+                                        <button md-button type="button" *ngIf="activeEmployer.isAdminVerified == false" (click)="approveEmployer()" class="btn-success">Approve Employer</button>
+                                        <!-- <button md-button type="button" *ngIf="activeEmployer.isAdminVerified == true" (click)="rejectEmployer()" class="btn-danger">Reject Employer</button> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </md-tab>
+                </md-tab-group>
+
+            </div>
+        </div>
+    </div>
+</div>

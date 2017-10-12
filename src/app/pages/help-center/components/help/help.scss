@@ -1,0 +1,36 @@
+@import "../../../../theme/sass/conf/conf";
+.messagePanel {
+    background-color: transparent;
+    min-height: 400px;
+}
+.pnl-footer {
+    margin-top: 30px;
+}
+.messagePanel .h4 {
+    margin: 13px 0px 14px 13px;
+    size: 30px;
+}
+.messagePanel.form-control {
+    color: black;
+}
+.language {
+    margin-top: 20px;
+}
+.languageSelect {
+    position: absolute;
+    width: 100px;
+}
+// .panel-footer.btn-primary{
+.text {
+    color: black;
+}
+.add-a-key {
+    margin: 13px 0px 24px 0px;
+    text-align: center;
+}
+form-group label {
+    margin-bottom: 5px;
+    color: #ffffff;
+    font-weight: 400;
+    font-size: 17px;
+}

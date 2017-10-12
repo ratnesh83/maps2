@@ -1,0 +1,38 @@
+<div class="widgets all-notifications-page">
+    <div class="container animated bounceInUp">
+        <div class="row">
+            <div class="col-md-12 col-xs-12 col-sm-12">
+                <h3>All Notifications</h3>
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Message</th>
+                            <th>Time</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let data of notifications| paginate: { itemsPerPage: limit, currentPage: page, totalItems: count }" [ngClass]="{'text-muted': data.isRead,'text-primary': !data.isRead}"
+                            (click)="read(data)">
+                            <td>
+                                {{ data.eventType }}
+                            </td>
+                            <td>
+                                {{ data.message }}
+                            </td>
+                            <td>
+                                {{ data.createdAt }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <pagination-controls (pageChange)="pageChanged($event)" maxSize="4" directionLinks="true" autoHide="true" previousLabel="Previous"
+                    nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page"></pagination-controls>
+
+            </div>
+        </div>
+    </div>
+</div>

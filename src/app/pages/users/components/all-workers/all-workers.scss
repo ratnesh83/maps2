@@ -1,0 +1,89 @@
+@import "../../../../theme/sass/conf/conf";
+.all {
+    width: 50px;
+    height: 50px!important;
+}
+.edit {
+    background-color: #209e91;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+.mat-paginator-pg {
+    background: none;
+}
+.rar-align {
+    text-align: right;
+}
+.panel-default {
+    .panel-heading {
+        margin-bottom: 10px;
+    }
+}
+.user-heading {
+    display: inline-flex;
+    h3 {
+        margin: auto 0px;
+        width: auto;
+    }
+}
+.ngx-pagination {
+    margin-top: 20px;
+    padding: 0;
+    .current {
+        background-color: rgba(0, 0, 0, 0.1) !important;
+    }
+    .pagination-next a {
+        &:hover {
+            background: rgba(0, 0, 0, 0.1);
+            ;
+        }
+    }
+    li {
+        a:hover {
+            background: rgba(0, 0, 0, 0.1);
+            ;
+        }
+    }
+}
+.verticle-middle-align {
+    display: inline-flex;
+    vertical-align: middle;
+}
+.mat-sort-header-container {
+    display: inline-flex !important;
+    align-items: center;
+}
+.td-left-align {
+    text-align: left !important;
+}
+.user-table-button-a {
+    margin: auto 15px !important;
+    button.btn-primary {
+        border-width: 1px !important;
+        border-color: black !important;
+        color: black !important;
+        background-color: transparent !important;
+        padding: 0.2rem 0.5rem !important;
+        font-size: small !important;
+        line-height: normal !important;
+        &:focus {
+            border-width: 1px !important;
+            background-color: transparent !important;
+            border-color: black !important;
+        }
+        &:hover {
+            border-width: 1px !important;
+            background-color: transparent !important;
+            border-color: black !important;
+            transform: scale(1.05) !important;
+        }
+    }
+}
+.tabs-content-create-form {
+    margin-top: 30px !important;
+}
+.create-form {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}

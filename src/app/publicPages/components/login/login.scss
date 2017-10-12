@@ -1,0 +1,43 @@
+@import '../../../theme/sass/auth';
+.multilingual-link {
+    cursor: pointer;
+    color: #54FF9F !important;
+}
+.rar-lang {
+    position: absolute;
+    width: 170px;
+    right: 20px;
+    top: 20px;
+}
+.error-alert {
+    color: $flame-warning;
+    margin-top: 5px;
+}
+.has-input-error {
+    border-color: $flame-warning;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(217, 73, 89, 0.6);
+}
+.has-input-error:focus {
+    border-color: $flame-warning;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(217, 73, 89, 0.6);
+}
+.btn-login {
+    background-color: #e1692c !important;
+    border-color: #e1692c !important;
+}
+.login-auth-block {
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
+    background: white;
+    position: relative;
+}
+.app-logo {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    top: -50px;
+    left: 0px;
+}
+.app-logo-image {
+    height: 80px;
+    margin: auto;
+}

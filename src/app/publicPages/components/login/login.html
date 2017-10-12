@@ -1,0 +1,45 @@
+<div class="auth-main" style="background: url(assets/img/cad-bg-fade.jpg) no-repeat center center; background-size: cover">
+
+    <div class="auth-block login-auth-block animated bounceInUp">
+        <span class="app-logo">
+            <img class="app-logo-image" src="assets/img/orange_cad.png">
+        </span>
+        <h1><strong>Welcome! Please Sign In</strong></h1>
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value,$event)" class="form-horizontal">
+        
+            <div class="form-group row">
+                <div class="col-sm-3">
+                    <label for="inputEmail3">Email</label>
+                </div>
+                <div class="col-sm-9">
+                    <input [formControl]="email" type="email"  [ngClass]="{'has-input-error': (!email.valid && email.touched)}" class="form-control" id="inputEmail3" placeholder="Email" [(ngModel)]="user.email">
+                    <div class="error-alert" *ngIf="form.controls['email'].errors?.required && !form.controls['email'].pristine">Email is Required</div>
+                    <div class="error-alert" *ngIf="form.controls['email'].errors?.invalid && !form.controls['email'].pristine">Email is not valid
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-3">
+                     <label for="password">Password</label> 
+                </div>
+                <div class="col-sm-9">
+                    <input type="password" [ngClass]="{'has-input-error': (!password.valid && password.touched)}" class="form-control" id="password" placeholder="Password" [(ngModel)]="user.password" [formControl]="password">
+                    <div class="error-alert" *ngIf="form.controls['password'].errors?.required && !form.controls['password'].pristine">Password Is Required
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div [hidden]="true" class="checkbox checkbox-primary offset-sm-3 col-sm-9">
+                    <input id="checkboxRemember" type="checkbox" [(ngModel)]="user.checkboxRemember" [formControl]="checkboxRemember">
+                    <label for="checkboxRemember">Remember Me </label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="offset-sm-3 col-sm-9">
+                    <button type="submit" class="btn btn-warning btn-block btn-login" [disabled]="!form.valid">Sign In</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,787 @@
+<div class="widgets">
+    <div class="container">
+
+        <div *ngIf="activeWorker" class="col-xs-12 animated bounceInUp">
+
+            <div *ngIf="isEditable == true">
+                <div class="form-group row">
+                    <div class="col-sm-9">
+                        <h2>Edit Worker</h2>
+                    </div>
+                    <div class="col-sm-3 text-right">
+                        <div>
+                            <button type="button" md-icon-button (click)="goBack()">
+                                <i class="fa fa-chevron-circle-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+                    <md-tab-group>
+                        <md-tab label="Edit Details">
+
+                            <div class="tabs-content col-md-12 col-sm-12 col-xs-12">
+                                <md-card class="example-card">
+                                    <md-card-header>
+                                        <md-card-title>Official Details</md-card-title>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <div class="row">
+                                            <div class="tabs-content col-md-6 col-sm-6 col-xs-12">
+
+                                                <div class="row picture-div">
+                                                    <div class="initial-picture">
+                                                        <span class="file-image-upload" *ngIf="fileUploading">
+                                                            <i class="fa fa-spin fa-spinner image-upload-spinner"></i>
+                                                        </span>
+
+                                                        <img (click)="bringFileSelector(1)" style="cursor: pointer" class="profile-pic" [src]="profilePicture ? profilePicture : 'assets/img/default-profile.jpg'">
+
+                                                    </div>
+                                                    <div [hidden]="true">
+                                                        <input #imageProfile type="file" (change)="selectProfileImage($event)">
+                                                    </div>
+                                                </div>
+                                                <div class="tabs-content row">
+                                                    <md-input-container class="col-sm-12">
+                                                        <input mdInput [formControl]="name" type="text" id="inputName3" placeholder="Name">
+                                                        <md-error *ngIf="form.controls['name'].errors?.required && !form.controls['name'].pristine">
+                                                            Name is required
+                                                        </md-error>
+                                                        <md-error *ngIf="form.controls['name'].errors?.minlength && !form.controls['name'].pristine">
+                                                            Min length must be 4
+                                                        </md-error>
+                                                    </md-input-container>
+                                                </div>
+
+                                                <div class="row">
+                                                    <md-input-container class="col-sm-12">
+                                                        <input mdInput [formControl]="email" type="email" id="email" placeholder="Email">
+                                                        <md-error *ngIf="form.controls['email'].errors?.required && !form.controls['email'].pristine">
+                                                            Email is required
+                                                        </md-error>
+                                                        <md-error *ngIf="form.controls['email'].errors?.invalid && !form.controls['email'].pristine">
+                                                            Invalid email
+                                                        </md-error>
+                                                    </md-input-container>
+                                                </div>
+                                            </div>
+                                            <div class="tabs-content-right col-md-6 col-sm-6 col-xs-12">
+                                                <div class="row">
+                                                    <md-input-container md-no-float class="col-sm-3">
+                                                        <input type="text" placeholder="Country Code" mdInput [formControl]="countryCode" [mdAutocomplete]="auto" maxlength="5" (keypress)="_keyPressCountryCode($event)">
+                                                        <md-autocomplete #auto="mdAutocomplete">
+                                                            <md-option *ngFor="let country of countries | async" [value]="'+' + country.phone_code">
+                                                                {{ '+' + country.phone_code }}
+                                                                <span style="color: rgba(0, 0, 0, 0.3)">
+                                                                            {{ country.country_code }}
+                                                                        </span>
+                                                            </md-option>
+                                                        </md-autocomplete>
+                                                    </md-input-container>
+                                                    <!-- <md-input-container class="col-sm-3">
+                                                        <input mdInput [formControl]="countryCode" type="text" id="countryCode" placeholder="Country Code" maxlength="4" (keypress)="_keyPressCountryCode($event)">
+                                                        <md-error *ngIf="form.controls['countryCode'].errors?.required && !form.controls['countryCode'].pristine">
+                                                            Required
+                                                        </md-error>
+                                                    </md-input-container> -->
+                                                    <md-input-container class="col-sm-9">
+                                                        <input mdInput [formControl]="mobile" type="tel" id="mobile" placeholder="Phone Number" (keypress)="_keyPressNumber($event)">
+                                                        <md-error *ngIf="form.controls['mobile'].errors?.required && !form.controls['mobile'].pristine">
+                                                            Phone Number is required
+                                                        </md-error>
+                                                    </md-input-container>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+                                <md-card class="example-card">
+                                    <md-card-header>
+                                        <md-card-title>Service Location Details</md-card-title>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-12 col-xs-12">
+
+                                                <div class="row">
+                                                    <md-input-container class="col-sm-6">
+                                                        <input ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)" mdInput [formControl]="locationAddress"
+                                                            id="locationAddress" type="text" placeholder="Location Address">
+                                                        <md-error *ngIf="serviceLocation.controls['locationAddress'].errors?.required && !serviceLocation.controls['locationAddress'].pristine">
+                                                            Required
+                                                        </md-error>
+                                                    </md-input-container>
+                                                    <md-input-container class="col-sm-3">
+                                                        <input mdInput [formControl]="locationName" id="locationName" type="text" placeholder="Location Name">
+                                                        <md-error *ngIf="serviceLocation.controls['locationName'].errors?.required && !serviceLocation.controls['locationName'].pristine">
+                                                            Required
+                                                        </md-error>
+                                                    </md-input-container>
+
+                                                    <md-select [formControl]="serviceRadius" class="col-sm-3" placeholder="Service Radius">
+                                                        <md-option *ngFor="let radius of radii" [value]="radius">
+                                                            {{ radius }}
+                                                        </md-option>
+                                                    </md-select>
+
+                                                </div>
+
+                                                <div class="hidden hidden-sm-up">
+                                                    <input [formControl]="latitude" id="latitude" type="hidden" placeholder="Latitude">
+                                                    <input [formControl]="longitude" id="longitude" type="hidden" placeholder="Longitude">
+                                                </div>
+
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="row">
+                                                    <md-input-container class="col-sm-5">
+                                                        <input mdInput [formControl]="city" id="city" type="text" placeholder="City">
+                                                        <md-error *ngIf="serviceLocation.controls['city'].errors?.required && !serviceLocation.controls['city'].pristine">
+                                                            Required
+                                                        </md-error>
+                                                    </md-input-container>
+                                                    <md-input-container class="col-sm-4">
+                                                        <input mdInput [formControl]="state" id="state" type="text" placeholder="State">
+                                                        <md-error *ngIf="serviceLocation.controls['state'].errors?.required && !serviceLocation.controls['state'].pristine">
+                                                            Required
+                                                        </md-error>
+                                                    </md-input-container>
+                                                    <md-input-container class="col-sm-3">
+                                                        <input mdInput [formControl]="zipCode" id="zipCode" type="text" placeholder="Zip Code">
+                                                        <md-error *ngIf="serviceLocation.controls['zipCode'].errors?.required && !serviceLocation.controls['zipCode'].pristine">
+                                                            Required
+                                                        </md-error>
+                                                    </md-input-container>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+
+                                <md-card *ngIf="activeWorker.workerID && activeWorker.workerID.expertiseID" class="example-card">
+                                    <md-card-header>
+                                        <md-card-title>Expertise Details</md-card-title>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <ng-select class="ng-select-worker" [multiple]="true" [items]="expertiseDisplay" [active]="selectedExpertiseDisplay" (data)="refreshValue($event)"
+                                                    placeholder="Expertise">
+                                                </ng-select>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+
+                                                <div class="row">
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+
+                                <md-card *ngIf="activeWorker.workerID" class="example-card">
+                                    <md-card-header style="margin-bottom: 10px">
+                                        <md-card-title>Service Type</md-card-title>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                                                <md-select [formControl]="serviceType" placeholder="Service Type">
+                                                    <md-option *ngFor="let service of services" [value]="service.value">
+                                                        {{ service.name }}
+                                                    </md-option>
+                                                </md-select>
+                                            </div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+
+                            </div>
+
+                        </md-tab>
+                        <md-tab label="Edit Documents">
+                            <div class="tabs-content col-md-12 col-sm-12 col-xs-12">
+                                <div class="panel-body" *ngIf="activeWorker.workerID && activeWorker.workerID">
+                                    <table class="table table-striped table-bordered table-list table-responsive table-resp">
+                                        <thead>
+                                            <tr>
+                                                <th>Document</th>
+                                                <th>Document Name</th>
+                                                <th>Number</th>
+                                                <th>Expiry Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngIf="activeWorker.workerID.insuranceProof">
+                                                <td class="document-td">
+                                                    <div [hidden]="true">
+                                                        <input #insuranceProofInput type="file" (change)="selectInsuranceProof($event, insuranceProofFiles.length)">
+                                                    </div>
+                                                    <div class="initial-doc">
+                                                        <span class="file-image-upload" *ngIf="insuranceProofUploading">
+                                                            <i class="fa fa-spin fa-spinner image-upload-spinner"></i>
+                                                        </span>
+                                                        <div *ngFor="let file of insuranceProofFiles; let i = index">
+                                                            <div [hidden]="true">
+                                                                <input #insuranceProofsInput type="file" (change)="selectInsuranceProofMulti($event, i)">
+                                                            </div>
+                                                            <img (click)="bringFilesSelector(i, 1)" *ngIf="file && file.indexOf('.pdf') == -1" class="document-pic" [src]="file ? file : ''">
+                                                            <md-chip-list *ngIf="file && file.indexOf('.pdf') != -1">
+                                                                <md-chip (click)="bringFilesSelector(i, 1)" style="cursor: pointer">{{file.substring(file.lastIndexOf('/') + 1, file.length)}}</md-chip>
+                                                            </md-chip-list>
+                                                        </div>
+                                                        <div *ngIf="insuranceProofFiles && insuranceProofFiles.length == 0">
+                                                            <span class="user-table-button">
+                                                                <button type="button" class="btn btn-primary" md-button (click)="bringFileSelector(2)">
+                                                                    Browse
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                        <div *ngIf="insuranceProofFiles && insuranceProofFiles.length > 0">
+                                                            <span class="user-table-button">
+                                                                <button type="button" class="btn btn-primary" md-button (click)="bringFileSelector(2)">
+                                                                    Add
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="td-left-align">
+                                                    Insurance Proof
+                                                </td>
+                                                <td class="td-left-align">
+                                                    Not Applicable
+                                                </td>
+                                                <td class="td-left-align">
+                                                    <md-input-container>
+                                                        <input mdInput readonly [formControl]="insuranceProofExpiry" id="insuranceProofExpiry" [mdDatepicker]="pickerinsuranceProof"
+                                                            placeholder="Document Expiry Date">
+                                                        <button mdSuffix [mdDatepickerToggle]="pickerinsuranceProof"></button>
+                                                    </md-input-container>
+                                                    <md-datepicker #pickerinsuranceProof></md-datepicker>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="activeWorker.workerID.licence">
+                                                <td class="document-td">
+                                                    <div [hidden]="true">
+                                                        <input #licenceInput type="file" (change)="selectLicence($event, licenceFiles.length)">
+                                                    </div>
+                                                    <div class="initial-doc">
+                                                        <span class="file-image-upload" *ngIf="licenceUploading">
+                                                            <i class="fa fa-spin fa-spinner image-upload-spinner"></i>
+                                                        </span>
+                                                        <div *ngFor="let file of licenceFiles; let i = index">
+                                                            <div [hidden]="true">
+                                                                <input #licencesInput type="file" (change)="selectLicenceMulti($event, i)">
+                                                            </div>
+                                                            <img (click)="bringFilesSelector(i, 2)" *ngIf="file && file.indexOf('.pdf') == -1" class="document-pic" [src]="file ? file : ''">
+                                                            <md-chip-list *ngIf="file && file.indexOf('.pdf') != -1">
+                                                                <md-chip (click)="bringFilesSelector(i, 2)" style="cursor: pointer">{{file.substring(file.lastIndexOf('/') + 1, file.length)}}</md-chip>
+                                                            </md-chip-list>
+                                                        </div>
+                                                        <div *ngIf="licenceFiles && licenceFiles.length == 0">
+                                                            <span class="user-table-button">
+                                                                <button type="button" class="btn btn-primary" md-button (click)="bringFileSelector(3)">
+                                                                    Browse
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                        <div *ngIf="licenceFiles && licenceFiles.length > 0">
+                                                            <span class="user-table-button">
+                                                                <button type="button" class="btn btn-primary" md-button (click)="bringFileSelector(3)">
+                                                                    Add
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="td-left-align">
+                                                    License
+                                                </td>
+                                                <td class="td-left-align">
+                                                    Not Applicable
+                                                </td>
+                                                <td class="td-left-align">
+                                                    <md-input-container>
+                                                        <input mdInput readonly [formControl]="licenceExpiry" id="licenceExpiry" [mdDatepicker]="pickerlicence" placeholder="Document Expiry Date">
+                                                        <button mdSuffix [mdDatepickerToggle]="pickerlicence"></button>
+                                                    </md-input-container>
+                                                    <md-datepicker #pickerlicence></md-datepicker>
+                                                </td>
+
+                                            </tr>
+                                            <tr *ngIf="activeWorker.workerID.ABN">
+                                                <td class="document-td">
+                                                    <div [hidden]="true">
+                                                        <input #ABNInput type="file" (change)="selectABN($event)">
+                                                    </div>
+                                                    <div class="initial-doc">
+                                                        <span class="file-image-upload" *ngIf="ABNUploading">
+                                                            <i class="fa fa-spin fa-spinner image-upload-spinner"></i>
+                                                        </span>
+
+                                                        <img (click)="bringFileSelector(5)" *ngIf="ABNFile && ABNFile.indexOf('.pdf') == -1" class="document-pic" [src]="ABNFile ? ABNFile : ''">
+                                                        <md-chip-list *ngIf="ABNFile && ABNFile.indexOf('.pdf') != -1">
+                                                            <md-chip (click)="bringFileSelector(5)" style="cursor: pointer">{{ABNFile.substring(ABNFile.lastIndexOf('/') + 1, ABNFile.length)}}</md-chip>
+                                                        </md-chip-list>
+                                                        <div *ngIf="!ABNFile">
+                                                            <span class="user-table-button">
+                                                                <button type="button" class="btn btn-primary" md-button (click)="bringFileSelector(5)">
+                                                                    Browse
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="td-left-align">
+                                                    ABN
+                                                </td>
+                                                <td class="td-left-align">
+                                                    <md-input-container>
+                                                        <input mdInput [formControl]="ABNNumber" id="ABNNumber" type="text" placeholder="Document Number" maxlength="11">
+
+                                                    </md-input-container>
+                                                </td>
+                                                <td class="td-left-align">
+                                                    Not Applicable
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="activeWorker.workerID.whiteCard">
+                                                <td class="document-td">
+                                                    <div [hidden]="true">
+                                                        <input #whiteCardInput type="file" (change)="selectWhiteCard($event)">
+                                                    </div>
+                                                    <div class="initial-doc">
+                                                        <span class="file-image-upload" *ngIf="whiteCardUploading">
+                                                            <i class="fa fa-spin fa-spinner image-upload-spinner"></i>
+                                                        </span>
+                                                        <img (click)="bringFileSelector(4)" *ngIf="whiteCardFile && whiteCardFile.indexOf('.pdf') == -1" class="document-pic" [src]="whiteCardFile ? whiteCardFile : ''">
+                                                        <md-chip-list *ngIf="whiteCardFile && whiteCardFile.indexOf('.pdf') != -1">
+                                                            <md-chip (click)="bringFileSelector(4)" style="cursor: pointer">{{whiteCardFile.substring(whiteCardFile.lastIndexOf('/') + 1, whiteCardFile.length)}}</md-chip>
+                                                        </md-chip-list>
+
+                                                        <div *ngIf="!whiteCardFile">
+                                                            <span class="user-table-button">
+                                                                <button type="button" class="btn btn-primary" md-button (click)="bringFileSelector(4)">
+                                                                    Browse
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="td-left-align">
+                                                    White Card
+                                                </td>
+                                                <td class="td-left-align">
+                                                    Not Applicable
+                                                </td>
+                                                <td class="td-left-align">
+                                                    Not Applicable
+                                                </td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </md-tab>
+
+                        <md-tab label="Qualification Documents">
+                            <div class="tabs-content col-md-12 col-sm-12 col-xs-12">
+                                <div class="panel-body" *ngIf="activeWorker.workerID && activeWorker.workerID.qualification && activeWorker.workerID.qualification.length > 0">
+                                    <table class="table table-striped table-bordered table-list table-responsive table-resp">
+                                        <thead>
+                                            <tr>
+                                                <th>S. No</th>
+                                                <th>Qualification Name</th>
+                                                <th>Document</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let document of activeWorker.workerID.qualification; let j = index">
+                                                <td>
+                                                    {{j + 1 + '.'}}
+                                                </td>
+                                                <td style="padding: 10px 20px" class="td-left-align">
+                                                    {{document.name.qualificationName}}
+                                                </td>
+                                                <td class="document-td" style="position: relative">
+                                                    <div [hidden]="true">
+                                                        <input #qualificationInput type="file" (change)="selectQualification($event, qualificationDocuments[j].document.length, j)">
+                                                    </div>
+                                                    <span class="file-image-upload" style="left: 0px; top: 0px" *ngIf="qualificationUploading[j]">
+                                                        <i class="fa fa-spin fa-spinner image-upload-spinner"></i>
+                                                    </span>
+                                                    <div *ngFor="let file of qualificationDocuments[j].document; let i = index">
+                                                        <div [hidden]="true">
+                                                            <input #qualificationsInput type="file" (change)="selectQualificationMulti($event, i, j)">
+                                                        </div>
+                                                        <img (click)="bringFilesSelector(i, 3)" *ngIf="file && file.indexOf('.pdf') == -1" class="document-pic" [src]="file ? file : ''">
+                                                        <md-chip-list *ngIf="file && file.indexOf('.pdf') != -1">
+                                                            <md-chip (click)="bringFilesSelector(i, 3)" style="cursor: pointer">{{file.substring(file.lastIndexOf('/') + 1, file.length)}}</md-chip>
+                                                        </md-chip-list>
+                                                    </div>
+                                                    <div *ngIf="qualificationDocuments[j].document && qualificationDocuments[j].document.length == 0">
+                                                        <span class="user-table-button">
+                                                            <button type="button" class="btn btn-primary" md-button (click)="bringFileSelector(6)">
+                                                                Browse
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                    <div *ngIf="qualificationDocuments[j].document && qualificationDocuments[j].document.length > 0">
+                                                        <span class="user-table-button">
+                                                            <button type="button" class="btn btn-primary" md-button (click)="bringFileSelector(6)">
+                                                                Add
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </md-tab>
+
+                    </md-tab-group>
+                    <div class="form-group row text-center">
+                        <div class="tabs-content col-md-12 col-sm-12 col-xs-12">
+                            <button md-button [disabled]="updateLoading" type="submit" class="btn-success">
+                                <i *ngIf="updateLoading" class="fa fa-spinner fa-spin"></i>
+                                Update
+                            </button>
+                            <button md-button type="button" class="btn-danger" (click)="closeEdit()">Cancel</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+
+            <div *ngIf="isEditable == false">
+                <div class="form-group row">
+                    <div class="col-sm-6">
+                        <h2>Worker Details</h2>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <div>
+                            <button *ngIf="activeWorker.hasCompletedRegistration" type="button" md-icon-button (click)="openEdit()">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+                            <button type="button" md-icon-button (click)="goBack()">
+                                        <i class="fa fa-chevron-circle-left"></i>
+                                    </button>
+                        </div>
+                    </div>
+                </div>
+
+                <md-tab-group>
+                    <md-tab label="Persional Details">
+                        <div class="tabs-content col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group row">
+                                <img class="profile-pic" [src]="activeWorker.workerID ? activeWorker.workerID.profilePic ? activeWorker.workerID.profilePic : 'assets/img/default-profile.jpg' : 'assets/img/default-profile.jpg'">
+                            </div>
+                            <div class="tabs-content form-group row">
+                                <div class="col-md-6 col-sm-6 col-xs-12">Name</div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">{{activeWorker.name}}</div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-6 col-sm-6 col-xs-12">Email</div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">{{activeWorker.email}}</div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-6 col-sm-6 col-xs-12">Phone Number</div>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <span *ngIf="activeWorker.contacts && activeWorker.contacts.length > 0">
+                                        {{activeWorker.contacts[0].countryCode}} {{activeWorker.contacts[0].mobile}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </md-tab>
+                    <md-tab label="Official Details">
+                        <div class="tabs-content col-md-12 col-sm-12 col-xs-12">
+                            <md-card class="example-card">
+                                <md-card-header>
+                                    <md-card-title>Worker Official Details</md-card-title>
+                                </md-card-header>
+                                <md-card-content>
+                                    <div class="form-group row">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">Worker ID</div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">{{activeWorker.userCode}}</div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">Registered On</div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">{{activeWorker.createdAt | date: 'medium'}}</div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">Updated On</div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">{{activeWorker.updatedAt | date: 'medium'}}</div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">Is Email Verified</div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">{{activeWorker.isEmailVerified ? 'Yes' : 'No'}}</div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">Is Admin Verified</div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">{{activeWorker.isAdminVerified ? 'Yes' : 'No'}}</div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-6 col-sm-6 col-xs-12">Is Blocked</div>
+                                        <div class="col-md-6 col-sm-6 col-xs-12">{{activeWorker.isBlocked ? 'Yes' : 'No'}}</div>
+                                    </div>
+                                </md-card-content>
+                            </md-card>
+
+                            <div *ngIf="activeWorker.workerID && activeWorker.workerID.ABN">
+                                <md-card class="example-card">
+                                    <md-card-header>
+                                        <md-card-title>ABN Details</md-card-title>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <div class="form-group row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">ABN Number</div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">{{activeWorker.workerID.ABN.number}}</div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div *ngIf="activeWorker.workerID && activeWorker.workerID.qualification && activeWorker.workerID.qualification.length > 0">
+                                <md-card class="example-card">
+                                    <md-card-header>
+                                        <md-card-title>Qualification Details</md-card-title>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <div class="form-group row" *ngFor="let qualification of activeWorker.workerID.qualification; let i = index">
+                                            <div *ngIf="qualification.name" class="col-md-6 col-sm-6 col-xs-12">{{i + 1}}. {{qualification.name.qualificationName}}</div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                            <div *ngIf="activeWorker.workerID && activeWorker.workerID.expertiseID && activeWorker.workerID.expertiseID.length > 0">
+                                <md-card class="example-card">
+                                    <md-card-header>
+                                        <md-card-title>Expertise Details</md-card-title>
+                                    </md-card-header>
+                                    <md-card-content>
+                                        <div class="form-group row" *ngFor="let expertise of activeWorker.workerID.expertiseID; let i = index">
+                                            <div class="col-md-6 col-sm-6 col-xs-12" *ngIf="expertise.isDeleted == false">
+                                                {{i+1}}. {{expertise.expertiseName}}
+                                            </div>
+                                        </div>
+                                    </md-card-content>
+                                </md-card>
+                            </div>
+                        </div>
+                    </md-tab>
+                    <md-tab label="Official Documents">
+                        <div class="tabs-content col-md-12 col-sm-12 col-xs-12">
+                            <div class="panel-body" *ngIf="activeWorker.workerID">
+                                <table class="table table-striped table-bordered table-list table-responsive table-resp">
+                                    <thead>
+                                        <tr>
+                                            <th>Document</th>
+                                            <th>Document Name</th>
+                                            <th>Document Number</th>
+                                            <th>Expiry Date</th>
+                                            <th>Approval</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngIf="activeWorker.workerID.insuranceProof">
+                                            <td class="document-td">
+                                                <div *ngFor="let file of activeWorker.workerID.insuranceProof.document; let i = index">
+                                                    <img *ngIf="file && file.indexOf('.pdf') == -1" (click)="openDocument(file)" class="document-pic" [src]="file ? file : ''">
+                                                    <md-chip-list *ngIf="file && file.indexOf('.pdf') != -1">
+                                                        <md-chip><a href="{{file}}" target="_blank">{{file.substring(file.lastIndexOf('/') + 1, file.length)}}</a></md-chip>
+                                                    </md-chip-list>
+                                                </div>
+                                                <div *ngIf="activeWorker.workerID.insuranceProof.document && activeWorker.workerID.insuranceProof.document.length == 0">
+                                                    No Document
+                                                </div>
+                                            </td>
+                                            <td class="td-left-align">
+                                                Insurance Proof
+                                            </td>
+
+                                            <td class="td-left-align">
+                                                {{activeWorker.workerID.insuranceProof.number ? activeWorker.workerID.insuranceProof.number : 'Not Applicable'}}
+                                            </td>
+                                            <td>
+                                                {{activeWorker.workerID.insuranceProof.expiryDate | date: 'mediumDate'}}
+                                            </td>
+                                            <td>
+                                                <button *ngIf="activeWorker.workerID.insuranceProof.isRejected == true || (activeWorker.workerID.insuranceProof.isRejected == false && activeWorker.workerID.insuranceProof.isReuploaded == true)"
+                                                    md-button type="button" class="btn-success" [disabled]="activeWorker.workerID.isRegisteredByAdmin && !activeWorker.hasCompletedRegistration" (click)="approveDocument(activeWorker.workerID.insuranceProof, 'insuranceProof', 'Insurance Proof')">Approve</button>
+                                                <!-- <md-chip-list *ngIf="activeWorker.workerID.insuranceProof.isRejected == false && activeWorker.workerID.insuranceProof.isReuploaded == false">
+                                                    <md-chip>Verified</md-chip>
+                                                </md-chip-list> -->
+                                                <button *ngIf="activeWorker.workerID.insuranceProof.isRejected == false && activeWorker.workerID.insuranceProof.isReuploaded == false"
+                                                    md-button type="button" class="btn-danger" [disabled]="activeWorker.workerID.isRegisteredByAdmin && !activeWorker.hasCompletedRegistration" (click)="rejectDocument(activeWorker.workerID.insuranceProof, 'insuranceProof', 'Insurance Proof')">Reject</button>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="activeWorker.workerID.licence">
+                                            <td class="document-td">
+                                                <div *ngFor="let file of activeWorker.workerID.licence.document; let i = index">
+                                                    <img *ngIf="file && file.indexOf('.pdf') == -1" (click)="openDocument(file)" class="document-pic" [src]="file ? file: ''">
+                                                    <md-chip-list *ngIf="file && file.indexOf('.pdf') != -1">
+                                                        <md-chip><a href="{{file}}" target="_blank">{{file.substring(file.lastIndexOf('/') + 1, file.length)}}</a></md-chip>
+                                                    </md-chip-list>
+                                                </div>
+                                                <div *ngIf="activeWorker.workerID.licence.document && activeWorker.workerID.licence.document.length == 0">
+                                                    No Document
+                                                </div>
+                                            </td>
+                                            <td class="td-left-align">
+                                                License
+                                            </td>
+                                            <td class="td-left-align">
+                                                {{activeWorker.workerID.licence.number ? activeWorker.workerID.licence.number : 'Not Applicable'}}
+                                            </td>
+                                            <td>
+                                                {{activeWorker.workerID.licence.expiryDate | date: 'mediumDate'}}
+                                            </td>
+                                            <td>
+                                                <button *ngIf="activeWorker.workerID.licence.isRejected == true || (activeWorker.workerID.licence.isRejected == false && activeWorker.workerID.licence.isReuploaded == true)"
+                                                    md-button type="button" class="btn-success" [disabled]="activeWorker.workerID.isRegisteredByAdmin && !activeWorker.hasCompletedRegistration" (click)="approveDocument(activeWorker.workerID.licence, 'licence', 'Licence')">Approve</button>
+                                                <!-- <md-chip-list *ngIf="activeWorker.workerID.licence.isRejected == false && activeWorker.workerID.licence.isReuploaded == false">
+                                                    <md-chip>Verified</md-chip>
+                                                </md-chip-list> -->
+                                                <button *ngIf="activeWorker.workerID.licence.isRejected == false && activeWorker.workerID.licence.isReuploaded == false"
+                                                    md-button type="button" class="btn-danger" [disabled]="activeWorker.workerID.isRegisteredByAdmin && !activeWorker.hasCompletedRegistration" (click)="rejectDocument(activeWorker.workerID.licence, 'licence', 'Licence')">Reject</button>
+                                            </td>
+
+                                        </tr>
+                                        <tr *ngIf="activeWorker.workerID.ABN">
+                                            <td class="document-td">
+                                                <img *ngIf="activeWorker.workerID.ABN.document && activeWorker.workerID.ABN.document.indexOf('.pdf') == -1" (click)="openDocument(activeWorker.workerID.ABN.document)"
+                                                    class="document-pic" [src]="activeWorker.workerID.ABN.document ? activeWorker.workerID.ABN.document: ''">
+                                                <md-chip-list *ngIf="activeWorker.workerID.ABN.document && activeWorker.workerID.ABN.document.indexOf('.pdf') != -1">
+                                                    <md-chip><a href="{{activeWorker.workerID.ABN.document}}" target="_blank">{{activeWorker.workerID.ABN.document.substring(activeWorker.workerID.ABN.document.lastIndexOf('/') + 1, activeWorker.workerID.ABN.document.length)}}</a></md-chip>
+                                                </md-chip-list>
+                                                <div *ngIf="!activeWorker.workerID.ABN.document">
+                                                    No Document
+                                                </div>
+                                            </td>
+                                            <td class="td-left-align">
+                                                ABN
+                                            </td>
+                                            <td class="td-left-align">
+                                                {{activeWorker.workerID.ABN.number ? activeWorker.workerID.ABN.number : 'Not Applicable'}}
+                                            </td>
+                                            <td>
+                                                {{activeWorker.workerID.ABN.expiryDate ? ( activeWorker.workerID.ABN.expiryDate | date: 'mediumDate' ) : 'Not Applicable'}}
+                                            </td>
+                                            <td>
+                                                <button *ngIf="activeWorker.workerID.ABN.isRejected == true || (activeWorker.workerID.ABN.isRejected == false && activeWorker.workerID.ABN.isReuploaded == true)"
+                                                    md-button type="button" class="btn-success" [disabled]="activeWorker.workerID.isRegisteredByAdmin && !activeWorker.hasCompletedRegistration" (click)="approveDocument(activeWorker.workerID.ABN, 'ABN', 'ABN')">Approve</button>
+                                                <!-- <md-chip-list *ngIf="activeWorker.workerID.ABN.isRejected == false && activeWorker.workerID.ABN.isReuploaded == false">
+                                                    <md-chip>Verified</md-chip>
+                                                </md-chip-list> -->
+                                                <button *ngIf="activeWorker.workerID.ABN.isRejected == false && activeWorker.workerID.ABN.isReuploaded == false" md-button
+                                                    type="button" class="btn-danger" [disabled]="activeWorker.workerID.isRegisteredByAdmin && !activeWorker.hasCompletedRegistration" (click)="rejectDocument(activeWorker.workerID.ABN, 'ABN', 'ABN')">Reject</button>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="activeWorker.workerID.whiteCard">
+                                            <td class="document-td">
+                                                <img *ngIf="activeWorker.workerID.whiteCard.document && activeWorker.workerID.whiteCard.document.indexOf('.pdf') == -1" (click)="openDocument(activeWorker.workerID.whiteCard.document)"
+                                                    class="document-pic" [src]="activeWorker.workerID.whiteCard.document ? activeWorker.workerID.whiteCard.document: ''">
+                                                <md-chip-list *ngIf="activeWorker.workerID.whiteCard.document && activeWorker.workerID.whiteCard.document.indexOf('.pdf') != -1">
+                                                    <md-chip><a href="{{activeWorker.workerID.whiteCard.document}}" target="_blank">{{activeWorker.workerID.whiteCard.document.substring(activeWorker.workerID.whiteCard.document.lastIndexOf('/') + 1, activeWorker.workerID.whiteCard.document.length)}}</a></md-chip>
+                                                </md-chip-list>
+                                                <div *ngIf="!activeWorker.workerID.whiteCard.document">
+                                                    No Document
+                                                </div>
+                                            </td>
+                                            <td class="td-left-align">
+                                                White Card
+                                            </td>
+                                            <td class="td-left-align">
+                                                {{activeWorker.workerID.whiteCard.number ? activeWorker.workerID.whiteCard.number : 'Not Applicable'}}
+                                            </td>
+                                            <td>
+                                                {{activeWorker.workerID.whiteCard.expiryDate ? ( activeWorker.workerID.whiteCard.expiryDate | date: 'mediumDate' ) : 'Not Applicable'}}
+                                            </td>
+                                            <td>
+                                                <button *ngIf="activeWorker.workerID.whiteCard.isRejected == true || (activeWorker.workerID.whiteCard.isRejected == false && activeWorker.workerID.whiteCard.isReuploaded == true)"
+                                                    md-button type="button" class="btn-success" [disabled]="activeWorker.workerID.isRegisteredByAdmin && !activeWorker.hasCompletedRegistration" (click)="approveDocument(activeWorker.workerID.whiteCard, 'whiteCard', 'White Card')">Approve</button>
+                                                <!-- <md-chip-list *ngIf="activeWorker.workerID.whiteCard.isRejected == false && activeWorker.workerID.whiteCard.isReuploaded == false">
+                                                    <md-chip>Verified</md-chip>
+                                                </md-chip-list> -->
+                                                <button *ngIf="activeWorker.workerID.whiteCard.isRejected == false && activeWorker.workerID.whiteCard.isReuploaded == false"
+                                                    md-button type="button" class="btn-danger" [disabled]="activeWorker.workerID.isRegisteredByAdmin && !activeWorker.hasCompletedRegistration" (click)="rejectDocument(activeWorker.workerID.whiteCard, 'whiteCard', 'White Card')">Reject</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="tabs-content form-group row text-center">
+                                    <div class="tabs-content col-md-12 col-sm-12 col-xs-12">
+                                        <button md-button type="button" *ngIf="activeWorker.isAdminVerified == false" (click)="approveWorker()" class="btn-success">Approve Worker</button>
+                                        <!-- <button md-button type="button" *ngIf="activeWorker.isAdminVerified == true" (click)="rejectWorker()" class="btn-danger">Reject Worker</button> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </md-tab>
+                    <md-tab *ngIf="activeWorker.workerID && activeWorker.workerID.qualification && activeWorker.workerID.qualification.length > 0"
+                        label="Qualification Documents">
+                        <div class="tabs-content col-md-12 col-sm-12 col-xs-12">
+                            <div class="panel-body">
+                                <table class="table table-striped table-bordered table-list table-responsive table-resp">
+                                    <thead>
+                                        <tr>
+                                            <th>S. No.</th>
+                                            <th>Qualification</th>
+                                            <th>Qualification Document</th>
+                                            <!-- <th>Approval</th> -->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        <tr *ngFor="let document of activeWorker.workerID.qualification; let i = index">
+                                            <td>
+                                                {{i + 1 + '.'}}
+                                            </td>
+                                            <td style="padding: 10px 20px" class="td-left-align">
+                                                <span *ngIf="document.name">
+                                                    {{document.name.qualificationName}}
+                                                </span>
+                                            </td>
+                                            <td class="document-td">
+                                                <div *ngFor="let file of document.document; let i = index">
+                                                    <img (click)="openDocument(file)" class="document-pic" [src]="file ? file: ''">
+                                                </div>
+                                            </td>
+                                            <!-- <td>
+                                                <button *ngIf="document.name.isRejected == true || (document.name.isRejected == false && document.name.isReuploaded == true)"
+                                                    md-button type="button" class="btn-success" (click)="approveQualificationDocument(activeWorker.workerID.qualification, i)">Approve</button>
+
+                                                <button *ngIf="document.name.isRejected == false && document.name.isReuploaded == false" md-button type="button" class="btn-danger"
+                                                    (click)="rejectQualificationDocument(activeWorker.workerID.qualification, i)">Reject</button>
+                                            </td> -->
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="tabs-content form-group row text-center">
+                                    <div class="tabs-content col-md-12 col-sm-12 col-xs-12">
+                                        <button md-button type="button" *ngIf="activeWorker.isAdminVerified == false" (click)="approveWorker()" class="btn-success">Approve Worker</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </md-tab>
+                </md-tab-group>
+
+            </div>
+        </div>
+    </div>
+</div>

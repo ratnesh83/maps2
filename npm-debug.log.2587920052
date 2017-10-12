@@ -1,0 +1,33 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs',
+1 verbose cli   '/home/sumit/Workspace/Chasing-A-Day/Chasingaday-adminpanel/node_modules/.bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'server:dev' ]
+2 info using npm@3.10.10
+3 info using node@v8.3.0
+4 warn invalid config loglevel="notice"
+5 verbose run-script [ 'preserver:dev', 'server:dev', 'postserver:dev' ]
+6 info lifecycle cladmin@0.9.0~preserver:dev: cladmin@0.9.0
+7 silly lifecycle cladmin@0.9.0~preserver:dev: no script for preserver:dev, continuing
+8 info lifecycle cladmin@0.9.0~server:dev: cladmin@0.9.0
+9 verbose lifecycle cladmin@0.9.0~server:dev: unsafe-perm in lifecycle true
+10 verbose lifecycle cladmin@0.9.0~server:dev: PATH: /home/sumit/Workspace/Chasing-A-Day/Chasingaday-adminpanel/node_modules/npm/bin/node-gyp-bin:/home/sumit/Workspace/Chasing-A-Day/Chasingaday-adminpanel/node_modules/.bin:/usr/lib/node_modules/npm/bin/node-gyp-bin:/home/sumit/Workspace/Chasing-A-Day/Chasingaday-adminpanel/node_modules/.bin:/home/sumit/bin:/home/sumit/.local/bin:/home/sumit/bin:/home/sumit/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/oracle_jdk8/jdk1.8.0_121/bin:/usr/lib/jvm/oracle_jdk8/jdk1.8.0_121/db/bin:/usr/lib/jvm/oracle_jre8/jre1.8.0_121/bin:/snap/bin:/usr/lib/jvm/oracle_jdk8/jdk1.8.0_121/bin:/usr/lib/jvm/oracle_jdk8/jdk1.8.0_121/db/bin:/usr/lib/jvm/oracle_jre8/jre1.8.0_121/bin
+11 verbose lifecycle cladmin@0.9.0~server:dev: CWD: /home/sumit/Workspace/Chasing-A-Day/Chasingaday-adminpanel
+12 silly lifecycle cladmin@0.9.0~server:dev: Args: [ '-c',
+12 silly lifecycle   'npm run lint &&  webpack-dev-server --config config/webpack.dev.js --progress --profile --watch --content-base src/' ]
+13 silly lifecycle cladmin@0.9.0~server:dev: Returned: code: null  signal: SIGHUP
+14 verbose stack Error: write EIO
+14 verbose stack     at _errnoException (util.js:1022:11)
+14 verbose stack     at WriteWrap.afterWrite [as oncomplete] (net.js:862:14)
+15 verbose cwd /home/sumit/Workspace/Chasing-A-Day/Chasingaday-adminpanel
+16 error Linux 4.4.0-91-generic
+17 error argv "/usr/bin/nodejs" "/home/sumit/Workspace/Chasing-A-Day/Chasingaday-adminpanel/node_modules/.bin/npm" "run" "server:dev"
+18 error node v8.3.0
+19 error npm  v3.10.10
+20 error code EIO
+21 error errno EIO
+22 error syscall write
+23 error write EIO
+24 error If you need help, you may report this error at:
+24 error     <https://github.com/npm/npm/issues>
+25 verbose exit [ 1, true ]

@@ -1,0 +1,126 @@
+@import "../../../../theme/sass/conf/conf";
+.mat-input-invalid .mat-input-placeholder {
+    color: $warning;
+}
+.mat-input-error {
+    color: $warning;
+}
+.mat-input-invalid .mat-input-ripple {
+    background-color: $warning;
+}
+.settings-main .mat-input-element:disabled {
+    color: rgba(0, 0, 0, 0.9);
+}
+.settings-main .disable-input.mat-input-element:disabled {
+    color: rgba(0, 0, 0, 0.3);
+}
+label {
+    padding-left: 0px;
+}
+.settings-table td {
+    padding: 15px !important;
+}
+.settings-table .child-equipments i {
+    font-size: small;
+}
+.settings-table .child-equipments .mat-icon-button {
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+}
+.no-padding {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+.mat-input-invalid .mat-input-placeholder {
+    color: $warning;
+}
+.mat-input-error {
+    color: $warning;
+}
+.mat-input-invalid .mat-input-ripple {
+    background-color: $warning;
+}
+.head-content-padding {
+    margin-top: 10px;
+}
+.tabs-content {
+    margin-top: 30px;
+}
+label {
+    padding-left: 0px;
+}
+.example-card {
+    background: transparent;
+    box-shadow: none !important;
+    padding-top: 0px !important;
+    .mat-card-image {
+        margin: 0px 0px 16px 0px;
+        max-width: 200px;
+    }
+    md-card-header {
+        margin-left: -24px;
+        > div {
+            margin: 5px 0px;
+            .mat-card-title {
+                font-weight: bold;
+            }
+        }
+    }
+}
+.td-align {
+    padding: 10px 50px !important;
+    text-align: left !important;
+}
+.td-actions {
+    display: inline-block;
+    min-width: 100px;
+    text-align: left;
+    margin: auto;
+}
+.no-button {
+    cursor: default;
+    &:hover {
+        cursor: default;
+    }
+}
+.image-upload {
+    display: flex; 
+    position: absolute; 
+    width: 50px; 
+    height: 50px
+}
+.image-upload-spin {
+    margin: auto;
+    z-index: 20;
+}
+.settings-md-header {
+    .mat-card-header-text {
+        width: 100%;
+    }
+}
+.settings-table-button {
+    float: right;
+}
+.settings-table-button {
+    button.btn-primary {
+        border-width: 1px !important;
+        border-color: black !important;
+        color: black !important;
+        background-color: transparent !important;
+        padding: 0.2rem 0.5rem !important;
+        font-size: small !important;
+        line-height: normal !important;
+        &:focus {
+            border-width: 1px !important;
+            background-color: transparent !important;
+            border-color: black !important;
+        }
+        &:hover {
+            border-width: 1px !important;
+            background-color: transparent !important;
+            border-color: black !important;
+            transform: scale(1.05) !important;
+        }
+    }
+}
