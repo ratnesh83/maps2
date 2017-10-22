@@ -4,7 +4,6 @@ import { Effect, Actions } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { UserService } from '../service/user-service/user.service';
-// import { AuthService  } from '../../theme/services/authService/auth.service';
 import { AuthService } from '../service/auth-service/auth.service';
 import { BaThemeSpinner } from '../../theme/services';
 import { Router } from '@angular/router';
@@ -203,6 +202,27 @@ export class AuthEffects {
                     }
                 }
             );
+
+        });
+
+    @Effect({ dispatch: false })
+    getCountryCodes$ = this.actions$
+        .ofType('GET_COUNTRIES')
+        .do((action) => {
+            this.UserService.getCountryCodes(action.payload).subscribe((result) => {
+                this.store.dispatch({
+                    type: auth.actionTypes.GET_COUNTRIES_SUCCESS, payload: result
+                });
+            }
+                , (error) => {
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    getCountryCodesSuccess: Observable<Action> = this.actions$
+        .ofType('GET_COUNTRIES_SUCCESS')
+        .do((action) => {
 
         });
 

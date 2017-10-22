@@ -8,6 +8,7 @@ const initialState: any = {
         assigned: [],
         unassigned: [],
     },
+    countryCodes: []
 };
 
 export const auth: ActionReducer<any> = (state = initialState, action: Action) => {
@@ -40,6 +41,9 @@ export const auth: ActionReducer<any> = (state = initialState, action: Action) =
 
         case 'AUTH_FORGOT_PASSWORD_SUCCESS':
             return Object.assign({}, state, { forgotPass: action.payload });
+
+        case 'GET_COUNTRIES_SUCCESS':
+            return Object.assign({}, state, { countryCodes: action.payload });
 
         default:
             return state;

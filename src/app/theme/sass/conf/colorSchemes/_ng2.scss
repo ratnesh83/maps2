@@ -93,3 +93,8 @@ $hoverlink: darken($activelink, 20%);
 
 /*** roughly variables - ria ***/
 $modal-border-color:rgba(2, 117, 216, 0.3);
+
+/*** md-autocomplete ***/
+.mat-autocomplete-panel.mat-autocomplete-panel-below {
+    top: 0px !important;
+}

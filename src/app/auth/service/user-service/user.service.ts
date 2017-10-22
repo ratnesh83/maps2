@@ -36,6 +36,13 @@ export class UserService {
         this.utcOffset = false;
         let url = environment.APP.API_URL + environment.APP.FORGOT_API + '?email=' + data.email;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
-
     }
+
+    getCountryCodes(payload) {
+        let url;
+        url = 'assets/json/country.json';
+        this.authRequired = false;
+        this.utcOffset = false;
+        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+    };
 }

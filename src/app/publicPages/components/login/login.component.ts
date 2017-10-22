@@ -12,6 +12,8 @@ import { Store } from '@ngrx/store';
 import * as auth from '../../../auth/state/auth.actions';
 import { EmailValidator } from '../../../theme/validators';
 import { User } from '../../../auth/model/user.model';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MdIconRegistry } from '@angular/material';
 import 'style-loader!./login.scss';
 
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
@@ -22,6 +24,7 @@ const types = ['success', 'error', 'info', 'warning'];
     selector: 'login',
     templateUrl: './login.html',
 })
+
 export class Login {
     options: ToastrConfig;
     title = '';
@@ -40,6 +43,8 @@ export class Login {
     public submitted: boolean = false;
     public domains: any[];
     public settings: any;
+    public countryCode: AbstractControl;
+    public countryCodes = [];
     user = new User();
 
     public roles = [
@@ -52,24 +57,64 @@ export class Login {
     constructor(fb: FormBuilder,
         private baThemeSpinner: BaThemeSpinner,
         private store: Store<any>,
-        private toastrService: ToastrService
+        private toastrService: ToastrService,
+        private iconRegistry: MdIconRegistry,
+        sanitizer: DomSanitizer
     ) {
-        
+        this.store
+            .select('auth')
+            .subscribe((res: any) => {
+                if (res.countryCodes) {
+                    this.countryCodes = res.countryCodes;
+                }
+            });
+
+        iconRegistry.addSvgIcon(
+            'facebook',
+            sanitizer.bypassSecurityTrustResourceUrl('assets/img/facebook.svg'));
+        iconRegistry.addSvgIcon(
+            'twitter',
+            sanitizer.bypassSecurityTrustResourceUrl('assets/img/twitter.svg'));
+
         this.options = this.toastrService.toastrConfig;
-        
+
         this.user.role = this.roles[0].value;
 
         this.form = fb.group({
             'email': [this.user.email, Validators.compose([Validators.required, EmailValidator.email])],
             'password': [this.user.password, Validators.compose([Validators.required])],
             'role': [this.user.role],
-            'checkboxRemember': [this.user.checkboxRemember]
+            'checkboxRemember': [this.user.checkboxRemember],
+            'countryCode': ['']
         });
 
         this.email = this.form.controls['email'];
         this.password = this.form.controls['password'];
         this.checkboxRemember = this.form.controls['checkboxRemember'];
         this.role = this.form.controls['role'];
+        this.countryCode = this.form.controls['countryCode'];
+    }
+
+    ngOnInit() {
+        this.store.dispatch({
+            type: auth.actionTypes.GET_COUNTRIES
+        });
+        this.countries = this.countryCode.valueChanges
+            .startWith(null)
+            .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
+    }
+
+    initializeCountryCodes() {
+        this.countries = this.countryCode.valueChanges
+            .startWith(null)
+            .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
+    }
+
+    countries: Observable<any[]>;
+
+    filterOptions(val) {
+        return this.countryCodes.filter(option =>
+            option.phone_code.toString().indexOf(val.replace('+', '')) === 0);
     }
 
     isEmail(control: FormControl): {

@@ -9,7 +9,9 @@ import { Register } from './components/register/register.component';
 import { ForgotPassword } from './components/forgot-password/forgot-password-modal.component';
 import {
     MdInputModule,
-    MdButtonModule
+    MdButtonModule,
+    MdAutocompleteModule,
+    MdIconModule
 } from '@angular/material';
 
 @NgModule({
@@ -20,7 +22,9 @@ import {
         RouterModule,
         routing,
         MdInputModule,
-        MdButtonModule
+        MdButtonModule,
+        MdAutocompleteModule,
+        MdIconModule
     ],
     declarations: [
         PublicPages,

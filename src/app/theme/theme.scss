@@ -14,12 +14,6 @@
 @import '~@angular/material/theming';
 @import '~@angular/material/_theming';
 @include mat-core();
-/* $dark-primary: mat-palette($mat-blue-grey);
-$dark-accent:  mat-palette($mat-amber, A200, A100, A400);
-$dark-warn:    mat-palette($mat-deep-orange);
-$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
-@include angular-material-theme($dark-theme); */
-
 $candy-app-primary: mat-palette($mat-indigo);
 $candy-app-accent:  mat-palette($mat-pink, A200, A100, A400);
 $candy-app-warn:    mat-palette($mat-red);
