@@ -2,22 +2,37 @@
 $text-color: #ffffff;
 .auth-main {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     height: 100%;
     width: 100%;
     position: absolute;
+    margin-left: 0px;
+    margin-right: 0px;
+    background: url("assets/img/bg2x.jpg") no-repeat top left; 
+    background-size: 50vw 100vh;
 }
 .auth-block {
-    width: 540px;
+    max-width: 70%;
     margin: 0 auto;
     border-radius: 5px;
-    //@include bg-translucent-dark(0.55);
-    color: #1e1e28;
-    padding: 32px;
+    color: #333333;
     h1 {
         font-weight: $font-light;
-        margin-bottom: 28px;
         text-align: center;
+    }
+    h4 {
+        font-weight: 300;
+        color: #999999;
+        text-align: center;
+    }
+    .btn {
+        border-radius: 3px;
+        font-weight: bold;
+        height: 50px;
+    }
+    input {
+        height: 50px;
     }
     p {
         font-size: 16px;
@@ -112,7 +127,7 @@ a.forgot-pass {
     }
 }
 .btn-auth {
-    color: #ffffff!important;
+    color: #ffffff !important;
     min-width: 100px;
     min-height: 35px
 }
@@ -249,6 +264,17 @@ all-jobs {
     color: #ffffff;
 }
 @media only screen and (max-width: 480px) {
+    .auth-block {
+        max-width: 80%;
+        color: #f5f5f5;
+        h4 {
+            color: #f0f0f0;
+        }
+    }
+    .auth-main {
+        background: url("assets/img/bg2x.jpg") no-repeat center center; 
+        background-size: 100vw 100vh;
+    }
     all-subscriptions,
     all-payments,
     all-employers,

@@ -1,33 +1,12 @@
 @import '../../../theme/sass/auth';
-.multilingual-link {
-    cursor: pointer;
-    color: #54FF9F !important;
-}
-.rar-lang {
-    position: absolute;
-    width: 170px;
-    right: 20px;
-    top: 20px;
-}
-.error-alert {
-    color: $flame-warning;
-    margin-top: 5px;
-}
-.has-input-error {
-    border-color: $flame-warning;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(217, 73, 89, 0.6);
-}
-.has-input-error:focus {
-    border-color: $flame-warning;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(217, 73, 89, 0.6);
+.top-label {
+    margin-bottom: 32px;
 }
 .btn-login {
-    background-color: #e1692c !important;
-    border-color: #e1692c !important;
+    background-color: #026eff !important;
+    border-color: #026eff !important;
 }
 .login-auth-block {
-    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.15);
-    background: white;
     position: relative;
 }
 .app-logo {
@@ -38,6 +17,15 @@
     left: 0px;
 }
 .app-logo-image {
-    height: 80px;
+    width: 210px;
     margin: auto;
+}
+@media only screen and (max-width: 480px) {
+    .app-logo {
+        top: 0px;
+    }
+    .app-logo-image {
+        width: 160px;
+        margin: auto;
+    }
 }

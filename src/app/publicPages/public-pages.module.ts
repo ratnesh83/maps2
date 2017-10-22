@@ -7,6 +7,10 @@ import { RouterModule } from '@angular/router';
 import { Login } from './components/login/login.component';
 import { Register } from './components/register/register.component';
 import { ForgotPassword } from './components/forgot-password/forgot-password-modal.component';
+import {
+    MdInputModule,
+    MdButtonModule
+} from '@angular/material';
 
 @NgModule({
     imports: [
@@ -14,7 +18,9 @@ import { ForgotPassword } from './components/forgot-password/forgot-password-mod
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
-        routing
+        routing,
+        MdInputModule,
+        MdButtonModule
     ],
     declarations: [
         PublicPages,
