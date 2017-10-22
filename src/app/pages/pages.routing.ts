@@ -1,7 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
 import { Pages } from './pages.component';
 import { ModuleWithProviders } from '@angular/core';
-
 import { AuthGuard } from '../auth/service/auth-service/auth-guard.service';
 import { AuthGuardAdmin } from '../auth/service/auth-service/auth-guard-admin.service';
 import { AuthGuardCustomer } from '../auth/service/auth-service/auth-guard-customer.service';

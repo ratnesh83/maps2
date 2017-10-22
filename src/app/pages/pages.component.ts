@@ -25,7 +25,7 @@ import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from '../theme
     <footer class="al-footer clearfix">
       <div class="al-footer-right"></div>
       <div class="al-footer-main clearfix">
-        <div class="al-copy">&copy; 2017 - Chasing A Day</div>
+        <div class="al-copy">&copy; 2017 - Labor Go</div>
         <!--<ul class="al-share clearfix">
           <li><i class="socicon socicon-facebook"></i></li>
           <li><i class="socicon socicon-twitter"></i></li>

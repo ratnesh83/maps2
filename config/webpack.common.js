@@ -24,8 +24,8 @@ const ngcWebpack = require('ngc-webpack');
 const HMR = helpers.hasProcessFlag('hot');
 const AOT = helpers.hasNpmFlag('aot');
 const METADATA = {
-    title: 'Chasing A Day',
-    description: 'Chasing A Day Admin Panel',
+    title: 'Labor Go',
+    description: 'Labor Go Project',
     baseUrl: '/',
     isDevServer: helpers.isWebpackDevServer()
 };
