@@ -95,6 +95,9 @@ $hoverlink: darken($activelink, 20%);
 $modal-border-color:rgba(2, 117, 216, 0.3);
 
 /*** md-autocomplete ***/
+.mat-autocomplete-panel.mat-autocomplete-panel-above {
+    top: 0px !important;
+}
 .mat-autocomplete-panel.mat-autocomplete-panel-below {
     top: 0px !important;
 }

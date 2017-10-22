@@ -4,13 +4,14 @@ $text-color: #ffffff;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    height: 100%;
+    height: auto;
+    min-height: 100%;
     width: 100%;
     position: absolute;
     margin-left: 0px;
     margin-right: 0px;
     background: url("assets/img/bg2x.jpg") no-repeat top left; 
-    background-size: 50vw 100vh;
+    background-size: 50vw 100%;
 }
 .auth-block {
     max-width: 70%;
@@ -228,6 +229,25 @@ a.forgot-pass {
     margin-top: 25px;
     margin-bottom: 25px;
 }
+.form-action-link {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    .forget {
+        a {
+            font-weight: bold;
+            color: #424242;
+        }
+    }
+    .signup {
+        span {
+            color: #535353;
+        }
+        a {
+            font-weight: bold;
+            color: #026eff;
+        }
+    }
+}
 #searchbox {
     border: 1px solid grey;
     border-radius: 4px;
@@ -356,7 +376,7 @@ all-jobs {
     }
     .auth-main {
         background: url("assets/img/bg2x.jpg") no-repeat center center; 
-        background-size: 100vw 100vh;
+        background-size: 100vw 100%;
     }
     all-subscriptions,
     all-payments,

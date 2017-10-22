@@ -1,5 +1,6 @@
 @import '../../../theme/sass/auth';
 .top-label {
+    margin-top: 32px;
     margin-bottom: 32px;
 }
 .btn-login {
@@ -17,20 +18,28 @@
 .login-auth-block {
     position: relative;
 }
+.left-container {
+    min-height: 130px;
+}
 .app-logo {
     display: flex;
     position: absolute;
     width: 100%;
-    top: -50px;
+    top: -58px;
+    height: 116px;
     left: 0px;
 }
 .app-logo-image {
     width: 210px;
     margin: auto;
 }
+.form-action-signup {
+    padding-top: 30px;
+    padding-bottom: 10px
+}
 @media only screen and (max-width: 480px) {
     .app-logo {
-        top: 0px;
+        top: 14px;
     }
     .app-logo-image {
         width: 160px;
