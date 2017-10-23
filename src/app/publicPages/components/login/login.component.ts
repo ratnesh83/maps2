@@ -20,6 +20,8 @@ import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { cloneDeep, random } from 'lodash';
 const types = ['success', 'error', 'info', 'warning'];
 
+declare const FB: any;
+
 @Component({
     selector: 'login',
     templateUrl: './login.html',
@@ -102,6 +104,25 @@ export class Login {
         this.countries = this.countryCode.valueChanges
             .startWith(null)
             .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
+    }
+
+    getFacebookData() {
+        FB.api('/me?fields=id,name,first_name,last_name,email', (data) => {
+            if (data && !data.error) {
+                console.log(data);
+            } else {
+                console.log(data.error);
+            }
+        });
+    }
+
+    loginFacebook() {
+        FB.getLoginStatus((response) => {
+            FB.login((result) => {
+                this.getFacebookData();
+            }, { scope: 'email' });
+            console.log(response);
+        });
     }
 
     initializeCountryCodes() {
