@@ -125,6 +125,10 @@ export class Login {
         });
     }
 
+    loginTwitter() {
+        
+    }
+
     initializeCountryCodes() {
         this.countries = this.countryCode.valueChanges
             .startWith(null)
