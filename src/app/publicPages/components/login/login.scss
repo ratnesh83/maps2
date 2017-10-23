@@ -8,12 +8,33 @@
     border-color: #026eff !important;
 }
 .btn-facebook {
+    .mat-button-wrapper {
+        display: flex;
+        height: 100%
+    }
     background-color: #3a5999 !important;
     border-color: #3a5999 !important;
 }
 .btn-twitter {
+    .mat-button-wrapper {
+        display: flex;
+        height: 100%
+    }
     background-color: #55acee !important;
     border-color: #55acee !important;
+}
+.btn-md-icon {
+    display: flex;
+    float: left;
+    height: -webkit-fill-available;
+    md-icon {
+        display: block;
+        margin: auto;
+    }
+}
+.btn-text-label {
+    display: flex;
+    margin: auto;
 }
 .login-auth-block {
     position: relative;
