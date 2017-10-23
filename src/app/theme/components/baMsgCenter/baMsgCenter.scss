@@ -113,7 +113,7 @@
   left: auto;
   right: -47px;
   top: 26px;
-  @include scrollbars(.4em, darken(#e1692c, 15%), hsla(0, 0%, 100%, .2));
+  @include scrollbars(.4em, darken(#026eff, 15%), hsla(0, 0%, 100%, .2));
   .header {
     padding: 10px 12px;
     border-bottom: 1px solid $default;
