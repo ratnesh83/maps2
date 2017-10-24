@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as auth from '../../../auth/state/auth.actions';
 import { Observable } from 'rxjs/Observable';
@@ -19,12 +19,18 @@ export class Register {
 
     public form: FormGroup;
     public name: AbstractControl;
+    public companyName: AbstractControl;
     public email: AbstractControl;
     public password: AbstractControl;
     public repeatPassword: AbstractControl;
     public passwords: FormGroup;
     public countryCode: AbstractControl;
+    public phone: AbstractControl;
+    public description: AbstractControl;
+    public expertiseDescription: AbstractControl;
     public signUpType: AbstractControl;
+    public agreement: AbstractControl;
+    public socialId: AbstractControl;
     public countryCodes = [];
 
     public submitted: boolean = false;
@@ -32,7 +38,8 @@ export class Register {
     constructor(fb: FormBuilder,
         private store: Store<any>,
         private iconRegistry: MdIconRegistry,
-        private sanitizer: DomSanitizer) {
+        private sanitizer: DomSanitizer,
+        private cdRef: ChangeDetectorRef) {
 
         this.store
             .select('auth')
@@ -51,9 +58,15 @@ export class Register {
 
         this.form = fb.group({
             'name': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
+            'companyName': [''],
             'email': ['', Validators.compose([Validators.required, EmailValidator.email])],
             'countryCode': [''],
+            'phone': [''],
             'signUpType': ['1'],
+            'agreement': [false],
+            'socialId': [''],
+            'description': [''],
+            'expertiseDescription': [''],
             'passwords': fb.group({
                 'password': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
                 'repeatPassword': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
@@ -61,10 +74,16 @@ export class Register {
         });
 
         this.name = this.form.controls['name'];
+        this.companyName = this.form.controls['companyName'];
         this.email = this.form.controls['email'];
         this.passwords = <FormGroup>this.form.controls['passwords'];
         this.countryCode = this.form.controls['countryCode'];
+        this.phone = this.form.controls['phone'];
+        this.description = this.form.controls['description'];
+        this.expertiseDescription = this.form.controls['expertiseDescription'];
         this.signUpType = this.form.controls['signUpType'];
+        this.agreement = this.form.controls['agreement'];
+        this.socialId = this.form.controls['socialId'];
         this.password = this.passwords.controls['password'];
         this.repeatPassword = this.passwords.controls['repeatPassword'];
     }
@@ -91,12 +110,22 @@ export class Register {
         this.password.reset();
         this.repeatPassword.reset();
         this.countryCode.reset();
+        this.phone.reset();
+        this.agreement.reset();
+        this.agreement.setValue(false);
+        this.socialId.reset();
+        this.description.reset();
+        this.expertiseDescription.reset();
     }
 
     getFacebookData() {
         FB.api('/me?fields=id,name,first_name,last_name,email', (data) => {
             if (data && !data.error) {
                 console.log(data);
+                if (data.id) {
+                    this.socialId.setValue(data.id);
+                    this.cdRef.detectChanges();
+                }
                 if (data.name) {
                     this.name.setValue(data.name);
                 }
@@ -130,6 +159,7 @@ export class Register {
 
     onSubmit(values: Object): void {
         this.submitted = true;
+        console.log(values);
         if (this.form.valid) {
             // your code goes here
             // console.log(values);

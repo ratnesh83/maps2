@@ -1,7 +1,7 @@
 <div class="row auth-main">
     <div class="col-12 col-sm-6 col-md-6 col-lg-6 left-container">
         <span class="app-logo">
-            <img class="app-logo-image" src="assets/img/logo.png">
+            <a class="app-logo-link" routerLink="/login"><img class="app-logo-image" src="assets/img/logo.png"></a>
         </span>
     </div>
 
@@ -45,9 +45,14 @@
                 <div class="form-group">
                     <div class="col-12 col-sm-12 signup-radio">
                         <md-radio-group class="signup-radio-button row" [formControl]="signUpType" (change)="changeSignUpType(signUpType.value)">
-                            <md-radio-button class="col-6 col-sm-6" color="primary" value="1">Sign up as User</md-radio-button>
-                            <md-radio-button class="col-6 col-sm-6" color="primary" value="2">Sign up as Employer</md-radio-button>
+                            <md-radio-button class="col-6 col-sm-6" color="primary" value="1"><span class="hidden-xs-down">Sign up as </span>User</md-radio-button>
+                            <md-radio-button class="col-6 col-sm-6" color="primary" value="2"><span class="hidden-xs-down">Sign up as </span>Employer</md-radio-button>
                         </md-radio-group>
+                    </div>
+                </div>
+                <div *ngIf="signUpType.value == '2'" class="form-group row">
+                    <div class="col-12 col-sm-12">
+                        <input type="text" [formControl]="companyName" class="form-control" id="inputCompanyName" placeholder="Company Name">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -72,43 +77,48 @@
                         </span>
                     </div>
                     <div class="col-9 col-sm-9 phone-number-phone">
-                        <input type="text" class="form-control" id="inputPhone" placeholder="Phone Number" (keypress)="_keyPressNumber($event)">
+                        <input type="text" [formControl]="phone" class="form-control" id="inputPhone" placeholder="Phone Number" (keypress)="_keyPressNumber($event)">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input [formControl]="email" type="email" [ngClass]="{'has-input-error': (!email.valid && email.touched)}" class="form-control"
+                        <input type="email" [formControl]="email" [ngClass]="{'has-input-error': (!email.valid && email.touched)}" class="form-control"
                             id="inputEmail" placeholder="Email">
                     </div>
                 </div>
-                <div class="form-group row">
+                <div *ngIf="signUpType.value == '1'" class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input type="text" class="form-control" id="inputExpertiseDescription" placeholder="Expertise Description">
+                        <input type="text" class="form-control" id="inputExpertiseDescription" [formControl]="expertiseDescription" placeholder="Expertise Description">
                     </div>
                 </div>
-                <div class="form-group row">
+                <div *ngIf="signUpType.value == '2'" class="form-group row">
+                    <div class="col-12 col-sm-12">
+                        <input type="text" class="form-control" id="inputDescription" [formControl]="description" placeholder="Description">
+                    </div>
+                </div>
+                <div *ngIf="!socialId.value" class="form-group row">
                     <div class="col-12 col-sm-12">
                         <input type="password" [ngClass]="{'has-input-error': (!password.valid && password.touched)}" class="form-control" id="inputPassword"
                             placeholder="Password" [formControl]="password">
                     </div>
                 </div>
-                <div class="form-group row">
+                <div *ngIf="!socialId.value" class="form-group row">
                     <div class="col-12 col-sm-12">
                         <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm Password" [formControl]="repeatPassword">
                     </div>
                 </div>
                 <div class="form-group row sigup-checkbox">
                     <div class="col-12 col-sm-12">
-                        <md-checkbox color="primary" class="sigup-checkbox-margin"></md-checkbox>
+                        <md-checkbox color="primary" class="sigup-checkbox-margin" [formControl]="agreement"></md-checkbox>
                         <span class="terms">I agree to
-                            <a class="terms-conditions">Terms and Conditions.</a>
+                            <a class="terms-conditions" href="https://www.google.com" target="_blank">Terms and Conditions.</a>
                         </span>
                     </div>
                 </div>
                 <div class="form-action-btn">
                     <div class="form-group row">
                         <div class="col-12 col-sm-12">
-                            <button md-raised-button color="primary" type="submit" class="btn btn-warning btn-block btn-login">SIGN UP</button>
+                            <button md-raised-button [disabled]="!agreement.value" color="primary" type="submit" class="btn btn-warning btn-block btn-login">SIGN UP</button>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
-import { Routes } from '@angular/router';
+import {
+    Routes, Router,
+    Event as RouterEvent,
+    NavigationStart,
+    NavigationEnd,
+    NavigationCancel,
+    NavigationError
+} from '@angular/router';
 import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from '../theme/services';
 
 @Component({
@@ -12,11 +19,37 @@ import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from '../theme
 })
 export class PublicPages {
 
-    constructor(private _spinner: BaThemeSpinner) {
+    constructor(private router: Router, private _spinner: BaThemeSpinner) {
         BaThemePreloader.load().then((values) => {
             this._spinner.hide();
         });
+        router.events.subscribe((event: RouterEvent) => {
+            this.navigationInterceptor(event);
+        });
     }
 
+    navigationInterceptor(event: RouterEvent): void {
+        if (event instanceof NavigationStart) {
+            this._spinner.show();
+        }
+        if (event instanceof NavigationEnd) {
+            BaThemePreloader.load().then((values) => {
+                this._spinner.hide();
+            });
+            if (jQuery('html, body')) {
+                jQuery('html, body').scrollTop(0);
+            }
+        }
+        if (event instanceof NavigationCancel) {
+            BaThemePreloader.load().then((values) => {
+                this._spinner.hide();
+            });
+        }
+        if (event instanceof NavigationError) {
+            BaThemePreloader.load().then((values) => {
+                this._spinner.hide();
+            });
+        }
+    }
 
 }

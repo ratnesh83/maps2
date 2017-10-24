@@ -100,6 +100,12 @@
         color: #026eff !important;
     }
 }
+.btn-login.mat-raised-button.mat-primary[disabled], .mat-raised-button.mat-accent[disabled], .mat-raised-button.mat-warn[disabled], .mat-raised-button[disabled][disabled] {
+    color: rgba(255, 255, 255, 0.87) !important;
+}
+.app-logo-link {
+    margin: auto;
+}
 @media only screen and (max-width: 480px) {
     .app-logo {
         top: 14px;
