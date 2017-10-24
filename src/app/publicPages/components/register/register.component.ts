@@ -24,6 +24,7 @@ export class Register {
     public repeatPassword: AbstractControl;
     public passwords: FormGroup;
     public countryCode: AbstractControl;
+    public signUpType: AbstractControl;
     public countryCodes = [];
 
     public submitted: boolean = false;
@@ -52,6 +53,7 @@ export class Register {
             'name': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
             'email': ['', Validators.compose([Validators.required, EmailValidator.email])],
             'countryCode': [''],
+            'signUpType': ['1'],
             'passwords': fb.group({
                 'password': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
                 'repeatPassword': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
@@ -62,6 +64,7 @@ export class Register {
         this.email = this.form.controls['email'];
         this.passwords = <FormGroup>this.form.controls['passwords'];
         this.countryCode = this.form.controls['countryCode'];
+        this.signUpType = this.form.controls['signUpType'];
         this.password = this.passwords.controls['password'];
         this.repeatPassword = this.passwords.controls['repeatPassword'];
     }
@@ -82,10 +85,24 @@ export class Register {
             option.phone_code.toString().indexOf(val.replace('+', '')) === 0);
     }
 
+    changeSignUpType(type) {
+        this.name.reset();
+        this.email.reset();
+        this.password.reset();
+        this.repeatPassword.reset();
+        this.countryCode.reset();
+    }
+
     getFacebookData() {
         FB.api('/me?fields=id,name,first_name,last_name,email', (data) => {
             if (data && !data.error) {
                 console.log(data);
+                if (data.name) {
+                    this.name.setValue(data.name);
+                }
+                if (data.email) {
+                    this.email.setValue(data.email);
+                }
             } else {
                 console.log(data.error);
             }
@@ -104,7 +121,7 @@ export class Register {
     loginTwitter() {
 
     }
-    
+
     initializeCountryCodes() {
         this.countries = this.countryCode.valueChanges
             .startWith(null)

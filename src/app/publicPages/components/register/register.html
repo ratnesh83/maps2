@@ -1,38 +1,3 @@
-<!-- <div class="auth-main">
-    <div class="auth-block">
-        <h1>Sign up to ng2-admin</h1>
-        <a routerLink="/login" class="auth-link">Already have an Cl Admin account? Sign in!</a>
-
-        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
-            <div class="form-group row" [ngClass]="{'has-error': (!name.valid && name.touched), 'has-success': (name.valid && name.touched)}">
-                <label for="inputName3" class="col-sm-2 control-label">Name</label>
-
-                <div class="col-sm-10">
-                    <input [formControl]="name" type="text" class="form-control" id="inputName3" placeholder="Full Name">
-                </div>
-            </div>
-
-            <div class="form-group row" [ngClass]="{'has-error': (!repeatPassword.valid && repeatPassword.touched), 'has-success': (repeatPassword.valid && repeatPassword.touched)}">
-                <label for="inputPassword4" class="col-sm-2 control-label">Repeat</label>
-
-                <div class="col-sm-10">
-                    <input [formControl]="repeatPassword" type="password" class="form-control" id="inputPassword4" placeholder="Repeat">
-                    <span *ngIf="!passwords.valid && (password.touched || repeatPassword.touched)" class="help-block sub-little-text">Passwords don't match.</span>
-                </div>
-            </div>
-
-
-            <div class="form-group row">
-                <div class="offset-sm-2 col-sm-10">
-                    <button [disabled]="!form.valid" type="submit" class="btn btn-default btn-auth">Sign up</button>
-                </div>
-            </div>
-        </form>
-
-    </div>
-</div> -->
-
-
 <div class="row auth-main">
     <div class="col-12 col-sm-6 col-md-6 col-lg-6 left-container">
         <span class="app-logo">
@@ -77,10 +42,23 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="col-12 col-sm-12 signup-radio">
+                        <md-radio-group class="signup-radio-button row" [formControl]="signUpType" (change)="changeSignUpType(signUpType.value)">
+                            <md-radio-button class="col-6 col-sm-6" color="primary" value="1">Sign up as User</md-radio-button>
+                            <md-radio-button class="col-6 col-sm-6" color="primary" value="2">Sign up as Employer</md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12 col-sm-12">
+                        <input type="text" [formControl]="name" class="form-control" id="inputName" placeholder="Full Name">
+                    </div>
+                </div>
                 <div class="form-group row">
                     <div class="col-3 col-sm-3 phone-number-cc">
-                        <input type="text" [formControl]="countryCode" (focus)="initializeCountryCodes()" class="form-control" id="inputCode" placeholder="+1"
-                            [mdAutocomplete]="auto" maxlength="5" (keypress)="_keyPressCountryCode($event)">
+                        <input type="text" [formControl]="countryCode" (focus)="initializeCountryCodes()" class="form-control" id="inputCountryCode"
+                            placeholder="+1" [mdAutocomplete]="auto" maxlength="5" (keypress)="_keyPressCountryCode($event)">
                         <md-autocomplete #auto="mdAutocomplete">
                             <md-option *ngFor="let country of countries | async" [value]="'+' + country.phone_code">
                                 {{ '+' + country.phone_code }}
@@ -100,13 +78,31 @@
                 <div class="form-group row">
                     <div class="col-12 col-sm-12">
                         <input [formControl]="email" type="email" [ngClass]="{'has-input-error': (!email.valid && email.touched)}" class="form-control"
-                            id="inputEmail3" placeholder="Email">
+                            id="inputEmail" placeholder="Email">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input type="password" [ngClass]="{'has-input-error': (!password.valid && password.touched)}" class="form-control" id="password"
+                        <input type="text" class="form-control" id="inputExpertiseDescription" placeholder="Expertise Description">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12 col-sm-12">
+                        <input type="password" [ngClass]="{'has-input-error': (!password.valid && password.touched)}" class="form-control" id="inputPassword"
                             placeholder="Password" [formControl]="password">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12 col-sm-12">
+                        <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm Password" [formControl]="repeatPassword">
+                    </div>
+                </div>
+                <div class="form-group row sigup-checkbox">
+                    <div class="col-12 col-sm-12">
+                        <md-checkbox color="primary" class="sigup-checkbox-margin"></md-checkbox>
+                        <span class="terms">I agree to
+                            <a class="terms-conditions">Terms and Conditions.</a>
+                        </span>
                     </div>
                 </div>
                 <div class="form-action-btn">

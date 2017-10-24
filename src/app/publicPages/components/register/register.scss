@@ -50,9 +50,55 @@
     width: 210px;
     margin: auto;
 }
+.signup {
+    font-size: 16px;
+}
 .form-action-signup {
     padding-top: 30px;
     padding-bottom: 10px
+}
+.signup-radio {
+    display: flex;
+    border-radius: 3px;
+    background-color: #ffffff;
+    height: 50px;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    label {
+        margin-bottom: 0px !important;
+    }
+}
+.signup-radio-button {
+    margin: auto 0px;
+    width: 100%;
+    .mat-radio-button {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .mat-radio-button.mat-primary.mat-radio-checked .mat-radio-outer-circle {
+        border-color: #026eff !important;
+    }
+    .mat-radio-button.mat-primary .mat-radio-inner-circle {
+        background-color: #026eff !important;
+    }
+}
+.sigup-checkbox {
+    padding-top: 10px;
+    .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background, .mat-checkbox-checked.mat-primary .mat-checkbox-background {
+        background-color: #026eff !important;
+    }
+}
+.sigup-checkbox-margin {
+    label {
+        padding-left: 0px;
+        padding-right: 10px;
+    }
+}
+.terms {
+    font-size: 16px;
+    .terms-conditions {
+        font-weight: bold;
+        color: #026eff !important;
+    }
 }
 @media only screen and (max-width: 480px) {
     .app-logo {

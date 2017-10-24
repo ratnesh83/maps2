@@ -11,7 +11,9 @@ import {
     MdInputModule,
     MdButtonModule,
     MdAutocompleteModule,
-    MdIconModule
+    MdIconModule,
+    MdCheckboxModule,
+    MdRadioModule
 } from '@angular/material';
 
 @NgModule({
@@ -24,7 +26,9 @@ import {
         MdInputModule,
         MdButtonModule,
         MdAutocompleteModule,
-        MdIconModule
+        MdIconModule,
+        MdCheckboxModule,
+        MdRadioModule
     ],
     declarations: [
         PublicPages,
