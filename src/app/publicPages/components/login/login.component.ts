@@ -6,6 +6,7 @@ import {
     Validators,
     FormControl
 } from '@angular/forms';
+import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { Observable } from 'rxjs/Observable';
 import { BaThemeSpinner } from '../../../theme/services';
 import { Store } from '@ngrx/store';
@@ -16,11 +17,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MdIconRegistry } from '@angular/material';
 import 'style-loader!./login.scss';
 
-import { ToastrService, ToastrConfig } from 'ngx-toastr';
-import { cloneDeep, random } from 'lodash';
-const types = ['success', 'error', 'info', 'warning'];
-
 declare const FB: any;
+
+
 
 @Component({
     selector: 'login',
@@ -28,10 +27,6 @@ declare const FB: any;
 })
 
 export class Login {
-    options: ToastrConfig;
-    title = '';
-    type = types[0];
-    message = '';
     allLanguage = [];
 
     version = VERSION;
@@ -61,7 +56,7 @@ export class Login {
         private store: Store<any>,
         private toastrService: ToastrService,
         private iconRegistry: MdIconRegistry,
-        sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer
     ) {
         this.store
             .select('auth')
@@ -77,8 +72,6 @@ export class Login {
         iconRegistry.addSvgIcon(
             'twitter',
             sanitizer.bypassSecurityTrustResourceUrl('assets/img/twitter.svg'));
-
-        this.options = this.toastrService.toastrConfig;
 
         this.user.role = this.roles[0].value;
 
@@ -105,6 +98,8 @@ export class Login {
             .startWith(null)
             .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
     }
+
+
 
     getFacebookData() {
         FB.api('/me?fields=id,name,first_name,last_name,email', (data) => {
@@ -191,16 +186,20 @@ export class Login {
         }
     }
 
-    openToast() {
-        let m = 'amar';
-        let t = 'amar';
-        const opt = cloneDeep(this.options);
-        this.toastrService.clear();
-        const inserted = this.toastrService[this.type](m, t, opt);
-        if (inserted) {
-            this.lastInserted.push(inserted.toastId);
+    _keyPressNumber(event: any) {
+        const pattern = /^[0-9]*$/;
+        let inputChar = event.target.value + String.fromCharCode(event.charCode);
+        if (event.charCode != 0 && !pattern.test(inputChar)) {
+            event.preventDefault();
         }
-        return inserted;
+    }
+
+    _keyPressCountryCode(event: any) {
+        const pattern = /^([+])?[0-9]*$/;
+        let inputChar = event.target.value + String.fromCharCode(event.charCode);
+        if (event.charCode != 0 && !pattern.test(inputChar)) {
+            event.preventDefault();
+        }
     }
 
 }

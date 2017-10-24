@@ -45,7 +45,7 @@
                 <div class="form-group row">
                     <div class="col-3 col-sm-3 phone-number-cc">
                         <input type="text" [formControl]="countryCode" (focus)="initializeCountryCodes()" class="form-control" id="inputCode" placeholder="+1"
-                            [mdAutocomplete]="auto" maxlength="5">
+                            [mdAutocomplete]="auto" maxlength="5" (keypress)="_keyPressCountryCode($event)">
                         <md-autocomplete #auto="mdAutocomplete">
                             <md-option *ngFor="let country of countries | async" [value]="'+' + country.phone_code">
                                 {{ '+' + country.phone_code }}
@@ -59,7 +59,7 @@
                         </span>
                     </div>
                     <div class="col-9 col-sm-9 phone-number-phone">
-                        <input type="text" class="form-control" id="inputPhone" placeholder="Phone Number">
+                        <input type="text" class="form-control" id="inputPhone" placeholder="Phone Number" (keypress)="_keyPressNumber($event)">
                     </div>
                 </div>
                 <div class="or-sep">
@@ -98,7 +98,7 @@
                     <div class="form-group row">
                         <div class="col-12 col-sm-12 text-center forget">
                             <a>
-                                FORGOT PASSWORD ?
+                                FORGOT PASSWORD?
                             </a>
                         </div>
                     </div>
@@ -107,9 +107,9 @@
                     <div class="form-group row">
                         <div class="col-12 col-sm-12 text-center signup">
                             <span>
-                                Haven't signed up yet ?
+                                Haven't signed up yet?
                             </span>
-                            <a>
+                            <a routerLink="/register">
                                 SIGN UP
                             </a>
                         </div>
