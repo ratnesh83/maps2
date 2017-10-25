@@ -7,6 +7,7 @@ import {
     FormControl
 } from '@angular/forms';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
+import { MdDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { BaThemeSpinner } from '../../../theme/services';
 import { Store } from '@ngrx/store';
@@ -15,11 +16,10 @@ import { EmailValidator } from '../../../theme/validators';
 import { User } from '../../../auth/model/user.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MdIconRegistry } from '@angular/material';
+import { ForgotPasswordDialog } from '../forgot-password-dialog/forgot-password-dialog.component';
 import 'style-loader!./login.scss';
 
 declare const FB: any;
-
-
 
 @Component({
     selector: 'login',
@@ -56,7 +56,8 @@ export class Login {
         private store: Store<any>,
         private toastrService: ToastrService,
         private iconRegistry: MdIconRegistry,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        public dialog: MdDialog
     ) {
         this.store
             .select('auth')
@@ -128,6 +129,12 @@ export class Login {
         this.countries = this.countryCode.valueChanges
             .startWith(null)
             .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
+    }
+
+    openForgotPasswordDialog() {
+        let dialogRef = this.dialog.open(ForgotPasswordDialog);
+        // dialogRef.disableClose = true;
+        dialogRef.componentInstance.data = 'sa';
     }
 
     countries: Observable<any[]>;

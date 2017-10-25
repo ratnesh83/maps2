@@ -1,0 +1,141 @@
+<div class="row auth-main">
+    <div class="col-12 col-sm-6 col-md-6 col-lg-6 left-container">
+        <span class="app-logo">
+            <a class="app-logo-link" routerLink="/login"><img class="app-logo-image" src="assets/img/logo.png"></a>
+        </span>
+    </div>
+
+    <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+        <div class="auth-block login-auth-block animated bounceInUp">
+            <div class="top-label">
+                <h1>
+                    <strong>Haven't signed up yet?</strong>
+                </h1>
+                <h4>
+                    Sign up to continue
+                </h4>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value, $event)" class="form-horizontal">
+                <div class="form-action-btn">
+                    <div class="form-group row">
+                        <div class="col-12 col-sm-12">
+                            <button md-raised-button color="primary" type="button" (click)="loginFacebook()" class="btn btn-warning btn-block btn-facebook">
+                                <span class="btn-md-icon">
+                                    <md-icon svgIcon="facebook"></md-icon>
+                                </span>
+                                <span class="btn-text-label">
+                                    CONTINUE WITH FACEBOOK
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12 col-sm-12">
+                            <button md-raised-button color="primary" type="button" (click)="loginTwitter()" class="btn btn-warning btn-block btn-twitter">
+                                <span class="btn-md-icon">
+                                    <md-icon svgIcon="twitter"></md-icon>
+                                </span>
+                                <span class="btn-text-label">
+                                    CONTINUE WITH TWITTER
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-12 col-sm-12 signup-radio">
+                        <md-radio-group class="signup-radio-button row" [formControl]="signUpType" (change)="changeSignUpType(signUpType.value)">
+                            <md-radio-button class="col-6 col-sm-6" color="primary" value="1"><span class="hidden-xs-down">Sign up as </span>User</md-radio-button>
+                            <md-radio-button class="col-6 col-sm-6" color="primary" value="2"><span class="hidden-xs-down">Sign up as </span>Employer</md-radio-button>
+                        </md-radio-group>
+                    </div>
+                </div>
+                <div *ngIf="signUpType.value == '2'" class="form-group row">
+                    <div class="col-12 col-sm-12">
+                        <input type="text" [formControl]="companyName" class="form-control" id="inputCompanyName" placeholder="Company Name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12 col-sm-12">
+                        <input type="text" [formControl]="name" class="form-control" id="inputName" placeholder="Full Name">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-3 col-sm-3 phone-number-cc">
+                        <input type="text" [formControl]="countryCode" (focus)="initializeCountryCodes()" class="form-control" id="inputCountryCode"
+                            placeholder="+1" [mdAutocomplete]="auto" maxlength="5" (keypress)="_keyPressCountryCode($event)">
+                        <md-autocomplete #auto="mdAutocomplete">
+                            <md-option *ngFor="let country of countries | async" [value]="'+' + country.phone_code">
+                                {{ '+' + country.phone_code }}
+                                <span style="color: rgba(0, 0, 0, 0.3)">
+                                    {{ country.country_code }}
+                                </span>
+                            </md-option>
+                        </md-autocomplete>
+                        <span class="separator-cc-container">
+                            <span class="separator-cc"></span>
+                        </span>
+                    </div>
+                    <div class="col-9 col-sm-9 phone-number-phone">
+                        <input type="text" [formControl]="phone" class="form-control" id="inputPhone" placeholder="Phone Number" (keypress)="_keyPressNumber($event)">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12 col-sm-12">
+                        <input type="email" [formControl]="email" [ngClass]="{'has-input-error': (!email.valid && email.touched)}" class="form-control"
+                            id="inputEmail" placeholder="Email">
+                    </div>
+                </div>
+                <div *ngIf="signUpType.value == '1'" class="form-group row">
+                    <div class="col-12 col-sm-12">
+                        <input type="text" class="form-control" id="inputExpertiseDescription" [formControl]="expertiseDescription" placeholder="Expertise Description">
+                    </div>
+                </div>
+                <div *ngIf="signUpType.value == '2'" class="form-group row">
+                    <div class="col-12 col-sm-12">
+                        <input type="text" class="form-control" id="inputDescription" [formControl]="description" placeholder="Description">
+                    </div>
+                </div>
+                <div *ngIf="!socialId.value" class="form-group row">
+                    <div class="col-12 col-sm-12">
+                        <input type="password" [ngClass]="{'has-input-error': (!password.valid && password.touched)}" class="form-control" id="inputPassword"
+                            placeholder="Password" [formControl]="password">
+                    </div>
+                </div>
+                <div *ngIf="!socialId.value" class="form-group row">
+                    <div class="col-12 col-sm-12">
+                        <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm Password" [formControl]="repeatPassword">
+                    </div>
+                </div>
+                <div class="form-group row sigup-checkbox">
+                    <div class="col-12 col-sm-12">
+                        <md-checkbox color="primary" class="sigup-checkbox-margin" [formControl]="agreement"></md-checkbox>
+                        <span class="terms">I agree to
+                            <a class="terms-conditions" href="https://www.google.com" target="_blank">Terms and Conditions.</a>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-action-btn">
+                    <div class="form-group row">
+                        <div class="col-12 col-sm-12">
+                            <button md-raised-button [disabled]="!agreement.value" color="primary" type="submit" class="btn btn-warning btn-block btn-login">SIGN UP</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-action-link form-action-signup">
+                    <div class="form-group row">
+                        <div class="col-12 col-sm-12 text-center signup">
+                            <span>
+                                Already have an account?
+                            </span>
+                            <a routerLink="/login">
+                                SIGN IN
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

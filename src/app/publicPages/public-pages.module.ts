@@ -6,14 +6,17 @@ import { PublicPages } from './public-pages.component';
 import { RouterModule } from '@angular/router';
 import { Login } from './components/login/login.component';
 import { Register } from './components/register/register.component';
-import { ForgotPassword } from './components/forgot-password/forgot-password-modal.component';
+import { Address } from './components/address/address.component';
+import { Documents } from './components/document/document.component';
+import { ForgotPasswordDialog } from './components/forgot-password-dialog/forgot-password-dialog.component';
 import {
     MdInputModule,
     MdButtonModule,
     MdAutocompleteModule,
     MdIconModule,
     MdCheckboxModule,
-    MdRadioModule
+    MdRadioModule,
+    MdDialogModule,
 } from '@angular/material';
 
 @NgModule({
@@ -28,15 +31,20 @@ import {
         MdAutocompleteModule,
         MdIconModule,
         MdCheckboxModule,
-        MdRadioModule
+        MdRadioModule,
+        MdDialogModule,
     ],
     declarations: [
         PublicPages,
         Login,
         Register,
-        ForgotPassword
+        Address,
+        Documents,
+        ForgotPasswordDialog
     ],
-
+    entryComponents: [
+        ForgotPasswordDialog
+    ]
 })
 
 export class PublicPageModule { }
