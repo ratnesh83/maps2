@@ -3,13 +3,8 @@ import { Store } from '@ngrx/store';
 import * as auth from '../../../auth/state/auth.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { EmailValidator, EqualPasswordsValidator } from '../../../theme/validators';
-import { DomSanitizer } from '@angular/platform-browser';
-import { MdIconRegistry } from '@angular/material';
 
 import 'style-loader!./address.scss';
-
-declare const FB: any;
 
 @Component({
     selector: 'address',
@@ -18,143 +13,90 @@ declare const FB: any;
 export class Address {
 
     public form: FormGroup;
-    public name: AbstractControl;
-    public companyName: AbstractControl;
-    public email: AbstractControl;
-    public password: AbstractControl;
-    public repeatPassword: AbstractControl;
-    public passwords: FormGroup;
-    public countryCode: AbstractControl;
-    public phone: AbstractControl;
-    public description: AbstractControl;
-    public expertiseDescription: AbstractControl;
-    public signUpType: AbstractControl;
-    public agreement: AbstractControl;
-    public socialId: AbstractControl;
-    public countryCodes = [];
+    public streetAddress: AbstractControl;
+    public locationAddress: AbstractControl;
+    public city: AbstractControl;
+    public zipCode: AbstractControl;
+    public state: AbstractControl;
+    public country: AbstractControl;
+    public latitude: AbstractControl;
+    public longitude: AbstractControl;
 
     public submitted: boolean = false;
 
     constructor(fb: FormBuilder,
         private store: Store<any>,
-        private iconRegistry: MdIconRegistry,
-        private sanitizer: DomSanitizer,
         private cdRef: ChangeDetectorRef) {
 
         this.store
             .select('auth')
             .subscribe((res: any) => {
-                if (res.countryCodes) {
-                    this.countryCodes = res.countryCodes;
-                }
+                
             });
 
-        iconRegistry.addSvgIcon(
-            'facebook',
-            sanitizer.bypassSecurityTrustResourceUrl('assets/img/facebook.svg'));
-        iconRegistry.addSvgIcon(
-            'twitter',
-            sanitizer.bypassSecurityTrustResourceUrl('assets/img/twitter.svg'));
-
         this.form = fb.group({
-            'name': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
-            'companyName': [''],
-            'email': ['', Validators.compose([Validators.required, EmailValidator.email])],
-            'countryCode': [''],
-            'phone': [''],
-            'signUpType': ['1'],
-            'agreement': [false],
-            'socialId': [''],
-            'description': [''],
-            'expertiseDescription': [''],
-            'passwords': fb.group({
-                'password': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
-                'repeatPassword': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
-            }, { validator: EqualPasswordsValidator.validate('password', 'repeatPassword') })
+            'streetAddress': ['', Validators.compose([Validators.required])],
+            'locationAddress': [''],
+            'latitude': [''],
+            'longitude': [''],
+            'city': [''],
+            'state': [''],
+            'zipCode': [''],
+            'country': ['']
         });
 
-        this.name = this.form.controls['name'];
-        this.companyName = this.form.controls['companyName'];
-        this.email = this.form.controls['email'];
-        this.passwords = <FormGroup>this.form.controls['passwords'];
-        this.countryCode = this.form.controls['countryCode'];
-        this.phone = this.form.controls['phone'];
-        this.description = this.form.controls['description'];
-        this.expertiseDescription = this.form.controls['expertiseDescription'];
-        this.signUpType = this.form.controls['signUpType'];
-        this.agreement = this.form.controls['agreement'];
-        this.socialId = this.form.controls['socialId'];
-        this.password = this.passwords.controls['password'];
-        this.repeatPassword = this.passwords.controls['repeatPassword'];
+        this.streetAddress = this.form.controls['streetAddress'];
+        this.locationAddress = this.form.controls['locationAddress'];
+        this.latitude = this.form.controls['latitude'];
+        this.longitude = this.form.controls['longitude'];
+        this.city = this.form.controls['city'];
+        this.state = this.form.controls['state'];
+        this.zipCode = this.form.controls['zipCode'];
+        this.country = this.form.controls['country'];
     }
 
     ngOnInit() {
-        this.store.dispatch({
-            type: auth.actionTypes.GET_COUNTRIES
-        });
-        this.countries = this.countryCode.valueChanges
-            .startWith(null)
-            .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
+       
     }
 
-    countries: Observable<any[]>;
-
-    filterOptions(val) {
-        return this.countryCodes.filter(option =>
-            option.phone_code.toString().indexOf(val.replace('+', '')) === 0);
-    }
-
-    changeSignUpType(type) {
-        this.name.reset();
-        this.email.reset();
-        this.password.reset();
-        this.repeatPassword.reset();
-        this.countryCode.reset();
-        this.phone.reset();
-        this.agreement.reset();
-        this.agreement.setValue(false);
-        this.socialId.reset();
-        this.description.reset();
-        this.expertiseDescription.reset();
-    }
-
-    getFacebookData() {
-        FB.api('/me?fields=id,name,first_name,last_name,email', (data) => {
-            if (data && !data.error) {
-                console.log(data);
-                if (data.id) {
-                    this.socialId.setValue(data.id);
-                    this.cdRef.detectChanges();
+    getAddress(event) {
+        let addressComponents = event.address_components;
+        let latitude = event.geometry.location.lat();
+        let longitude = event.geometry.location.lng();
+        let formattedAddress = event.formatted_address;
+        let locationName = event.streetAddress;
+        let route = '';
+        let locality = '';
+        let city = '';
+        let state = '';
+        let country = '';
+        let postal = '';
+        for (let i = 0; i < addressComponents.length; i++) {
+            let types = addressComponents[i].types;
+            for (let j = 0; j < types.length; j++) {
+                if (types[j] == 'administrative_area_level_1') {
+                    state = addressComponents[i].long_name;
+                } else if (types[j] == 'administrative_area_level_2') {
+                    city = addressComponents[i].long_name;
+                } else if (types[j] == 'locality') {
+                    locality = addressComponents[i].long_name;
+                } else if (types[j] == 'country') {
+                    country = addressComponents[i].long_name;
+                } else if (types[j] == 'postal_code') {
+                    postal = addressComponents[i].long_name;
+                } else if (types[j] == 'route') {
+                    route = addressComponents[i].long_name;
                 }
-                if (data.name) {
-                    this.name.setValue(data.name);
-                }
-                if (data.email) {
-                    this.email.setValue(data.email);
-                }
-            } else {
-                console.log(data.error);
             }
-        });
-    }
-
-    loginFacebook() {
-        FB.getLoginStatus((response) => {
-            FB.login((result) => {
-                this.getFacebookData();
-            }, { scope: 'email' });
-            console.log(response);
-        });
-    }
-
-    loginTwitter() {
-
-    }
-
-    initializeCountryCodes() {
-        this.countries = this.countryCode.valueChanges
-            .startWith(null)
-            .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
+        }
+        this.locationAddress.setValue(formattedAddress);
+        this.streetAddress.setValue(locationName);
+        this.latitude.setValue(latitude);
+        this.longitude.setValue(longitude);
+        this.city.setValue(city);
+        this.state.setValue(state);
+        this.zipCode.setValue(postal);
+        this.country.setValue(country);
     }
 
     onSubmit(values: Object): void {
@@ -168,14 +110,6 @@ export class Address {
 
     _keyPressNumber(event: any) {
         const pattern = /^[0-9]*$/;
-        let inputChar = event.target.value + String.fromCharCode(event.charCode);
-        if (event.charCode != 0 && !pattern.test(inputChar)) {
-            event.preventDefault();
-        }
-    }
-
-    _keyPressCountryCode(event: any) {
-        const pattern = /^([+])?[0-9]*$/;
         let inputChar = event.target.value + String.fromCharCode(event.charCode);
         if (event.charCode != 0 && !pattern.test(inputChar)) {
             event.preventDefault();
