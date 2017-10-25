@@ -81,8 +81,17 @@
         background-color: #026eff !important;
     }
 }
-.sigup-checkbox {
+.sigup-add-doc {
     padding-top: 10px;
+    text-align: center;
+    .terms {
+        font-size: 16px;
+        .terms-conditions {
+            font-weight: bold;
+            cursor: pointer;
+            color: #026eff !important;
+        }
+    }
     .mat-checkbox-indeterminate.mat-primary .mat-checkbox-background, .mat-checkbox-checked.mat-primary .mat-checkbox-background {
         background-color: #026eff !important;
     }
@@ -91,13 +100,6 @@
     label {
         padding-left: 0px;
         padding-right: 10px;
-    }
-}
-.terms {
-    font-size: 16px;
-    .terms-conditions {
-        font-weight: bold;
-        color: #026eff !important;
     }
 }
 .btn-login.mat-raised-button.mat-primary[disabled], .mat-raised-button.mat-accent[disabled], .mat-raised-button.mat-warn[disabled], .mat-raised-button[disabled][disabled] {
