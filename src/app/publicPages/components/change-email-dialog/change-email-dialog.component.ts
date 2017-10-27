@@ -13,18 +13,18 @@ import 'style-loader!./change-email-dialog.scss';
                     </div>
                     <div style="width: 100%; text-align: center">
                         <h2 class="title">
-                            Forgot Password?
+                            Change Email
                         </h2>
                     </div>
                 </div>
                 <div class="forgot-block-message">
                     <span style="color: #777777">
-                        Please enter your registered phone number / email id so that we can help you out with resetting your password.
+                        
                     </span>
                 </div>
                 <div class="forgot-block-inner">
                     <div style="text-align: center">
-                        <input type="text" class="form-control" id="inputUser" placeholder="Phone Number / Email">
+                        <input type="text" class="form-control" id="inputUser" placeholder="Email">
                     </div>
                     <div class="form-action-btn form-action-btns">
                         <div class="form-group row">

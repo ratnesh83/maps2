@@ -1,7 +1,9 @@
 <div class="row auth-main">
     <div class="col-12 col-sm-6 col-md-6 col-lg-6 left-container">
         <span class="app-logo">
-            <a class="app-logo-link" routerLink="/login"><img class="app-logo-image" src="assets/img/logo.png"></a>
+            <a class="app-logo-link" routerLink="/login">
+                <img class="app-logo-image" src="assets/img/logo.png">
+            </a>
         </span>
     </div>
 
@@ -9,112 +11,59 @@
         <div class="auth-block login-auth-block animated bounceInUp">
             <div class="top-label">
                 <h1>
-                    <strong>Hi! Welcome back.</strong>
+                    <strong>Verification Code</strong>
                 </h1>
-                <h4>
-                    Sign in to continue
+                <h4 class="hidden-xs-down" style="line-height: 30px">
+                    Enter the verification code sent
+                    <br> to {{ selectedEmail }} via email.
+                </h4>
+                <h4 class="hidden-sm-up" style="line-height: 30px">
+                    Enter the verification code sent to {{ selectedEmail }} via email.
                 </h4>
             </div>
+            <div class="verify-cred-margin"></div>
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value, $event)" class="form-horizontal">
+                <div class="form-group row">
+                    <div class="col-12 col-sm-12">
+                        <div class="row">
+                            <div class="col-3 col-sm-3">
+                                <input type="text" class="otp-input" maxlength="1" #inputCodeOne (keypress)="_keyPressNumber($event)" (keyup)="goto('inputCodeTwo')">
+                            </div>
+                            <div class="col-3 col-sm-3">
+                                <input type="text" class="otp-input" maxlength="1" #inputCodeTwo (keypress)="_keyPressNumber($event)" (keyup)="goto('inputCodeThree')">
+                            </div>
+                            <div class="col-3 col-sm-3">
+                                <input type="text" class="otp-input" maxlength="1" #inputCodeThree (keypress)="_keyPressNumber($event)" (keyup)="goto('inputCodeFour')">
+                            </div>
+                            <div class="col-3 col-sm-3">
+                                <input type="text" class="otp-input" maxlength="1" #inputCodeFour (keypress)="_keyPressNumber($event)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="verify-cred-margin-in"></div>
                 <div class="form-action-btn">
                     <div class="form-group row">
                         <div class="col-12 col-sm-12">
-                            <button md-raised-button color="primary" type="button" (click)="loginFacebook()" class="btn btn-warning btn-block btn-facebook">
-                                <span class="btn-md-icon">
-                                    <md-icon svgIcon="facebook"></md-icon>
-                                </span>
-                                <span class="btn-text-label">
-                                    CONTINUE WITH FACEBOOK
-                                </span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-12 col-sm-12">
-                            <button md-raised-button color="primary" type="button" (click)="loginTwitter()" class="btn btn-warning btn-block btn-twitter">
-                                <span class="btn-md-icon">
-                                    <md-icon svgIcon="twitter"></md-icon>
-                                </span>
-                                <span class="btn-text-label">
-                                    CONTINUE WITH TWITTER
-                                </span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-3 col-sm-3 phone-number-cc">
-                        <input type="text" [formControl]="countryCode" (focus)="initializeCountryCodes()" class="form-control" id="inputCode" placeholder="+1"
-                            [mdAutocomplete]="auto" maxlength="5" (keypress)="_keyPressCountryCode($event)">
-                        <md-autocomplete #auto="mdAutocomplete">
-                            <md-option *ngFor="let country of countries | async" [value]="'+' + country.phone_code">
-                                {{ '+' + country.phone_code }}
-                                <span style="color: rgba(0, 0, 0, 0.3)">
-                                    {{ country.country_code }}
-                                </span>
-                            </md-option>
-                        </md-autocomplete>
-                        <span class="separator-cc-container">
-                            <span class="separator-cc"></span>
-                        </span>
-                    </div>
-                    <div class="col-9 col-sm-9 phone-number-phone">
-                        <input type="text" class="form-control" id="inputPhone" placeholder="Phone Number" (keypress)="_keyPressNumber($event)">
-                    </div>
-                </div>
-                <div class="or-sep">
-                    <div class="row or">
-                        <div class="col-5 col-sm-5 or-line"></div>
-                        <div class="col-2 col-sm-2 or-text">
-                            <span class="or-or">
-                                <span class="or-or-text">
-                                    or
-                                </span>
-                            </span>
-                        </div>
-                        <div class="col-5 col-sm-5 or-line"></div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-12 col-sm-12">
-                        <input [formControl]="email" type="email" [ngClass]="{'has-input-error': (!email.valid && email.touched)}" class="form-control"
-                            id="inputEmail3" placeholder="Email" [(ngModel)]="user.email">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-12 col-sm-12">
-                        <input type="password" [ngClass]="{'has-input-error': (!password.valid && password.touched)}" class="form-control" id="password"
-                            placeholder="Password" [(ngModel)]="user.password" [formControl]="password">
-                    </div>
-                </div>
-                <div class="form-action-btn">
-                    <div class="form-group row">
-                        <div class="col-12 col-sm-12">
-                            <button md-raised-button color="primary" type="submit" class="btn btn-warning btn-block btn-login">SIGN IN</button>
+                            <button md-raised-button color="primary" type="submit" class="btn btn-warning btn-block btn-login">SIGN UP</button>
                         </div>
                     </div>
                 </div>
                 <div class="form-action-link">
                     <div class="form-group row">
-                        <div class="col-12 col-sm-12 text-center forget">
-                            <a style="cursor: pointer" (click)="openForgotPasswordDialog()">
-                                FORGOT PASSWORD?
+                        <div class="col-6 col-sm-6 text-left forget change-credential">
+                            <a style="cursor: pointer" (click)="resendVerificationCode()">
+                                RESEND VERIFICATION CODE
+                            </a>
+                        </div>
+                        <div class="col-6 col-sm-6 text-right forget change-credential">
+                            <a style="cursor: pointer" (click)="openChangeDialog()">
+                                CHANGE EMAIL
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="form-action-link form-action-signup">
-                    <div class="form-group row">
-                        <div class="col-12 col-sm-12 text-center signup">
-                            <span>
-                                Haven't signed up yet?
-                            </span>
-                            <a routerLink="/register">
-                                SIGN UP
-                            </a>
-                        </div>
-                    </div>
-                </div>
+
             </form>
 
         </div>

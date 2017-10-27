@@ -1,4 +1,4 @@
-import { Component, VERSION } from '@angular/core';
+import { Component, ViewChild, ElementRef, Renderer, VERSION } from '@angular/core';
 import {
     FormGroup,
     AbstractControl,
@@ -14,8 +14,6 @@ import { Store } from '@ngrx/store';
 import * as auth from '../../../auth/state/auth.actions';
 import { EmailValidator } from '../../../theme/validators';
 import { User } from '../../../auth/model/user.model';
-import { DomSanitizer } from '@angular/platform-browser';
-import { MdIconRegistry } from '@angular/material';
 import { ChangeMobileDialog } from '../change-mobile-dialog/change-mobile-dialog.component';
 import 'style-loader!./verification-mobile.scss';
 
@@ -27,6 +25,12 @@ declare const FB: any;
 })
 
 export class VerificationMobile {
+
+    @ViewChild('inputCodeOne') public _inputCodeOne: ElementRef;
+    @ViewChild('inputCodeTwo') public _inputCodeTwo: ElementRef;
+    @ViewChild('inputCodeThree') public _inputCodeThree: ElementRef;
+    @ViewChild('inputCodeFour') public _inputCodeFour: ElementRef;
+
     allLanguage = [];
 
     version = VERSION;
@@ -42,6 +46,8 @@ export class VerificationMobile {
     public settings: any;
     public countryCode: AbstractControl;
     public countryCodes = [];
+    public selectedPhone;
+    public selectedCountryCode;
     user = new User();
 
     public roles = [
@@ -55,10 +61,11 @@ export class VerificationMobile {
         private baThemeSpinner: BaThemeSpinner,
         private store: Store<any>,
         private toastrService: ToastrService,
-        private iconRegistry: MdIconRegistry,
-        private sanitizer: DomSanitizer,
+        private renderer: Renderer,
         public dialog: MdDialog
     ) {
+        this.selectedCountryCode = '+91';
+        this.selectedPhone = '9988776655';
         this.store
             .select('auth')
             .subscribe((res: any) => {
@@ -66,13 +73,6 @@ export class VerificationMobile {
                     this.countryCodes = res.countryCodes;
                 }
             });
-
-        iconRegistry.addSvgIcon(
-            'facebook',
-            sanitizer.bypassSecurityTrustResourceUrl('assets/img/facebook.svg'));
-        iconRegistry.addSvgIcon(
-            'twitter',
-            sanitizer.bypassSecurityTrustResourceUrl('assets/img/twitter.svg'));
 
         this.user.role = this.roles[0].value;
 
@@ -99,9 +99,7 @@ export class VerificationMobile {
             .startWith(null)
             .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
     }
-
-
-
+    
     getFacebookData() {
         FB.api('/me?fields=id,name,first_name,last_name,email', (data) => {
             if (data && !data.error) {
@@ -122,7 +120,7 @@ export class VerificationMobile {
     }
 
     loginTwitter() {
-        
+
     }
 
     initializeCountryCodes() {
@@ -131,7 +129,37 @@ export class VerificationMobile {
             .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
     }
 
-    openForgotPasswordDialog() {
+    resendVerificationCode() {
+
+    }
+
+    goto(id) {
+        switch (id) {
+            case 'inputCodeOne':
+                if (this._inputCodeOne) {
+                    this._inputCodeOne.nativeElement.focus();
+                }
+                break;
+            case 'inputCodeTwo':
+                if (this._inputCodeTwo) {
+                    this._inputCodeTwo.nativeElement.focus();
+                }
+                break;
+            case 'inputCodeThree':
+                if (this._inputCodeThree) {
+                    this._inputCodeThree.nativeElement.focus();
+                }
+                break;
+            case 'inputCodeFour':
+                if (this._inputCodeFour) {
+                    this._inputCodeFour.nativeElement.focus();
+                }
+                break;
+            default: break;
+        }
+    }
+
+    openChangeDialog() {
         let dialogRef = this.dialog.open(ChangeMobileDialog);
         // dialogRef.disableClose = true;
         dialogRef.componentInstance.data = 'sa';

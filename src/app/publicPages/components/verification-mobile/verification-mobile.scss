@@ -57,6 +57,17 @@
 .forget {
     font-size: 16px;
 }
+.verify-cred-margin {
+    height: 30px;
+}
+.verify-cred-margin-in {
+    height: 10px;
+}
+.change-credential {
+    a {
+        color: #026eff !important;
+    }
+}
 .signup {
     font-size: 16px;
 }
@@ -67,6 +78,12 @@
 .app-logo-link {
     margin: auto;
 }
+.otp-input {
+    height: 100px !important;
+    width: 100% !important;
+    font-size: xx-large !important;
+    text-align: center !important;
+}
 @media only screen and (max-width: 767px) {
     .app-logo {
         top: 14px;
@@ -74,5 +91,9 @@
     .app-logo-image {
         width: 160px;
         margin: auto;
+    }
+    .otp-input {
+        height: 50px !important;
+        font-size: x-large !important;
     }
 }
