@@ -13,6 +13,9 @@ import { Verification } from './components/verification/verification.component';
 import { VerificationEmail } from './components/verification-email/verification-email.component';
 import { VerificationMobile } from './components/verification-mobile/verification-mobile.component';
 import { ForgotPasswordDialog } from './components/forgot-password-dialog/forgot-password-dialog.component';
+import { ChangeMobileDialog } from './components/change-mobile-dialog/change-mobile-dialog.component';
+import { ChangeEmailDialog } from './components/change-email-dialog/change-email-dialog.component';
+import { ChangePasswordDialog } from './components/change-password-dialog/change-password-dialog.component';
 import {
     MdInputModule,
     MdButtonModule,
@@ -48,11 +51,16 @@ import {
         Verification,
         VerificationEmail,
         VerificationMobile,
-        ForgotPasswordDialog
+        ForgotPasswordDialog,
+        ChangeMobileDialog,
+        ChangeEmailDialog,
+        ChangePasswordDialog
     ],
     entryComponents: [
-        ForgotPasswordDialog
+        ForgotPasswordDialog,
+        ChangeMobileDialog,
+        ChangeEmailDialog,
+        ChangePasswordDialog
     ]
 })
-
 export class PublicPageModule { }

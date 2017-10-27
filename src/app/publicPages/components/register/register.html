@@ -62,7 +62,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-3 col-sm-3 phone-number-cc">
-                        <input type="text" [formControl]="countryCode" (focus)="initializeCountryCodes()" class="form-control" id="inputCountryCode"
+                        <input type="text" [formControl]="countryCode" (focus)="countryCodeClick()" class="form-control" id="inputCountryCode"
                             placeholder="+1" [mdAutocomplete]="auto" maxlength="5" (keypress)="_keyPressCountryCode($event)">
                         <md-autocomplete #auto="mdAutocomplete">
                             <md-option *ngFor="let country of countries | async" [value]="'+' + country.phone_code">

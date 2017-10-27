@@ -100,8 +100,6 @@ export class Login {
             .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
     }
 
-
-
     getFacebookData() {
         FB.api('/me?fields=id,name,first_name,last_name,email', (data) => {
             if (data && !data.error) {
@@ -125,10 +123,21 @@ export class Login {
         
     }
 
-    initializeCountryCodes() {
-        this.countries = this.countryCode.valueChanges
-            .startWith(null)
-            .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
+    countryCodeClick() {
+        if (this.countries) {
+            this.countries = this.countryCode.valueChanges
+                .startWith(null)
+                .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
+        } else {
+            this.countries = this.countryCode.valueChanges
+                .startWith(null)
+                .map(val => val ? this.filterOptions(val) : this.countryCodes.slice(0, 6));
+            setTimeout(() => {
+                this.countries = this.countryCode.valueChanges
+                    .startWith(null)
+                    .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
+            }, 1);
+        }
     }
 
     openForgotPasswordDialog() {

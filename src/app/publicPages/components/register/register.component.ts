@@ -92,9 +92,23 @@ export class Register {
         this.store.dispatch({
             type: auth.actionTypes.GET_COUNTRIES
         });
-        this.countries = this.countryCode.valueChanges
-            .startWith(null)
-            .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
+    }
+
+    countryCodeClick() {
+        if (this.countries) {
+            this.countries = this.countryCode.valueChanges
+                .startWith(null)
+                .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
+        } else {
+            this.countries = this.countryCode.valueChanges
+                .startWith(null)
+                .map(val => val ? this.filterOptions(val) : this.countryCodes.slice(0, 6));
+            setTimeout(() => {
+                this.countries = this.countryCode.valueChanges
+                    .startWith(null)
+                    .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
+            }, 1);
+        }
     }
 
     countries: Observable<any[]>;
@@ -149,12 +163,6 @@ export class Register {
 
     loginTwitter() {
 
-    }
-
-    initializeCountryCodes() {
-        this.countries = this.countryCode.valueChanges
-            .startWith(null)
-            .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
     }
 
     onSubmit(values: Object): void {

@@ -16,7 +16,7 @@ import { EmailValidator } from '../../../theme/validators';
 import { User } from '../../../auth/model/user.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MdIconRegistry } from '@angular/material';
-import { ForgotPasswordDialog } from '../forgot-password-dialog/forgot-password-dialog.component';
+import { ChangeEmailDialog } from '../change-email-dialog/change-email-dialog.component';
 import 'style-loader!./verification-email.scss';
 
 declare const FB: any;
@@ -100,8 +100,6 @@ export class VerificationEmail {
             .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
     }
 
-
-
     getFacebookData() {
         FB.api('/me?fields=id,name,first_name,last_name,email', (data) => {
             if (data && !data.error) {
@@ -132,7 +130,7 @@ export class VerificationEmail {
     }
 
     openForgotPasswordDialog() {
-        let dialogRef = this.dialog.open(ForgotPasswordDialog);
+        let dialogRef = this.dialog.open(ChangeEmailDialog);
         // dialogRef.disableClose = true;
         dialogRef.componentInstance.data = 'sa';
     }

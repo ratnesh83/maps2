@@ -16,7 +16,7 @@ import { EmailValidator } from '../../../theme/validators';
 import { User } from '../../../auth/model/user.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MdIconRegistry } from '@angular/material';
-import { ForgotPasswordDialog } from '../forgot-password-dialog/forgot-password-dialog.component';
+import { ChangeMobileDialog } from '../change-mobile-dialog/change-mobile-dialog.component';
 import 'style-loader!./verification-mobile.scss';
 
 declare const FB: any;
@@ -132,7 +132,7 @@ export class VerificationMobile {
     }
 
     openForgotPasswordDialog() {
-        let dialogRef = this.dialog.open(ForgotPasswordDialog);
+        let dialogRef = this.dialog.open(ChangeMobileDialog);
         // dialogRef.disableClose = true;
         dialogRef.componentInstance.data = 'sa';
     }
