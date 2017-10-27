@@ -27,11 +27,11 @@ export class ForgotPassword implements OnInit {
     user = new User();
     modalHeader: string = 'FORGOT PASSWORD';
 
-    constructor(fb: FormBuilder
-        , private activeModal: NgbActiveModal
-        , private modalService: NgbModal
-        , private store: Store<any>
-        , private baThemeSpinner: BaThemeSpinner) {
+    constructor(fb: FormBuilder, 
+        private activeModal: NgbActiveModal, 
+        private modalService: NgbModal, 
+        private store: Store<any>, 
+        private baThemeSpinner: BaThemeSpinner) {
 
         this.store
             .select('auth')
@@ -41,7 +41,6 @@ export class ForgotPassword implements OnInit {
                     this.activeModal.close();
                 }
             });
-
 
         this.form = fb.group({
             'email': [this.user.email, Validators.compose([Validators.required, EmailValidator.email, Validators.minLength(4)])],

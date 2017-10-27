@@ -1,0 +1,78 @@
+@import '../../../theme/sass/auth';
+.top-label {
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+.btn-login {
+    background-color: #026eff !important;
+    border-color: #026eff !important;
+}
+.btn-facebook {
+    .mat-button-wrapper {
+        display: flex;
+        height: 100%
+    }
+    background-color: #3a5999 !important;
+    border-color: #3a5999 !important;
+}
+.btn-twitter {
+    .mat-button-wrapper {
+        display: flex;
+        height: 100%
+    }
+    background-color: #55acee !important;
+    border-color: #55acee !important;
+}
+.btn-md-icon {
+    display: flex;
+    float: left;
+    height: -webkit-fill-available;
+    md-icon {
+        display: block;
+        margin: auto;
+    }
+}
+.btn-text-label {
+    display: flex;
+    margin: auto;
+}
+.login-auth-block {
+    position: relative;
+}
+.left-container {
+    min-height: 130px;
+}
+.app-logo {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    height: 116px;
+    left: 0px;
+}
+.app-logo-image {
+    width: 210px;
+    margin: auto;
+}
+.forget {
+    font-size: 16px;
+}
+.signup {
+    font-size: 16px;
+}
+.form-action-signup {
+    padding-top: 30px;
+    padding-bottom: 10px
+}
+.app-logo-link {
+    margin: auto;
+}
+@media only screen and (max-width: 480px) {
+    .app-logo {
+        top: 14px;
+    }
+    .app-logo-image {
+        width: 160px;
+        margin: auto;
+    }
+}

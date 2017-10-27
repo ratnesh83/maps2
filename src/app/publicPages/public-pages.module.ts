@@ -9,6 +9,9 @@ import { Login } from './components/login/login.component';
 import { Register } from './components/register/register.component';
 import { Address } from './components/address/address.component';
 import { Documents } from './components/document/document.component';
+import { Verification } from './components/verification/verification.component';
+import { VerificationEmail } from './components/verification-email/verification-email.component';
+import { VerificationMobile } from './components/verification-mobile/verification-mobile.component';
 import { ForgotPasswordDialog } from './components/forgot-password-dialog/forgot-password-dialog.component';
 import {
     MdInputModule,
@@ -42,6 +45,9 @@ import {
         Register,
         Address,
         Documents,
+        Verification,
+        VerificationEmail,
+        VerificationMobile,
         ForgotPasswordDialog
     ],
     entryComponents: [
