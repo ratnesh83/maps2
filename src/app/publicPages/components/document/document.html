@@ -1,7 +1,9 @@
 <div class="row auth-main">
     <div class="col-12 col-sm-6 col-md-6 col-lg-6 left-container">
         <span class="app-logo">
-            <a class="app-logo-link" routerLink="/login"><img class="app-logo-image" src="assets/img/logo.png"></a>
+            <a class="app-logo-link" routerLink="/login">
+                <img class="app-logo-image" src="assets/img/logo.png">
+            </a>
         </span>
     </div>
 
@@ -16,46 +18,34 @@
                 </h4>
             </div>
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value, $event)" class="form-horizontal">
-                
-                <div *ngIf="signUpType.value == '2'" class="form-group row">
-                    <div class="col-12 col-sm-12">
-                        <input type="text" [formControl]="companyName" class="form-control" id="inputCompanyName" placeholder="Company Name">
+                <div class="profile-section">
+                    <img class="profile-picture-image" (click)="bringFileSelector()" [src]="profilePicture.value ? profilePicture.value : 'assets/img/user.png'">
+                    <input #profilePicture [hidden]="true" type="file" (change)="selectImage($event)">
+                    <p class="picture-text">Upload profile picture</p>
+                </div>
+
+                <div class="doc-section row">
+                    <div class="col-12 col-sm-12" *ngFor="let document of form.controls['documents'].controls; let i=index">
+                        <div class="form-group row">
+                            <div class="col-12 col-sm-12">
+                                <input type="text" [formControl]="document.controls['documentName']" class="form-control" id="inputDocumentName" placeholder="Document Name">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-12 col-sm-12">
+                                <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader[i]"
+                                    class="well my-drop-zone">
+                                    <span (click)="bringFilesSelector(i)">Upload Image</span>
+                                    <input #documentInput [hidden]="true" type="file" ng2FileSelect [uploader]="uploader[i]" (change)="selectDocumentImage($event, i)">
+                                </div>
+                                <strong>
+                                    {{ uploader[i]?.queue[uploader[i]?.queue?.length > 0 ? uploader[i]?.queue?.length - 1 : 0]?.file?.name}}
+                                </strong>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-12 col-sm-12">
-                        <input type="text" [formControl]="name" class="form-control" id="inputName" placeholder="Full Name">
-                    </div>
-                </div>
-                
-                <div class="form-group row">
-                    <div class="col-12 col-sm-12">
-                        <input type="email" [formControl]="email" [ngClass]="{'has-input-error': (!email.valid && email.touched)}" class="form-control"
-                            id="inputEmail" placeholder="Email">
-                    </div>
-                </div>
-                <div *ngIf="signUpType.value == '1'" class="form-group row">
-                    <div class="col-12 col-sm-12">
-                        <input type="text" class="form-control" id="inputExpertiseDescription" [formControl]="expertiseDescription" placeholder="Expertise Description">
-                    </div>
-                </div>
-                <div *ngIf="signUpType.value == '2'" class="form-group row">
-                    <div class="col-12 col-sm-12">
-                        <input type="text" class="form-control" id="inputDescription" [formControl]="description" placeholder="Description">
-                    </div>
-                </div>
-                <div *ngIf="!socialId.value" class="form-group row">
-                    <div class="col-12 col-sm-12">
-                        <input type="password" [ngClass]="{'has-input-error': (!password.valid && password.touched)}" class="form-control" id="inputPassword"
-                            placeholder="Password" [formControl]="password">
-                    </div>
-                </div>
-                <div *ngIf="!socialId.value" class="form-group row">
-                    <div class="col-12 col-sm-12">
-                        <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm Password" [formControl]="repeatPassword">
-                    </div>
-                </div>
-                
+
                 <div class="form-action-btn">
                     <div class="form-group row">
                         <div class="col-12 col-sm-12">
@@ -66,11 +56,11 @@
                 <div class="form-group row sigup-add-doc">
                     <div class="col-12 col-sm-12">
                         <span class="terms">
-                            <a class="terms-conditions">+ ADD MORE DOCUMENTS</a>
+                            <a (click)="addDocument()" class="terms-conditions">+ ADD MORE DOCUMENTS</a>
                         </span>
                     </div>
                 </div>
-                
+
             </form>
 
         </div>

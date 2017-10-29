@@ -11,6 +11,14 @@
     background-color: #3a5999 !important;
     border-color: #3a5999 !important;
 }
+.doc-section {
+    max-height: 300px;
+    overflow-y: auto;
+}
+.padding-null {
+    padding-left: 0px;
+    padding-right: 0px;
+}
 .btn-twitter {
     .mat-button-wrapper {
         display: flex;
@@ -107,6 +115,24 @@
 }
 .app-logo-link {
     margin: auto;
+}
+.profile-section {
+    text-align: center;
+    .profile-picture-image {
+        height: 100px;
+        cursor: pointer;
+    }
+    .picture-text {
+        color: #999999;
+        padding-top: 15px;
+    }
+    padding-bottom: 20px;
+}
+.my-drop-zone { 
+    border: dotted 3px lightgray; 
+}
+.nv-file-over { 
+    border: dotted 3px red; 
 }
 @media only screen and (max-width: 767px) {
     .app-logo {

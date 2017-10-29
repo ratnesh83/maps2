@@ -25,6 +25,7 @@ import {
     MdRadioModule,
     MdDialogModule,
 } from '@angular/material';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
     imports: [
@@ -40,7 +41,8 @@ import {
         MdCheckboxModule,
         MdRadioModule,
         MdDialogModule,
-        GooglePlaceModule
+        GooglePlaceModule,
+        FileUploadModule
     ],
     declarations: [
         PublicPages,
