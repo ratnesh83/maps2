@@ -15,12 +15,10 @@ export class UserService {
     }
 
     login(data) {
-
         let url = environment.APP.API_URL + environment.APP.LOGIN_API;
         this.authRequired = false;
         this.utcOffset = true;
         return this.apiService.postApi(url, data, this.authRequired, this.utcOffset);
-
     }
 
     logoutUser() {
@@ -44,5 +42,5 @@ export class UserService {
         this.authRequired = false;
         this.utcOffset = false;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
-    };
+    }
 }

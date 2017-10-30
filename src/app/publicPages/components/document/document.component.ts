@@ -17,7 +17,7 @@ declare const FB: any;
 })
 export class Documents {
 
-    @ViewChild('profilePicture') public _profilePicture: ElementRef;
+    @ViewChild('profilePictureInput') public _profilePicture: ElementRef;
     @ViewChildren('documentInput') public _document: QueryList<HTMLInputElement>;
     public storeData;
     public form: FormGroup;
@@ -38,7 +38,7 @@ export class Documents {
         this.storeData = this.store
             .select('auth')
             .subscribe((res: any) => {
-
+                
             });
 
         this.form = this.fb.group({
@@ -47,7 +47,6 @@ export class Documents {
         });
         this.uploader.push(new FileUploader({ url: '' }));
         this.profilePicture = this.form.controls['profilePicture'];
-
     }
 
     ngOnInit() {
@@ -65,7 +64,7 @@ export class Documents {
     }
 
     checkFileSize(size): boolean {
-        if (size > 5000000) {
+        if (size > 20000000) {
             return false;
         } else {
             return true;
@@ -80,47 +79,98 @@ export class Documents {
         }
     }
 
+    checkFileSizeImage(size): boolean {
+        if (size > 5000000) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    checkFileTypeImage(type): boolean {
+        if (type.indexOf('image') != -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    droppedFile(files, index) {
+        if (files.length == 0) {
+            this.uploader[index].queue.pop();
+            return;
+        }
+        if (!this.checkFileType(files[0].type)) {
+            this.toastrService.clear();
+            this.toastrService.error('Only images and pdf are allowed', 'Error');
+            this.uploader[index].queue.pop();
+            return;
+        }
+        if (!this.checkFileSize(files[0].size)) {
+            this.toastrService.clear();
+            this.toastrService.error('Please select file less than 20MB', 'Error');
+            this.uploader[index] = new FileUploader({ url: '' });
+            return;
+        }
+        const control = <FormArray>this.form.controls['documents'];
+        const reader = new FileReader();
+        reader.addEventListener('load', (element: Event) => {
+            const childControl = <FormGroup>control.at(index);
+            childControl.controls['document'].setValue(reader.result);
+        }, false);
+        reader.readAsDataURL(files[0]);
+    }
+
     selectImage(event) {
         if (event.target.files.length == 0) {
             return;
         }
-        if (!this.checkFileType(event.target.files[0].type)) {
+        if (!this.checkFileTypeImage(event.target.files[0].type)) {
             this.toastrService.clear();
-            this.toastrService.error('Only images and pdf are allowed', 'Error');
+            this.toastrService.error('Only images are allowed', 'Error');
             event.target.value = null;
             return;
         }
-        if (!this.checkFileSize(event.target.files[0].size)) {
+        if (!this.checkFileSizeImage(event.target.files[0].size)) {
             this.toastrService.clear();
             this.toastrService.error('Please select an image less than 5MB', 'Error');
             event.target.value = null;
             return;
         }
+        const reader = new FileReader();
+        reader.addEventListener('load', (element: Event) => {
+            this.profilePicture.setValue(reader.result);
+        }, false);
+        reader.readAsDataURL(event.target.files[0]);
         event.target.value = null;
     }
 
     selectDocumentImage(event, index) {
         if (event.target.files.length == 0) {
-            //this.uploader[index] = new FileUploader({ url: '' });
             this.uploader[index].queue.pop();
             return;
         }
         if (!this.checkFileType(event.target.files[0].type)) {
             this.toastrService.clear();
-            this.toastrService.error('Only images are allowed', 'Error');
-            //this.uploader[index] = new FileUploader({ url: '' });
+            this.toastrService.error('Only images and pdf are allowed', 'Error');
             this.uploader[index].queue.pop();
             event.target.value = null;
             return;
         }
         if (!this.checkFileSize(event.target.files[0].size)) {
             this.toastrService.clear();
-            this.toastrService.error('Please select an image less than 5MB', 'Error');
+            this.toastrService.error('Please select file less than 20MB', 'Error');
             this.uploader[index] = new FileUploader({ url: '' });
             event.target.value = null;
             return;
         }
-        console.log(event.target.files, index);
+        const control = <FormArray>this.form.controls['documents'];
+        const reader = new FileReader();
+        reader.addEventListener('load', (element: Event) => {
+            const childControl = <FormGroup>control.at(index);
+            childControl.controls['document'].setValue(reader.result);
+        }, false);
+        reader.readAsDataURL(event.target.files[0]);
         event.target.value = null;
     }
 

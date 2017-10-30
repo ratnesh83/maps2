@@ -20,8 +20,8 @@
 
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value, $event)" class="form-horizontal">
                 <div class="profile-section">
-                    <img class="profile-picture-image" (click)="bringFileSelector()" [src]="profilePicture.value ? profilePicture.value : 'assets/img/user.png'">
-                    <input #profilePicture [hidden]="true" type="file" (change)="selectImage($event)">
+                    <img class="profile-picture-image" (click)="bringFileSelector()" [src]="profilePicture.value && profilePicture.value.indexOf('image') != -1 ? profilePicture.value : 'assets/img/user.png'">
+                    <input #profilePictureInput [hidden]="true" type="file" (change)="selectImage($event)">
                     <p class="picture-text">Upload Profile Picture</p>
                 </div>
 
@@ -34,19 +34,24 @@
                         </div>
                         <div class="form-group row">
                             <div class="col-12 col-sm-12">
-                                <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader[i]"
+                                <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" (onFileDrop)="droppedFile($event, i)" [uploader]="uploader[i]"
                                     class="well my-drop-zone">
                                     <span class="my-drop-zone-span" (click)="bringFilesSelector(i)">
                                         <div style="text-align: center; padding-bottom: 10px">
-                                            <img style="cursor: pointer" src="assets/img/upload.png">
+                                            <img style="cursor: pointer; max-height: 100px" [src]="document?.controls['document']?.value && document?.controls['document']?.value?.indexOf('image') != -1 ? document?.controls['document']?.value : 'assets/img/upload.png'">
                                         </div>
-                                        Drag an document here or browse for an document to upload.
+                                        <div *ngIf="document?.controls['document']?.value && document?.controls['document']?.value?.indexOf('image') == -1" style="line-height: 25px; cursor: pointer" class="text-center">
+                                            <strong>
+                                                {{ uploader[i]?.queue[uploader[i]?.queue?.length > 0 ? uploader[i]?.queue?.length - 1 : 0]?.file?.name }}
+                                            </strong>
+                                        </div>
+                                        <div style="line-height: 25px; cursor: pointer" class="text-center">
+                                            Drag an document here or browse for an document to upload.
+                                        </div>
                                     </span>
                                     <input #documentInput [hidden]="true" type="file" ng2FileSelect [uploader]="uploader[i]" (change)="selectDocumentImage($event, i)">
                                 </div>
-                                <strong>
-                                    {{ uploader[i]?.queue[uploader[i]?.queue?.length > 0 ? uploader[i]?.queue?.length - 1 : 0]?.file?.name}}
-                                </strong>
+
                             </div>
                         </div>
                         <div *ngIf="!first" class="text-right">

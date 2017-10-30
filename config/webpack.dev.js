@@ -16,7 +16,8 @@ const ENV = process.env.ENV = process.env.NODE_ENV = 'development';
 const HOST = process.env.HOST || 'localhost';
 const PORT = Number(process.env.PORT) || 3004;
 const HMR = helpers.hasProcessFlag('hot');
-const APIURL = process.env.APIURL || "http://13.126.154.41:3001";
+//const APIURL = process.env.APIURL || "http://13.126.154.41:3001";
+const APIURL = process.env.APIURL || "http://52.90.243.185:3000";
 //console.log("--------process.env.APIURL--------");
 //console.log(process.env.APIURL);
 const METADATA = webpackMerge(commonConfig({ env: ENV }).metadata, {

@@ -2,7 +2,7 @@ export const environment = {
     production: false,
     APP: {
         API_URL: APIURL,
-        LOGIN_API: '/user/login',
+        LOGIN_API: '/api/v2/web/user/login',
         LOGOUT_API: '/user/logout',
         FORGOT_API: '/user/getResetPasswordToken',
       
