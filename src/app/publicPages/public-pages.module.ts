@@ -24,6 +24,7 @@ import {
     MdCheckboxModule,
     MdRadioModule,
     MdDialogModule,
+    MdTooltipModule
 } from '@angular/material';
 import { FileUploadModule } from 'ng2-file-upload';
 
@@ -41,6 +42,7 @@ import { FileUploadModule } from 'ng2-file-upload';
         MdCheckboxModule,
         MdRadioModule,
         MdDialogModule,
+        MdTooltipModule,
         GooglePlaceModule,
         FileUploadModule
     ],

@@ -71,6 +71,7 @@ import 'style-loader!./change-mobile-dialog.scss';
 
 export class ChangeMobileDialog {
     data;
+    public storeData;
     public form: FormGroup;
     public email: AbstractControl;
     public countryCode: AbstractControl;
@@ -79,7 +80,7 @@ export class ChangeMobileDialog {
     constructor(fb: FormBuilder,
         private store: Store<any>,
         public dialog: MdDialog) {
-        this.store
+        this.storeData = this.store
             .select('auth')
             .subscribe((res: any) => {
                 if (res.countryCodes) {
@@ -87,20 +88,26 @@ export class ChangeMobileDialog {
                 }
             });
 
-            this.form = fb.group({
-                'email': ['', Validators.compose([Validators.required, EmailValidator.email])],
-                'countryCode': [''],
-                'phone': ['']
-            });
+        this.form = fb.group({
+            'email': ['', Validators.compose([Validators.required, EmailValidator.email])],
+            'countryCode': [''],
+            'phone': ['']
+        });
 
-            this.countryCode = this.form.controls['countryCode'];
-            this.phone = this.form.controls['phone'];
+        this.countryCode = this.form.controls['countryCode'];
+        this.phone = this.form.controls['phone'];
     }
 
     ngOnInit() {
         this.store.dispatch({
             type: auth.actionTypes.GET_COUNTRIES
         });
+    }
+
+    ngOnDestroy() {
+        if (this.storeData) {
+            this.storeData.unsubscribe();
+        }
     }
 
     countryCodeClick() {

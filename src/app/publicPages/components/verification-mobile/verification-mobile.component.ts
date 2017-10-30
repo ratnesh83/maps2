@@ -35,7 +35,7 @@ export class VerificationMobile {
 
     version = VERSION;
     private lastInserted: number[] = [];
-
+    public storeData;
     public form: FormGroup;
     public email: AbstractControl;
     public role: AbstractControl;
@@ -66,7 +66,7 @@ export class VerificationMobile {
     ) {
         this.selectedCountryCode = '+91';
         this.selectedPhone = '9988776655';
-        this.store
+        this.storeData = this.store
             .select('auth')
             .subscribe((res: any) => {
                 if (res.countryCodes) {
@@ -99,7 +99,13 @@ export class VerificationMobile {
             .startWith(null)
             .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
     }
-    
+
+    ngOnDestroy() {
+        if (this.storeData) {
+            this.storeData.unsubscribe();
+        }
+    }
+
     getFacebookData() {
         FB.api('/me?fields=id,name,first_name,last_name,email', (data) => {
             if (data && !data.error) {

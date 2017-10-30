@@ -25,7 +25,7 @@ declare const FB: any;
 export class Verification {
 
     version = VERSION;
-
+    public storeData;
     public form: FormGroup;
     public signUpType: AbstractControl;
     public role: AbstractControl;
@@ -47,10 +47,10 @@ export class Verification {
         private toastrService: ToastrService,
         public dialog: MdDialog
     ) {
-        this.store
+        this.storeData = this.store
             .select('auth')
             .subscribe((res: any) => {
-                
+
             });
 
         this.user.role = this.roles[0].value;
@@ -63,7 +63,13 @@ export class Verification {
     }
 
     ngOnInit() {
-        
+
+    }
+
+    ngOnDestroy() {
+        if (this.storeData) {
+            this.storeData.unsubscribe();
+        }
     }
 
     onSubmit(values: Object, event) {

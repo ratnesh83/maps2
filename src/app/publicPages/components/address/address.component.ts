@@ -12,6 +12,7 @@ import 'style-loader!./address.scss';
 })
 export class Address {
 
+    public storeData;
     public form: FormGroup;
     public streetAddress: AbstractControl;
     public locationAddress: AbstractControl;
@@ -28,10 +29,10 @@ export class Address {
         private store: Store<any>,
         private cdRef: ChangeDetectorRef) {
 
-        this.store
+        this.storeData = this.store
             .select('auth')
             .subscribe((res: any) => {
-                
+
             });
 
         this.form = fb.group({
@@ -56,7 +57,13 @@ export class Address {
     }
 
     ngOnInit() {
-       
+
+    }
+
+    ngOnDestroy() {
+        if (this.storeData) {
+            this.storeData.unsubscribe();
+        }
     }
 
     getAddress(event) {

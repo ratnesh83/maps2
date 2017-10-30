@@ -49,7 +49,9 @@ export class ForgotPassword implements OnInit {
         this.email = this.form.controls['email'];
 
     }
-    ngOnInit() { }
+    ngOnInit() { 
+
+    }
 
     closeModal() {
         this.activeModal.close();

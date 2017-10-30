@@ -19,6 +19,7 @@ export class Documents {
 
     @ViewChild('profilePicture') public _profilePicture: ElementRef;
     @ViewChildren('documentInput') public _document: QueryList<HTMLInputElement>;
+    public storeData;
     public form: FormGroup;
     public profilePicture: AbstractControl;
     public documentName: AbstractControl;
@@ -34,7 +35,7 @@ export class Documents {
         private toastrService: ToastrService,
         private cdRef: ChangeDetectorRef) {
 
-        this.store
+        this.storeData = this.store
             .select('auth')
             .subscribe((res: any) => {
 
@@ -46,11 +47,17 @@ export class Documents {
         });
         this.uploader.push(new FileUploader({ url: '' }));
         this.profilePicture = this.form.controls['profilePicture'];
-        
+
     }
 
     ngOnInit() {
 
+    }
+
+    ngOnDestroy() {
+        if (this.storeData) {
+            this.storeData.unsubscribe();
+        }
     }
 
     fileOverBase(e) {
@@ -88,7 +95,7 @@ export class Documents {
             return;
         }
         event.target.value = null;
-        
+
     }
 
     selectDocumentImage(event, index) {
@@ -137,6 +144,12 @@ export class Documents {
         const control = <FormArray>this.form.controls['documents'];
         control.push(this.initDocument());
         this.uploader.push(new FileUploader({ url: '' }));
+    }
+
+    removeDocument(index) {
+        const control = <FormArray>this.form.controls['documents'];
+        control.removeAt(index);
+        this.uploader.splice(index, 1);
     }
 
     onSubmit(values: Object): void {

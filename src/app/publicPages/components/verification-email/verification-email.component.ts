@@ -35,7 +35,7 @@ export class VerificationEmail {
 
     version = VERSION;
     private lastInserted: number[] = [];
-
+    public storeData;
     public form: FormGroup;
     public email: AbstractControl;
     public role: AbstractControl;
@@ -64,7 +64,7 @@ export class VerificationEmail {
         public dialog: MdDialog
     ) {
         this.selectedEmail = 'dev@mail.com';
-        this.store
+        this.storeData = this.store
             .select('auth')
             .subscribe((res: any) => {
                 if (res.countryCodes) {
@@ -96,6 +96,12 @@ export class VerificationEmail {
         this.countries = this.countryCode.valueChanges
             .startWith(null)
             .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
+    }
+
+    ngOnDestroy() {
+        if (this.storeData) {
+            this.storeData.unsubscribe();
+        }
     }
 
     getFacebookData() {

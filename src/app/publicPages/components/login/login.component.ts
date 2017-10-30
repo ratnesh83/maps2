@@ -31,7 +31,7 @@ export class Login {
 
     version = VERSION;
     private lastInserted: number[] = [];
-
+    public storeData;
     public form: FormGroup;
     public email: AbstractControl;
     public role: AbstractControl;
@@ -59,7 +59,7 @@ export class Login {
         private sanitizer: DomSanitizer,
         public dialog: MdDialog
     ) {
-        this.store
+        this.storeData = this.store
             .select('auth')
             .subscribe((res: any) => {
                 if (res.countryCodes) {
@@ -95,9 +95,12 @@ export class Login {
         this.store.dispatch({
             type: auth.actionTypes.GET_COUNTRIES
         });
-        this.countries = this.countryCode.valueChanges
-            .startWith(null)
-            .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
+    }
+
+    ngOnDestroy() {
+        if (this.storeData) {
+            this.storeData.unsubscribe();
+        }
     }
 
     getFacebookData() {
@@ -120,7 +123,7 @@ export class Login {
     }
 
     loginTwitter() {
-        
+
     }
 
     countryCodeClick() {

@@ -17,6 +17,7 @@ declare const FB: any;
 })
 export class Register {
 
+    public storeData;
     public form: FormGroup;
     public name: AbstractControl;
     public companyName: AbstractControl;
@@ -41,7 +42,7 @@ export class Register {
         private sanitizer: DomSanitizer,
         private cdRef: ChangeDetectorRef) {
 
-        this.store
+        this.storeData = this.store
             .select('auth')
             .subscribe((res: any) => {
                 if (res.countryCodes) {
@@ -92,6 +93,12 @@ export class Register {
         this.store.dispatch({
             type: auth.actionTypes.GET_COUNTRIES
         });
+    }
+
+    ngOnDestroy() {
+        if (this.storeData) {
+            this.storeData.unsubscribe();
+        }
     }
 
     countryCodeClick() {
