@@ -28,16 +28,16 @@
                     <div class="col-12 col-sm-12">
                         <div class="row">
                             <div class="col-3 col-sm-3">
-                                <input type="text" class="otp-input" maxlength="1" #inputCodeOne (keypress)="_keyPressNumber($event)" (keyup)="goto('inputCodeTwo')">
+                                <input type="text" class="otp-input" [formControl]="codeOne" maxlength="1" #inputCodeOne (keypress)="_keyPressOtpNumber($event, 'inputCodeTwo')">
                             </div>
                             <div class="col-3 col-sm-3">
-                                <input type="text" class="otp-input" maxlength="1" #inputCodeTwo (keypress)="_keyPressNumber($event)" (keyup)="goto('inputCodeThree')">
+                                <input type="text" class="otp-input" [formControl]="codeTwo" maxlength="1" #inputCodeTwo (keypress)="_keyPressOtpNumber($event, 'inputCodeThree')">
                             </div>
                             <div class="col-3 col-sm-3">
-                                <input type="text" class="otp-input" maxlength="1" #inputCodeThree (keypress)="_keyPressNumber($event)" (keyup)="goto('inputCodeFour')">
+                                <input type="text" class="otp-input" [formControl]="codeThree" maxlength="1" #inputCodeThree (keypress)="_keyPressOtpNumber($event, 'inputCodeFour')">
                             </div>
                             <div class="col-3 col-sm-3">
-                                <input type="text" class="otp-input" maxlength="1" #inputCodeFour (keypress)="_keyPressNumber($event)">
+                                <input type="text" class="otp-input" [formControl]="codeFour" maxlength="1" #inputCodeFour (keypress)="_keyPressOtpNumber($event, 'inputCodeOne')">
                             </div>
                         </div>
                     </div>

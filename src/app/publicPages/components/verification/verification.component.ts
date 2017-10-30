@@ -1,4 +1,4 @@
-import { Component, VERSION } from '@angular/core';
+import { Component } from '@angular/core';
 import {
     FormGroup,
     AbstractControl,
@@ -24,15 +24,11 @@ declare const FB: any;
 
 export class Verification {
 
-    version = VERSION;
     public storeData;
     public form: FormGroup;
     public signUpType: AbstractControl;
     public role: AbstractControl;
     public submitted: boolean = false;
-    public domains: any[];
-    public settings: any;
-    user = new User();
 
     public roles = [
         { value: 'admin', display: 'Admin' },
@@ -52,8 +48,6 @@ export class Verification {
             .subscribe((res: any) => {
 
             });
-
-        this.user.role = this.roles[0].value;
 
         this.form = fb.group({
             'signUpType': ['1']

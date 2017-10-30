@@ -1,4 +1,4 @@
-import { Component, VERSION } from '@angular/core';
+import { Component } from '@angular/core';
 import {
     FormGroup,
     AbstractControl,
@@ -27,10 +27,7 @@ declare const FB: any;
 })
 
 export class Login {
-    allLanguage = [];
-
-    version = VERSION;
-    private lastInserted: number[] = [];
+   
     public storeData;
     public form: FormGroup;
     public email: AbstractControl;
@@ -38,8 +35,6 @@ export class Login {
     public checkboxRemember: AbstractControl;
     public password: AbstractControl;
     public submitted: boolean = false;
-    public domains: any[];
-    public settings: any;
     public countryCode: AbstractControl;
     public countryCodes = [];
     user = new User();
@@ -171,7 +166,7 @@ export class Login {
 
     onSubmit(values: Object, event) {
         let remember;
-
+        console.log(values);
         //  console.log(this.user.checkboxRemember);
         if (this.user.checkboxRemember) {
             remember = this.user.checkboxRemember;
