@@ -17,6 +17,7 @@
                     Add your documents & profile picture to Continue
                 </h4>
             </div>
+
             <form [formGroup]="form" (ngSubmit)="onSubmit(form.value, $event)" class="form-horizontal">
                 <div class="profile-section">
                     <img class="profile-picture-image" (click)="bringFileSelector()" [src]="profilePicture.value ? profilePicture.value : 'assets/img/user.png'">

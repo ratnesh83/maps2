@@ -73,7 +73,7 @@ export class Documents {
     }
 
     checkFileType(type): boolean {
-        if (type.indexOf('image') != -1) {
+        if (type.indexOf('image') != -1 || type.indexOf('pdf') != -1) {
             return true;
         } else {
             return false;
@@ -86,30 +86,38 @@ export class Documents {
         }
         if (!this.checkFileType(event.target.files[0].type)) {
             this.toastrService.clear();
-            this.toastrService.error('Only images are allowed', 'Error');
+            this.toastrService.error('Only images and pdf are allowed', 'Error');
+            event.target.value = null;
             return;
         }
         if (!this.checkFileSize(event.target.files[0].size)) {
             this.toastrService.clear();
             this.toastrService.error('Please select an image less than 5MB', 'Error');
+            event.target.value = null;
             return;
         }
         event.target.value = null;
-
     }
 
     selectDocumentImage(event, index) {
         if (event.target.files.length == 0) {
+            //this.uploader[index] = new FileUploader({ url: '' });
+            this.uploader[index].queue.pop();
             return;
         }
         if (!this.checkFileType(event.target.files[0].type)) {
             this.toastrService.clear();
             this.toastrService.error('Only images are allowed', 'Error');
+            //this.uploader[index] = new FileUploader({ url: '' });
+            this.uploader[index].queue.pop();
+            event.target.value = null;
             return;
         }
         if (!this.checkFileSize(event.target.files[0].size)) {
             this.toastrService.clear();
             this.toastrService.error('Please select an image less than 5MB', 'Error');
+            this.uploader[index] = new FileUploader({ url: '' });
+            event.target.value = null;
             return;
         }
         console.log(event.target.files, index);
