@@ -109,7 +109,7 @@
     top: 35px;
     background: darken(#e1692c, 5%);
     box-shadow: 0 5px 10px 2px rgba(0, 0, 0, .25);
-    @include scrollbars(.4em, darken(#026eff, 15%), hsla(0, 0%, 100%, .2));
+    @include scrollbars(.4em, #026eff, hsla(0, 0%, 100%, .2));
     a.text-muted .msg-area div {
         color: #fff;
     }

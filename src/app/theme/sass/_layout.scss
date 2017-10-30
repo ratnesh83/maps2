@@ -1,6 +1,6 @@
 @import 'conf/conf';
 $left-space: $sidebar-width;
-@include scrollbars(.3em, darken(#026eff, 15%), #026eff);
+@include scrollbars(.4em, #026eff, lighten(#026eff, 25%));
 html {
     position: relative;
     min-width: 320px;

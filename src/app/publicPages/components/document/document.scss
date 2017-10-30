@@ -14,6 +14,10 @@
 .doc-section {
     max-height: 300px;
     overflow-y: auto;
+    padding: 2px 1px;
+}
+.doc-section-element-margin {
+    height: 15px;
 }
 .padding-null {
     padding-left: 0px;
@@ -121,6 +125,7 @@
     .profile-picture-image {
         height: 100px;
         cursor: pointer;
+        border-radius: 50%;
     }
     .picture-text {
         color: #999999;
@@ -128,11 +133,20 @@
     }
     padding-bottom: 20px;
 }
-.my-drop-zone { 
-    border: dotted 3px lightgray; 
+.my-drop-zone {
+    display: flex;
+    height: 180px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    border: dotted 3px lightgray;
+    .my-drop-zone-span {
+        margin: auto;
+        color: #999999;
+        font-size: medium;
+    }
 }
 .nv-file-over { 
-    border: dotted 3px red; 
+    border: dotted 3px #82b7ff; 
 }
 @media only screen and (max-width: 767px) {
     .app-logo {

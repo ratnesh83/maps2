@@ -21,11 +21,11 @@
                 <div class="profile-section">
                     <img class="profile-picture-image" (click)="bringFileSelector()" [src]="profilePicture.value ? profilePicture.value : 'assets/img/user.png'">
                     <input #profilePicture [hidden]="true" type="file" (change)="selectImage($event)">
-                    <p class="picture-text">Upload profile picture</p>
+                    <p class="picture-text">Upload Profile Picture</p>
                 </div>
 
                 <div class="doc-section row">
-                    <div class="col-12 col-sm-12" *ngFor="let document of form.controls['documents'].controls; let i=index">
+                    <div class="col-12 col-sm-12" *ngFor="let document of form.controls['documents'].controls; let i=index; let last=last">
                         <div class="form-group row">
                             <div class="col-12 col-sm-12">
                                 <input type="text" [formControl]="document.controls['documentName']" class="form-control" id="inputDocumentName" placeholder="Document Name">
@@ -35,7 +35,12 @@
                             <div class="col-12 col-sm-12">
                                 <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" [uploader]="uploader[i]"
                                     class="well my-drop-zone">
-                                    <span (click)="bringFilesSelector(i)">Upload Image</span>
+                                    <span class="my-drop-zone-span" (click)="bringFilesSelector(i)">
+                                        <div style="text-align: center; padding-bottom: 10px">
+                                            <img style="cursor: pointer" src="assets/img/upload.png">
+                                        </div>
+                                        Drag an document here or browse for an document to upload.
+                                    </span>
                                     <input #documentInput [hidden]="true" type="file" ng2FileSelect [uploader]="uploader[i]" (change)="selectDocumentImage($event, i)">
                                 </div>
                                 <strong>
@@ -43,6 +48,7 @@
                                 </strong>
                             </div>
                         </div>
+                        <div *ngIf="!last" class="doc-section-element-margin"></div>
                     </div>
                 </div>
 

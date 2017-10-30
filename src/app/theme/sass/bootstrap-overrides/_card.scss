@@ -10,7 +10,7 @@ $card-header-font-size: 16px;
     }
 }
 .card {
-    @include scrollbars(.4em, darken(#026eff, 15%), hsla(0, 0%, 100%, .2));
+    @include scrollbars(.4em, #026eff, hsla(0, 0%, 100%, .2));
     color: $content-text;
     background-color: $bootstrap-panel-card-bg;
     border: 0;
