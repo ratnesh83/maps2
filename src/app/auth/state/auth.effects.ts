@@ -67,6 +67,52 @@ export class AuthEffects {
         });
 
     @Effect({ dispatch: false })
+    loginSocail: Observable<Action> = this.actions$
+        .ofType(auth.actionTypes.AUTH_SOCIAL_LOGIN)
+        .do(action => {
+            this.baThemeSpinner.show();
+            this.UserService.login(action.payload).subscribe((result) => {
+                if (result.statusCode === 200) {
+                    // hide loader
+                    this.baThemeSpinner.hide();
+                    //this.toast_service.showSuccess();
+                    // this.store.dispatch({ type: 'AUTH_GET_USER_ROLES', payload: result });
+                    this.store.dispatch(new auth.AuthLoginSuccessAction(result));
+                    //token store in localstorage
+                    localStorage.setItem('token', result.data.accessToken);
+                    let tokenSession = localStorage.getItem('token');
+                    localStorage.setItem('tokenSession', JSON.stringify(result.data.accessToken));
+                    let loggedIn = this.authService.login();
+                    if (loggedIn) {
+                        // Get the redirect URL from our auth service
+                        // If no redirect has been set, use the default
+                        let redirect = 'pages/dashboard';
+                        if (this.authService.user.userType === 'USER') {
+                            //redirecting user to specfic roles
+                            // console.log("Success fully admin  role redirect ");
+                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/dashboard';
+                        }
+                        else if (this.authService.user.userType === 'EMPLOYER') {
+                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/settings/key-message';
+                        }
+                        this.router.navigate([redirect]);
+                    }
+                }
+                else {
+                }
+            }
+                , (error) => {
+                    this.baThemeSpinner.hide();
+                    if (error.message) {
+                        this.toastrService.clear();
+                        this.toastrService.error(error.message || 'User not found', 'Authentication');
+                        this.router.navigate(['register']);
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
     loginError: Observable<Action> = this.actions$
         .ofType(auth.actionTypes.AUTH_LOGIN_ERROR)
         .do((action) => {

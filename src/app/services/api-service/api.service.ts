@@ -14,8 +14,7 @@ export class ApiService {
     options;
     utcOffset;
 
-    constructor(public http: Http, private store: Store<any>) {
-    }
+    constructor(public http: Http, private store: Store<any>) { }
 
     getToken(authRequired, utcOffset) {
 

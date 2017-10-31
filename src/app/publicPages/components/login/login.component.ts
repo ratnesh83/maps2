@@ -6,6 +6,7 @@ import {
     Validators,
     FormControl
 } from '@angular/forms';
+import { FacebookService, LoginResponse, InitParams } from 'ngx-facebook';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { MdDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -50,7 +51,8 @@ export class Login {
         private toastrService: ToastrService,
         private iconRegistry: MdIconRegistry,
         private sanitizer: DomSanitizer,
-        public dialog: MdDialog
+        public dialog: MdDialog,
+        public facebook: FacebookService
     ) {
         this.storeData = this.store
             .select('auth')
@@ -59,6 +61,14 @@ export class Login {
                     this.countryCodes = res.countryCodes;
                 }
             });
+
+        let initParams: InitParams = {
+            appId: '124864551546012',
+            xfbml: true,
+            version: 'v2.1'
+        };
+
+        facebook.init(initParams);
 
         iconRegistry.addSvgIcon(
             'facebook',
@@ -90,27 +100,33 @@ export class Login {
 
     ngOnDestroy() {
         if (this.storeData) {
-            this.storeData.unsubscribe();
+            // this.storeData.unsubscribe();
         }
     }
 
     getFacebookData() {
-        FB.api('/me?fields=id,name,first_name,last_name,email', (data) => {
-            if (data && !data.error) {
-                console.log(data);
-            } else {
-                console.log(data.error);
-            }
-        });
+        this.facebook.api('/me?fields=id,name,first_name,gender,email')
+            .then((response: any) => {
+                this.onFacebookSubmit(response);
+            }, (error: any) => {
+                console.error(error);
+            });
     }
 
     loginFacebook() {
-        FB.getLoginStatus((response) => {
-            FB.login((result) => {
-                this.getFacebookData();
-            }, { scope: 'email' });
-            console.log(response);
-        });
+        this.facebook.getLoginStatus()
+            .then(() => {
+                this.facebook.login({ scope: 'email' })
+                    .then((response: LoginResponse) => {
+                        this.getFacebookData();
+                    })
+                    .catch((error: any) => {
+                        console.error(error);
+                    });
+            })
+            .catch((error: any) => {
+                console.error(error);
+            });
     }
 
     loginTwitter() {
@@ -147,6 +163,22 @@ export class Login {
             option.phone_code.toString().indexOf(val.replace('+', '')) === 0);
     }
 
+    onFacebookSubmit(value) {
+        let timezoneOffset = (new Date()).getTimezoneOffset();
+        if (this.form.valid) {
+            let data = {
+                socialId: value.id,
+                socialMode: 'FACEBOOK',
+                deviceType: 'WEB_BROWSER',
+                timezoneOffset: timezoneOffset
+            };
+            this.store.dispatch({
+                type: auth.actionTypes.AUTH_SOCIAL_LOGIN,
+                payload: data
+            });
+        }
+    }
+
     onSubmit() {
         let timezoneOffset = (new Date()).getTimezoneOffset();
         if (this.form.valid) {
@@ -154,7 +186,7 @@ export class Login {
                 emailOrPhone: this.email.value,
                 password: this.password.value,
                 deviceType: 'WEB_BROWSER',
-                //timezoneOffset: timezoneOffset
+                timezoneOffset: timezoneOffset
             };
             this.store.dispatch({
                 type: auth.actionTypes.AUTH_LOGIN,

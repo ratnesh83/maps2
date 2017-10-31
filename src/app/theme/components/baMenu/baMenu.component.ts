@@ -67,8 +67,12 @@ export class BaMenu {
     }
 
     public ngOnDestroy(): void {
-        this._onRouteChange.unsubscribe();
-        this._menuItemsSub.unsubscribe();
+        if (this._onRouteChange) {
+            this._onRouteChange.unsubscribe();
+        }
+        if (this._menuItemsSub) {
+            this._menuItemsSub.unsubscribe();
+        }
     }
 
     public hoverItem($event): void {
