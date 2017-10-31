@@ -59,7 +59,7 @@
                         </span>
                     </div>
                     <div class="col-9 col-sm-9 phone-number-phone">
-                        <input type="text" class="form-control" id="inputPhone" placeholder="Phone Number" (keypress)="_keyPressNumber($event)">
+                        <input type="text" class="form-control" id="inputPhone" [formControl]="phone" placeholder="Phone Number" (keypress)="_keyPressNumber($event)">
                     </div>
                 </div>
                 <div class="or-sep">
@@ -78,12 +78,12 @@
                 <div class="form-group row">
                     <div class="col-12 col-sm-12">
                         <input [formControl]="email" type="email" [ngClass]="{'has-input-error': (!email.valid && email.touched)}" class="form-control"
-                            id="inputEmail3" placeholder="Email">
+                            id="inputEmail" (keypress)="_keyPressEmail($event)" placeholder="Email">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input type="password" [ngClass]="{'has-input-error': (!password.valid && password.touched)}" class="form-control" id="password"
+                        <input type="password" [ngClass]="{'has-input-error': (!password.valid && password.touched)}" class="form-control" id="inputPassword"
                             placeholder="Password" [formControl]="password">
                     </div>
                 </div>

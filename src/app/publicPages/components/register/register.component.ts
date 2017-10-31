@@ -52,14 +52,6 @@ export class Register {
                 }
             });
 
-        let initParams: InitParams = {
-            appId: '124864551546012',
-            xfbml: true,
-            version: 'v2.1'
-        };
-
-        facebook.init(initParams);
-
         iconRegistry.addSvgIcon(
             'facebook',
             sanitizer.bypassSecurityTrustResourceUrl('assets/img/facebook.svg'));

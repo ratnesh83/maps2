@@ -177,7 +177,6 @@ export class ApiService {
             'body': { 'userID': data.userID }
         });
 
-        //console.log("data in delete.....................................",data)
         return this.http.delete(url, this.options)
             .map((res: Response) => res.json())
             .catch((error: any) => {

@@ -31,7 +31,7 @@ export class Login {
     public storeData;
     public form: FormGroup;
     public email: AbstractControl;
-    public role: AbstractControl;
+    public phone: AbstractControl;
     public checkboxRemember: AbstractControl;
     public password: AbstractControl;
     public submitted: boolean = false;
@@ -62,14 +62,6 @@ export class Login {
                 }
             });
 
-        let initParams: InitParams = {
-            appId: '124864551546012',
-            xfbml: true,
-            version: 'v2.1'
-        };
-
-        facebook.init(initParams);
-
         iconRegistry.addSvgIcon(
             'facebook',
             sanitizer.bypassSecurityTrustResourceUrl('assets/img/facebook.svg'));
@@ -80,16 +72,16 @@ export class Login {
         this.form = fb.group({
             'email': ['', Validators.compose([Validators.required, EmailValidator.email])],
             'password': ['', Validators.compose([Validators.required])],
-            'role': [''],
-            'checkboxRemember': [false],
-            'countryCode': ['']
+            'phone': ['', Validators.compose([Validators.required])],
+            'countryCode': ['', Validators.compose([Validators.required])]
         });
 
         this.email = this.form.controls['email'];
         this.password = this.form.controls['password'];
         this.checkboxRemember = this.form.controls['checkboxRemember'];
-        this.role = this.form.controls['role'];
+        this.phone = this.form.controls['phone'];
         this.countryCode = this.form.controls['countryCode'];
+
     }
 
     ngOnInit() {
@@ -181,36 +173,57 @@ export class Login {
 
     onSubmit() {
         let timezoneOffset = (new Date()).getTimezoneOffset();
-        if (this.form.valid) {
+        if (!this.phone.value && !this.email.value) {
+            if (this.phone.errors.required) {
+                this.toastrService.clear();
+                this.toastrService.error('Phone number or email is required', 'Error');
+            }
+        } else if ((this.countryCode.value || this.phone.value) && !this.email.value && this.phone.hasError && this.phone.errors) {
+            if (this.phone.errors.required) {
+                this.toastrService.clear();
+                this.toastrService.error('Phone number is required', 'Error');
+            }
+        } else if (this.email.value && !this.phone.value && this.email.hasError && this.email.errors) {
+            if (this.email.errors.required) {
+                this.toastrService.clear();
+                this.toastrService.error('Email is required', 'Error');
+            } else if (this.email.errors.invalid) {
+                this.toastrService.clear();
+                this.toastrService.error('Email is invalid', 'Error');
+            }
+        } else if (this.password.hasError && this.password.errors) {
+            if (this.password.errors.required) {
+                this.toastrService.clear();
+                this.toastrService.error('Password is required', 'Error');
+            } else if (this.password.errors.invalid) {
+                this.toastrService.clear();
+                this.toastrService.error('Password is invalid', 'Error');
+            }
+        } else {
             let data = {
                 emailOrPhone: this.email.value,
+                countryCode: this.countryCode.value,
                 password: this.password.value,
                 deviceType: 'WEB_BROWSER',
                 timezoneOffset: timezoneOffset
             };
+            if (this.phone.value) {
+                data.emailOrPhone = this.phone.value;
+                data.countryCode = this.countryCode.value;
+            } else if (this.email.value) {
+                data.emailOrPhone = this.email.value;
+                delete data.countryCode;
+            }
             this.store.dispatch({
                 type: auth.actionTypes.AUTH_LOGIN,
                 payload: data
             });
-        } else {
-            if (this.email.hasError && this.email.errors) {
-                if (this.email.errors.required) {
-                    this.toastrService.clear();
-                    this.toastrService.error('Email is required', 'Error');
-                } else if (this.email.errors.invalid) {
-                    this.toastrService.clear();
-                    this.toastrService.error('Email is invalid', 'Error');
-                }
-            } else if (this.password.hasError && this.password.errors) {
-                if (this.password.errors.required) {
-                    this.toastrService.clear();
-                    this.toastrService.error('Password is required', 'Error');
-                } else if (this.password.errors.invalid) {
-                    this.toastrService.clear();
-                    this.toastrService.error('Password is invalid', 'Error');
-                }
-            }
         }
+    }
+
+    _keyPressEmail(event: any) {
+        this.countryCode.reset();
+        this.phone.reset();
     }
 
     _keyPressNumber(event: any) {
@@ -218,6 +231,8 @@ export class Login {
         let inputChar = event.target.value + String.fromCharCode(event.charCode);
         if (event.charCode != 0 && !pattern.test(inputChar)) {
             event.preventDefault();
+        } else {
+            this.email.reset();
         }
     }
 
@@ -226,6 +241,8 @@ export class Login {
         let inputChar = event.target.value + String.fromCharCode(event.charCode);
         if (event.charCode != 0 && !pattern.test(inputChar)) {
             event.preventDefault();
+        } else {
+            this.email.reset();
         }
     }
 
