@@ -5,122 +5,52 @@
 .mat-input-error {
     color: $warning;
 }
-.mat-input-invalid .mat-input-ripple {
-    background-color: $warning;
-}
-.settings-main .mat-input-element:disabled {
-    color: rgba(0, 0, 0, 0.9);
-}
-.settings-main .disable-input.mat-input-element:disabled {
-    color: rgba(0, 0, 0, 0.3);
-}
-label {
-    padding-left: 0px;
-}
-.settings-table td {
-    padding: 15px !important;
-}
-.settings-table .child-equipments i {
-    font-size: small;
-}
-.settings-table .child-equipments .mat-icon-button {
-    height: 30px;
-    width: 30px;
-    line-height: 30px;
-}
 .no-padding {
     padding-left: 0px;
     padding-right: 0px;
 }
-.mat-input-invalid .mat-input-placeholder {
-    color: $warning;
+.Rectangle-317-Copy-2{
+margin-left:-20px; 
+  background-color: #025acc;
 }
-.mat-input-error {
-    color: $warning;
+.Employer-Profile {
+    margin: 5px 15px 5px 25px;
+  font-family: OpenSans;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  color: #ffffff;
 }
-.mat-input-invalid .mat-input-ripple {
-    background-color: $warning;
+.main-card-header{
+    margin:20px; 
 }
-.head-content-padding {
-    margin-top: 10px;
+.main-header-image{
+    width: 140px !important;
+  height: 140px !important;
+  background-color: #ffffff;
 }
-.tabs-content {
-    margin-top: 30px;
+.main-card-title{
+    font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  text-align: center;
+  color: #474747;
 }
-label {
-    padding-left: 0px;
+.main-card-title-address{
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  text-align: center;
+  color: #026eff;
 }
-.example-card {
-    background: transparent;
-    box-shadow: none !important;
-    padding-top: 0px !important;
-    .mat-card-image {
-        margin: 0px 0px 16px 0px;
-        max-width: 200px;
-    }
-    md-card-header {
-        margin-left: -24px;
-        > div {
-            margin: 5px 0px;
-            .mat-card-title {
-                font-weight: bold;
-            }
-        }
-    }
-}
-.td-align {
-    padding: 10px 50px !important;
-    text-align: left !important;
-}
-.td-actions {
-    display: inline-block;
-    min-width: 100px;
-    text-align: left;
-    margin: auto;
-}
-.no-button {
-    cursor: default;
-    &:hover {
-        cursor: default;
-    }
-}
-.image-upload {
-    display: flex; 
-    position: absolute; 
-    width: 50px; 
-    height: 50px
-}
-.image-upload-spin {
-    margin: auto;
-    z-index: 20;
-}
-.settings-md-header {
-    .mat-card-header-text {
-        width: 100%;
-    }
-}
-.settings-table-button {
-    float: right;
-}
-.settings-table-button {
-    button.btn-primary {
-        border-width: 1px !important;
-        border-color: black !important;
-        color: black !important;
-        background-color: transparent !important;
-        padding: 0.2rem 0.5rem !important;
-        font-size: small !important;
-        line-height: normal !important;
-        &:focus {
-            border-width: 1px !important;
-            background-color: transparent !important;
-            border-color: black !important;
-        }
-        &:hover {
-            border-width: 1px !important;
-            background-color: transparent !important;
-            border-color: black !important;
-            transform: scale(1.05) !important;
-        }
-    }
+.main-card-subtitle{
+    .text{
+    width: 627px;
+  height: 48px;
+font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.9px;
+  text-align: center;
+  color: #b1b1b1;
+  }
 }
