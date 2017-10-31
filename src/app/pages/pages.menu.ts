@@ -24,7 +24,7 @@ export class PagesMenuService {
                                 selected: false,
                                 expanded: false,
                                 order: 0,
-                                auth: ['admin']
+                                auth: ['USER']
                             }
                         }
                     },
@@ -130,7 +130,7 @@ export class PagesMenuService {
                                 selected: false,
                                 expanded: false,
                                 order: 100,
-                                auth: ['admin']
+                                auth: ['USER']
                             }
                         },
                     },

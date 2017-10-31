@@ -48,6 +48,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PublicPageModule } from './publicPages/public-pages.module';
 import { CustomOption } from './theme/components/toaster/toaster-option';
 import { ToastOptions } from 'ng2-toastr/src/toast-options';
+import { FacebookModule } from 'ngx-facebook';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -77,8 +78,8 @@ export type StoreType = {
         AdminAuthModule,
         BrowserAnimationsModule,
         CommonModule,
+        FacebookModule.forRoot(),
         ToastModule.forRoot(),
-
         ToastrModule.forRoot({
             positionClass: 'toast-bottom-left',
             preventDuplicates: true,

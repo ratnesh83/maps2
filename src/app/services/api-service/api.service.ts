@@ -14,8 +14,7 @@ export class ApiService {
     options;
     utcOffset;
 
-    constructor(public http: Http, private store: Store<any>) {
-    }
+    constructor(public http: Http, private store: Store<any>) { }
 
     getToken(authRequired, utcOffset) {
 
@@ -178,7 +177,6 @@ export class ApiService {
             'body': { 'userID': data.userID }
         });
 
-        //console.log("data in delete.....................................",data)
         return this.http.delete(url, this.options)
             .map((res: Response) => res.json())
             .catch((error: any) => {

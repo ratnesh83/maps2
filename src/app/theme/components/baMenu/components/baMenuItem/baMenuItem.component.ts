@@ -32,9 +32,8 @@ export class BaMenuItem {
     public authCheck(): boolean {
     
         //console.log(this.menuItem);
-
         if (this.menuItem.auth) {
-            if (this.authService.user.role == this.menuItem.auth) {
+            if (this.authService.user.userType == this.menuItem.auth) {
                 return true;
             }
             else {

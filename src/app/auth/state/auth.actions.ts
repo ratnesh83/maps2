@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 
 export const actionTypes = {
     AUTH_LOGIN: 'AUTH_LOGIN',
+    AUTH_SOCIAL_LOGIN: 'AUTH_SOCIAL_LOGIN',
     AUTH_LOGIN_ERROR: 'AUTH_LOGIN_ERROR',
     AUTH_LOGIN_SUCCESS: 'AUTH_LOGIN_SUCCESS',
     AUTH_LOGOUT: 'AUTH_LOGOUT',
@@ -30,7 +31,11 @@ type credentials = {
 export class AuthLoginAction implements Action {
     type = actionTypes.AUTH_LOGIN;
     constructor(public payload: credentials) {
-
+    }
+}
+export class AuthSocialLoginAction implements Action {
+    type = actionTypes.AUTH_SOCIAL_LOGIN;
+    constructor(public payload: credentials) {
     }
 }
 export class AuthLoginErrorAction implements Action {

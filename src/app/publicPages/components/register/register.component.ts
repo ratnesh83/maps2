@@ -4,6 +4,7 @@ import * as auth from '../../../auth/state/auth.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { EmailValidator, EqualPasswordsValidator } from '../../../theme/validators';
+import { FacebookService, LoginResponse, InitParams } from 'ngx-facebook';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MdIconRegistry } from '@angular/material';
 
@@ -40,7 +41,8 @@ export class Register {
         private store: Store<any>,
         private iconRegistry: MdIconRegistry,
         private sanitizer: DomSanitizer,
-        private cdRef: ChangeDetectorRef) {
+        private cdRef: ChangeDetectorRef,
+        public facebook: FacebookService) {
 
         this.storeData = this.store
             .select('auth')
@@ -97,7 +99,7 @@ export class Register {
 
     ngOnDestroy() {
         if (this.storeData) {
-            this.storeData.unsubscribe();
+            //this.storeData.unsubscribe();
         }
     }
 
@@ -140,32 +142,36 @@ export class Register {
     }
 
     getFacebookData() {
-        FB.api('/me?fields=id,name,first_name,last_name,email', (data) => {
-            if (data && !data.error) {
-                console.log(data);
-                if (data.id) {
-                    this.socialId.setValue(data.id);
-                    this.cdRef.detectChanges();
+        this.facebook.api('/me?fields=id,name,first_name,gender,email')
+            .then((response: any) => {
+                if (response.id) {
+                    this.socialId.setValue(response.id);
                 }
-                if (data.name) {
-                    this.name.setValue(data.name);
+                if (response.name) {
+                    this.name.setValue(response.name);
                 }
-                if (data.email) {
-                    this.email.setValue(data.email);
+                if (response.email) {
+                    this.email.setValue(response.email);
                 }
-            } else {
-                console.log(data.error);
-            }
-        });
+            }, (error: any) => {
+                console.error(error);
+            });
     }
 
     loginFacebook() {
-        FB.getLoginStatus((response) => {
-            FB.login((result) => {
-                this.getFacebookData();
-            }, { scope: 'email' });
-            console.log(response);
-        });
+        this.facebook.getLoginStatus()
+            .then(() => {
+                this.facebook.login({ scope: 'email' })
+                    .then((response: LoginResponse) => {
+                        this.getFacebookData();
+                    })
+                    .catch((error: any) => {
+                        console.error(error);
+                    });
+            })
+            .catch((error: any) => {
+                console.error(error);
+            });
     }
 
     loginTwitter() {
