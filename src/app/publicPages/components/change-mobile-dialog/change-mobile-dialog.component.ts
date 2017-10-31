@@ -20,7 +20,7 @@ import 'style-loader!./change-mobile-dialog.scss';
             <div class="forgot-block">
                 <div class="forgot-block-inner">
                     <div style="width: 100%; text-align: center; margin-bottom: 25px">
-                        <img class="image" src="assets/img/lock2.png">
+                        <img class="image" src="assets/img/mobile.png">
                     </div>
                     <div style="width: 100%; text-align: center">
                         <h2 class="title">
