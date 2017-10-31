@@ -36,7 +36,7 @@ export class Register {
 
     public submitted: boolean = false;
 
-    constructor(fb: FormBuilder,
+    constructor(private fb: FormBuilder,
         private store: Store<any>,
         private iconRegistry: MdIconRegistry,
         private sanitizer: DomSanitizer,

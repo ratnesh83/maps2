@@ -77,7 +77,7 @@ export class ChangeMobileDialog {
     public countryCode: AbstractControl;
     public phone: AbstractControl;
     public countryCodes = [];
-    constructor(fb: FormBuilder,
+    constructor(private fb: FormBuilder,
         private store: Store<any>,
         public dialog: MdDialog) {
         this.storeData = this.store

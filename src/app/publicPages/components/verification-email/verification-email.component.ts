@@ -45,7 +45,7 @@ export class VerificationEmail {
         { value: 'driver', display: 'Driver' }
     ];
 
-    constructor(fb: FormBuilder,
+    constructor(private fb: FormBuilder,
         private baThemeSpinner: BaThemeSpinner,
         private store: Store<any>,
         private toastrService: ToastrService,

@@ -25,7 +25,7 @@ export class Address {
 
     public submitted: boolean = false;
 
-    constructor(fb: FormBuilder,
+    constructor(private fb: FormBuilder,
         private store: Store<any>,
         private cdRef: ChangeDetectorRef) {
 

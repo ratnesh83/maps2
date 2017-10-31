@@ -54,9 +54,10 @@ export class ApiService {
 
         //console.log(this.headers,'__')
         ///if(utc)
-        this.options = new RequestOptions({ headers: this.headers });
+        // this.options = new RequestOptions({ headers: this.headers });
         //console.log(this.options)
-        return this.options;
+        // console.log(new RequestOptions({ headers: this.headers }))
+        return this.headers;
     }
 
     getFileUploadToken(authRequired, utcOffset) {
@@ -91,7 +92,7 @@ export class ApiService {
             this.headers.set('utcoffset', this.utcOffset);
         }
         this.options = new RequestOptions({ headers: this.headers });
-        return this.options;
+        return this.headers;
     }
 
     getApi(url, authRequired, utcOffset) {

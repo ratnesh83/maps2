@@ -13,7 +13,6 @@ import { BaThemeSpinner } from '../../../theme/services';
 import { Store } from '@ngrx/store';
 import * as auth from '../../../auth/state/auth.actions';
 import { EmailValidator } from '../../../theme/validators';
-import { User } from '../../../auth/model/user.model';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MdIconRegistry } from '@angular/material';
 import { ForgotPasswordDialog } from '../forgot-password-dialog/forgot-password-dialog.component';
@@ -27,7 +26,7 @@ declare const FB: any;
 })
 
 export class Login {
-   
+
     public storeData;
     public form: FormGroup;
     public email: AbstractControl;
@@ -37,7 +36,6 @@ export class Login {
     public submitted: boolean = false;
     public countryCode: AbstractControl;
     public countryCodes = [];
-    user = new User();
 
     public roles = [
         { value: 'admin', display: 'Admin' },
@@ -46,7 +44,7 @@ export class Login {
         { value: 'driver', display: 'Driver' }
     ];
 
-    constructor(fb: FormBuilder,
+    constructor(private fb: FormBuilder,
         private baThemeSpinner: BaThemeSpinner,
         private store: Store<any>,
         private toastrService: ToastrService,
@@ -69,13 +67,11 @@ export class Login {
             'twitter',
             sanitizer.bypassSecurityTrustResourceUrl('assets/img/twitter.svg'));
 
-        this.user.role = this.roles[0].value;
-
         this.form = fb.group({
-            'email': [this.user.email, Validators.compose([Validators.required, EmailValidator.email])],
-            'password': [this.user.password, Validators.compose([Validators.required])],
-            'role': [this.user.role],
-            'checkboxRemember': [this.user.checkboxRemember],
+            'email': ['', Validators.compose([Validators.required, EmailValidator.email])],
+            'password': ['', Validators.compose([Validators.required])],
+            'role': [''],
+            'checkboxRemember': [false],
             'countryCode': ['']
         });
 
@@ -151,52 +147,37 @@ export class Login {
             option.phone_code.toString().indexOf(val.replace('+', '')) === 0);
     }
 
-    isEmail(control: FormControl): {
-        [s: string]: boolean
-    } {
-        if (control.value) {
-            if (!control.value.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
-                return {
-                    noEmail: true
-                };
-            }
-        }
-
-    }
-
-    onSubmit(values: Object, event) {
-        let remember;
-        console.log(values);
-        //  console.log(this.user.checkboxRemember);
-        if (this.user.checkboxRemember) {
-            remember = this.user.checkboxRemember;
-            this.user.checkboxRemember = remember;
-        }
-        else {
-            remember = false;
-            //  console.log("user.checkbox",remember)
-            this.user.checkboxRemember = remember;
-        }
-
-        //console.log(this.user);
-        event.preventDefault();
-        this.submitted = true;
-
+    onSubmit() {
+        let timezoneOffset = (new Date()).getTimezoneOffset();
         if (this.form.valid) {
             let data = {
-                email: this.user.email,
-                password: this.user.password,
-                rememberMe: this.user.checkboxRemember,
-                role: this.user.role,
-                deviceType: 'WEB'
+                emailOrPhone: this.email.value,
+                password: this.password.value,
+                deviceType: 'WEB_BROWSER',
+                //timezoneOffset: timezoneOffset
             };
-            this.baThemeSpinner.show();
             this.store.dispatch({
                 type: auth.actionTypes.AUTH_LOGIN,
                 payload: data
             });
         } else {
-            //console.log('form is not valid ');
+            if (this.email.hasError && this.email.errors) {
+                if (this.email.errors.required) {
+                    this.toastrService.clear();
+                    this.toastrService.error('Email is required', 'Error');
+                } else if (this.email.errors.invalid) {
+                    this.toastrService.clear();
+                    this.toastrService.error('Email is invalid', 'Error');
+                }
+            } else if (this.password.hasError && this.password.errors) {
+                if (this.password.errors.required) {
+                    this.toastrService.clear();
+                    this.toastrService.error('Password is required', 'Error');
+                } else if (this.password.errors.invalid) {
+                    this.toastrService.clear();
+                    this.toastrService.error('Password is invalid', 'Error');
+                }
+            }
         }
     }
 

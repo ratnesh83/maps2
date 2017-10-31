@@ -25,38 +25,31 @@ export class AuthEffects {
     login: Observable<Action> = this.actions$
         .ofType(auth.actionTypes.AUTH_LOGIN)
         .do(action => {
-            let numberOne = 100;
-
+            this.baThemeSpinner.show();
             this.UserService.login(action.payload).subscribe((result) => {
                 if (result.statusCode === 200) {
                     // hide loader
-                    this.baThemeSpinner.hide(numberOne);
+                    this.baThemeSpinner.hide();
                     //this.toast_service.showSuccess();
                     // this.store.dispatch({ type: 'AUTH_GET_USER_ROLES', payload: result });
                     this.store.dispatch(new auth.AuthLoginSuccessAction(result));
                     //token store in localstorage
-                    localStorage.setItem('token', result.data.token);
+                    localStorage.setItem('token', result.data.accessToken);
                     let tokenSession = localStorage.getItem('token');
-                    localStorage.setItem('tokenSession', JSON.stringify(result.data.token));
+                    localStorage.setItem('tokenSession', JSON.stringify(result.data.accessToken));
                     let loggedIn = this.authService.login();
                     if (loggedIn) {
                         // Get the redirect URL from our auth service
                         // If no redirect has been set, use the default
-                        let redirect = 'pages';
-                        if (this.authService.user.role === 'admin') {
+                        let redirect = 'pages/dashboard';
+                        if (this.authService.user.userType === 'USER') {
                             //redirecting user to specfic roles
                             // console.log("Success fully admin  role redirect ");
                             redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/dashboard';
                         }
-                        else if (this.authService.user.role === 'customer') {
+                        else if (this.authService.user.userType === 'EMPLOYER') {
                             redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/settings/key-message';
-                        } else if (this.authService.user.role === 'serviceProvider') {
-
-                        } else if (this.authService.user.role === 'driver') {
-
                         }
-
-
                         this.router.navigate([redirect]);
                     }
                 }
@@ -66,18 +59,11 @@ export class AuthEffects {
                 , (error) => {
                     this.baThemeSpinner.hide();
                     if (error.message) {
-                        let m = 'Email or password does not match !';
-                        let t = 'Authentication';
-                        const opt = cloneDeep(this.options);
                         this.toastrService.clear();
-                        const inserted = this.toastrService[types[1]](m, t, opt);
-                        if (inserted) {
-                            this.lastInserted.push(inserted.toastId);
-                        }
+                        this.toastrService.error(error.message || 'Email or password does not match', 'Authentication');
                     }
                 }
             );
-
         });
 
     @Effect({ dispatch: false })
@@ -122,8 +108,6 @@ export class AuthEffects {
                     this.store.dispatch(new auth.AuthLogoutSuccessAction(result));
                     window.localStorage.removeItem('token');
                     window.localStorage.removeItem('tokenSession');
-                    window.localStorage.removeItem('editEmployerId');
-                    window.localStorage.removeItem('editWorkerId');
                     this.router.navigate(['login']);
                 }
             }
@@ -132,8 +116,6 @@ export class AuthEffects {
                     this.store.dispatch(new auth.AuthLogoutSuccessAction(error));
                     window.localStorage.removeItem('token');
                     window.localStorage.removeItem('tokenSession');
-                    window.localStorage.removeItem('editEmployerId');
-                    window.localStorage.removeItem('editWorkerId');
                     this.router.navigate(['login']);
                 }
             );

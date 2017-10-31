@@ -52,7 +52,6 @@ export class AuthService {
             this.isLoggedIn = false;
             return this.isLoggedIn;
         }
-
     }
 
     getSocketConnection() {
@@ -67,8 +66,6 @@ export class AuthService {
     logout(): void {
         window.localStorage.removeItem('token');
         window.localStorage.removeItem('tokenSession');
-        window.localStorage.removeItem('editEmployerId');
-        window.localStorage.removeItem('editWorkerId');
     }
 
 }

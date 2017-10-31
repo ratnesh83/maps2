@@ -23,11 +23,10 @@ export const actionTypes = {
 };
 
 type credentials = {
-    email: string,
+    emailOrPhone: string,
     password: string,
     deviceType: string
 };
-// LOGIN
 export class AuthLoginAction implements Action {
     type = actionTypes.AUTH_LOGIN;
     constructor(public payload: credentials) {
@@ -43,7 +42,6 @@ export class AuthLoginSuccessAction implements Action {
     type = actionTypes.AUTH_LOGIN_SUCCESS;
     constructor(public payload: any) { }
 }
-//  LOGOUT
 export class AuthLogoutAction implements Action {
     type = actionTypes.AUTH_LOGOUT;
     constructor(public payload: any = {}) { }
