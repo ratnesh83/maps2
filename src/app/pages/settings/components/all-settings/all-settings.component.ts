@@ -31,7 +31,8 @@ export class AllSettings {
     public fileUploadIndex;
     public imageUploadChildrenArray;
     public settingStore;
-
+    public jobItems;
+    public products;
     constructor(
         private store: Store<any>,
         private modalService: NgbModal,
@@ -45,13 +46,10 @@ export class AllSettings {
                 
             });
     };
-
-    
     bringFileSelector(): boolean {
         this.renderer.invokeElementMethod(this._fileUpload.nativeElement, 'click');
         return false;
     }
-
     bringFilesSelector(index): boolean {
         this.renderer.invokeElementMethod(this.imageUploadChildrenArray[index].nativeElement, 'click');
         return false;
@@ -100,21 +98,69 @@ export class AllSettings {
         }
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.jobItems = [
+            {
+            title:"Labor required",
+            subTitle:"Construction: Concre",
+            imgPath:"assets/img/crane.svg",
+            rate:40,
+            location:"1245 West Broadway, Vancouver.",
+            },
+            {
+            title:"Labor required",
+            subTitle:"Construction: Concre",
+            imgPath:"assets/img/electrical.svg",
+            rate:40,
+            location:"1245 West Broadway, Vancouver.",
+            },
+            {
+            title:"Labor required",
+            subTitle:"Construction: Concre",
+            imgPath:"assets/img/heart.svg",
+            rate:40,
+            location:"1245 West Broadway, Vancouver.",
+            },
+            {
+            title:"Labor required",
+            subTitle:"Construction: Concre",
+            imgPath:"assets/img/teeth.svg",
+            rate:40,
+            location:"1245 West Broadway, Vancouver.",
+            }
+        ];
+        this.products = [
+            {
+                title:"Donec facilisis",
+                subTitle:"Last updated: Yesterday 3:41 AM ",
+                imgPath:"assets/img/default-profile.jpg"
+            },
+            {
+                title:"Donec facilisis",
+                subTitle:"Last updated: Yesterday 3:41 AM ",
+                imgPath:"assets/img/default-profile.jpg"
+            },
+            {
+                title:"Donec facilisis",
+                subTitle:"Last updated: Yesterday 3:41 AM ",
+                imgPath:"assets/img/default-profile.jpg"
+            }
+        ]
+        console.log(this.jobItems);
+        
+    }
 
     ngOnDestroy() {
         /* if (this.settingStore) {
             this.settingStore.unsubscribe();
         } */
     }
-
     ngAfterViewInit() {
         this.imageUploadChildrenArray = this._filesUpload.toArray();
         this._filesUpload.changes.subscribe(childern => {
             this.imageUploadChildrenArray = childern.toArray();
         });
     }
-
     _keyPressCsvNumber(event: any) {
         const pattern = /^[0-9,]*$/;
         let inputChar = event.target.value + String.fromCharCode(event.charCode);
@@ -122,5 +168,4 @@ export class AllSettings {
             event.preventDefault();
         }
     }
-
 }

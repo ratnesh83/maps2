@@ -5,20 +5,89 @@
                 <div class="Rectangle-317-Copy-2 ">
                     <p class="Employer-Profile">Employer Profile</p>
                 </div>
-                
+
             </div>
-        <md-card-header class="main-card-header d-flex justify-content-center">
-                
+            <md-card-header class="main-card-header d-flex justify-content-center">
                 <div md-card-avatar class="main-header-image">
-                    <img mat-card-avatar class="main-header-image" src='assets/img/default-profile.jpg'>
+                    <img md-card-avatar class="main-header-image" src='assets/img/default-profile.jpg'>
                 </div>
             </md-card-header>
-            <md-card-title class="main-card-title text-center text-uppercase ">Careerhub</md-card-title>
-            <md-card-title class="main-card-title-address text-center text-lowercase">www.careerhub.com</md-card-title>
+            <md-card-title class="main-card-title text-uppercase ">Careerhub</md-card-title>
+            <md-card-title class="main-card-title-address text-lowercase">www.careerhub.com</md-card-title>
             <md-card-subtitle class="main-card-subtitle d-flex justify-content-center">
-                 <p class="text">Donec facilisis tortor ut augue lacinia, at viverra est semp Donec facilisis tortor ut augue lacinia, at viverra est semp.</p>
+                <p class="text">Donec facilisis tortor ut augue lacinia, at viverra est semp Donec facilisis tortor ut augue lacinia, at
+                    viverra est semp.</p>
             </md-card-subtitle>
 
+            <div class="container section-container">
+                <div class="row">
+                    <div class="col-md-12 section-heading">
+                        <div class="d-flex justify-content-center">
+                            <div md-card-avatar class="header-image">
+                                <img md-card-avatar class="group-5" src='assets/img/job.svg'>
+                            </div>
+                            <span class="job-title text-uppercase">JOB</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6" *ngFor="let item of jobItems">
+                        <md-card class="job-item">
+                            <md-card-header class="">
+                                <div mat-card-avatar class="header-image">
+                                    <img class="header-image" [src]="item.imgPath">
+                                </div>
+                                <md-card-title class="">{{item.title}}</md-card-title>
+                                <md-card-subtitle>{{item.subTitle}}</md-card-subtitle>
+                            </md-card-header>
+                            <md-card-content class="content">
+                                <p class="rate">${{item.rate}}/hr</p>
+                                <span class="location">{{item.location}}</span>
+                                <i class="fa fa-map-marker" style="color:#026eff"></i>
+                            </md-card-content>
+                        </md-card>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 section-heading">
+                        <div class="d-flex justify-content-center">
+                            <div md-card-avatar class="header-image">
+                                <img md-card-avatar class="group-5" src='assets/img/my_profile.svg'>
+                            </div>
+                            <span class="job-title text-uppercase">MY PRODUCTS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4" *ngFor="let item of products">
+                        <md-card class="">
+                            <md-card-content class="">
+                                <img class="img-fluid " [src]="item.imgPath">
+                                <md-card-title class="">{{item.title}}</md-card-title>
+                                <md-card-subtitle>{{item.subTitle}}</md-card-subtitle>
+                            </md-card-content>
+                        </md-card>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 section-heading">
+                        <div class="d-flex justify-content-center">
+                            <div md-card-avatar class="header-image">
+                                <img md-card-avatar class="group-5" src='assets/img/contact_us.svg'>
+                            </div>
+                            <span class="job-title text-uppercase">Contact us</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <md-card class="col-12">
+
+                    </md-card>
+                </div>
+            </div>
         </md-card>
 
     </div>

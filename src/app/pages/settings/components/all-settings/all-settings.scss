@@ -1,36 +1,35 @@
 @import "../../../../theme/sass/conf/conf";
 .mat-input-invalid .mat-input-placeholder {
-    color: $warning;
+  color: $warning;
 }
 .mat-input-error {
-    color: $warning;
+  color: $warning;
 }
 .no-padding {
-    padding-left: 0px;
-    padding-right: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 .Rectangle-317-Copy-2{
-margin-left:-20px; 
+  margin-left:-20px; 
   background-color: #025acc;
 }
 .Employer-Profile {
-    margin: 5px 15px 5px 25px;
-  font-family: OpenSans;
+  margin: 5px 15px 5px 25px;
   font-size: 16px;
   font-weight: bold;
   text-align: center;
   color: #ffffff;
 }
 .main-card-header{
-    margin:20px; 
+  margin:20px; 
 }
 .main-header-image{
-    width: 140px !important;
+  width: 140px !important;
   height: 140px !important;
   background-color: #ffffff;
 }
 .main-card-title{
-    font-size: 30px;
+  font-size: 30px;
   font-weight: 600;
   letter-spacing: 1.1px;
   text-align: center;
@@ -44,13 +43,57 @@ margin-left:-20px;
   color: #026eff;
 }
 .main-card-subtitle{
-    .text{
+  .text{
     width: 627px;
-  height: 48px;
-font-size: 18px;
+    height: 48px;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.9px;
+    text-align: center;
+    color: #b1b1b1;
+  }
+}
+.section-container{
+  padding: 0px 50px 0px 50px;
+}
+.section-heading{
+margin: 20px 0px 20px 0px;
+}
+.group-5{
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+.job-title{
+  font-size: 30px;
   font-weight: 600;
-  letter-spacing: 0.9px;
+  letter-spacing: 1.1px;
   text-align: center;
-  color: #b1b1b1;
+  color: #474747;
+  line-height: 40px;
+  margin: 0px 10px 0px 10px;
+}
+.job-item{
+  margin: 10px 0px 10px 0px;
+  border-radius: 2.5px;
+  border-left: solid 5px #f4ba48;
+  padding: 10px;
+  .content{
+    margin-left: 48px;
+    .rate{
+    font-size: 17px;
+    font-weight: bold;
+    letter-spacing: 0.9px;
+    text-align: left;
+    color: #026eff;
+    }
+    .location{
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.7px;
+    text-align: left;
+    color: #a7a7a7;
+    text-overflow: ellipsis;
+    }
   }
 }
