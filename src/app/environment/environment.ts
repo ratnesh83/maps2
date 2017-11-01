@@ -4,7 +4,7 @@ export const environment = {
         API_URL: APIURL,
         LOGIN_API: '/api/v2/web/user/login',
         LOGOUT_API: '/api/v2/web/user/logout',
-        FORGOT_API: '/user/getResetPasswordToken',
+        FORGOT_API: '/api/v2/web/user/forgotPassword',
       
         GET_ALL_BOOKING: '/admin/getAllAvailabeBooking',
         GET_ALL_OUTGOING_BOOKING: '/admin/getOngoingBooking',

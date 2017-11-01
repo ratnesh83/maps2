@@ -17,6 +17,7 @@ import { EmailValidator } from '../../../theme/validators';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MdIconRegistry } from '@angular/material';
 import { ForgotPasswordDialog } from '../forgot-password-dialog/forgot-password-dialog.component';
+import { ChangePasswordDialog } from '../change-password-dialog/change-password-dialog.component';
 import 'style-loader!./login.scss';
 
 declare const FB: any;
@@ -59,6 +60,11 @@ export class Login {
             .subscribe((res: any) => {
                 if (res.countryCodes) {
                     this.countryCodes = res.countryCodes;
+                }
+                if (res && res.forgotPass && res.forgotPass.statusCode) {
+                    this.dialog.closeAll();
+                    // this.forgetSuccess = true;
+                    this.openChangePasswordDialog();
                 }
             });
 
@@ -144,6 +150,12 @@ export class Login {
 
     openForgotPasswordDialog() {
         let dialogRef = this.dialog.open(ForgotPasswordDialog);
+        // dialogRef.disableClose = true;
+        dialogRef.componentInstance.data = 'sa';
+    }
+
+    openChangePasswordDialog() {
+        let dialogRef = this.dialog.open(ChangePasswordDialog);
         // dialogRef.disableClose = true;
         dialogRef.componentInstance.data = 'sa';
     }

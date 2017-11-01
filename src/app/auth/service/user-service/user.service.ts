@@ -32,8 +32,11 @@ export class UserService {
     forgotPassword(data) {
         this.authRequired = false;
         this.utcOffset = false;
-        let url = environment.APP.API_URL + environment.APP.FORGOT_API + '?email=' + data.email;
-        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+        let formData = new FormData();
+        formData.append('emailOrPhone', data);
+        let url = environment.APP.API_URL + environment.APP.FORGOT_API;
+        //return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
     }
 
     getCountryCodes(payload) {

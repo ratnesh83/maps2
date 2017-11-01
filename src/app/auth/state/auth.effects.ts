@@ -1,5 +1,5 @@
 import { get } from 'lodash';
-import { Injectable, VERSION } from '@angular/core';
+import { Injectable, VERSION, ApplicationRef } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -195,20 +195,12 @@ export class AuthEffects {
     forgot$ = this.actions$
         .ofType('AUTH_FORGOT_PASSWORD')
         .do(action => {
-            let numberThree = 100;
             this.UserService.forgotPassword(action.payload).subscribe((result) => {
+                this.baThemeSpinner.hide();
                 if (result.statusCode === 200) {
                     this.store.dispatch(new auth.AuthForgotPasswordSuccess(result));
-                    let m = 'Reset email sent successfully!';
-                    let t = 'Authentication';
-                    const opt = cloneDeep(this.options);
                     this.toastrService.clear();
-                    const inserted = this.toastrService[types[0]](m, t, opt);
-                    if (inserted) {
-                        this.lastInserted.push(inserted.toastId);
-                    }
-                    //hide loader
-                    this.baThemeSpinner.hide(numberThree);
+                    this.toastrService.success(result.message || 'Success', 'Success');
                 }
                 else {
 
@@ -216,18 +208,8 @@ export class AuthEffects {
             }
                 , (error) => {
                     this.baThemeSpinner.hide();
-
-
-                    if (error.message) {
-                        let m = error.message;
-                        let t = 'Authentication';
-                        const opt = cloneDeep(this.options);
-                        this.toastrService.clear();
-                        const inserted = this.toastrService[types[1]](m, t, opt);
-                        if (inserted) {
-                            this.lastInserted.push(inserted.toastId);
-                        }
-                    }
+                    this.toastrService.clear();
+                    this.toastrService.error(error.message || 'User not found', 'Error');
                 }
             );
 
@@ -262,7 +244,8 @@ export class AuthEffects {
         private authService: AuthService,
         private baThemeSpinner: BaThemeSpinner,
         private router: Router,
-        private toastrService: ToastrService
+        private toastrService: ToastrService,
+        private cdRef: ApplicationRef
     ) {
 
         this.options = this.toastrService.toastrConfig;
