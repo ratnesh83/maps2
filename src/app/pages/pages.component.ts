@@ -15,25 +15,27 @@ import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from '../theme
 @Component({
     selector: 'pages',
     template: `
-    <ba-sidebar></ba-sidebar>
+    
     <ba-page-top></ba-page-top>
     <div class="al-main">
-      <div class="container-fluid al-content">
-        <router-outlet></router-outlet>
+      <div class="container al-content">
+        <router-outlet>
+            <ba-sidebar></ba-sidebar>
+        </router-outlet>
       </div>
     </div>
-    <footer class="al-footer clearfix">
+    <!--<footer class="al-footer clearfix">
       <div class="al-footer-right"></div>
       <div class="al-footer-main clearfix">
         <div class="al-copy">&copy; 2017 - Labor Go</div>
-        <!--<ul class="al-share clearfix">
+        <ul class="al-share clearfix">
           <li><i class="socicon socicon-facebook"></i></li>
           <li><i class="socicon socicon-twitter"></i></li>
           <li><i class="socicon socicon-google"></i></li>
           <li><i class="socicon socicon-github"></i></li>
-        </ul>-->
+        </ul>
       </div>
-    </footer>
+    </footer>-->
     <ba-back-top position="200"></ba-back-top>
     `
 })

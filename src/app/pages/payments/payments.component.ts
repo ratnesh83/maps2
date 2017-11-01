@@ -7,8 +7,10 @@ import * as payment from './state/payment.actions';
 @Component({
     selector: 'payments',
     template: `
-        <ba-content-top></ba-content-top>
-        <all-payments></all-payments>
+        <div>
+            <ba-content-top></ba-content-top>
+            <all-payments></all-payments>
+        </div
     `
 })
 export class Payments {

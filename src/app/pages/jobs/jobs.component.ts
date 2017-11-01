@@ -7,9 +7,10 @@ import * as job from './state/job.actions';
 @Component({
     selector: 'Jobs',
     template: `
-        <ba-content-top></ba-content-top>
-        <router-outlet></router-outlet>
-
+        <div>
+            <ba-content-top></ba-content-top>
+            <router-outlet></router-outlet>
+        </div>
     `
 })
 export class Jobs {

@@ -6,8 +6,10 @@ import { Effect, Actions } from '@ngrx/effects';
 @Component({
     selector: 'feedbacks',
     template: `
-        <ba-content-top></ba-content-top>       
-        <feeds></feeds>
+        <div>
+            <ba-content-top></ba-content-top>       
+            <feeds></feeds>
+        </div>
     `
 })
 export class Feedbacks {
