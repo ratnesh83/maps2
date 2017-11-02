@@ -19,6 +19,10 @@ export const actionTypes = {
     AUTH_REGISTER_SUCCESS: 'AUTH_REGISTER_SUCCESS',
     AUTH_FORGOT_PASSWORD: 'AUTH_FORGOT_PASSWORD',
     AUTH_FORGOT_PASSWORD_SUCCESS: 'AUTH_FORGOT_PASSWORD_SUCCESS',
+    AUTH_FORGOT_PASSWORD_OTP: 'AUTH_FORGOT_PASSWORD_OTP',
+    AUTH_FORGOT_PASSWORD_OTP_SUCCESS: 'AUTH_FORGOT_PASSWORD_OTP_SUCCESS',
+    AUTH_RESET_PASSWORD: 'AUTH_RESET_PASSWORD',
+    AUTH_RESET_PASSWORD_SUCCESS: 'AUTH_RESET_PASSWORD_SUCCESS',
     GET_COUNTRIES: 'GET_COUNTRIES',
     GET_COUNTRIES_SUCCESS: 'GET_COUNTRIES_SUCCESS'
 };
@@ -109,6 +113,26 @@ export class AuthForgotPasswordSuccess implements Action {
     constructor(public payload: any) { }
 }
 
+export class AuthForgotPasswordOtp implements Action {
+    type = actionTypes.AUTH_FORGOT_PASSWORD_OTP;
+    constructor(public payload: any) { }
+}
+
+export class AuthForgotPasswordOtpSuccess implements Action {
+    type = actionTypes.AUTH_FORGOT_PASSWORD_OTP_SUCCESS;
+    constructor(public payload: any) { }
+}
+
+export class AuthResetPassword implements Action {
+    type = actionTypes.AUTH_RESET_PASSWORD;
+    constructor(public payload: any) { }
+}
+
+export class AuthResetPasswordSuccess implements Action {
+    type = actionTypes.AUTH_RESET_PASSWORD_SUCCESS;
+    constructor(public payload: any) { }
+}
+
 export type Actions
     = AuthLoginAction
     | AuthLoginErrorAction
@@ -126,4 +150,8 @@ export type Actions
     | AuthRegisterErrorAction
     | AuthRegisterSuccessAction
     | AuthForgotPassword
-    | AuthForgotPasswordSuccess;
+    | AuthForgotPasswordSuccess
+    | AuthForgotPasswordOtp
+    | AuthForgotPasswordOtpSuccess
+    | AuthResetPassword
+    | AuthResetPasswordSuccess;

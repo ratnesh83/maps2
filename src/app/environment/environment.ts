@@ -5,6 +5,8 @@ export const environment = {
         LOGIN_API: '/api/v2/web/user/login',
         LOGOUT_API: '/api/v2/web/user/logout',
         FORGOT_API: '/api/v2/web/user/forgotPassword',
+        FORGOT_OTP_API: '/api/v2/web/user/verifyOtpWeb',
+        RESET_PASSWORD_API: '/api/v2/web/user/resetPasswordWeb',
       
         GET_ALL_BOOKING: '/admin/getAllAvailabeBooking',
         GET_ALL_OUTGOING_BOOKING: '/admin/getOngoingBooking',

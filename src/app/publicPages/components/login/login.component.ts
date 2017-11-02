@@ -61,10 +61,12 @@ export class Login {
                 if (res.countryCodes) {
                     this.countryCodes = res.countryCodes;
                 }
-                if (res && res.forgotPass && res.forgotPass.statusCode) {
+                if (res && res.forgotPassOtp && res.forgotPassOtp.statusCode && res.forgotPassOtp.statusCode == 200) {
                     this.dialog.closeAll();
-                    // this.forgetSuccess = true;
                     this.openChangePasswordDialog();
+                }
+                if (res && res.resetOtp && res.resetOtp.statusCode && res.resetOtp.statusCode == 200) {
+                    this.dialog.closeAll();
                 }
             });
 

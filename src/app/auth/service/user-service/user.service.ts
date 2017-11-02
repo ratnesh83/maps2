@@ -35,7 +35,26 @@ export class UserService {
         let formData = new FormData();
         formData.append('emailOrPhone', data);
         let url = environment.APP.API_URL + environment.APP.FORGOT_API;
-        //return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+    }
+
+    forgotPasswordOtp(data) {
+        this.authRequired = false;
+        this.utcOffset = false;
+        let formData = new FormData();
+        formData.append('phoneOtp', data.otp);
+        formData.append('phoneNumber', data.phoneNumber);
+        let url = environment.APP.API_URL + environment.APP.FORGOT_OTP_API;
+        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+    }
+
+    resetPassword(data) {
+        this.authRequired = false;
+        this.utcOffset = false;
+        let formData = new FormData();
+        formData.append('resetOtp', data.resetToken);
+        formData.append('password', data.password);
+        let url = environment.APP.API_URL + environment.APP.RESET_PASSWORD_API;
         return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
     }
 

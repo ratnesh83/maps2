@@ -216,6 +216,54 @@ export class AuthEffects {
         });
 
     @Effect({ dispatch: false })
+    forgotOtp$ = this.actions$
+        .ofType('AUTH_FORGOT_PASSWORD_OTP')
+        .do(action => {
+            this.UserService.forgotPasswordOtp(action.payload).subscribe((result) => {
+                this.baThemeSpinner.hide();
+                if (result.statusCode === 200) {
+                    this.store.dispatch(new auth.AuthForgotPasswordOtpSuccess(result));
+                    this.toastrService.clear();
+                    this.toastrService.success(result.message || 'Success', 'Success');
+                }
+                else {
+
+                }
+            }
+                , (error) => {
+                    this.baThemeSpinner.hide();
+                    this.toastrService.clear();
+                    this.toastrService.error(error.message || 'Verification code is wrong', 'Error');
+                }
+            );
+
+        });
+
+        @Effect({ dispatch: false })
+        resetPassword$ = this.actions$
+            .ofType('AUTH_RESET_PASSWORD')
+            .do(action => {
+                this.UserService.resetPassword(action.payload).subscribe((result) => {
+                    this.baThemeSpinner.hide();
+                    if (result.statusCode === 200) {
+                        this.store.dispatch(new auth.AuthResetPasswordSuccess(result));
+                        this.toastrService.clear();
+                        this.toastrService.success(result.message || 'Success', 'Success');
+                    }
+                    else {
+    
+                    }
+                }
+                    , (error) => {
+                        this.baThemeSpinner.hide();
+                        this.toastrService.clear();
+                        this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                    }
+                );
+    
+            });
+
+    @Effect({ dispatch: false })
     getCountryCodes$ = this.actions$
         .ofType('GET_COUNTRIES')
         .do((action) => {
