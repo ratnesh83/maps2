@@ -154,7 +154,7 @@ export class Register {
                     this.email.setValue(response.email);
                 }
             }, (error: any) => {
-                console.error(error);
+                // console.error(error);
             });
     }
 
@@ -166,11 +166,11 @@ export class Register {
                         this.getFacebookData();
                     })
                     .catch((error: any) => {
-                        console.error(error);
+                        // console.error(error);
                     });
             })
             .catch((error: any) => {
-                console.error(error);
+                // console.error(error);
             });
     }
 
