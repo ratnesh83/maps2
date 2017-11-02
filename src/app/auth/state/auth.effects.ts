@@ -146,11 +146,10 @@ export class AuthEffects {
     logout: Observable<Action> = this.actions$
         .ofType(auth.actionTypes.AUTH_LOGOUT)
         .do(() => {
-            let numberTwo = 100;
             this.baThemeSpinner.show();
             this.UserService.logoutUser().subscribe((result) => {
                 if (result.statusCode === 200) {
-                    this.baThemeSpinner.hide(numberTwo);
+                    this.baThemeSpinner.hide();
                     this.store.dispatch(new auth.AuthLogoutSuccessAction(result));
                     window.localStorage.removeItem('token');
                     window.localStorage.removeItem('tokenSession');
@@ -158,7 +157,7 @@ export class AuthEffects {
                 }
             }
                 , (error) => {
-                    this.baThemeSpinner.hide(numberTwo);
+                    this.baThemeSpinner.hide();
                     this.store.dispatch(new auth.AuthLogoutSuccessAction(error));
                     window.localStorage.removeItem('token');
                     window.localStorage.removeItem('tokenSession');
@@ -195,6 +194,7 @@ export class AuthEffects {
     forgot$ = this.actions$
         .ofType('AUTH_FORGOT_PASSWORD')
         .do(action => {
+            this.baThemeSpinner.show();
             this.UserService.forgotPassword(action.payload).subscribe((result) => {
                 this.baThemeSpinner.hide();
                 if (result.statusCode === 200) {
@@ -219,6 +219,7 @@ export class AuthEffects {
     forgotOtp$ = this.actions$
         .ofType('AUTH_FORGOT_PASSWORD_OTP')
         .do(action => {
+            this.baThemeSpinner.show();
             this.UserService.forgotPasswordOtp(action.payload).subscribe((result) => {
                 this.baThemeSpinner.hide();
                 if (result.statusCode === 200) {
@@ -243,6 +244,7 @@ export class AuthEffects {
         resetPassword$ = this.actions$
             .ofType('AUTH_RESET_PASSWORD')
             .do(action => {
+                this.baThemeSpinner.show();
                 this.UserService.resetPassword(action.payload).subscribe((result) => {
                     this.baThemeSpinner.hide();
                     if (result.statusCode === 200) {

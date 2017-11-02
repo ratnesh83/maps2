@@ -83,6 +83,11 @@ export class ChangePasswordDialog {
     }
 
     submit() {
+        if(!this.password.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Password is required', 'Error');
+            return;
+        }
         if (this.passwords.errors && this.passwords.errors.passwordsEqual && !this.passwords.errors.passwordsEqual.valid) {
             this.toastrService.clear();
             this.toastrService.error('Passwords do not match', 'Error');
