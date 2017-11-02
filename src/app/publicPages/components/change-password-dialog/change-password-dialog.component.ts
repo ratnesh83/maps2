@@ -29,10 +29,10 @@ import 'style-loader!./change-password-dialog.scss';
                 <div class="forgot-block-inner">
                     <form [formGroup]="form">
                         <div class="form-group" style="text-align: center">
-                            <input type="text" [formControl]="password" class="form-control" id="inputNewPassword" placeholder="Enter New Password">
+                            <input type="password" [formControl]="password" class="form-control" id="inputNewPassword" placeholder="Enter New Password">
                         </div>
                         <div class="form-group" style="text-align: center">
-                            <input type="text" [formControl]="repeatPassword" class="form-control" id="inputConfirmPassword" placeholder="Confirm New Password">
+                            <input type="password" [formControl]="repeatPassword" class="form-control" id="inputConfirmPassword" placeholder="Confirm New Password">
                         </div>
                         <div class="form-action-btn form-action-btns">
                             <div class="form-group row">
@@ -66,7 +66,6 @@ export class ChangePasswordDialog {
             .select('auth')
             .subscribe((res: any) => {
                 if (res && res.forgotPassOtp && res.forgotPassOtp.statusCode && res.forgotPassOtp.statusCode == 200) {
-                    console.log(res.forgotPassOtp);
                     if (res.forgotPassOtp.data && res.forgotPassOtp.data.otp != undefined) {
                         this.resetToken = res.forgotPassOtp.data.otp;
                     }
@@ -89,13 +88,23 @@ export class ChangePasswordDialog {
             this.toastrService.error('Passwords do not match', 'Error');
             return;
         }
-        this.store.dispatch({
-            type: auth.actionTypes.AUTH_RESET_PASSWORD,
-            payload: {
-                resetToken: this.resetToken,
-                password: this.password.value
-            }
-        });
+        if (this.data) {
+            this.store.dispatch({
+                type: auth.actionTypes.AUTH_RESET_PASSWORD,
+                payload: {
+                    resetToken: this.data,
+                    password: this.password.value
+                }
+            });
+        } else {
+            this.store.dispatch({
+                type: auth.actionTypes.AUTH_RESET_PASSWORD,
+                payload: {
+                    resetOtp: this.resetToken,
+                    password: this.password.value
+                }
+            });
+        }
     }
 
 }

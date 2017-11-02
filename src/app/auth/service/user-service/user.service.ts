@@ -52,7 +52,11 @@ export class UserService {
         this.authRequired = false;
         this.utcOffset = false;
         let formData = new FormData();
-        formData.append('resetOtp', data.resetToken);
+        if(data && data.resetToken) {
+            formData.append('resetToken', data.resetToken);
+        } else {
+            formData.append('resetOtp', data.resetOtp);
+        }
         formData.append('password', data.password);
         let url = environment.APP.API_URL + environment.APP.RESET_PASSWORD_API;
         return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);

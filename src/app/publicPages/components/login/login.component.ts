@@ -96,6 +96,19 @@ export class Login {
         this.store.dispatch({
             type: auth.actionTypes.GET_COUNTRIES
         });
+
+    }
+
+    ngAfterViewInit() {
+        let passwordresetlink = window.location.href;
+        let resetToken;
+        let token = '?resetToken=';
+        if (passwordresetlink.indexOf(token) != -1) {
+            resetToken = passwordresetlink.substr(passwordresetlink.indexOf(token) + token.length, passwordresetlink.length);
+            setTimeout(() => {
+                this.openChangePasswordTokenDialog(resetToken);
+            });
+        }
     }
 
     ngOnDestroy() {
@@ -153,13 +166,17 @@ export class Login {
     openForgotPasswordDialog() {
         let dialogRef = this.dialog.open(ForgotPasswordDialog);
         // dialogRef.disableClose = true;
-        dialogRef.componentInstance.data = 'sa';
     }
 
     openChangePasswordDialog() {
         let dialogRef = this.dialog.open(ChangePasswordDialog);
         // dialogRef.disableClose = true;
-        dialogRef.componentInstance.data = 'sa';
+    }
+
+    openChangePasswordTokenDialog(token) {
+        let dialogRef = this.dialog.open(ChangePasswordDialog);
+        // dialogRef.disableClose = true;
+        dialogRef.componentInstance.data = token;
     }
 
     countries: Observable<any[]>;
