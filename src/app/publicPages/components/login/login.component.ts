@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import {
+    Form,
     FormGroup,
     AbstractControl,
     FormBuilder,
@@ -16,7 +17,9 @@ import * as auth from '../../../auth/state/auth.actions';
 import { EmailValidator } from '../../../theme/validators';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MdIconRegistry } from '@angular/material';
+import { Http, Headers, RequestOptions } from '@angular/http';
 import { ForgotPasswordDialog } from '../forgot-password-dialog/forgot-password-dialog.component';
+import { ChangePasswordDialog } from '../change-password-dialog/change-password-dialog.component';
 import 'style-loader!./login.scss';
 
 declare const FB: any;
@@ -28,6 +31,7 @@ declare const FB: any;
 
 export class Login {
 
+    @ViewChild('checkoutForm') public _checkoutForm: ElementRef;
     public storeData;
     public form: FormGroup;
     public email: AbstractControl;
@@ -52,13 +56,21 @@ export class Login {
         private iconRegistry: MdIconRegistry,
         private sanitizer: DomSanitizer,
         public dialog: MdDialog,
-        public facebook: FacebookService
+        public facebook: FacebookService,
+        public http: Http
     ) {
         this.storeData = this.store
             .select('auth')
             .subscribe((res: any) => {
                 if (res.countryCodes) {
                     this.countryCodes = res.countryCodes;
+                }
+                if (res && res.forgotPassOtp && res.forgotPassOtp.statusCode && res.forgotPassOtp.statusCode == 200) {
+                    this.dialog.closeAll();
+                    this.openChangePasswordDialog();
+                }
+                if (res && res.resetOtp && res.resetOtp.statusCode && res.resetOtp.statusCode == 200) {
+                    this.dialog.closeAll();
                 }
             });
 
@@ -88,6 +100,19 @@ export class Login {
         this.store.dispatch({
             type: auth.actionTypes.GET_COUNTRIES
         });
+
+    }
+
+    ngAfterViewInit() {
+        let passwordresetlink = window.location.href;
+        let resetToken;
+        let token = '?resetToken=';
+        if (passwordresetlink.indexOf(token) != -1) {
+            resetToken = passwordresetlink.substr(passwordresetlink.indexOf(token) + token.length, passwordresetlink.length);
+            setTimeout(() => {
+                this.openChangePasswordTokenDialog(resetToken);
+            });
+        }
     }
 
     ngOnDestroy() {
@@ -101,7 +126,7 @@ export class Login {
             .then((response: any) => {
                 this.onFacebookSubmit(response);
             }, (error: any) => {
-                console.error(error);
+                // console.error(error);
             });
     }
 
@@ -113,15 +138,37 @@ export class Login {
                         this.getFacebookData();
                     })
                     .catch((error: any) => {
-                        console.error(error);
+                        // console.error(error);
                     });
             })
             .catch((error: any) => {
-                console.error(error);
+                // console.error(error);
             });
     }
 
     loginTwitter() {
+        this.fetchTwitterToken();
+    }
+
+    fetchTwitterToken() {
+        let headers = new Headers();
+        let consumerKey = 'actualkeyvalue';
+        let consumerSecret = 'actualsecretvalue';
+        headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
+        headers.append('Authorization', 'Basic ' +
+            btoa(consumerKey) + ':' + btoa(consumerSecret));
+
+        let options = new RequestOptions({ headers: headers });
+        let params = JSON.stringify({
+            'consumerKey': '4Lk7JVYWHCU2gweHfjjNIAUNP',
+            'consumerSecret': 'uhI1UjCHrrnCu5zu8XKM9Gf09VJv3C1eMImIhxJBDLeFTBVqCr',
+            'grant_type': 'client_credentials'
+        });
+
+        return this.http.post('https://api.twitter.com/oauth/authorize', params, options)
+            .subscribe(token => {
+                console.log(token);
+            });
 
     }
 
@@ -145,7 +192,17 @@ export class Login {
     openForgotPasswordDialog() {
         let dialogRef = this.dialog.open(ForgotPasswordDialog);
         // dialogRef.disableClose = true;
-        dialogRef.componentInstance.data = 'sa';
+    }
+
+    openChangePasswordDialog() {
+        let dialogRef = this.dialog.open(ChangePasswordDialog);
+        // dialogRef.disableClose = true;
+    }
+
+    openChangePasswordTokenDialog(token) {
+        let dialogRef = this.dialog.open(ChangePasswordDialog);
+        // dialogRef.disableClose = true;
+        dialogRef.componentInstance.data = token;
     }
 
     countries: Observable<any[]>;

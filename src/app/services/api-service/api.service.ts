@@ -213,4 +213,27 @@ export class ApiService {
 
     }
 
+    putFileApi(url, data, authRequired, utcOffset) {
+        return this.http.put(url, data, this.getFileUploadToken(authRequired, utcOffset))
+            .map((res: Response) => res.json())
+
+            .catch((error: any) => {
+                try {
+                    return (Observable.throw(error.json()));
+                } catch (jsonError) {
+                    // If the error couldn't be parsed as JSON data
+                    // then it's possible the API is down or something
+                    // went wrong with the parsing of the successful
+                    // response. In any case, to keep things simple,
+                    // we'll just create a minimum representation of
+                    // a parsed error.
+                    let minimumViableError = {
+                        success: false
+                    };
+                    return (Observable.throw(minimumViableError));
+                }
+            });
+
+    }
+
 }

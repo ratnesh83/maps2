@@ -6,7 +6,7 @@
     </div>
 
     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-        <div class="auth-block login-auth-block animated bounceInUp">
+        <div class="auth-block login-auth-block">
             <div class="top-label red">
                 <h1>
                     <strong>Address details required</strong>
@@ -15,7 +15,7 @@
                     Enter your address details to continue
                 </h4>
             </div>
-            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value, $event)" class="form-horizontal">
+            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
                
                 <div class="form-group row">
                     <div class="col-12 col-sm-12">

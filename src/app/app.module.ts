@@ -19,6 +19,7 @@ import { AuthGuardDriver } from './auth/service/auth-service/auth-guard-driver.s
 
 import { CommonService } from './services/common.service';
 import { UserService } from './services/user-service/user.service';
+import { DataService } from './services/data-service/data.service';
 import { JobService } from './services/job-service/job.service';
 import { ChangePasswordService } from './services/change-password/change-password.service';
 import { DashboardService } from './services/dashboard-service/dashboard.service';
@@ -100,6 +101,7 @@ export type StoreType = {
         APP_PROVIDERS,
         AuthService,
         UserService,
+        DataService,
         JobService,
         NgbActiveModal,
         CommonService,

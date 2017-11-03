@@ -21,6 +21,27 @@ export class UserService {
         return this.apiService.postApi(url, data, this.authRequired, this.utcOffset);
     }
 
+    register(data) {
+        let url = environment.APP.API_URL + environment.APP.REGISTER_API;
+        this.authRequired = false;
+        this.utcOffset = true;
+        return this.apiService.postApi(url, data, this.authRequired, this.utcOffset);
+    }
+
+    registerAddress(data) {
+        let url = environment.APP.API_URL + environment.APP.REGISTER_ADDRESS_API;
+        this.authRequired = false;
+        this.utcOffset = true;
+        return this.apiService.postApi(url, data, this.authRequired, this.utcOffset);
+    }
+
+    registerDocuments(data) {
+        let url = environment.APP.API_URL + environment.APP.REGISTER_DOCUMENTS_API;
+        this.authRequired = false;
+        this.utcOffset = true;
+        return this.apiService.postApi(url, data, this.authRequired, this.utcOffset);
+    }
+
     logoutUser() {
         this.authRequired = true;
         this.utcOffset = false;
@@ -32,8 +53,34 @@ export class UserService {
     forgotPassword(data) {
         this.authRequired = false;
         this.utcOffset = false;
-        let url = environment.APP.API_URL + environment.APP.FORGOT_API + '?email=' + data.email;
-        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+        let formData = new FormData();
+        formData.append('emailOrPhone', data);
+        let url = environment.APP.API_URL + environment.APP.FORGOT_API;
+        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+    }
+
+    forgotPasswordOtp(data) {
+        this.authRequired = false;
+        this.utcOffset = false;
+        let formData = new FormData();
+        formData.append('phoneOtp', data.otp);
+        formData.append('phoneNumber', data.phoneNumber);
+        let url = environment.APP.API_URL + environment.APP.FORGOT_OTP_API;
+        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+    }
+
+    resetPassword(data) {
+        this.authRequired = false;
+        this.utcOffset = false;
+        let formData = new FormData();
+        if(data && data.resetToken) {
+            formData.append('resetToken', data.resetToken);
+        } else {
+            formData.append('resetOtp', data.resetOtp);
+        }
+        formData.append('password', data.password);
+        let url = environment.APP.API_URL + environment.APP.RESET_PASSWORD_API;
+        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
     }
 
     getCountryCodes(payload) {

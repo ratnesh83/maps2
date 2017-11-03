@@ -1,34 +1,34 @@
 <div class="page-top clearfix" baScrollPosition maxHeight="50" (scrollChange)="scrolledChanged($event)" [ngClass]="{scrolled: isScrolled}">
-    <a href (click)="toggleMenu()" class="hidden-sm-up collapse-menu-link ion-navicon"></a>
-    <a routerLink="/pages/dashboard" class="al-logo clearfix">
-        <!-- <span>
-            <img src="assets/icon/favicon.png">
-        </span> -->
-        <span>
-            Labor Go
-        </span>
-    </a>
+    <div class="container container-page-top">
+        <div class="container">
+            <a href (click)="toggleMenu()" class="hidden-sm-up collapse-menu-link ion-navicon"></a>
+            <a routerLink="/pages/dashboard" class="al-logo clearfix">
+                <span>
+                    Labor Go
+                </span>
+            </a>
 
-    <!-- <div class="search">
-    <i class="ion-ios-search-strong" ng-click="startSearch()"></i>
-    <input id="searchInput" type="text" placeholder="Search for...">
-  </div>-->
+            <div class="user-profile clearfix">
+                <div class="dropdown al-user-profile">
+                    <a class="profile-toggle-link dropdown-toggle" id="user-profile-dd" data-toggle="dropdown" aria-expanded="false">
+                        <i class="fa fa-user-o" style="color: white"></i>
+                    </a>
+                    <ul class="dropdown-menu top-dropdown-menu profile-dropdown" aria-labelledby="user-profile-dd">
+                        <!-- <li class="dropdown-item"><a href class="signout"><i class="fa fa-user"></i>Profile</a></li> -->
+                        <li class="dropdown-item">
+                            <a href routerLink="/pages/settings" class="signout">
+                                <i class="fa fa-cog fa-spin"></i>Settings</a>
+                        </li>
+                        <!-- <li class="dropdown-item"><a (click)="changePassword()" class="signout"><i class="fa fa-key"></i>Change Password</a></li> -->
+                        <li class="dropdown-item">
+                            <a (click)="logout()" class="signout">
+                                <i class="fa fa-power-off"></i>Sign out</a>
+                        </li>
+                    </ul>
+                </div>
+                <top-notification></top-notification>
 
-    <div class="user-profile clearfix">
-        <div class="dropdown al-user-profile">
-            <a class="profile-toggle-link dropdown-toggle" id="user-profile-dd" data-toggle="dropdown" aria-expanded="false">
-        <i class="fa fa-user-o" style="color: white"></i>
-      </a>
-            <ul class="dropdown-menu top-dropdown-menu profile-dropdown" aria-labelledby="user-profile-dd">
-                <!-- <li class="dropdown-item"><a href class="signout"><i class="fa fa-user"></i>Profile</a></li> -->
-                <li class="dropdown-item"><a href routerLink="/pages/settings" class="signout"><i class="fa fa-cog fa-spin"></i>Settings</a></li>
-                <!-- <li class="dropdown-item"><a (click)="changePassword()" class="signout"><i class="fa fa-key"></i>Change Password</a></li> -->
-                <li class="dropdown-item"><a (click)="logout()" class="signout"><i class="fa fa-power-off"></i>Sign out</a></li>
-
-
-            </ul>
+            </div>
         </div>
-        <top-notification></top-notification>
-
     </div>
 </div>
