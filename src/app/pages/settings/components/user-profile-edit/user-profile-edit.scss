@@ -1,0 +1,111 @@
+@import "../../../../theme/sass/conf/conf";
+.mat-input-invalid .mat-input-placeholder {
+  color: $warning;
+}
+.mat-input-error {
+  color: $warning;
+}
+.no-padding {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.page-header{
+  margin-bottom:24px 
+}
+.Rectangle-317-Copy-2{
+  margin-left:-39px; 
+}
+.Employer-Profile {
+  padding: 5px 15px 5px 25px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  color: #ffffff;
+  background-color: #025acc; 
+}
+.Rectangle-317-Copy-2::before{
+    content: "";
+    height: 5px;
+    border-right: 7px solid #025acc;
+    border-bottom: 7px solid transparent;
+    border-top: 7px solid #025acc;
+    border-left: 7px solid transparent;
+    position: absolute;
+    top: 22px;
+    left: -24px;
+}
+.main-card-header{
+  margin:20px; 
+}
+.main-header-image{
+  width: 140px !important;
+  height: 140px !important;
+  background-color: #ffffff;
+}
+.main-card-title{
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  text-align: center;
+  color: #474747;
+}
+.main-card-title-address{
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 1.1px;
+  text-align: center;
+  color: #026eff;
+}
+.main-card-subtitle{
+  .text{
+    width: 627px;
+    height: 48px;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.9px;
+    text-align: center;
+    color: #b1b1b1;
+  }
+}
+.section-container{
+  padding: 0px 50px 0px 50px;
+}
+.section-heading{
+margin: 20px 0px 20px 0px;
+}
+.info{
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1.1px;
+  line-height: 20px;
+  text-align: left;
+  color: #1b1b1b;
+}
+.group-5{
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+.btn-custom{
+  margin: 10px;
+  width: 200px;
+  border-radius: 3px;
+  background-color: #026eff;
+  font-weight: bold;
+  text-align: center;
+  color: #ffffff;
+}
+.editLable{
+  font-size: 14px !important;
+  line-height: 1.5;
+  text-align: left;
+  color: #999999 !important;
+}
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+.margin-10{
+  margin: 10px;
+}
