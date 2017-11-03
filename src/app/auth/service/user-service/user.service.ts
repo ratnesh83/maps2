@@ -35,6 +35,13 @@ export class UserService {
         return this.apiService.postApi(url, data, this.authRequired, this.utcOffset);
     }
 
+    registerDocuments(data) {
+        let url = environment.APP.API_URL + environment.APP.REGISTER_DOCUMENTS_API;
+        this.authRequired = false;
+        this.utcOffset = true;
+        return this.apiService.postApi(url, data, this.authRequired, this.utcOffset);
+    }
+
     logoutUser() {
         this.authRequired = true;
         this.utcOffset = false;

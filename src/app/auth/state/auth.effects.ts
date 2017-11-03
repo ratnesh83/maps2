@@ -201,6 +201,36 @@ export class AuthEffects {
         });
 
     @Effect({ dispatch: false })
+    registerDocuments: Observable<Action> = this.actions$
+        .ofType(auth.actionTypes.AUTH_REGISTER_DOCUMENTS)
+        .do((action: any) => {
+            this.baThemeSpinner.show();
+            this.UserService.registerDocuments(action.payload).subscribe((result) => {
+                this.baThemeSpinner.hide();
+                if (result.statusCode === 200 || result.statusCode === 201) {
+                    this.store.dispatch(new auth.AuthRegisterDocumentsSuccessAction(result));
+                    this.router.navigate(['verification']);
+                }
+                else {
+                }
+            }
+                , (error) => {
+                    this.baThemeSpinner.hide();
+                    if (error.message) {
+                        this.toastrService.clear();
+                        this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    registerDocumentsSuccess: Observable<Action> = this.actions$
+        .ofType(auth.actionTypes.AUTH_REGISTER_DOCUMENTS_SUCCESS)
+        .do((action: any) => {
+        });
+
+    @Effect({ dispatch: false })
     registerError: Observable<Action> = this.actions$
         .ofType(auth.actionTypes.AUTH_REGISTER_ERROR)
         .do((action) => { });

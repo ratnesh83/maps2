@@ -4,6 +4,7 @@ import * as auth from '../../../auth/state/auth.actions';
 import { Observable } from 'rxjs/Observable';
 import { DataService } from '../../../services/data-service/data.service';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { ToastrService, ToastrConfig } from 'ngx-toastr';
 
 import 'style-loader!./address.scss';
 
@@ -30,6 +31,7 @@ export class Address {
     constructor(private fb: FormBuilder,
         private store: Store<any>,
         private cdRef: ChangeDetectorRef,
+        private toastrService: ToastrService,
         private dataService: DataService) {
 
         this.storeData = this.store
@@ -115,6 +117,12 @@ export class Address {
 
         if (this.dataService.getUserRegisterationId()) {
             this.userId = this.dataService.getUserRegisterationId();
+        }
+
+        if(!this.locationAddress.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Address is required', 'Error');
+            return;
         }
 
         let locationDetails = {

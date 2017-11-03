@@ -19,6 +19,8 @@ export const actionTypes = {
     AUTH_REGISTER_SUCCESS: 'AUTH_REGISTER_SUCCESS',
     AUTH_REGISTER_ADDRESS: 'AUTH_REGISTER_ADDRESS',
     AUTH_REGISTER_ADDRESS_SUCCESS: 'AUTH_REGISTER_ADDRESS_SUCCESS',
+    AUTH_REGISTER_DOCUMENTS: 'AUTH_REGISTER_DOCUMENTS',
+    AUTH_REGISTER_DOCUMENTS_SUCCESS: 'AUTH_REGISTER_DOCUMENTS_SUCCESS',
     AUTH_FORGOT_PASSWORD: 'AUTH_FORGOT_PASSWORD',
     AUTH_FORGOT_PASSWORD_SUCCESS: 'AUTH_FORGOT_PASSWORD_SUCCESS',
     AUTH_FORGOT_PASSWORD_OTP: 'AUTH_FORGOT_PASSWORD_OTP',
@@ -112,6 +114,16 @@ export class AuthRegisterAddressAction implements Action {
 
 export class AuthRegisterAddressSuccessAction implements Action {
     type = actionTypes.AUTH_REGISTER_ADDRESS_SUCCESS;
+    constructor(public payload: any) { }
+}
+
+export class AuthRegisterDocumentsAction implements Action {
+    type = actionTypes.AUTH_REGISTER_DOCUMENTS;
+    constructor(public payload: any) { }
+}
+
+export class AuthRegisterDocumentsSuccessAction implements Action {
+    type = actionTypes.AUTH_REGISTER_DOCUMENTS_SUCCESS;
     constructor(public payload: any) { }
 }
 

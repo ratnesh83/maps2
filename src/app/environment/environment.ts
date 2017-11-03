@@ -9,6 +9,7 @@ export const environment = {
         RESET_PASSWORD_API: '/api/v2/web/user/resetPasswordWeb',
         REGISTER_API: '/api/v2/web/user/register/step1',
         REGISTER_ADDRESS_API: '/api/v2/web/user/register/step2',
+        REGISTER_DOCUMENTS_API: '/api/v2/web/user/register/step3',
       
         GET_ALL_BOOKING: '/admin/getAllAvailabeBooking',
         GET_ALL_OUTGOING_BOOKING: '/admin/getOngoingBooking',
