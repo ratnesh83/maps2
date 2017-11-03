@@ -55,9 +55,9 @@ export class Login {
         private toastrService: ToastrService,
         private iconRegistry: MdIconRegistry,
         private sanitizer: DomSanitizer,
-        public dialog: MdDialog,
-        public facebook: FacebookService,
-        public http: Http
+        private dialog: MdDialog,
+        private facebook: FacebookService,
+        private http: Http
     ) {
         this.storeData = this.store
             .select('auth')
@@ -100,7 +100,6 @@ export class Login {
         this.store.dispatch({
             type: auth.actionTypes.GET_COUNTRIES
         });
-
     }
 
     ngAfterViewInit() {

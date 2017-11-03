@@ -66,7 +66,7 @@ export class Register {
             sanitizer.bypassSecurityTrustResourceUrl('assets/img/twitter.svg'));
 
         this.form = fb.group({
-            'name': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
+            'name': ['', Validators.compose([Validators.required])],
             'companyName': [''],
             'email': ['', Validators.compose([Validators.required, EmailValidator.email])],
             'countryCode': [''],
@@ -108,7 +108,6 @@ export class Register {
         if (link.indexOf(token) != -1) {
             baseLink = link.substr(0, link.indexOf(token) + 1);
             this.termsLink = baseLink + 'terms';
-            console.log(this.termsLink);
         }
         this.socialMode = null;
     }
@@ -196,9 +195,14 @@ export class Register {
 
     }
 
-    onSubmit(values) {
+    onSubmit() {
 
         let timezoneOffset = (new Date()).getTimezoneOffset();
+        if (this.signUpType.value == 'EMPLOYER' && !this.companyName.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Company name is required', 'Error');
+            return;
+        }
         if (!this.name.value) {
             this.toastrService.clear();
             this.toastrService.error('Name is required', 'Error');
@@ -234,6 +238,7 @@ export class Register {
             this.toastrService.error('Passwords do not match', 'Error');
             return;
         }
+        
         let data = {
             userType: this.signUpType.value,
             email: this.email.value,
@@ -262,8 +267,6 @@ export class Register {
                 delete data.socialMode;
             }
         }
-
-        console.log(data);
 
         this.store.dispatch({
             type: auth.actionTypes.AUTH_REGISTER,

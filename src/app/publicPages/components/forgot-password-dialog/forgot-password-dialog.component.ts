@@ -78,7 +78,12 @@ export class ForgotPasswordDialog {
             .select('auth')
             .subscribe((res: any) => {
                 if (res && res.forgotPass && res.forgotPass.statusCode && res.forgotPass.statusCode == 200) {
-                    this.forgetSuccess = true;
+                    // todo change logic based on response status
+                    if (res.forgotPass.message && res.forgotPass.message.indexOf('Reset password link has been sent to the Email') != -1) {
+                        this.dialog.closeAll();
+                    } else {
+                        this.forgetSuccess = true;
+                    }
                 }
             });
         this.form = fb.group({
@@ -103,8 +108,8 @@ export class ForgotPasswordDialog {
             this.toastrService.error('Please enter email or phone number', 'Error');
             return;
         }
-        if(this.emailOrPhone.errors) {
-            if(this.emailOrPhone.errors.invalidPhoneNumber && this.emailOrPhone.errors.invalidEmail) {
+        if (this.emailOrPhone.errors) {
+            if (this.emailOrPhone.errors.invalidPhoneNumber && this.emailOrPhone.errors.invalidEmail) {
                 this.toastrService.clear();
                 this.toastrService.error('Please enter a valid email or phone number', 'Error');
                 return;
