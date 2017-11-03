@@ -2,6 +2,7 @@ import { Component, ChangeDetectorRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as auth from '../../../auth/state/auth.actions';
 import { Observable } from 'rxjs/Observable';
+import { DataService } from '../../../services/data-service/data.service';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
 import 'style-loader!./address.scss';
@@ -22,12 +23,14 @@ export class Address {
     public country: AbstractControl;
     public latitude: AbstractControl;
     public longitude: AbstractControl;
+    public userId;
 
     public submitted: boolean = false;
 
     constructor(private fb: FormBuilder,
         private store: Store<any>,
-        private cdRef: ChangeDetectorRef) {
+        private cdRef: ChangeDetectorRef,
+        private dataService: DataService) {
 
         this.storeData = this.store
             .select('auth')
@@ -38,8 +41,8 @@ export class Address {
         this.form = fb.group({
             'streetAddress': ['', Validators.compose([Validators.required])],
             'locationAddress': [''],
-            'latitude': [''],
-            'longitude': [''],
+            'latitude': [0],
+            'longitude': [0],
             'city': [''],
             'state': [''],
             'zipCode': [''],
@@ -57,7 +60,9 @@ export class Address {
     }
 
     ngOnInit() {
-
+        if (this.dataService.getUserRegisterationId()) {
+            this.userId = this.dataService.getUserRegisterationId();
+        }
     }
 
     ngOnDestroy() {
@@ -106,13 +111,35 @@ export class Address {
         this.country.setValue(country);
     }
 
-    onSubmit(values: Object): void {
-        this.submitted = true;
-        console.log(values);
-        if (this.form.valid) {
-            // your code goes here
-            // console.log(values);
+    onSubmit(values) {
+
+        if (this.dataService.getUserRegisterationId()) {
+            this.userId = this.dataService.getUserRegisterationId();
         }
+
+        let locationDetails = {
+            latitude: this.latitude.value,
+            longitude: this.longitude.value,
+            addressLine1: this.locationAddress.value,
+            addressLine2: this.streetAddress.value || '',
+            city: this.city.value || '',
+            state: this.state.value || '',
+            country: this.country.value || '',
+            zipCode: this.zipCode.value || ''
+        };
+
+        let data = {
+            userId: this.userId,
+            locationDetails: locationDetails,
+            stepNumber: 2
+        };
+
+        console.log(data);
+
+        this.store.dispatch({
+            type: auth.actionTypes.AUTH_REGISTER_ADDRESS,
+            payload: data
+        });
     }
 
     _keyPressNumber(event: any) {

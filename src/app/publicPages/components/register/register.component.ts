@@ -8,6 +8,7 @@ import { FacebookService, LoginResponse, InitParams } from 'ngx-facebook';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MdIconRegistry } from '@angular/material';
+import { DataService } from '../../../services/data-service/data.service';
 
 import 'style-loader!./register.scss';
 
@@ -46,7 +47,8 @@ export class Register {
         private iconRegistry: MdIconRegistry,
         private sanitizer: DomSanitizer,
         private cdRef: ChangeDetectorRef,
-        public facebook: FacebookService) {
+        private facebook: FacebookService,
+        private dataService: DataService) {
 
         this.storeData = this.store
             .select('auth')
