@@ -21,6 +21,13 @@ export class UserService {
         return this.apiService.postApi(url, data, this.authRequired, this.utcOffset);
     }
 
+    register(data) {
+        let url = environment.APP.API_URL + environment.APP.REGISTER_API;
+        this.authRequired = false;
+        this.utcOffset = true;
+        return this.apiService.postApi(url, data, this.authRequired, this.utcOffset);
+    }
+
     logoutUser() {
         this.authRequired = true;
         this.utcOffset = false;

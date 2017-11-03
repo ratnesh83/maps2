@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { EmailValidator, EqualPasswordsValidator } from '../../../theme/validators';
 import { FacebookService, LoginResponse, InitParams } from 'ngx-facebook';
+import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MdIconRegistry } from '@angular/material';
 
@@ -33,12 +34,15 @@ export class Register {
     public signUpType: AbstractControl;
     public agreement: AbstractControl;
     public socialId: AbstractControl;
+    public termsLink;
+    public socialMode;
     public countryCodes = [];
 
     public submitted: boolean = false;
 
     constructor(private fb: FormBuilder,
         private store: Store<any>,
+        private toastrService: ToastrService,
         private iconRegistry: MdIconRegistry,
         private sanitizer: DomSanitizer,
         private cdRef: ChangeDetectorRef,
@@ -65,7 +69,7 @@ export class Register {
             'email': ['', Validators.compose([Validators.required, EmailValidator.email])],
             'countryCode': [''],
             'phone': [''],
-            'signUpType': ['1'],
+            'signUpType': ['USER'],
             'agreement': [false],
             'socialId': [''],
             'description': [''],
@@ -89,12 +93,22 @@ export class Register {
         this.socialId = this.form.controls['socialId'];
         this.password = this.passwords.controls['password'];
         this.repeatPassword = this.passwords.controls['repeatPassword'];
+
     }
 
     ngOnInit() {
         this.store.dispatch({
             type: auth.actionTypes.GET_COUNTRIES
         });
+        let link = window.location.href;
+        let baseLink;
+        let token = '/register';
+        if (link.indexOf(token) != -1) {
+            baseLink = link.substr(0, link.indexOf(token) + 1);
+            this.termsLink = baseLink + 'terms';
+            console.log(this.termsLink);
+        }
+        this.socialMode = null;
     }
 
     ngOnDestroy() {
@@ -139,6 +153,7 @@ export class Register {
         this.socialId.reset();
         this.description.reset();
         this.expertiseDescription.reset();
+        this.socialMode = null;
     }
 
     getFacebookData() {
@@ -153,6 +168,7 @@ export class Register {
                 if (response.email) {
                     this.email.setValue(response.email);
                 }
+                this.socialMode = 'FACEBOOK';
             }, (error: any) => {
                 // console.error(error);
             });
@@ -178,13 +194,79 @@ export class Register {
 
     }
 
-    onSubmit(values: Object): void {
-        this.submitted = true;
-        console.log(values);
-        if (this.form.valid) {
-            // your code goes here
-            // console.log(values);
+    onSubmit(values) {
+
+        let timezoneOffset = (new Date()).getTimezoneOffset();
+        if (!this.name.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Name is required', 'Error');
+            return;
         }
+        if (!this.countryCode.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Country code is required', 'Error');
+            return;
+        }
+        if (!this.phone.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Phone number is required', 'Error');
+            return;
+        }
+        if (!this.email.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Email is required', 'Error');
+            return;
+        }
+        if (this.email.errors && this.email.errors.invalidEmail) {
+            this.toastrService.clear();
+            this.toastrService.error('Please enter a valid email', 'Error');
+            return;
+        }
+        if (!this.password.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Password is required', 'Error');
+            return;
+        }
+        if (this.passwords.errors && this.passwords.errors.passwordsEqual && !this.passwords.errors.passwordsEqual.valid) {
+            this.toastrService.clear();
+            this.toastrService.error('Passwords do not match', 'Error');
+            return;
+        }
+        let data = {
+            userType: this.signUpType.value,
+            email: this.email.value,
+            fullName: this.name.value,
+            password: this.password.value,
+            countryCode: this.countryCode.value,
+            phoneNumber: this.phone.value,
+            timezoneOffset: timezoneOffset,
+            stepNumber: 1,
+            description: this.description.value,
+            companyName: this.companyName.value,
+            socialId: this.socialId.value,
+            socialMode: this.socialMode
+        };
+
+        if (this.signUpType.value == 'USER') {
+            data.description = this.expertiseDescription.value;
+            delete data.companyName;
+            if (this.socialMode == null || this.socialMode == '' || this.socialMode == undefined) {
+                delete data.socialId;
+                delete data.socialMode;
+            }
+        } else if (this.signUpType.value == 'EMPLOYER') {
+            if (this.socialMode == null || this.socialMode == '' || this.socialMode == undefined) {
+                delete data.socialId;
+                delete data.socialMode;
+            }
+        }
+
+        console.log(data);
+
+        this.store.dispatch({
+            type: auth.actionTypes.AUTH_REGISTER,
+            payload: data
+        });
     }
 
     _keyPressNumber(event: any) {

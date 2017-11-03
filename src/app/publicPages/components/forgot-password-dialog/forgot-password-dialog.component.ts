@@ -103,7 +103,7 @@ export class ForgotPasswordDialog {
             this.toastrService.error('Please enter email or phone number', 'Error');
             return;
         }
-        if(this.emailOrPhone.errors && this.emailOrPhone.errors) {
+        if(this.emailOrPhone.errors) {
             if(this.emailOrPhone.errors.invalidPhoneNumber && this.emailOrPhone.errors.invalidEmail) {
                 this.toastrService.clear();
                 this.toastrService.error('Please enter a valid email or phone number', 'Error');

@@ -27,9 +27,9 @@ export class AuthEffects {
         .do(action => {
             this.baThemeSpinner.show();
             this.UserService.login(action.payload).subscribe((result) => {
+                this.baThemeSpinner.hide();
                 if (result.statusCode === 200) {
                     // hide loader
-                    this.baThemeSpinner.hide();
                     //this.toast_service.showSuccess();
                     // this.store.dispatch({ type: 'AUTH_GET_USER_ROLES', payload: result });
                     this.store.dispatch(new auth.AuthLoginSuccessAction(result));
@@ -72,9 +72,9 @@ export class AuthEffects {
         .do(action => {
             this.baThemeSpinner.show();
             this.UserService.login(action.payload).subscribe((result) => {
+                this.baThemeSpinner.hide();
                 if (result.statusCode === 200) {
                     // hide loader
-                    this.baThemeSpinner.hide();
                     //this.toast_service.showSuccess();
                     // this.store.dispatch({ type: 'AUTH_GET_USER_ROLES', payload: result });
                     this.store.dispatch(new auth.AuthLoginSuccessAction(result));
@@ -129,7 +129,31 @@ export class AuthEffects {
     register: Observable<Action> = this.actions$
         .ofType(auth.actionTypes.AUTH_REGISTER)
         .do((action: any) => {
-
+            this.baThemeSpinner.show();
+            this.UserService.register(action.payload).subscribe((result) => {
+                this.baThemeSpinner.hide();
+                if (result.statusCode === 200 || result.statusCode === 201) {
+                    // hide loader
+                    
+                    //this.toast_service.showSuccess();
+                    // this.store.dispatch({ type: 'AUTH_GET_USER_ROLES', payload: result });
+                    this.store.dispatch(new auth.AuthRegisterSuccessAction(result));
+                    //token store in localstorage
+                    localStorage.setItem('registerFormId', result.data._id);
+                    this.router.navigate(['address']);
+                }
+                else {
+                }
+            }
+                , (error) => {
+                    this.baThemeSpinner.hide();
+                    if (error.message) {
+                        this.toastrService.clear();
+                        this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                        this.router.navigate(['register']);
+                    }
+                }
+            );
         });
 
     @Effect({ dispatch: false })
