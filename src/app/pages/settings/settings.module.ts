@@ -29,6 +29,7 @@ import { EmployeeProfileEdit } from './components/employee-profile-edit/employee
 
 import { Settings } from './settings.component';
 import { NgaModule } from '../../theme/nga.module';
+import { UserProfile } from './components/user-profile/user-profile.component';
 
 @NgModule({
     imports: [
@@ -59,6 +60,7 @@ import { NgaModule } from '../../theme/nga.module';
         Settings,
         AllSettings,
         EmployeeProfileEdit,
+        UserProfile,
     ],
     entryComponents: [
     ],
