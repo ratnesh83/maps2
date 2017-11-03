@@ -7,8 +7,10 @@ import * as subscription from './state/subscription.actions';
 @Component({
     selector: 'Subscriptions',
     template: `
-        <ba-content-top></ba-content-top>
-        <all-subscriptions></all-subscriptions>
+        <div>
+            <ba-content-top></ba-content-top>
+            <all-subscriptions></all-subscriptions>
+        </div>
     `
 })
 export class Subscriptions {

@@ -20,7 +20,8 @@ export class ApiService {
 
         this.headers = new Headers({ 'Content-Type': 'application/json', 'content-language': 'en' });
         this.token = localStorage.getItem('token');
-        this.headerToken = 'Bearer ' + this.token;
+        // this.headerToken = 'Bearer ' + this.token;
+        this.headerToken = this.token;
         this.utcOffset = (new Date()).getTimezoneOffset();
         if (authRequired === true && utcOffset === false) {
             this.headers = this.headers ? this.headers : {};
@@ -28,42 +29,40 @@ export class ApiService {
             if (this.headers.has('utcoffset')) {
                 this.headers.delete('utcoffset');
             }
-        }
-        else if (authRequired === true && utcOffset === true) {
+        } else if (authRequired === true && utcOffset === true) {
             this.headers.set('Authorization', this.headerToken);
             this.headers.set('utcoffset', this.utcOffset);
-        }
-        else if (authRequired === false && utcOffset === false) {
+        } else if (authRequired === false && utcOffset === false) {
             if (this.headers.has('Authorization')) {
                 this.headers.delete('Authorization');
             }
             if (this.headers.has('utcoffset')) {
                 this.headers.delete('utcoffset');
             }
-        }
-        else if (authRequired === false && utcOffset === true) {
+        } else if (authRequired === false && utcOffset === true) {
             //console.log("login condition valid..........................")
             if (this.headers.has('Authorization')) {
                 this.headers.delete('Authorization');
             }
-            this.headers.set('utcoffset', this.utcOffset);
+            // this.headers.set('utcoffset', this.utcOffset);
             //  this.headers.set('Content-Type','application/x-www-form-urlencoded')
             //  this.headers.set('Accept','application/json')
         }
 
         //console.log(this.headers,'__')
         ///if(utc)
-        // this.options = new RequestOptions({ headers: this.headers });
+        this.options = new RequestOptions({ headers: this.headers });
         //console.log(this.options)
         // console.log(new RequestOptions({ headers: this.headers }))
-        return this.headers;
+        return this.options;
     }
 
     getFileUploadToken(authRequired, utcOffset) {
-        
+
         this.headers = new Headers({ 'content-language': 'en' });
         this.token = localStorage.getItem('token');
-        this.headerToken = 'Bearer ' + this.token;
+        // this.headerToken = 'Bearer ' + this.token;
+        this.headerToken = this.token;
         this.utcOffset = (new Date()).getTimezoneOffset();
         if (authRequired === true && utcOffset === false) {
             this.headers = this.headers ? this.headers : {};
@@ -88,10 +87,10 @@ export class ApiService {
             if (this.headers.has('Authorization')) {
                 this.headers.delete('Authorization');
             }
-            this.headers.set('utcoffset', this.utcOffset);
+            // this.headers.set('utcoffset', this.utcOffset);
         }
         this.options = new RequestOptions({ headers: this.headers });
-        return this.headers;
+        return this.options;
     }
 
     getApi(url, authRequired, utcOffset) {

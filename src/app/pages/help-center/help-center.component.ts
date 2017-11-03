@@ -6,8 +6,10 @@ import { Effect, Actions } from '@ngrx/effects';
 @Component({
     selector: 'helpcenter',
     template: `
-        <ba-content-top></ba-content-top>       
-        <help></help>
+        <div>
+            <ba-content-top></ba-content-top>       
+            <help></help>
+        </div>
     `
 })
 export class HelpCenter {

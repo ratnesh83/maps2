@@ -7,8 +7,10 @@ import * as setting from './state/setting.actions';
 @Component({
     selector: 'settings',
     template: `
-            <ba-content-top></ba-content-top>
-            <all-settings></all-settings>
+            <div>
+                <ba-content-top></ba-content-top>
+                <employee-profile-edit></employee-profile-edit>
+            </div>
             `
 })
 export class Settings {

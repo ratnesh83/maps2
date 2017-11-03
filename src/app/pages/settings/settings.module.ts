@@ -25,6 +25,7 @@ import {
 } from '@angular/material';
 
 import { AllSettings } from './components/all-settings/all-settings.component';
+import { EmployeeProfileEdit } from './components/employee-profile-edit/employee-profile-edit.component';
 
 import { Settings } from './settings.component';
 import { NgaModule } from '../../theme/nga.module';
@@ -57,6 +58,7 @@ import { NgaModule } from '../../theme/nga.module';
     declarations: [
         Settings,
         AllSettings,
+        EmployeeProfileEdit,
     ],
     entryComponents: [
     ],

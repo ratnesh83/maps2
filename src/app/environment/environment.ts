@@ -3,7 +3,7 @@ export const environment = {
     APP: {
         API_URL: APIURL,
         LOGIN_API: '/api/v2/web/user/login',
-        LOGOUT_API: '/user/logout',
+        LOGOUT_API: '/api/v2/web/user/logout',
         FORGOT_API: '/user/getResetPasswordToken',
       
         GET_ALL_BOOKING: '/admin/getAllAvailabeBooking',

@@ -8,13 +8,13 @@ import { BaThemeSpinner } from '../../../../theme/services';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 
-import 'style-loader!./all-settings.scss';
+import 'style-loader!./employee-profile-edit.scss';
 
 @Component({
-    selector: 'all-settings',
-    templateUrl: './all-settings.html',
+    selector: 'employee-profile-edit',
+    templateUrl: './employee-profile-edit.html',
 })
-export class AllSettings {
+export class EmployeeProfileEdit {
 
     @ViewChild('file') public _fileUpload: ElementRef;
     @ViewChildren('file') public _filesUpload: QueryList<HTMLInputElement>;
@@ -31,8 +31,10 @@ export class AllSettings {
     public fileUploadIndex;
     public imageUploadChildrenArray;
     public settingStore;
-    public jobItems;
     public products;
+    public isEditMode = false;
+    public isEdited;
+    public profile;
     constructor(
         private store: Store<any>,
         private modalService: NgbModal,
@@ -99,36 +101,6 @@ export class AllSettings {
     }
 
     ngOnInit() {
-        this.jobItems = [
-            {
-            title:'Labor required',
-            subTitle:'Construction: Concre',
-            imgPath:'assets/img/crane.svg',
-            rate:40,
-            location:'1245 West Broadway, Vancouver.',
-            },
-            {
-            title:'Labor required',
-            subTitle:'Construction: Concre',
-            imgPath:'assets/img/electrical.svg',
-            rate:40,
-            location:'1245 West Broadway, Vancouver.',
-            },
-            {
-            title:'Labor required',
-            subTitle:'Construction: Concre',
-            imgPath:'assets/img/heart.svg',
-            rate:40,
-            location:'1245 West Broadway, Vancouver.',
-            },
-            {
-            title:'Labor required',
-            subTitle:'Construction: Concre',
-            imgPath:'assets/img/teeth.svg',
-            rate:40,
-            location:'1245 West Broadway, Vancouver.',
-            }
-        ];
         this.products = [
             {
                 title: 'Donec facilisis',
@@ -146,8 +118,15 @@ export class AllSettings {
                 imgPath: 'assets/img/product_img_3.png'
             }
         ];
-        console.log(this.jobItems);
-        
+        this.profile ={
+            companyName:'Careerhub',
+            companyWebsite:'www.careerhub.com',
+            contactPerson:'James Smith',
+            contactNumber:'+1 9888611221',
+            address:'1245 West Broadway, Vancouver…',
+            category:'Health Care',
+            description: 'Donec facilisis tortor ut augue lacinia, at viverra est semp Donec facilisis tortor ut augue lacinia, at viverra est semp.'
+        };
     }
 
     ngOnDestroy() {
@@ -156,10 +135,7 @@ export class AllSettings {
         } */
     }
     ngAfterViewInit() {
-        this.imageUploadChildrenArray = this._filesUpload.toArray();
-        this._filesUpload.changes.subscribe(childern => {
-            this.imageUploadChildrenArray = childern.toArray();
-        });
+        
     }
     _keyPressCsvNumber(event: any) {
         const pattern = /^[0-9,]*$/;
@@ -167,5 +143,9 @@ export class AllSettings {
         if (!pattern.test(inputChar)) {
             event.preventDefault();
         }
+    }
+    toogleEdit(){
+        this.isEditMode = !this.isEditMode;
+        console.log(this.isEditMode);
     }
 }

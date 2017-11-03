@@ -6,8 +6,10 @@ import { Effect, Actions } from '@ngrx/effects';
 @Component({
     selector: 'appversion',
     template: `
-        <ba-content-top></ba-content-top>       
-        <version></version>
+        <div>
+            <ba-content-top></ba-content-top>       
+            <version></version>
+        </div>
     `
 })
 export class AppVersion {
