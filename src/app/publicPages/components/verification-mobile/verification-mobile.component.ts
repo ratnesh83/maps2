@@ -16,6 +16,7 @@ import * as auth from '../../../auth/state/auth.actions';
 import { EmailValidator } from '../../../theme/validators';
 import { User } from '../../../auth/model/user.model';
 import { ChangeMobileDialog } from '../change-mobile-dialog/change-mobile-dialog.component';
+import { ApprovalDialog } from '../approval-dialog/approval-dialog.component';
 import 'style-loader!./verification-mobile.scss';
 
 @Component({
@@ -90,7 +91,7 @@ export class VerificationMobile {
     }
 
     resendVerificationCode() {
-
+        
     }
 
     goto(id) {
@@ -121,6 +122,12 @@ export class VerificationMobile {
 
     openChangeDialog() {
         let dialogRef = this.dialog.open(ChangeMobileDialog);
+        // dialogRef.disableClose = true;
+        dialogRef.componentInstance.data = this.dataService.getUserRegisterationId();
+    }
+
+    openApprovalDialog() {
+        let dialogRef = this.dialog.open(ApprovalDialog);
         // dialogRef.disableClose = true;
         dialogRef.componentInstance.data = this.dataService.getUserRegisterationId();
     }

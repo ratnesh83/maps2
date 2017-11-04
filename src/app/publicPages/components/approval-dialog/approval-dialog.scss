@@ -1,0 +1,143 @@
+@import '../../../theme/sass/auth';
+.mat-dialog-container {
+    background-color: #f0f0f0;
+    border-radius: 3px;
+    .mat-dialog-content {
+        margin: 0px;
+        min-width: 45vw;
+        background-color: #ffffff;
+        border-radius: 3px;
+        box-shadow: 0 0 18px 0 rgba(0, 0, 0, 0.11);
+    }
+}
+.btn-login {
+    background-color: #026eff !important;
+    border-color: #026eff !important;
+}
+.btn-text-label {
+    display: flex;
+    margin: auto;
+}
+.login-auth-block {
+    position: relative;
+}
+.left-container {
+    min-height: 130px;
+}
+.app-logo {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    height: 116px;
+    left: 0px;
+}
+.app-logo-image {
+    width: 210px;
+    margin: auto;
+}
+.signup {
+    font-size: 16px;
+}
+.form-action-signup {
+    padding-top: 30px;
+    padding-bottom: 10px
+}
+.forgot-block {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 25px 0px;
+    border-radius: 5px;
+    color: #333333;
+    .image-approval {
+        height: 60px;
+    }
+    .forgot-block-inner {
+        max-width: 50%;
+        margin: 0 auto;
+    }
+    .forgot-block-message {
+        width: 75%; 
+        margin: 0 auto;
+        text-align: center; 
+        font-size: medium;
+        margin-bottom: 25px;
+    }
+    .title {
+        font-size: x-large;
+    }
+    h1 {
+        font-weight: $font-light;
+        text-align: center;
+    }
+    h4 {
+        font-weight: 300;
+        color: #999999;
+        text-align: center;
+    }
+    .btn {
+        border-radius: 3px;
+        font-weight: bold;
+        height: 50px;
+        font-size: 0.95rem;
+    }
+    input, select {
+        height: 50px;
+        border-radius: 3px;
+        background-color: #ffffff;
+        border: 1px solid #f0f0f0;
+        font-size: 0.95rem;
+        font-weight: 500;
+    }
+    p {
+        font-size: 16px;
+    }
+    a {
+        text-decoration: none;
+        outline: none;
+        transition: all 0.2s ease;
+        color: $primary;
+        &:hover {
+            color: $primary-dark;
+        }
+    }
+    .control-label {
+        padding-top: 11px;
+        color: $text-color;
+    }
+    .form-group {
+        margin-bottom: 12px;
+    }
+    .form-action-btns {
+        margin-bottom: 0px !important;
+    }
+}
+.btn-login.mat-raised-button.mat-primary[disabled], .mat-raised-button.mat-accent[disabled], .mat-raised-button.mat-warn[disabled], .mat-raised-button[disabled][disabled] {
+    color: rgba(255, 255, 255, 0.87) !important;
+}
+@media only screen and (max-width: 767px) {
+    .forgot-block {
+        max-width: 100%;
+        .image {
+            height: 50px;
+        }
+        .title {
+            font-size: medium;
+        }
+        .forgot-block-inner {
+            max-width: 100%;
+        }
+        input, select {
+            height: 45px;
+            font-size: 0.9rem;
+        }
+        .btn {
+            height: 45px;
+            font-size: 0.9rem;
+        }
+        .forgot-block-message {
+            width: 100%;
+            font-size: small;
+        }
+    }
+}

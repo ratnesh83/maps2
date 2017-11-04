@@ -16,6 +16,7 @@ import * as auth from '../../../auth/state/auth.actions';
 import { EmailValidator } from '../../../theme/validators';
 import { User } from '../../../auth/model/user.model';
 import { ChangeEmailDialog } from '../change-email-dialog/change-email-dialog.component';
+import { ApprovalDialog } from '../approval-dialog/approval-dialog.component';
 import 'style-loader!./verification-email.scss';
 
 @Component({
@@ -88,7 +89,7 @@ export class VerificationEmail {
     }
 
     resendVerificationCode() {
-
+        
     }
 
     goto(id) {
@@ -119,6 +120,12 @@ export class VerificationEmail {
 
     openChangeDialog() {
         let dialogRef = this.dialog.open(ChangeEmailDialog);
+        // dialogRef.disableClose = true;
+        dialogRef.componentInstance.data = this.dataService.getUserRegisterationId();
+    }
+
+    openApprovalDialog() {
+        let dialogRef = this.dialog.open(ApprovalDialog);
         // dialogRef.disableClose = true;
         dialogRef.componentInstance.data = this.dataService.getUserRegisterationId();
     }
