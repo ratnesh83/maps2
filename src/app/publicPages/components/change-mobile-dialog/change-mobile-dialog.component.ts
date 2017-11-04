@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { EmailValidator } from '../../../theme/validators';
+import { DataService } from '../../../services/data-service/data.service';
+import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import * as auth from '../../../auth/state/auth.actions';
 import {
     FormGroup,
@@ -52,14 +54,14 @@ import 'style-loader!./change-mobile-dialog.scss';
                                 </span>
                             </div>
                             <div class="col-9 col-sm-9 phone-number-phone">
-                                <input type="text" class="form-control" [formControl]="phone" id="inputPhone" placeholder="Mobile Number" (keypress)="_keyPressNumber($event)">
+                                <input #inputPhone type="text" class="form-control" [formControl]="phone" placeholder="Mobile Number" (keypress)="_keyPressNumber($event)">
                             </div>
                         </div>
                     </div>
                     <div class="form-action-btn form-action-btns">
                         <div class="form-group row">
                             <div class="col-12 col-sm-12">
-                                <button md-raised-button type="button" color="primary" class="btn btn-warning btn-block btn-login">SEND OTP</button>
+                                <button md-raised-button (click)="submit()" type="button" color="primary" class="btn btn-warning btn-block btn-login">SEND OTP</button>
                             </div>
                         </div>
                     </div>
@@ -70,16 +72,23 @@ import 'style-loader!./change-mobile-dialog.scss';
 })
 
 export class ChangeMobileDialog {
-    data;
+
+    @ViewChild('inputPhone') public _phone: ElementRef;
+
+    public data;
+    public userId;
     public storeData;
     public form: FormGroup;
     public email: AbstractControl;
     public countryCode: AbstractControl;
     public phone: AbstractControl;
     public countryCodes = [];
+
     constructor(private fb: FormBuilder,
         private store: Store<any>,
-        public dialog: MdDialog) {
+        private toastrService: ToastrService,
+        private dataService: DataService,
+        private dialog: MdDialog) {
         this.storeData = this.store
             .select('auth')
             .subscribe((res: any) => {
@@ -89,9 +98,8 @@ export class ChangeMobileDialog {
             });
 
         this.form = fb.group({
-            'email': ['', Validators.compose([Validators.required, EmailValidator.email])],
-            'countryCode': [''],
-            'phone': ['']
+            'countryCode': ['', Validators.compose([Validators.required])],
+            'phone': ['', Validators.compose([Validators.required])]
         });
 
         this.countryCode = this.form.controls['countryCode'];
@@ -101,6 +109,17 @@ export class ChangeMobileDialog {
     ngOnInit() {
         this.store.dispatch({
             type: auth.actionTypes.GET_COUNTRIES
+        });
+        if (this.dataService.getUserRegisterationId()) {
+            this.userId = this.dataService.getUserRegisterationId();
+        }
+    }
+
+    ngAfterViewInit() {
+        setTimeout(() => {
+            if (this._phone) {
+                this._phone.nativeElement.focus();
+            }
         });
     }
 
@@ -132,6 +151,28 @@ export class ChangeMobileDialog {
     filterOptions(val) {
         return this.countryCodes.filter(option =>
             option.phone_code.toString().indexOf(val.replace('+', '')) === 0);
+    }
+
+    submit() {
+        if (this.dataService.getUserRegisterationId()) {
+            this.userId = this.dataService.getUserRegisterationId();
+        }
+        if (!this.countryCode.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Country code is required', 'Error');
+            return;
+        }
+        if (!this.phone.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Phone number is required', 'Error');
+            return;
+        }
+        let data = {
+            userId: this.userId,
+            countryCode: this.countryCode.value,
+            phone: this.phone.value
+        };
+        console.log(data);
     }
 
     _keyPressNumber(event: any) {
