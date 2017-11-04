@@ -1,7 +1,9 @@
 <div class="row auth-main">
     <div class="col-12 col-sm-6 col-md-6 col-lg-6 left-container">
         <span class="app-logo">
-            <a class="app-logo-link" routerLink="/login"><img class="app-logo-image" src="assets/img/logo.png"></a>
+            <a class="app-logo-link" routerLink="/login">
+                <img class="app-logo-image" src="assets/img/logo.png">
+            </a>
         </span>
     </div>
 
@@ -45,25 +47,30 @@
                 <div class="form-group">
                     <div class="col-12 col-sm-12 signup-radio">
                         <md-radio-group class="signup-radio-button row" [formControl]="signUpType" (change)="changeSignUpType(signUpType.value)">
-                            <md-radio-button class="col-6 col-sm-6 text-center" color="primary" value="USER"><span class="hidden-xs-down">Sign up as </span>User</md-radio-button>
-                            <md-radio-button class="col-6 col-sm-6 text-center" color="primary" value="EMPLOYER"><span class="hidden-xs-down">Sign up as </span>Employer</md-radio-button>
+                            <md-radio-button class="col-6 col-sm-6 text-center" color="primary" value="USER">
+                                <span class="hidden-xs-down">Sign up as </span>User</md-radio-button>
+                            <md-radio-button class="col-6 col-sm-6 text-center" color="primary" value="EMPLOYER">
+                                <span class="hidden-xs-down">Sign up as </span>Employer</md-radio-button>
                         </md-radio-group>
                     </div>
                 </div>
                 <div *ngIf="signUpType.value == 'EMPLOYER'" class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input type="text" [formControl]="companyName" class="form-control" id="inputCompanyName" placeholder="Company Name">
+                        <input #inputCompanyName type="text" [formControl]="companyName" [ngClass]="{'has-input-error': (!companyName.valid && (companyName.touched || submitted))}"
+                            class="form-control" placeholder="Company Name">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input type="text" [formControl]="name" class="form-control" id="inputName" placeholder="Full Name*">
+                        <input #inputName type="text" [formControl]="name" [ngClass]="{'has-input-error': (!name.valid && (name.touched || submitted))}"
+                            class="form-control" placeholder="Full Name*">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-3 col-sm-3 phone-number-cc">
-                        <input type="text" [formControl]="countryCode" (focus)="countryCodeClick()" class="form-control" id="inputCountryCode"
-                            placeholder="+1" [mdAutocomplete]="auto" maxlength="5" (keypress)="_keyPressCountryCode($event)">
+                        <input #inputCountryCode type="text" [formControl]="countryCode" [ngClass]="{'has-input-error': (!countryCode.valid && (countryCode.touched || submitted))}"
+                            (focus)="countryCodeClick()" class="form-control" placeholder="+1" [mdAutocomplete]="auto" maxlength="5"
+                            (keypress)="_keyPressCountryCode($event)">
                         <md-autocomplete #auto="mdAutocomplete">
                             <md-option *ngFor="let country of countries | async" [value]="'+' + country.phone_code">
                                 {{ '+' + country.phone_code }}
@@ -77,34 +84,36 @@
                         </span>
                     </div>
                     <div class="col-9 col-sm-9 phone-number-phone">
-                        <input type="text" [formControl]="phone" class="form-control" id="inputPhone" placeholder="Phone Number*" (keypress)="_keyPressNumber($event)">
+                        <input #inputPhone type="text" [formControl]="phone" [ngClass]="{'has-input-error': (!phone.valid && (phone.touched || submitted))}"
+                            class="form-control" placeholder="Phone Number*" (keypress)="_keyPressNumber($event)">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input type="email" [formControl]="email" [ngClass]="{'has-input-error': (!email.valid && email.touched)}" class="form-control"
-                            id="inputEmail" placeholder="Email*">
+                        <input #inputEmail type="email" [formControl]="email" [ngClass]="{'has-input-error': (!email.valid && (email.touched || submitted))}"
+                            class="form-control" placeholder="Email*">
                     </div>
                 </div>
                 <div *ngIf="signUpType.value == 'USER'" class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input type="text" class="form-control" id="inputExpertiseDescription" [formControl]="expertiseDescription" placeholder="Expertise Description">
+                        <input #inputExpertiseDescription type="text" class="form-control" [formControl]="expertiseDescription" placeholder="Expertise Description">
                     </div>
                 </div>
                 <div *ngIf="signUpType.value == 'EMPLOYER'" class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input type="text" class="form-control" id="inputDescription" [formControl]="description" placeholder="Description">
+                        <input #inputDescription type="text" class="form-control" [formControl]="description" placeholder="Description">
                     </div>
                 </div>
                 <div *ngIf="!socialId.value" class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input type="password" [ngClass]="{'has-input-error': (!password.valid && password.touched)}" class="form-control" id="inputPassword"
-                            placeholder="Password*" [formControl]="password">
+                        <input #inputPassword type="password" [ngClass]="{'has-input-error': (!password.valid && (password.touched || submitted))}"
+                            class="form-control" placeholder="Password*" [formControl]="password">
                     </div>
                 </div>
                 <div *ngIf="!socialId.value" class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Confirm Password*" [formControl]="repeatPassword">
+                        <input #inputConfirmPassword type="password" [ngClass]="{'has-input-error': ((!passwords.valid || !repeatPassword.valid) && (repeatPassword.touched || submitted))}"
+                            class="form-control" placeholder="Confirm Password*" [formControl]="repeatPassword">
                     </div>
                 </div>
                 <div class="form-group row sigup-checkbox">

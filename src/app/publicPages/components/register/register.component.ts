@@ -1,14 +1,15 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as auth from '../../../auth/state/auth.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { EmailValidator, EqualPasswordsValidator } from '../../../theme/validators';
+import { EmailValidator, EqualPasswordsValidator, NameValidator } from '../../../theme/validators';
 import { FacebookService, LoginResponse, InitParams } from 'ngx-facebook';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MdIconRegistry } from '@angular/material';
 import { DataService } from '../../../services/data-service/data.service';
+import { environment } from '../../../environment/environment';
 
 import 'style-loader!./register.scss';
 
@@ -20,6 +21,13 @@ declare const FB: any;
 })
 export class Register {
 
+    @ViewChild('inputName') public _name: ElementRef;
+    @ViewChild('inputCountryCode') public _countryCode: ElementRef;
+    @ViewChild('inputPhone') public _phone: ElementRef;
+    @ViewChild('inputEmail') public _email: ElementRef;
+    @ViewChild('inputPassword') public _password: ElementRef;
+    @ViewChild('inputConfirmPassword') public _confirmPassword: ElementRef;
+    @ViewChild('inputCompanyName') public _companyName: ElementRef;
     public storeData;
     public form: FormGroup;
     public name: AbstractControl;
@@ -66,19 +74,19 @@ export class Register {
             sanitizer.bypassSecurityTrustResourceUrl('assets/img/twitter.svg'));
 
         this.form = fb.group({
-            'name': ['', Validators.compose([Validators.required])],
-            'companyName': [''],
+            'name': ['', Validators.compose([Validators.required, NameValidator.nameValid])],
+            'companyName': ['', Validators.compose([Validators.required])],
             'email': ['', Validators.compose([Validators.required, EmailValidator.email])],
-            'countryCode': [''],
-            'phone': [''],
+            'countryCode': ['', Validators.compose([Validators.required])],
+            'phone': ['', Validators.compose([Validators.required])],
             'signUpType': ['USER'],
             'agreement': [false],
             'socialId': [''],
             'description': [''],
             'expertiseDescription': [''],
             'passwords': fb.group({
-                'password': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
-                'repeatPassword': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
+                'password': ['', Validators.compose([Validators.required, NameValidator.password])],
+                'repeatPassword': ['', Validators.compose([Validators.required])]
             }, { validator: EqualPasswordsValidator.validate('password', 'repeatPassword') })
         });
 
@@ -197,45 +205,91 @@ export class Register {
 
     onSubmit() {
 
+        this.submitted = true;
         let timezoneOffset = (new Date()).getTimezoneOffset();
+
         if (this.signUpType.value == 'EMPLOYER' && !this.companyName.value) {
             this.toastrService.clear();
             this.toastrService.error('Company name is required', 'Error');
+            if(this._companyName) {
+                this._companyName.nativeElement.focus();
+            }
             return;
         }
         if (!this.name.value) {
             this.toastrService.clear();
             this.toastrService.error('Name is required', 'Error');
+            if(this._name) {
+                this._name.nativeElement.focus();
+            }
             return;
+        }
+        if (this.name.errors) {
+            if (this.name.errors.invalidName) {
+                this.toastrService.clear();
+                this.toastrService.error(environment.ERROR.NAME_INVALID, 'Error');
+                if(this._name) {
+                    this._name.nativeElement.focus();
+                }
+                return;
+            }
         }
         if (!this.countryCode.value) {
             this.toastrService.clear();
             this.toastrService.error('Country code is required', 'Error');
+            if(this._countryCode) {
+                this._countryCode.nativeElement.focus();
+            }
             return;
         }
         if (!this.phone.value) {
             this.toastrService.clear();
             this.toastrService.error('Phone number is required', 'Error');
+            if(this._phone) {
+                this._phone.nativeElement.focus();
+            }
             return;
         }
         if (!this.email.value) {
             this.toastrService.clear();
             this.toastrService.error('Email is required', 'Error');
+            if(this._email) {
+                this._email.nativeElement.focus();
+            }
             return;
         }
         if (this.email.errors && this.email.errors.invalidEmail) {
             this.toastrService.clear();
             this.toastrService.error('Please enter a valid email', 'Error');
+            if(this._email) {
+                this._email.nativeElement.focus();
+            }
             return;
         }
         if (!this.password.value) {
             this.toastrService.clear();
             this.toastrService.error('Password is required', 'Error');
+            if(this._password) {
+                this._password.nativeElement.focus();
+            }
             return;
+        }
+        if (this.password.errors) {
+            if (this.password.errors.invalidPassword) {
+                this.toastrService.clear();
+                this.toastrService.error(environment.ERROR.PASSWORD_INVALID, 'Error');
+                if(this._password) {
+                    this._password.nativeElement.focus();
+                }
+                return;
+            }
         }
         if (this.passwords.errors && this.passwords.errors.passwordsEqual && !this.passwords.errors.passwordsEqual.valid) {
             this.toastrService.clear();
             this.toastrService.error('Passwords do not match', 'Error');
+            if(this._confirmPassword) {
+                this._confirmPassword.nativeElement.focus();
+            }
             return;
         }
         

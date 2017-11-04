@@ -10,13 +10,13 @@ export const environment = {
         REGISTER_API: '/api/v2/web/user/register/step1',
         REGISTER_ADDRESS_API: '/api/v2/web/user/register/step2',
         REGISTER_DOCUMENTS_API: '/api/v2/web/user/register/step3',
-      
+
         GET_ALL_BOOKING: '/admin/getAllAvailabeBooking',
         GET_ALL_OUTGOING_BOOKING: '/admin/getOngoingBooking',
         GET_ALL_PAST_BOOKING: '/admin/getPastBooking',
         GET_BOOKING_BY_ID: '/admin/getBookingDetails',
         CANCEL_BOOKING_BY_ID: '/admin/cancelBooking',
-     
+
         GET_ALL_USER: '/admin/getAllUsers',
         GET_USER: '/admin/userDetails',
         GET_ALL_USER_BY_ID: '/admin/userDetails',
@@ -34,7 +34,7 @@ export const environment = {
         EDIT_DRIVER_BY_ID_SUCCESS: '/admin/driver/updateProfile',
         CHANGE_PASSWORD: '/user/changePassword',
         GET_DASHBOARD_COUNT: '/admin/getDashboardCount',
-  
+
         GET_ALL_NOTIFICATION: '/notification/admin/getAllNotification',
         CLEAR_ALL_NOTIFICATION: '/notification/admin/clearNotification',
         READ_NOTIFICATION: '/notification/admin/readNotification',
@@ -46,7 +46,7 @@ export const environment = {
         SET_SERVICE_RADII: '/admin/setDefaultSettings',
         GET_QUALIFICATION: '/universalVariables/getAllQualifications',
         SET_QUALIFICATION: '/universalVariables/addNewQualification',
-        UPDATE_QUALIFICATION: '/universalVariables/updateQualification',  
+        UPDATE_QUALIFICATION: '/universalVariables/updateQualification',
         GET_EXPERTISE: '/universalVariables/getAllExpertise',
         GET_EQUIPMENTS: '/admin/machine',
         SET_EXPERTISE: '/universalVariables/addNewExpertise',
@@ -72,5 +72,10 @@ export const environment = {
         UPLOAD_FILE: '/user/uploadFile',
         UPLOAD_MULTIPLE_FILES: '/user/uploadMultipleFiles'
 
+    },
+
+    ERROR: {
+        NAME_INVALID: 'Only A-Z/a-z allowed',
+        PASSWORD_INVALID: 'Password is invalid (minimum eight characters, at least one uppercase letter, one lowercase letter and one number)'
     }
 };

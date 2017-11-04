@@ -31,7 +31,10 @@ declare const FB: any;
 
 export class Login {
 
-    @ViewChild('checkoutForm') public _checkoutForm: ElementRef;
+    @ViewChild('inputCountryCode') public _countryCode: ElementRef;
+    @ViewChild('inputPhone') public _phone: ElementRef;
+    @ViewChild('inputEmail') public _email: ElementRef;
+    @ViewChild('inputPassword') public _password: ElementRef;
     public storeData;
     public form: FormGroup;
     public email: AbstractControl;
@@ -228,33 +231,47 @@ export class Login {
     }
 
     onSubmit() {
+        this.submitted = true;
         let timezoneOffset = (new Date()).getTimezoneOffset();
         if (!this.phone.value && !this.email.value) {
             if (this.phone.errors.required) {
                 this.toastrService.clear();
                 this.toastrService.error('Phone number or email is required', 'Error');
             }
+            return;
         } else if ((this.countryCode.value || this.phone.value) && !this.email.value && this.phone.hasError && this.phone.errors) {
             if (this.phone.errors.required) {
                 this.toastrService.clear();
                 this.toastrService.error('Phone number is required', 'Error');
             }
+            if(this._phone) {
+                this._phone.nativeElement.focus();
+            }
+            return;
         } else if (this.email.value && !this.phone.value && this.email.hasError && this.email.errors) {
             if (this.email.errors.required) {
                 this.toastrService.clear();
                 this.toastrService.error('Email is required', 'Error');
-            } else if (this.email.errors.invalid) {
+            } else if (this.email.errors.invalidEmail) {
                 this.toastrService.clear();
                 this.toastrService.error('Email is invalid', 'Error');
             }
+            if(this._email) {
+                this._email.nativeElement.focus();
+            }
+            return;
         } else if (this.password.hasError && this.password.errors) {
             if (this.password.errors.required) {
                 this.toastrService.clear();
                 this.toastrService.error('Password is required', 'Error');
-            } else if (this.password.errors.invalid) {
+            } else if (this.password.errors.invalidPassword) {
                 this.toastrService.clear();
                 this.toastrService.error('Password is invalid', 'Error');
             }
+            if(this._password) {
+                this._password.nativeElement.focus();
+            }
+            return;
         } else {
             let data = {
                 emailOrPhone: this.email.value,
