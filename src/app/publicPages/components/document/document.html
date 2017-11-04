@@ -18,29 +18,35 @@
                 </h4>
             </div>
 
-            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value, $event)" class="form-horizontal">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-horizontal">
                 <div class="profile-section">
                     <img class="profile-picture-image" (click)="bringFileSelector()" [src]="profilePicture.value && profilePicture.value.indexOf('image') != -1 ? profilePicture.value : 'assets/img/user.png'">
                     <input #profilePictureInput [hidden]="true" type="file" (change)="selectImage($event)">
                     <p class="picture-text">Upload Profile Picture</p>
                 </div>
+                <div class="form-group row">
+                    <div class="col-12 col-sm-12">
+                        <input #inputDocumentName type="text" [ngClass]="{'has-input-error': (!documentName.valid && (documentName.touched || submitted))}" [formControl]="documentName" class="form-control" placeholder="Document Name*">
+                    </div>
+                </div>
 
                 <div class="doc-section row">
                     <div class="col-12 col-sm-12" *ngFor="let document of form.controls['documents'].controls; let i=index; let last=last; let first=first">
-                        <div class="form-group row">
+                        <!-- <div class="form-group row">
                             <div class="col-12 col-sm-12">
-                                <input type="text" [formControl]="document.controls['documentName']" class="form-control" id="inputDocumentName" placeholder="Document Name">
+                                <input type="text" [formControl]="document.controls['documentName']" class="form-control" placeholder="Document Name">
                             </div>
-                        </div>
-                        <div class="form-group row">
+                        </div> -->
+                        <div class="form-group row" style="margin-bottom: 0px">
                             <div class="col-12 col-sm-12">
-                                <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" (onFileDrop)="droppedFile($event, i)" [uploader]="uploader[i]"
-                                    class="well my-drop-zone">
+                                <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" (onFileDrop)="droppedFile($event, i)"
+                                    [uploader]="uploader[i]" class="well my-drop-zone">
                                     <span class="my-drop-zone-span" (click)="bringFilesSelector(i)">
                                         <div style="text-align: center; padding-bottom: 10px">
                                             <img style="cursor: pointer; max-height: 100px" [src]="document?.controls['document']?.value && document?.controls['document']?.value?.indexOf('image') != -1 ? document?.controls['document']?.value : 'assets/img/upload.png'">
                                         </div>
-                                        <div *ngIf="document?.controls['document']?.value && document?.controls['document']?.value?.indexOf('image') == -1" style="line-height: 25px; cursor: pointer" class="text-center">
+                                        <div *ngIf="document?.controls['document']?.value && document?.controls['document']?.value?.indexOf('image') == -1" style="line-height: 25px; cursor: pointer"
+                                            class="text-center">
                                             <strong>
                                                 {{ uploader[i]?.queue[uploader[i]?.queue?.length > 0 ? uploader[i]?.queue?.length - 1 : 0]?.file?.name }}
                                             </strong>

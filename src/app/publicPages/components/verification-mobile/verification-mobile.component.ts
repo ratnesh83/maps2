@@ -7,6 +7,7 @@ import {
     FormControl
 } from '@angular/forms';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
+import { DataService } from '../../../services/data-service/data.service';
 import { MdDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { BaThemeSpinner } from '../../../theme/services';
@@ -36,6 +37,7 @@ export class VerificationMobile {
     public codeThree: AbstractControl;
     public codeFour: AbstractControl;
     public submitted: boolean = false;
+    public userId;
     public selectedPhone;
     public selectedCountryCode;
 
@@ -51,7 +53,8 @@ export class VerificationMobile {
         private store: Store<any>,
         private toastrService: ToastrService,
         private renderer: Renderer,
-        public dialog: MdDialog
+        private dialog: MdDialog,
+        private dataService: DataService
     ) {
         this.selectedCountryCode = '+91';
         this.selectedPhone = '9988776655';
@@ -62,10 +65,10 @@ export class VerificationMobile {
             });
 
             this.form = fb.group({
-                'codeOne': [''],
-                'codeTwo': [''],
-                'codeThree': [''],
-                'codeFour': ['']
+                'codeOne': ['', Validators.compose([Validators.required])],
+                'codeTwo': ['', Validators.compose([Validators.required])],
+                'codeThree': ['', Validators.compose([Validators.required])],
+                'codeFour': ['', Validators.compose([Validators.required])]
             });
     
             this.codeOne = this.form.controls['codeOne'];
@@ -75,7 +78,9 @@ export class VerificationMobile {
     }
 
     ngOnInit() {
-  
+        if (this.dataService.getUserRegisterationId()) {
+            this.userId = this.dataService.getUserRegisterationId();
+        }
     }
 
     ngOnDestroy() {
@@ -117,25 +122,53 @@ export class VerificationMobile {
     openChangeDialog() {
         let dialogRef = this.dialog.open(ChangeMobileDialog);
         // dialogRef.disableClose = true;
-        dialogRef.componentInstance.data = 'sa';
+        dialogRef.componentInstance.data = this.dataService.getUserRegisterationId();
     }
 
     onSubmit(values: Object, event) {
        
         this.submitted = true;
-        console.log(values);
-
-        if (this.form.valid) {
-            let data = {
-                email: values,
-                password: values,
-                rememberMe: values,
-                role: values,
-                deviceType: 'WEB'
-            };
-        } else {
-            //console.log('form is not valid ');
+        if (this.dataService.getUserRegisterationId()) {
+            this.userId = this.dataService.getUserRegisterationId();
         }
+        if (!this.codeOne.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Verification code is required', 'Error');
+            if(this._inputCodeOne) {
+                this._inputCodeOne.nativeElement.focus();
+            }
+            return;
+        }
+        if (!this.codeTwo.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Verification code is required', 'Error');
+            if(this._inputCodeTwo) {
+                this._inputCodeTwo.nativeElement.focus();
+            }
+            return;
+        }
+        if (!this.codeThree.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Verification code is required', 'Error');
+            if(this._inputCodeThree) {
+                this._inputCodeThree.nativeElement.focus();
+            }
+            return;
+        }
+        if (!this.codeFour.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Verification code is required', 'Error');
+            if(this._inputCodeFour) {
+                this._inputCodeFour.nativeElement.focus();
+            }
+            return;
+        }
+        let otp = this.codeOne.value + this.codeTwo.value + this.codeThree.value + this.codeFour.value;
+        let data = {
+            userId: this.userId,
+            otp: otp
+        };
+        console.log(data);
     }
 
     _keyPressNumber(event: any) {

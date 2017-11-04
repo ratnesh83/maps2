@@ -24,7 +24,7 @@ import 'style-loader!./change-email-dialog.scss';
                 </div>
                 <div class="forgot-block-inner">
                     <div style="text-align: center">
-                        <input type="text" class="form-control" id="inputUser" placeholder="Email">
+                        <input type="text" class="form-control" id="inputEmail" placeholder="Email">
                     </div>
                     <div class="form-action-btn form-action-btns">
                         <div class="form-group row">

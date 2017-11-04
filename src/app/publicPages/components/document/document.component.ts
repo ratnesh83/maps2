@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { FormGroup, AbstractControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { EmailValidator, EqualPasswordsValidator } from '../../../theme/validators';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
+import { DataService } from '../../../services/data-service/data.service';
 import { FileUploader } from 'ng2-file-upload';
 
 import 'style-loader!./document.scss';
@@ -19,12 +20,15 @@ export class Documents {
 
     @ViewChild('profilePictureInput') public _profilePicture: ElementRef;
     @ViewChildren('documentInput') public _document: QueryList<HTMLInputElement>;
+    @ViewChild('inputDocumentName') public _documentName: ElementRef;
     public storeData;
     public form: FormGroup;
     public profilePicture: AbstractControl;
     public documentName: AbstractControl;
+    public documents: AbstractControl;
     public uploader: FileUploader[] = [];
     public hasBaseDropZoneOver: boolean = false;
+    public userId;
     public documentArray;
 
     public submitted: boolean = false;
@@ -33,24 +37,30 @@ export class Documents {
         private store: Store<any>,
         private renderer: Renderer,
         private toastrService: ToastrService,
+        private dataService: DataService,
         private cdRef: ChangeDetectorRef) {
 
         this.storeData = this.store
             .select('auth')
             .subscribe((res: any) => {
-                
+
             });
 
         this.form = this.fb.group({
             'profilePicture': [''],
+            'documentName': ['', Validators.compose([Validators.required])],
             'documents': fb.array([this.initDocument()])
         });
         this.uploader.push(new FileUploader({ url: '' }));
         this.profilePicture = this.form.controls['profilePicture'];
+        this.documentName = this.form.controls['documentName'];
+        this.documents = this.form.controls['documents'];
     }
 
     ngOnInit() {
-
+        if (this.dataService.getUserRegisterationId()) {
+            this.userId = this.dataService.getUserRegisterationId();
+        }
     }
 
     ngOnDestroy() {
@@ -210,13 +220,41 @@ export class Documents {
         this.uploader.splice(index, 1);
     }
 
-    onSubmit(values: Object): void {
+    onSubmit() {
         this.submitted = true;
-        console.log(values, this.uploader);
-        if (this.form.valid) {
-            // your code goes here
-            // console.log(values);
+        if (this.dataService.getUserRegisterationId()) {
+            this.userId = this.dataService.getUserRegisterationId();
         }
+        const control = <FormArray>this.documents;
+        if (!this.documentName.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Document name is required', 'Error');
+            if (this._documentName) {
+                this._documentName.nativeElement.focus();
+            }
+            return;
+        }
+        let documents = [];
+        for (let i = 0; i < control.value.length; i++) {
+            if (control.value[i] && control.value[i].document) {
+                documents.push(control.value[i].document);
+            }
+        }
+        if (documents.length == 0) {
+            this.toastrService.clear();
+            this.toastrService.error('Please upload a document', 'Error');
+            return;
+        }
+        let data = {
+            userId: this.userId,
+            profilePicture: this.profilePicture.value,
+            documentName: this.documentName.value,
+            documents: documents
+        };
+        if(!this.profilePicture.value) {
+            delete data.profilePicture;
+        }
+        console.log(data);
     }
 
 }

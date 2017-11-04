@@ -13,6 +13,7 @@ import { BaThemeSpinner } from '../../../theme/services';
 import { Store } from '@ngrx/store';
 import * as auth from '../../../auth/state/auth.actions';
 import { User } from '../../../auth/model/user.model';
+import { Router } from '@angular/router';
 import 'style-loader!./verification.scss';
 
 declare const FB: any;
@@ -41,6 +42,7 @@ export class Verification {
         private baThemeSpinner: BaThemeSpinner,
         private store: Store<any>,
         private toastrService: ToastrService,
+        private router: Router,
         public dialog: MdDialog
     ) {
         this.storeData = this.store
@@ -50,7 +52,7 @@ export class Verification {
             });
 
         this.form = fb.group({
-            'signUpType': ['1']
+            'signUpType': ['SMS']
         });
 
         this.signUpType = this.form.controls['signUpType'];
@@ -66,8 +68,12 @@ export class Verification {
         }
     }
 
-    onSubmit(values: Object, event) {
-        console.log(values);
+    onSubmit() {
+        if (this.signUpType.value == 'SMS') {
+            this.router.navigate(['verifyMobile']);
+        } else if (this.signUpType.value == 'EMAIL') {
+            this.router.navigate(['verifyEmail']);
+        }
     }
 
 }
