@@ -126,7 +126,7 @@ export class VerificationEmail {
 
     openApprovalDialog() {
         let dialogRef = this.dialog.open(ApprovalDialog);
-        // dialogRef.disableClose = true;
+        dialogRef.disableClose = true;
         dialogRef.componentInstance.data = this.dataService.getUserRegisterationId();
     }
 
