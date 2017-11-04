@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as auth from '../../../auth/state/auth.actions';
 import { Observable } from 'rxjs/Observable';
@@ -9,11 +9,17 @@ import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import 'style-loader!./address.scss';
 
 @Component({
-    selector: 'address',
+    selector: 'location',
     templateUrl: './address.html',
 })
 export class Address {
 
+    @ViewChild('inputLocationAddress') public _locationAddress: ElementRef;
+    @ViewChild('inputStreetAddress') public _streetAddress: ElementRef;
+    @ViewChild('inputCity') public _city: ElementRef;
+    @ViewChild('inputState') public _state: ElementRef;
+    @ViewChild('inputZipCode') public _zipCode: ElementRef;
+    @ViewChild('inputCountry') public _country: ElementRef;
     public storeData;
     public form: FormGroup;
     public streetAddress: AbstractControl;
@@ -41,14 +47,14 @@ export class Address {
             });
 
         this.form = fb.group({
-            'streetAddress': ['', Validators.compose([Validators.required])],
-            'locationAddress': [''],
+            'streetAddress': [''],
+            'locationAddress': ['', Validators.compose([Validators.required])],
             'latitude': [0],
             'longitude': [0],
-            'city': [''],
-            'state': [''],
-            'zipCode': [''],
-            'country': ['']
+            'city': ['', Validators.compose([Validators.required])],
+            'state': ['', Validators.compose([Validators.required])],
+            'zipCode': ['', Validators.compose([Validators.required])],
+            'country': ['', Validators.compose([Validators.required])]
         });
 
         this.streetAddress = this.form.controls['streetAddress'];
@@ -115,13 +121,48 @@ export class Address {
 
     onSubmit() {
 
+        this.submitted = true;
         if (this.dataService.getUserRegisterationId()) {
             this.userId = this.dataService.getUserRegisterationId();
         }
-
         if(!this.locationAddress.value) {
             this.toastrService.clear();
-            this.toastrService.error('Address is required', 'Error');
+            this.toastrService.error('Street address 1 is required', 'Error');
+            if(this._locationAddress) {
+                this._locationAddress.nativeElement.focus();
+            }
+            return;
+        }
+        if(!this.city.value) {
+            this.toastrService.clear();
+            this.toastrService.error('City is required', 'Error');
+            if(this._city) {
+                this._city.nativeElement.focus();
+            }
+            return;
+        }
+        if(!this.state.value) {
+            this.toastrService.clear();
+            this.toastrService.error('State is required', 'Error');
+            if(this._state) {
+                this._state.nativeElement.focus();
+            }
+            return;
+        }
+        if(!this.zipCode.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Zip code is required', 'Error');
+            if(this._zipCode) {
+                this._zipCode.nativeElement.focus();
+            }
+            return;
+        }
+        if(!this.country.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Country is required', 'Error');
+            if(this._country) {
+                this._country.nativeElement.focus();
+            }
             return;
         }
 
@@ -130,19 +171,21 @@ export class Address {
             longitude: this.longitude.value,
             addressLine1: this.locationAddress.value,
             addressLine2: this.streetAddress.value || '',
-            city: this.city.value || '',
-            state: this.state.value || '',
-            country: this.country.value || '',
-            zipCode: this.zipCode.value || ''
+            city: this.city.value,
+            state: this.state.value,
+            country: this.country.value,
+            zipCode: this.zipCode.value
         };
+
+        if(!this.streetAddress.value) {
+            delete locationDetails.addressLine2;
+        }
 
         let data = {
             userId: this.userId,
             locationDetails: locationDetails,
             stepNumber: 2
         };
-
-        console.log(data);
 
         this.store.dispatch({
             type: auth.actionTypes.AUTH_REGISTER_ADDRESS,
