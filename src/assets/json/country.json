@@ -972,6 +972,12 @@
         "phone_code": 1758
     },
     {
+        "country_code": "MH",
+        "country_en": "Marshall Islands",
+        "country_cn": "马绍尔群岛",
+        "phone_code": 692
+    },
+    {
         "country_code": "SM",
         "country_en": "San Marino",
         "country_cn": "圣马力诺",

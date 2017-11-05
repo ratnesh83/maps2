@@ -291,6 +291,26 @@ button.btn.cancel-booking-cls {
         color: #fff;
     }
 }
+@media only screen and (max-width: 1139px) {
+    .flag-options {
+        display: none;
+        height: 16px;
+        width: 16px;
+    }
+    .phone-number-cc {
+        .flag-placeholder {
+            display: none;
+            position: absolute; 
+            top: 17px; 
+            left: 25px;
+            height: 16px;
+            width: 16px;
+        }
+        input {
+            padding-left: 0.75rem;
+        }
+    }
+}
 @media only screen and (max-width: 767px) {
     button.btn.btn-primary {
         margin-bottom: 20px;

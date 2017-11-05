@@ -200,7 +200,7 @@ export class Login {
         if(this.countryCode.value) {
             return 'default';
         }
-        return;
+        return 'us';
     }
 
     openForgotPasswordDialog() {

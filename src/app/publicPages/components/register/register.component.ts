@@ -150,6 +150,18 @@ export class Register {
             option.phone_code.toString().indexOf(val.replace('+', '')) === 0);
     }
 
+    getCountryFlag(country) {
+        for (let i = 0; i < this.countryCodes.length; i++) {
+            if (country == this.countryCodes[i].phone_code) {
+                return this.countryCodes[i].country_code;
+            }
+        }
+        if(this.countryCode.value) {
+            return 'default';
+        }
+        return 'us';
+    }
+
     changeSignUpType(type) {
         this.name.reset();
         this.email.reset();

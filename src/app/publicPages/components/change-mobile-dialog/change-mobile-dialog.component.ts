@@ -38,12 +38,13 @@ import 'style-loader!./change-mobile-dialog.scss';
                 <div class="forgot-block-inner">
                     <div style="text-align: center">
                         <div class="form-group row">
-                            <div class="col-3 col-sm-3 phone-number-cc">
+                            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-4 phone-number-cc">
+                                <img class="flag-placeholder" src="{{ 'assets/img/flags/iso/' + getCountryFlag(countryCode.value)?.toString()?.toLowerCase() + '.png' }}">
                                 <input type="text" [formControl]="countryCode" class="form-control" (focus)="countryCodeClick()" id="inputCode" placeholder="+1"
                                     [mdAutocomplete]="auto" maxlength="5" (keypress)="_keyPressCountryCode($event)">
                                 <md-autocomplete #auto="mdAutocomplete">
                                     <md-option *ngFor="let country of countries | async" [value]="'+' + country.phone_code">
-                                        {{ '+' + country.phone_code }}
+                                        <img class="flag-options" src="{{ 'assets/img/flags/iso/' + country.country_code?.toString()?.toLowerCase() + '.png' }}"> {{ ' +' + country.phone_code }}
                                         <span style="color: rgba(0, 0, 0, 0.3)">
                                             {{ country.country_code }}
                                         </span>
@@ -53,7 +54,7 @@ import 'style-loader!./change-mobile-dialog.scss';
                                     <span class="separator-cc"></span>
                                 </span>
                             </div>
-                            <div class="col-9 col-sm-9 phone-number-phone">
+                            <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 phone-number-phone">
                                 <input #inputPhone type="text" class="form-control" [formControl]="phone" placeholder="Mobile Number" (keypress)="_keyPressNumber($event)">
                             </div>
                         </div>
@@ -151,6 +152,18 @@ export class ChangeMobileDialog {
     filterOptions(val) {
         return this.countryCodes.filter(option =>
             option.phone_code.toString().indexOf(val.replace('+', '')) === 0);
+    }
+
+    getCountryFlag(country) {
+        for (let i = 0; i < this.countryCodes.length; i++) {
+            if (country == this.countryCodes[i].phone_code) {
+                return this.countryCodes[i].country_code;
+            }
+        }
+        if(this.countryCode.value) {
+            return 'default';
+        }
+        return 'us';
     }
 
     submit() {
