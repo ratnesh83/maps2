@@ -155,9 +155,23 @@ a.forgot-pass {
         border-bottom: 1px solid $border-light;
     }
 }
+.flag-options {
+    height: 22px;
+    width: 22px;
+}
 .phone-number-cc {
     position: relative;
     padding-right: 0px;
+    .flag-placeholder {
+        position: absolute; 
+        top: 13px; 
+        left: 25px;
+        height: 24px;
+        width: 24px;
+    }
+    input {
+        padding-left: 40px;
+    }
     input, select {
         border-right: 0px;
         border-radius: 3px 0px 0px 3px;
@@ -377,6 +391,24 @@ all-jobs {
     .auth-main {
         background: url("assets/img/bg2x.jpg") no-repeat center center; 
         background-size: 100vw 100%;
+    }
+    .flag-options {
+        display: none;
+        height: 16px;
+        width: 16px;
+    }
+    .phone-number-cc {
+        .flag-placeholder {
+            display: none;
+            position: absolute; 
+            top: 17px; 
+            left: 25px;
+            height: 16px;
+            width: 16px;
+        }
+        input {
+            padding-left: 0.75rem;
+        }
     }
     all-subscriptions,
     all-payments,

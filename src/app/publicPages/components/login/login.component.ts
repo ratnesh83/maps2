@@ -191,6 +191,18 @@ export class Login {
         }
     }
 
+    getCountryFlag(country) {
+        for (let i = 0; i < this.countryCodes.length; i++) {
+            if (country == this.countryCodes[i].phone_code) {
+                return this.countryCodes[i].country_code;
+            }
+        }
+        if(this.countryCode.value) {
+            return 'default';
+        }
+        return;
+    }
+
     openForgotPasswordDialog() {
         let dialogRef = this.dialog.open(ForgotPasswordDialog);
         // dialogRef.disableClose = true;
@@ -244,7 +256,7 @@ export class Login {
                 this.toastrService.clear();
                 this.toastrService.error('Phone number is required', 'Error');
             }
-            if(this._phone) {
+            if (this._phone) {
                 this._phone.nativeElement.focus();
             }
             return;
@@ -256,7 +268,7 @@ export class Login {
                 this.toastrService.clear();
                 this.toastrService.error('Email is invalid', 'Error');
             }
-            if(this._email) {
+            if (this._email) {
                 this._email.nativeElement.focus();
             }
             return;
@@ -268,7 +280,7 @@ export class Login {
                 this.toastrService.clear();
                 this.toastrService.error('Password is invalid', 'Error');
             }
-            if(this._password) {
+            if (this._password) {
                 this._password.nativeElement.focus();
             }
             return;
