@@ -106,11 +106,11 @@ export class Login {
     }
 
     ngAfterViewInit() {
-        let passwordresetlink = window.location.href;
+        let passwordResetLink = window.location.href;
         let resetToken;
         let token = '?resetToken=';
-        if (passwordresetlink.indexOf(token) != -1) {
-            resetToken = passwordresetlink.substr(passwordresetlink.indexOf(token) + token.length, passwordresetlink.length);
+        if (passwordResetLink.indexOf(token) != -1) {
+            resetToken = passwordResetLink.substr(passwordResetLink.indexOf(token) + token.length, passwordResetLink.length);
             setTimeout(() => {
                 this.openChangePasswordTokenDialog(resetToken);
             });

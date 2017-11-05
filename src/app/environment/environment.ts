@@ -10,6 +10,11 @@ export const environment = {
         REGISTER_API: '/api/v2/web/user/register/step1',
         REGISTER_ADDRESS_API: '/api/v2/web/user/register/step2',
         REGISTER_DOCUMENTS_API: '/api/v2/web/user/register/step3',
+        RESEND_OTP_API: '/api/v2/web/user/register/resendOtp',
+        CHANGE_PHONE_NUMBER_API: '/api/v2/web/user/register/changePhoneNumber',
+        CHANGE_EMAIL_API: '/api/v2/web/user/register/changeEmail',
+        CONFIRM_SIGNUP_OTP_API: '/api/v2/web/user/register/step4',
+        GET_USER_DETAILS_API: '/api/v2/web/user/register/getUserDetails',
 
         GET_ALL_BOOKING: '/admin/getAllAvailabeBooking',
         GET_ALL_OUTGOING_BOOKING: '/admin/getOngoingBooking',

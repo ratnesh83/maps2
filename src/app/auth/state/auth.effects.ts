@@ -1,5 +1,5 @@
 import { get } from 'lodash';
-import { Injectable, VERSION, ApplicationRef } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -16,12 +16,6 @@ const types = ['success', 'error', 'info', 'warning'];
 
 @Injectable()
 export class AuthEffects {
-    private lastInserted: number[] = [];
-    options: ToastrConfig;
-    title = '';
-    message = '';
-
-    version = VERSION;
 
     @Effect({ dispatch: false })
     login: Observable<Action> = this.actions$
@@ -387,24 +381,8 @@ export class AuthEffects {
         private dataService: DataService,
         private baThemeSpinner: BaThemeSpinner,
         private router: Router,
-        private toastrService: ToastrService,
-        private cdRef: ApplicationRef
-    ) {
-
-        this.options = this.toastrService.toastrConfig;
-
-    }
-    openToast() {
-        let m = 'amar';
-        let t = 'amar';
-        const opt = cloneDeep(this.options);
-        this.toastrService.clear();
-        const inserted = this.toastrService[1](m, t, opt);
-        if (inserted) {
-            this.lastInserted.push(inserted.toastId);
-        }
-        return inserted;
-    }
+        private toastrService: ToastrService
+    ) {}
 
 }
 

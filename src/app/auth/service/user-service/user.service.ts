@@ -39,7 +39,7 @@ export class UserService {
         let url = environment.APP.API_URL + environment.APP.REGISTER_DOCUMENTS_API;
         this.authRequired = false;
         this.utcOffset = true;
-        return this.apiService.postApi(url, data, this.authRequired, this.utcOffset);
+        return this.apiService.postFileApi(url, data, this.authRequired, this.utcOffset);
     }
 
     logoutUser() {
@@ -69,6 +69,16 @@ export class UserService {
         return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
     }
 
+    confirmSignUpOtp(data) {
+        this.authRequired = false;
+        this.utcOffset = false;
+        let formData = new FormData();
+        formData.append('userId', data.userId);
+        formData.append('otp', data.otp);
+        let url = environment.APP.API_URL + environment.APP.CONFIRM_SIGNUP_OTP_API;
+        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+    }
+
     resetPassword(data) {
         this.authRequired = false;
         this.utcOffset = false;
@@ -81,6 +91,45 @@ export class UserService {
         formData.append('password', data.password);
         let url = environment.APP.API_URL + environment.APP.RESET_PASSWORD_API;
         return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+    }
+
+    changePhone(data) {
+        this.authRequired = false;
+        this.utcOffset = false;
+        let formData = new FormData();
+        formData.append('userId', data.userId);
+        formData.append('countryCode', data.countryCode);
+        formData.append('phoneNumber', data.phoneNumber);
+        let url = environment.APP.API_URL + environment.APP.CHANGE_PHONE_NUMBER_API;
+        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+    }
+
+    changeEmail(data) {
+        this.authRequired = false;
+        this.utcOffset = false;
+        let formData = new FormData();
+        formData.append('userId', data.userId);
+        formData.append('email', data.email);
+        let url = environment.APP.API_URL + environment.APP.CHANGE_EMAIL_API;
+        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+    }
+
+    resendOtp(data) {
+        this.authRequired = false;
+        this.utcOffset = false;
+        let formData = new FormData();
+        formData.append('userId', data.userId);
+        formData.append('emailOrPhone', data.emailOrPhone);
+        let url = environment.APP.API_URL + environment.APP.RESEND_OTP_API;
+        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+    }
+
+    getUserDetails(payload) {
+        this.authRequired = false;
+        this.utcOffset = false;
+        let url = environment.APP.API_URL + environment.APP.GET_USER_DETAILS_API;
+        url += '?userId=' + payload.userId;
+        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
 
     getCountryCodes(payload) {
