@@ -25,28 +25,21 @@ export class AuthEffects {
             this.UserService.login(action.payload).subscribe((result) => {
                 this.baThemeSpinner.hide();
                 if (result.statusCode === 200) {
-                    // hide loader
-                    //this.toast_service.showSuccess();
-                    // this.store.dispatch({ type: 'AUTH_GET_USER_ROLES', payload: result });
                     this.store.dispatch(new auth.AuthLoginSuccessAction(result));
-                    //token store in localstorage
                     localStorage.setItem('token', result.data.accessToken);
                     let tokenSession = localStorage.getItem('token');
                     localStorage.setItem('tokenSession', JSON.stringify(result.data.accessToken));
                     let loggedIn = this.authService.login();
                     if (loggedIn) {
-                        // Get the redirect URL from our auth service
-                        // If no redirect has been set, use the default
                         let redirect = 'pages/dashboard';
                         if (this.authService.user.userType === 'USER') {
-                            //redirecting user to specfic roles
-                            // console.log("Success fully admin  role redirect ");
                             redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/dashboard';
                         }
                         else if (this.authService.user.userType === 'EMPLOYER') {
                             redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/settings/key-message';
                         }
                         this.router.navigate([redirect]);
+                        this.dataService.removeUserRegisterationId();
                     }
                 }
                 else {
@@ -70,28 +63,22 @@ export class AuthEffects {
             this.UserService.login(action.payload).subscribe((result) => {
                 this.baThemeSpinner.hide();
                 if (result.statusCode === 200) {
-                    // hide loader
-                    //this.toast_service.showSuccess();
-                    // this.store.dispatch({ type: 'AUTH_GET_USER_ROLES', payload: result });
                     this.store.dispatch(new auth.AuthLoginSuccessAction(result));
-                    //token store in localstorage
-                    localStorage.setItem('token', result.data.accessToken);
-                    let tokenSession = localStorage.getItem('token');
-                    localStorage.setItem('tokenSession', JSON.stringify(result.data.accessToken));
+                    if (result.data && result.data.accessToken) {
+                        localStorage.setItem('token', result.data.accessToken);
+                        let tokenSession = localStorage.getItem('token');
+                        localStorage.setItem('tokenSession', JSON.stringify(result.data.accessToken));
+                    }
                     let loggedIn = this.authService.login();
                     if (loggedIn) {
-                        // Get the redirect URL from our auth service
-                        // If no redirect has been set, use the default
                         let redirect = 'pages/dashboard';
                         if (this.authService.user.userType === 'USER') {
-                            //redirecting user to specfic roles
-                            // console.log("Success fully admin  role redirect ");
+                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/dashboard';
+                        } else if (this.authService.user.userType === 'EMPLOYER') {
                             redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/dashboard';
                         }
-                        else if (this.authService.user.userType === 'EMPLOYER') {
-                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/settings/key-message';
-                        }
                         this.router.navigate([redirect]);
+                        this.dataService.removeUserRegisterationId();
                     }
                 }
                 else {
@@ -129,12 +116,7 @@ export class AuthEffects {
             this.UserService.register(action.payload).subscribe((result) => {
                 this.baThemeSpinner.hide();
                 if (result.statusCode === 200 || result.statusCode === 201) {
-                    // hide loader
-
-                    //this.toast_service.showSuccess();
-                    // this.store.dispatch({ type: 'AUTH_GET_USER_ROLES', payload: result });
                     this.store.dispatch(new auth.AuthRegisterSuccessAction(result));
-                    //token store in localstorage
                     if (result.data._id) {
                         this.dataService.setUserRegisterationId(result.data._id);
                     }
@@ -167,12 +149,7 @@ export class AuthEffects {
             this.UserService.registerAddress(action.payload).subscribe((result) => {
                 this.baThemeSpinner.hide();
                 if (result.statusCode === 200 || result.statusCode === 201) {
-                    // hide loader
-
-                    //this.toast_service.showSuccess();
-                    // this.store.dispatch({ type: 'AUTH_GET_USER_ROLES', payload: result });
                     this.store.dispatch(new auth.AuthRegisterAddressSuccessAction(result));
-
                     this.router.navigate(['document']);
                 }
                 else {
@@ -224,6 +201,194 @@ export class AuthEffects {
         .do((action: any) => {
         });
 
+
+    @Effect({ dispatch: false })
+    resendOtp: Observable<Action> = this.actions$
+        .ofType(auth.actionTypes.AUTH_RESEND_OTP)
+        .do((action: any) => {
+            this.baThemeSpinner.show();
+            this.UserService.resendOtp(action.payload).subscribe((result) => {
+                this.baThemeSpinner.hide();
+                if (result.statusCode === 200 || result.statusCode === 201) {
+                    this.store.dispatch({
+                        type: auth.actionTypes.AUTH_RESEND_OTP_SUCCESS,
+                        payload: result
+                    });
+                    this.toastrService.clear();
+                    this.toastrService.success(result.message || 'OTP sent', 'Success');
+                }
+                else {
+                }
+            }
+                , (error) => {
+                    this.baThemeSpinner.hide();
+                    if (error.message) {
+                        this.toastrService.clear();
+                        this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    resendOtpSuccess: Observable<Action> = this.actions$
+        .ofType(auth.actionTypes.AUTH_RESEND_OTP_SUCCESS)
+        .do((action: any) => {
+        });
+
+    @Effect({ dispatch: false })
+    changePhone: Observable<Action> = this.actions$
+        .ofType(auth.actionTypes.AUTH_CHANGE_PHONE)
+        .do((action: any) => {
+            this.baThemeSpinner.show();
+            this.UserService.changePhone(action.payload).subscribe((result) => {
+                this.baThemeSpinner.hide();
+                if (result.statusCode === 200 || result.statusCode === 201) {
+                    this.store.dispatch({
+                        type: auth.actionTypes.AUTH_CHANGE_PHONE_SUCCESS,
+                        payload: result
+                    });
+                    this.toastrService.clear();
+                    this.toastrService.success(result.message || 'Phone number changed successfully', 'Success');
+                }
+                else {
+                }
+            }
+                , (error) => {
+                    this.baThemeSpinner.hide();
+                    if (error.message) {
+                        this.toastrService.clear();
+                        this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    changePhoneSuccess: Observable<Action> = this.actions$
+        .ofType(auth.actionTypes.AUTH_CHANGE_PHONE_SUCCESS)
+        .do((action: any) => {
+        });
+
+    @Effect({ dispatch: false })
+    changeEmail: Observable<Action> = this.actions$
+        .ofType(auth.actionTypes.AUTH_CHANGE_EMAIL)
+        .do((action: any) => {
+            this.baThemeSpinner.show();
+            this.UserService.changeEmail(action.payload).subscribe((result) => {
+                this.baThemeSpinner.hide();
+                if (result.statusCode === 200 || result.statusCode === 201) {
+                    this.store.dispatch({
+                        type: auth.actionTypes.AUTH_CHANGE_EMAIL_SUCCESS,
+                        payload: result
+                    });
+                    this.toastrService.clear();
+                    this.toastrService.success(result.message || 'Email changed successfully', 'Success');
+                }
+                else {
+                }
+            }
+                , (error) => {
+                    this.baThemeSpinner.hide();
+                    if (error.message) {
+                        this.toastrService.clear();
+                        this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    changeEmailSuccess: Observable<Action> = this.actions$
+        .ofType(auth.actionTypes.AUTH_CHANGE_EMAIL_SUCCESS)
+        .do((action: any) => {
+        });
+
+
+    @Effect({ dispatch: false })
+    confirmSignUpOtp: Observable<Action> = this.actions$
+        .ofType(auth.actionTypes.AUTH_CONFIRM_OTP_SIGNUP)
+        .do((action: any) => {
+            this.baThemeSpinner.show();
+            this.UserService.confirmSignUpOtp(action.payload).subscribe((result) => {
+                this.baThemeSpinner.hide();
+                if (result.statusCode === 200 || result.statusCode === 201) {
+                    this.store.dispatch({
+                        type: auth.actionTypes.AUTH_CONFIRM_OTP_SIGNUP_SUCCESS,
+                        payload: result
+                    });
+                    if (result.data && result.data.accessToken) {
+                        localStorage.setItem('token', result.data.accessToken);
+                        let tokenSession = localStorage.getItem('token');
+                        localStorage.setItem('tokenSession', JSON.stringify(result.data.accessToken));
+                    }
+                    let loggedIn = this.authService.login();
+                    if (loggedIn) {
+                        let redirect = 'pages/dashboard';
+                        if (this.authService.user.userType === 'USER') {
+                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/dashboard';
+                        } else if (this.authService.user.userType === 'EMPLOYER') {
+                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/dashboard';
+                        }
+                        // this.router.navigate([redirect]);
+                    }
+                    this.toastrService.clear();
+                    this.toastrService.success(result.message || 'Registered successfully', 'Success');
+                }
+                else {
+                }
+            }
+                , (error) => {
+                    this.baThemeSpinner.hide();
+                    if (error.message) {
+                        this.toastrService.clear();
+                        this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    confirmSignUpOtpSuccess: Observable<Action> = this.actions$
+        .ofType(auth.actionTypes.AUTH_CONFIRM_OTP_SIGNUP_SUCCESS)
+        .do((action: any) => {
+        });
+
+    @Effect({ dispatch: false })
+    getUserDetails: Observable<Action> = this.actions$
+        .ofType(auth.actionTypes.AUTH_GET_USER_DETAILS)
+        .do((action: any) => {
+            this.baThemeSpinner.show();
+            this.UserService.getUserDetails(action.payload).subscribe((result) => {
+                this.baThemeSpinner.hide();
+                if (result.statusCode === 200 || result.statusCode === 201) {
+                    let data = result.data;
+                    this.store.dispatch({
+                        type: auth.actionTypes.AUTH_GET_USER_DETAILS_SUCCESS,
+                        payload: data
+                    });
+                    this.toastrService.clear();
+                    this.toastrService.success(result.message || 'Registered successfully', 'Success');
+                }
+                else {
+                }
+            }
+                , (error) => {
+                    this.baThemeSpinner.hide();
+                    if (error.message) {
+                        this.toastrService.clear();
+                        this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    getUserDetailsSuccess: Observable<Action> = this.actions$
+        .ofType(auth.actionTypes.AUTH_GET_USER_DETAILS_SUCCESS)
+        .do((action: any) => {
+        });
+
     @Effect({ dispatch: false })
     registerError: Observable<Action> = this.actions$
         .ofType(auth.actionTypes.AUTH_REGISTER_ERROR)
@@ -237,16 +402,18 @@ export class AuthEffects {
                 if (result.statusCode === 200) {
                     this.baThemeSpinner.hide();
                     this.store.dispatch(new auth.AuthLogoutSuccessAction(result));
-                    window.localStorage.removeItem('token');
-                    window.localStorage.removeItem('tokenSession');
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('tokenSession');
+                    this.dataService.removeUserRegisterationId();
                     this.router.navigate(['login']);
                 }
             }
                 , (error) => {
                     this.baThemeSpinner.hide();
                     this.store.dispatch(new auth.AuthLogoutSuccessAction(error));
-                    window.localStorage.removeItem('token');
-                    window.localStorage.removeItem('tokenSession');
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('tokenSession');
+                    this.dataService.removeUserRegisterationId();
                     this.router.navigate(['login']);
                 }
             );
@@ -382,7 +549,7 @@ export class AuthEffects {
         private baThemeSpinner: BaThemeSpinner,
         private router: Router,
         private toastrService: ToastrService
-    ) {}
+    ) { }
 
 }
 

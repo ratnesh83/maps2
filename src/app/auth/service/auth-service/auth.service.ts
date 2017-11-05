@@ -64,8 +64,9 @@ export class AuthService {
     }
 
     logout(): void {
-        window.localStorage.removeItem('token');
-        window.localStorage.removeItem('tokenSession');
+        localStorage.removeItem('token');
+        localStorage.removeItem('tokenSession');
+        localStorage.removeItem('userRegisterationId');
     }
 
 }
