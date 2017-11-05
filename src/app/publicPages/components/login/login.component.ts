@@ -20,6 +20,8 @@ import { MdIconRegistry } from '@angular/material';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { ForgotPasswordDialog } from '../forgot-password-dialog/forgot-password-dialog.component';
 import { ChangePasswordDialog } from '../change-password-dialog/change-password-dialog.component';
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
 import 'style-loader!./login.scss';
 
 declare const FB: any;
@@ -43,6 +45,8 @@ export class Login {
     public password: AbstractControl;
     public submitted: boolean = false;
     public countryCode: AbstractControl;
+    public user: Observable<firebase.User>;
+    public authStore;
     public countryCodes = [];
 
     public roles = [
@@ -60,7 +64,8 @@ export class Login {
         private sanitizer: DomSanitizer,
         private dialog: MdDialog,
         private facebook: FacebookService,
-        private http: Http
+        private http: Http,
+        private afAuth: AngularFireAuth
     ) {
         this.storeData = this.store
             .select('auth')
@@ -149,29 +154,14 @@ export class Login {
     }
 
     loginTwitter() {
-        this.fetchTwitterToken();
-    }
-
-    fetchTwitterToken() {
-        let headers = new Headers();
-        let consumerKey = 'actualkeyvalue';
-        let consumerSecret = 'actualsecretvalue';
-        headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
-        headers.append('Authorization', 'Basic ' +
-            btoa(consumerKey) + ':' + btoa(consumerSecret));
-
-        let options = new RequestOptions({ headers: headers });
-        let params = JSON.stringify({
-            'consumerKey': '4Lk7JVYWHCU2gweHfjjNIAUNP',
-            'consumerSecret': 'uhI1UjCHrrnCu5zu8XKM9Gf09VJv3C1eMImIhxJBDLeFTBVqCr',
-            'grant_type': 'client_credentials'
+        localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
+        this.authStore = this.afAuth.authState.subscribe((user: firebase.User) => {
+            if (user && user.providerData && user.providerData[0] && user.providerData[0].uid) {
+                this.onTwitterSubmit(user.providerData[0].uid);
+            } else {
+                this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider());
+            }
         });
-
-        return this.http.post('https://api.twitter.com/oauth/authorize', params, options)
-            .subscribe(token => {
-                console.log(token);
-            });
-
     }
 
     countryCodeClick() {
@@ -197,7 +187,7 @@ export class Login {
                 return this.countryCodes[i].country_code;
             }
         }
-        if(this.countryCode.value) {
+        if (this.countryCode.value) {
             return 'default';
         }
         return 'us';
@@ -226,20 +216,36 @@ export class Login {
             option.phone_code.toString().indexOf(val.replace('+', '')) === 0);
     }
 
+    onTwitterSubmit(uid) {
+        let timezoneOffset = (new Date()).getTimezoneOffset();
+        let data = {
+            socialId: uid,
+            socialMode: 'TWITTER',
+            deviceType: 'WEB_BROWSER',
+            timezoneOffset: timezoneOffset
+        };
+        this.store.dispatch({
+            type: auth.actionTypes.AUTH_SOCIAL_LOGIN,
+            payload: data
+        });
+        localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
+        if (this.authStore) {
+            this.authStore.unsubscribe();
+        }
+    }
+
     onFacebookSubmit(value) {
         let timezoneOffset = (new Date()).getTimezoneOffset();
-        if (this.form.valid) {
-            let data = {
-                socialId: value.id,
-                socialMode: 'FACEBOOK',
-                deviceType: 'WEB_BROWSER',
-                timezoneOffset: timezoneOffset
-            };
-            this.store.dispatch({
-                type: auth.actionTypes.AUTH_SOCIAL_LOGIN,
-                payload: data
-            });
-        }
+        let data = {
+            socialId: value.id,
+            socialMode: 'FACEBOOK',
+            deviceType: 'WEB_BROWSER',
+            timezoneOffset: timezoneOffset
+        };
+        this.store.dispatch({
+            type: auth.actionTypes.AUTH_SOCIAL_LOGIN,
+            payload: data
+        });
     }
 
     onSubmit() {

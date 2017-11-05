@@ -50,12 +50,22 @@ import { PublicPageModule } from './publicPages/public-pages.module';
 import { CustomOption } from './theme/components/toaster/toaster-option';
 import { ToastOptions } from 'ng2-toastr/src/toast-options';
 import { FacebookModule } from 'ngx-facebook';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule, AngularFireAuth } from 'angularfire2/auth';
 
 // Application wide providers
 const APP_PROVIDERS = [
     AppState,
     GlobalState
 ];
+
+export const firebaseConfig = {
+    apiKey: 'AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8',
+    authDomain: 'labor-go.firebaseapp.com',
+    databaseURL: 'https://labor-go.firebaseio.com',
+    storageBucket: 'labor-go.appspot.com',
+    messagingSenderId: '602227286001'
+};
 
 export type StoreType = {
     state: InternalStateType,
@@ -86,7 +96,8 @@ export type StoreType = {
             preventDuplicates: true,
             enableHtml: true
         }),
-
+        AngularFireModule.initializeApp(firebaseConfig),
+        AngularFireAuthModule,
         AppStoreModule,
         ReactiveFormsModule,
         NgaModule.forRoot(),

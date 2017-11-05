@@ -4,7 +4,7 @@ export class NameValidator {
 
     static nameValid(control: FormControl): { [s: string]: boolean } {
 
-        let NAME = /^[a-zA-Z]*$/;
+        let NAME = /^[a-zA-Z ]*$/;
 
         if (control.value && control.value !== '' && !NAME.test(control.value)) {
             return { invalidName: true };

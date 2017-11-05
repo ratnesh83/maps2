@@ -9,6 +9,8 @@ import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MdIconRegistry } from '@angular/material';
 import { DataService } from '../../../services/data-service/data.service';
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
 import { environment } from '../../../environment/environment';
 
 import 'style-loader!./register.scss';
@@ -56,6 +58,7 @@ export class Register {
         private sanitizer: DomSanitizer,
         private cdRef: ChangeDetectorRef,
         private facebook: FacebookService,
+        private afAuth: AngularFireAuth,
         private dataService: DataService) {
 
         this.storeData = this.store
@@ -156,7 +159,7 @@ export class Register {
                 return this.countryCodes[i].country_code;
             }
         }
-        if(this.countryCode.value) {
+        if (this.countryCode.value) {
             return 'default';
         }
         return 'us';
@@ -212,7 +215,23 @@ export class Register {
     }
 
     loginTwitter() {
-
+        this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider())
+            .then((response) => {
+                if (response.user && response.user.uid && response.user.providerData && response.user.providerData[0] && response.user.providerData[0].uid) {
+                    this.socialId.setValue(response.user.providerData[0].uid);
+                    if (response.user && response.user.displayName) {
+                        this.name.setValue(response.user.displayName);
+                    }
+                    if (response.user && response.user.email) {
+                        this.email.setValue(response.user.email);
+                    }
+                    this.socialMode = 'TWITTER';
+                }
+                this.cdRef.detectChanges();
+            })
+            .catch((error: any) => {
+                // console.log(error);
+            });
     }
 
     onSubmit() {
@@ -223,7 +242,7 @@ export class Register {
         if (this.signUpType.value == 'EMPLOYER' && !this.companyName.value) {
             this.toastrService.clear();
             this.toastrService.error('Company name is required', 'Error');
-            if(this._companyName) {
+            if (this._companyName) {
                 this._companyName.nativeElement.focus();
             }
             return;
@@ -231,7 +250,7 @@ export class Register {
         if (!this.name.value) {
             this.toastrService.clear();
             this.toastrService.error('Name is required', 'Error');
-            if(this._name) {
+            if (this._name) {
                 this._name.nativeElement.focus();
             }
             return;
@@ -240,7 +259,7 @@ export class Register {
             if (this.name.errors.invalidName) {
                 this.toastrService.clear();
                 this.toastrService.error(environment.ERROR.NAME_INVALID, 'Error');
-                if(this._name) {
+                if (this._name) {
                     this._name.nativeElement.focus();
                 }
                 return;
@@ -249,7 +268,7 @@ export class Register {
         if (!this.countryCode.value) {
             this.toastrService.clear();
             this.toastrService.error('Country code is required', 'Error');
-            if(this._countryCode) {
+            if (this._countryCode) {
                 this._countryCode.nativeElement.focus();
             }
             return;
@@ -257,7 +276,7 @@ export class Register {
         if (!this.phone.value) {
             this.toastrService.clear();
             this.toastrService.error('Phone number is required', 'Error');
-            if(this._phone) {
+            if (this._phone) {
                 this._phone.nativeElement.focus();
             }
             return;
@@ -265,7 +284,7 @@ export class Register {
         if (!this.email.value) {
             this.toastrService.clear();
             this.toastrService.error('Email is required', 'Error');
-            if(this._email) {
+            if (this._email) {
                 this._email.nativeElement.focus();
             }
             return;
@@ -273,38 +292,38 @@ export class Register {
         if (this.email.errors && this.email.errors.invalidEmail) {
             this.toastrService.clear();
             this.toastrService.error('Please enter a valid email', 'Error');
-            if(this._email) {
+            if (this._email) {
                 this._email.nativeElement.focus();
             }
             return;
         }
-        if (!this.password.value) {
+        if (!this.socialId.value && !this.password.value) {
             this.toastrService.clear();
             this.toastrService.error('Password is required', 'Error');
-            if(this._password) {
+            if (this._password) {
                 this._password.nativeElement.focus();
             }
             return;
         }
-        if (this.password.errors) {
+        if (!this.socialId.value && this.password.errors) {
             if (this.password.errors.invalidPassword) {
                 this.toastrService.clear();
                 this.toastrService.error(environment.ERROR.PASSWORD_INVALID, 'Error');
-                if(this._password) {
+                if (this._password) {
                     this._password.nativeElement.focus();
                 }
                 return;
             }
         }
-        if (this.passwords.errors && this.passwords.errors.passwordsEqual && !this.passwords.errors.passwordsEqual.valid) {
+        if (!this.socialId.value && this.passwords.errors && this.passwords.errors.passwordsEqual && !this.passwords.errors.passwordsEqual.valid) {
             this.toastrService.clear();
             this.toastrService.error('Passwords do not match', 'Error');
-            if(this._confirmPassword) {
+            if (this._confirmPassword) {
                 this._confirmPassword.nativeElement.focus();
             }
             return;
         }
-        
+
         let data = {
             userType: this.signUpType.value,
             email: this.email.value,
@@ -332,6 +351,10 @@ export class Register {
                 delete data.socialId;
                 delete data.socialMode;
             }
+        }
+
+        if (this.password.value == null || this.password.value == '' || this.password.value == undefined) {
+            delete data.password;
         }
 
         this.store.dispatch({
