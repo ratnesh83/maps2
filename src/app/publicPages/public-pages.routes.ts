@@ -15,7 +15,7 @@ export const routes: Routes = [
         path: '',
         component: PublicPages,
         children: [
-            { path: '', redirectTo: '/pages/dashboard', pathMatch: 'full' },
+            { path: '', redirectTo: '/pages/home', pathMatch: 'full' },
             { path: 'login', component: Login, canActivate: [AuthGuardPublic] },
             { path: 'register', component: Register, canActivate: [AuthGuardPublic] },
             { path: 'address', component: Address, canActivate: [AuthGuardPublic] },

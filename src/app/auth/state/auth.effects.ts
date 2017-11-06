@@ -31,9 +31,9 @@ export class AuthEffects {
                     localStorage.setItem('tokenSession', JSON.stringify(result.data.accessToken));
                     let loggedIn = this.authService.login();
                     if (loggedIn) {
-                        let redirect = 'pages/dashboard';
+                        let redirect = 'pages/home';
                         if (this.authService.user.userType === 'USER') {
-                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/dashboard';
+                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/home';
                         }
                         else if (this.authService.user.userType === 'EMPLOYER') {
                             redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/settings/key-message';
@@ -71,11 +71,11 @@ export class AuthEffects {
                     }
                     let loggedIn = this.authService.login();
                     if (loggedIn) {
-                        let redirect = 'pages/dashboard';
+                        let redirect = 'pages/home';
                         if (this.authService.user.userType === 'USER') {
-                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/dashboard';
+                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/home';
                         } else if (this.authService.user.userType === 'EMPLOYER') {
-                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/dashboard';
+                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/home';
                         }
                         this.router.navigate([redirect]);
                         this.dataService.removeUserRegisterationId();
@@ -324,11 +324,11 @@ export class AuthEffects {
                     }
                     let loggedIn = this.authService.login();
                     if (loggedIn) {
-                        let redirect = 'pages/dashboard';
+                        let redirect = 'pages/home';
                         if (this.authService.user.userType === 'USER') {
-                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/dashboard';
+                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/home';
                         } else if (this.authService.user.userType === 'EMPLOYER') {
-                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/dashboard';
+                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/home';
                         }
                         // this.router.navigate([redirect]);
                     }

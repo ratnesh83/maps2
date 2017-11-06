@@ -16,10 +16,10 @@ export class PagesMenuService {
                 path: 'pages',
                 children: [
                     {
-                        path: 'dashboard',
+                        path: 'home',
                         data: {
                             menu: {
-                                title: 'Dashboard',
+                                title: 'Home',
                                 icon: 'icon-wrap fa fa-home',
                                 selected: false,
                                 expanded: false,

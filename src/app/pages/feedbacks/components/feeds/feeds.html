@@ -1,3 +1,91 @@
-<div class="container messagePanel animated bounceInUp">
-    <h2>Feedbacks</h2>
+<div class="container-fluid messagePanel animated bounceInUp">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-12 col-sm-12 user-feed-heading">
+                <md-card class="feedback-card-heading">
+                    <md-card-header class="feedback-card-header">
+                        <md-card-title style="font-weight: 600; color: #1b1b1b; margin-bottom: 0px"><h2>My Ratings</h2></md-card-title>
+                        <div class="feedback-header-rating">
+                            <rating class="feedback-stars" [(ngModel)]="rating" [max]="5" fullIcon="★" emptyIcon="☆" [readonly]="true" [disabled]="false"
+                                [required]="false" [float]="true" [titles]="['1', '2', '3', '4', '5']">
+                            </rating>
+                        </div>
+                    </md-card-header>
+                    <md-card-content>
+                       
+                    </md-card-content>
+                </md-card>
+            </div>
+        </div>
+    </div>
+    <div class="feeds-section">
+        <md-card class="feedback-card">
+            <md-card-header class="feedback-card-header">
+                <div md-card-avatar class="feedback-header-image">
+                    <img mat-card-avatar [src]="profilePicture ? profilePicture : 'assets/img/default-profile.jpg'">
+                </div>
+                <md-card-title style="font-weight: 600; color: #1b1b1b">Charles Bates</md-card-title>
+                <md-card-subtitle style="font-weight: 500">Electrical: Air-Conditioning</md-card-subtitle>
+                <div class="feedback-header-rating">
+                    <rating class="feedback-stars" [(ngModel)]="rating" [max]="5" fullIcon="★" emptyIcon="☆" [readonly]="true" [disabled]="false"
+                        [required]="false" [float]="true" [titles]="['1', '2', '3', '4', '5']">
+                    </rating>
+                </div>
+            </md-card-header>
+            <md-card-content>
+                <p class="md-card-content-feedback-p">
+                    The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes
+                    very well with mountainous terrain, the Shiba Inu was originally bred for hunting.
+                </p>
+                <p class="md-card-content-feedback-p-date">
+                    12/12/2017
+                </p>
+            </md-card-content>
+        </md-card>
+        <md-card class="feedback-card">
+            <md-card-header class="feedback-card-header">
+                <div md-card-avatar class="feedback-header-image">
+                    <img mat-card-avatar [src]="profilePicture ? profilePicture : 'assets/img/default-profile.jpg'">
+                </div>
+                <md-card-title style="font-weight: 600; color: #1b1b1b">Larry Perez</md-card-title>
+                <md-card-subtitle style="font-weight: 500">Electrical: Air-Conditioning</md-card-subtitle>
+                <div class="feedback-header-rating">
+                    <rating class="feedback-stars" [(ngModel)]="rating" [max]="5" fullIcon="★" emptyIcon="☆" [readonly]="true" [disabled]="false"
+                        [required]="true" [float]="true" [titles]="['one', 'two', 'three', 'four', 'five']">
+                    </rating>
+                </div>
+            </md-card-header>
+            <md-card-content>
+                <p class="md-card-content-feedback-p">
+                    The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes
+                    very well with mountainous terrain, the Shiba Inu was originally bred for hunting.
+                </p>
+                <p class="md-card-content-feedback-p-date">
+                    12/12/2017
+                </p>
+            </md-card-content>
+        </md-card>
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <div *ngIf="count > 4" class="col-sm-12 rar-align page-select">
+                <span class="first-last-ctrl">
+                    <span [ngClass]="{'enabled': pageIndex > 0}" class="page-controls" (click)="pageIndex > 0 && goToFirstPage($event)">
+                        <span mdTooltip="{{(pageIndex > 0) ? 'First page' : ''}}">
+                            <i [ngClass]="{'enabled': pageIndex > 0}" class="fa fa-fast-backward"></i>
+                        </span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                    <span [ngClass]="{'enabled': pageIndex * pageSize + pageSize < length}" class="page-controls" (click)="pageIndex * pageSize + pageSize < length && goToLastPage($event)">
+                        <span mdTooltip="{{(pageIndex * pageSize + pageSize < length) ? 'Last page' : ''}}">
+                            <i [ngClass]="{'enabled': pageIndex * pageSize + pageSize < length}" class="fa fa-fast-forward"></i>
+                        </span>
+                    </span>
+                </span>
+                <md-paginator #feedbackPaginator class="mat-paginator-pg" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                    (page)="pageChange($event)">
+                </md-paginator>
+            </div>
+        </div>
+    </div>
 </div>

@@ -1,11 +1,10 @@
 import { Action, ActionReducer } from '@ngrx/store';
 
 const initialState: any = {
-    dashBoardCount: null,
-
+    homeCount: null,
 };
 
-export const dashBoard: ActionReducer<any> = (state = initialState, action: Action) => {
+export const home: ActionReducer<any> = (state = initialState, action: Action) => {
     switch (action.type) {
 
         case 'GET_DASHBOARD_COUNT':

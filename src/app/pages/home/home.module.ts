@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgaModule } from '../../theme/nga.module';
-import { Dashboard } from './dashboard.component';
-import { routing } from './dashboard.routing';
+import { Home } from './home.component';
+import { routing } from './home.routing';
 
 @NgModule({
     imports: [
@@ -13,11 +13,11 @@ import { routing } from './dashboard.routing';
         routing
     ],
     declarations: [
-        Dashboard,
+        Home,
     ],
     providers: [
 
     ]
 })
 
-export class DashboardModule { }
+export class HomeModule { }

@@ -7,14 +7,14 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { app, AppEffects } from './state';
 import { auth, AuthEffects } from './auth/state';
 import { payment, PaymentEffects } from './pages/payments/state';
-import { dashBoard, DashboardEffects } from './pages/dashboard/state';
+import { home, HomeEffects } from './pages/home/state';
 import { customer, worker, employer, UserEffects } from './pages/users/state';
 import { setting, SettingEffects } from './pages/settings/state';
 import { job, JobEffects } from './pages/jobs/state';
 import { subscription, SubscriptionEffects } from './pages/subscriptions/state';
 import { notification, NotificationEffects } from './pages/notification/state';
 import { pass, ChangePasswordEffects } from './pages/change-password/state';
-import { settings, SettingsEffects } from './pages/feedbacks/state';
+import { feedback, FeedbackEffects } from './pages/feedbacks/state';
 
 @NgModule({
     imports: [
@@ -22,7 +22,7 @@ import { settings, SettingsEffects } from './pages/feedbacks/state';
             app,
             auth,
             payment,
-            dashBoard,
+            home,
             customer,
             worker,
             employer,
@@ -31,7 +31,7 @@ import { settings, SettingsEffects } from './pages/feedbacks/state';
             setting,
             subscription,
             pass,
-            settings,
+            feedback,
         }),
 
         StoreDevtoolsModule.instrumentStore({
@@ -44,13 +44,13 @@ import { settings, SettingsEffects } from './pages/feedbacks/state';
         EffectsModule.run(AppEffects),
         EffectsModule.run(AuthEffects),
         EffectsModule.run(PaymentEffects),
-        EffectsModule.run(DashboardEffects),
+        EffectsModule.run(HomeEffects),
         EffectsModule.run(UserEffects),
         EffectsModule.run(NotificationEffects),
         EffectsModule.run(SettingEffects),
         EffectsModule.run(SubscriptionEffects),
         EffectsModule.run(ChangePasswordEffects),
-        EffectsModule.run(SettingsEffects),
+        EffectsModule.run(FeedbackEffects),
         EffectsModule.run(JobEffects)
     ],
 })

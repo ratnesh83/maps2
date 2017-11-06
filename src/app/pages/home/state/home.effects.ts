@@ -4,26 +4,23 @@ import { Effect, Actions } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
-import { DashboardService } from '../../../services/dashboard-service/dashboard.service';
-
-
-
-import * as dashBoard from './dashboard.actions';
+import { HomeService } from '../../../services/home-service/home.service';
+import * as home from './home.actions';
 import * as app from '../../../state/app.actions';
 
 @Injectable()
-export class DashboardEffects {
+export class HomeEffects {
 
 
     @Effect({ dispatch: false })
     dashboardCount: Observable<Action> = this.actions$
-        .ofType(dashBoard.actionTypes.GET_DASHBOARD_COUNT)
+        .ofType(home.actionTypes.GET_DASHBOARD_COUNT)
         .do((action) => {
-            this.dashboardService.getDashBoardData()
+            this.homeService.getDashBoardData()
                 .subscribe((result) => {
                     //console.log(result)
                     if (result.message == 'Success') {
-                        this.store.dispatch(new dashBoard.AppGetDashBoardCountSuccess(result));
+                        this.store.dispatch(new home.AppGetDashBoardCountSuccess(result));
                         //console.log("deleted")
                     }
 
@@ -42,7 +39,7 @@ export class DashboardEffects {
 
     @Effect({ dispatch: false })
     dashboardCountSuccess: Observable<Action> = this.actions$
-        .ofType(dashBoard.actionTypes.GET_DASHBOARD_COUNT_SUCCESS)
+        .ofType(home.actionTypes.GET_DASHBOARD_COUNT_SUCCESS)
         .do((action) => {
 
         });
@@ -52,7 +49,7 @@ export class DashboardEffects {
         private actions$: Actions,
         private store: Store<any>,
         private router: Router,
-        private dashboardService: DashboardService
+        private homeService: HomeService
     ) {
     }
 

@@ -124,7 +124,8 @@ a {
     padding: 0px;
     > :nth-child(2)   {
         > div {
-            padding-left: 235px;
+            padding-left: 195px;
+            padding-right: 195px;
         }
     }
 }
@@ -134,6 +135,7 @@ a {
         > :nth-child(2)   {
             > div {
                 padding-left: 15px;
+                padding-right: 15px;
             }
         }
     }

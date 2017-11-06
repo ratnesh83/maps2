@@ -21,8 +21,9 @@ import { CommonService } from './services/common.service';
 import { UserService } from './services/user-service/user.service';
 import { DataService } from './services/data-service/data.service';
 import { JobService } from './services/job-service/job.service';
+import { FeedbackService } from './services/feedback-service/feedback.service';
 import { ChangePasswordService } from './services/change-password/change-password.service';
-import { DashboardService } from './services/dashboard-service/dashboard.service';
+import { HomeService } from './services/home-service/home.service';
 import { NotificationService } from './services/notification/notification.service';
 import { ApiService } from './services/api-service/api.service';
 import { SettingsService } from './services/settings/settings.service';
@@ -114,9 +115,10 @@ export type StoreType = {
         UserService,
         DataService,
         JobService,
+        FeedbackService,
         NgbActiveModal,
         CommonService,
-        DashboardService,
+        HomeService,
         ApiService,
         AuthGuard,
         AuthGuardPublic,

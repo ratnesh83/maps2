@@ -1,12 +1,12 @@
 import { Routes, RouterModule } from '@angular/router';
 
-import { Dashboard } from './dashboard.component';
+import { Home } from './home.component';
 import { ModuleWithProviders } from '@angular/core';
 
 export const routes: Routes = [
     {
         path: '',
-        component: Dashboard,
+        component: Home,
         children: [ ]
     }
 ];

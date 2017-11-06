@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 
 
 @Injectable()
-export class DashboardService {
+export class HomeService {
     authRequired;
     utcOffset;
     constructor(public http: Http, private apiService: ApiService) {
