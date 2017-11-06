@@ -7,6 +7,11 @@
         margin-bottom: 10px;
     }
 }
+.avg-rating {
+    font-weight: 500;
+    padding-top: 5px;
+    color: #b1b1b1;
+}
 .user-feed-heading {
     display: inline-flex;
     h2 {
@@ -17,8 +22,11 @@
 .feedback-card-heading {
     width: 100%;
 }
+.feedback-card-heading {
+    top: -5px;
+}
 .feeds-section {
-    margin-top: 10px;
+    margin-top: 5px;
 }
 .feedback-card {
     margin-bottom: 10px;

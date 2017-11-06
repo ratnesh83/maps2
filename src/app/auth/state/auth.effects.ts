@@ -237,6 +237,45 @@ export class AuthEffects {
         });
 
     @Effect({ dispatch: false })
+    sendVerificationType: Observable<Action> = this.actions$
+        .ofType(auth.actionTypes.AUTH_SEND_VERIFICATION_TYPE)
+        .do((action: any) => {
+            this.baThemeSpinner.show();
+            this.UserService.sendVerificationType(action.payload).subscribe((result) => {
+                this.baThemeSpinner.hide();
+                if (result.statusCode === 200 || result.statusCode === 201) {
+                    this.store.dispatch({
+                        type: auth.actionTypes.AUTH_SEND_VERIFICATION_TYPE_SUCCESS,
+                        payload: result
+                    });
+                    let routeState = 'verifyMobile';
+                    if (action.payload && action.payload.verificationType == 'SMS') {
+                        routeState = 'verifyMobile';
+                    } else if (action.payload && action.payload.verificationType == 'EMAIL') {
+                        routeState = 'verifyEmail';
+                    }
+                    this.router.navigate([routeState]);
+                }
+                else {
+                }
+            }
+                , (error) => {
+                    this.baThemeSpinner.hide();
+                    if (error.message) {
+                        this.toastrService.clear();
+                        this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    sendVerificationTypeSuccess: Observable<Action> = this.actions$
+        .ofType(auth.actionTypes.AUTH_SEND_VERIFICATION_TYPE_SUCCESS)
+        .do((action: any) => {
+        });
+
+    @Effect({ dispatch: false })
     changePhone: Observable<Action> = this.actions$
         .ofType(auth.actionTypes.AUTH_CHANGE_PHONE)
         .do((action: any) => {

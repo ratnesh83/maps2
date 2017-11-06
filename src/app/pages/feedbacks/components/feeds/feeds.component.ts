@@ -45,19 +45,23 @@ export class Feeds {
             { id: 'hiring', value: 'all' }
         ];
     }
+    
     ngOnInit() {
         this.onLoad();
     }
+
     ngOnDestroy() {
         if (this.feedbackStore) {
             // this.feedbackStore.unsubscribe();
         }
     }
+
     onLoad() {
         this.role = 'all';
         this.filter = this.myOptionsSelected;
         // this.getAllFeedbacks();
-    };
+    }
+
     getAllFeedbacks() {
         this.store.dispatch({
             type: feedback.actionTypes.GET_FEEDBACKS, payload: {
@@ -68,7 +72,8 @@ export class Feeds {
                 value: this.value
             }
         });
-    };
+    }
+
     pageChange(page) {
         /* this.store.dispatch({
             type: feedback.actionTypes.GET_FEEDBACKS, payload: {
@@ -82,6 +87,7 @@ export class Feeds {
         }); */
         this.pageSize = page.pageSize;
     }
+
     goToLastPage(index) {
         this._paginator.pageIndex = Math.ceil(this.length / this.pageSize) - 1;
         let page = {
@@ -92,6 +98,7 @@ export class Feeds {
         this.pageChange(page);
         this._paginator._changePageSize(this.pageSize);
     }
+
     goToFirstPage(index) {
         this._paginator.pageIndex = 0;
         let page = {
@@ -102,6 +109,7 @@ export class Feeds {
         this.pageChange(page);
         this._paginator._changePageSize(this.pageSize);
     }
+
     SearchFeedback(name) {
         this.searchKey = name;
         if (name.length > 0) {

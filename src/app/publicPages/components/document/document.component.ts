@@ -48,7 +48,7 @@ export class Documents {
 
         this.form = this.fb.group({
             'profilePicture': [''],
-            'documentName': ['', Validators.compose([Validators.required])],
+            'documentName': [''],
             'documents': fb.array([this.initDocument()])
         });
         this.uploader.push(new FileUploader({ url: '' }));
@@ -226,18 +226,28 @@ export class Documents {
             this.userId = this.dataService.getUserRegisterationId();
         }
         const control = <FormArray>this.documents;
-        if (!this.documentName.value) {
+        /* if (!this.documentName.value) {
             this.toastrService.clear();
             this.toastrService.error('Document name is required', 'Error');
             if (this._documentName) {
                 this._documentName.nativeElement.focus();
             }
             return;
-        }
+        } */
         let documents = [];
+        let documentsName = [];
         for (let i = 0; i < control.value.length; i++) {
+            if(!control.value[i].documentName && i == 0) {
+                this.toastrService.clear();
+                this.toastrService.error('Document name is required', 'Error');
+                if (this._documentName) {
+                    this._documentName.nativeElement.focus();
+                }
+                return;
+            }
             if (control.value[i] && control.value[i].document) {
                 documents.push(control.value[i].document);
+                documentsName.push(control.value[i].documentName);
             }
         }
         if (documents.length == 0) {
@@ -247,14 +257,26 @@ export class Documents {
         }
         let data = {
             userId: this.userId,
+            stepNumber: 3,
             profilePicture: this.profilePicture.value,
-            documentName: this.documentName.value,
+            info: this.documentName.value,
             documents: documents
         };
-        if(!this.profilePicture.value) {
+        if (!this.profilePicture.value) {
             delete data.profilePicture;
         }
-        console.log(data);
+        let formData = new FormData();
+        formData.append('userId', this.userId);
+        formData.append('stepNumber', '3');
+        if (this.profilePicture.value) {
+            formData.append('profilePicture', this.profilePicture.value);
+        }
+        formData.append('info', JSON.stringify(documentsName));
+        formData.append('documents', JSON.stringify(documents));
+        this.store.dispatch({
+            type: auth.actionTypes.AUTH_REGISTER_DOCUMENTS,
+            payload: formData
+        });
     }
 
 }

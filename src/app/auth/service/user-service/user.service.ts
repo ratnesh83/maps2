@@ -124,6 +124,16 @@ export class UserService {
         return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
     }
 
+    sendVerificationType(data) {
+        this.authRequired = false;
+        this.utcOffset = false;
+        let formData = new FormData();
+        formData.append('userId', data.userId);
+        formData.append('verificationType', data.verificationType);
+        let url = environment.APP.API_URL + environment.APP.SEND_VERIFICATION_TYPE_API;
+        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+    }
+
     getUserDetails(payload) {
         this.authRequired = false;
         this.utcOffset = false;

@@ -24,19 +24,19 @@
                     <input #profilePictureInput [hidden]="true" type="file" (change)="selectImage($event)">
                     <p class="picture-text">Upload Profile Picture</p>
                 </div>
-                <div class="form-group row">
+                <!-- <div class="form-group row">
                     <div class="col-12 col-sm-12">
                         <input #inputDocumentName type="text" [ngClass]="{'has-input-error': (!documentName.valid && (documentName.touched || submitted))}" [formControl]="documentName" class="form-control" placeholder="Document Name*">
                     </div>
-                </div>
+                </div> -->
 
                 <div class="doc-section row">
                     <div class="col-12 col-sm-12" *ngFor="let document of form.controls['documents'].controls; let i=index; let last=last; let first=first">
-                        <!-- <div class="form-group row">
+                        <div class="form-group row">
                             <div class="col-12 col-sm-12">
                                 <input type="text" [formControl]="document.controls['documentName']" class="form-control" placeholder="Document Name">
                             </div>
-                        </div> -->
+                        </div>
                         <div class="form-group row" style="margin-bottom: 0px">
                             <div class="col-12 col-sm-12">
                                 <div ng2FileDrop [ngClass]="{'nv-file-over': hasBaseDropZoneOver}" (fileOver)="fileOverBase($event)" (onFileDrop)="droppedFile($event, i)"

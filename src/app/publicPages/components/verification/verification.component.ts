@@ -14,6 +14,7 @@ import { Store } from '@ngrx/store';
 import * as auth from '../../../auth/state/auth.actions';
 import { User } from '../../../auth/model/user.model';
 import { Router } from '@angular/router';
+import { DataService } from '../../../services/data-service/data.service';
 import 'style-loader!./verification.scss';
 
 declare const FB: any;
@@ -29,6 +30,7 @@ export class Verification {
     public form: FormGroup;
     public signUpType: AbstractControl;
     public role: AbstractControl;
+    public userId;
     public submitted: boolean = false;
 
     public roles = [
@@ -43,6 +45,7 @@ export class Verification {
         private store: Store<any>,
         private toastrService: ToastrService,
         private router: Router,
+        private dataService: DataService,
         public dialog: MdDialog
     ) {
         this.storeData = this.store
@@ -59,7 +62,9 @@ export class Verification {
     }
 
     ngOnInit() {
-
+        if (this.dataService.getUserRegisterationId()) {
+            this.userId = this.dataService.getUserRegisterationId();
+        }
     }
 
     ngOnDestroy() {
@@ -69,11 +74,17 @@ export class Verification {
     }
 
     onSubmit() {
-        if (this.signUpType.value == 'SMS') {
-            this.router.navigate(['verifyMobile']);
-        } else if (this.signUpType.value == 'EMAIL') {
-            this.router.navigate(['verifyEmail']);
+        if (this.dataService.getUserRegisterationId()) {
+            this.userId = this.dataService.getUserRegisterationId();
         }
+        let data = {
+            userId: this.userId,
+            verificationType: this.signUpType.value
+        };
+        this.store.dispatch({
+            type: auth.actionTypes.AUTH_SEND_VERIFICATION_TYPE,
+            payload: data
+        });
     }
 
 }
