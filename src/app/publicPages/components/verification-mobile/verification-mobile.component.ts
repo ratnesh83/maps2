@@ -62,26 +62,37 @@ export class VerificationMobile {
         this.storeData = this.store
             .select('auth')
             .subscribe((res: any) => {
-              
+                if (res && res.userDetails) {
+                    console.log(res.userDetails);
+                    this.selectedCountryCode = res.userDetails.countryCode;
+                    this.selectedPhone = res.userDetails.phoneNumber;
+                }
+                if (res && res.changePhone && res.changePhone.statusCode && res.changePhone.statusCode == 200) {
+                    this.dialog.closeAll();
+                }
+                if (res && res.confirmOtpSignup && res.confirmOtpSignup.statusCode && res.confirmOtpSignup.statusCode == 200) {
+                    this.openApprovalDialog();
+                }
             });
 
-            this.form = fb.group({
-                'codeOne': ['', Validators.compose([Validators.required])],
-                'codeTwo': ['', Validators.compose([Validators.required])],
-                'codeThree': ['', Validators.compose([Validators.required])],
-                'codeFour': ['', Validators.compose([Validators.required])]
-            });
-    
-            this.codeOne = this.form.controls['codeOne'];
-            this.codeTwo = this.form.controls['codeTwo'];
-            this.codeThree = this.form.controls['codeThree'];
-            this.codeFour = this.form.controls['codeFour'];
+        this.form = fb.group({
+            'codeOne': ['', Validators.compose([Validators.required])],
+            'codeTwo': ['', Validators.compose([Validators.required])],
+            'codeThree': ['', Validators.compose([Validators.required])],
+            'codeFour': ['', Validators.compose([Validators.required])]
+        });
+
+        this.codeOne = this.form.controls['codeOne'];
+        this.codeTwo = this.form.controls['codeTwo'];
+        this.codeThree = this.form.controls['codeThree'];
+        this.codeFour = this.form.controls['codeFour'];
     }
 
     ngOnInit() {
         if (this.dataService.getUserRegisterationId()) {
             this.userId = this.dataService.getUserRegisterationId();
         }
+        // this.store.dispatch({ type: auth.actionTypes.AUTH_GET_USER_DETAILS });
     }
 
     ngOnDestroy() {
@@ -91,7 +102,17 @@ export class VerificationMobile {
     }
 
     resendVerificationCode() {
-        
+        if (this.dataService.getUserRegisterationId()) {
+            this.userId = this.dataService.getUserRegisterationId();
+        }
+        let data = { 
+            userId: this.userId,
+            sendVia: 'SMS'
+        };
+        this.store.dispatch({
+            type: auth.actionTypes.AUTH_RESEND_OTP,
+            payload: data
+        });
     }
 
     goto(id) {
@@ -133,7 +154,7 @@ export class VerificationMobile {
     }
 
     onSubmit(values: Object, event) {
-       
+
         this.submitted = true;
         if (this.dataService.getUserRegisterationId()) {
             this.userId = this.dataService.getUserRegisterationId();
@@ -141,7 +162,7 @@ export class VerificationMobile {
         if (!this.codeOne.value) {
             this.toastrService.clear();
             this.toastrService.error('Verification code is required', 'Error');
-            if(this._inputCodeOne) {
+            if (this._inputCodeOne) {
                 this._inputCodeOne.nativeElement.focus();
             }
             return;
@@ -149,7 +170,7 @@ export class VerificationMobile {
         if (!this.codeTwo.value) {
             this.toastrService.clear();
             this.toastrService.error('Verification code is required', 'Error');
-            if(this._inputCodeTwo) {
+            if (this._inputCodeTwo) {
                 this._inputCodeTwo.nativeElement.focus();
             }
             return;
@@ -157,7 +178,7 @@ export class VerificationMobile {
         if (!this.codeThree.value) {
             this.toastrService.clear();
             this.toastrService.error('Verification code is required', 'Error');
-            if(this._inputCodeThree) {
+            if (this._inputCodeThree) {
                 this._inputCodeThree.nativeElement.focus();
             }
             return;
@@ -165,7 +186,7 @@ export class VerificationMobile {
         if (!this.codeFour.value) {
             this.toastrService.clear();
             this.toastrService.error('Verification code is required', 'Error');
-            if(this._inputCodeFour) {
+            if (this._inputCodeFour) {
                 this._inputCodeFour.nativeElement.focus();
             }
             return;
@@ -175,7 +196,10 @@ export class VerificationMobile {
             userId: this.userId,
             otp: otp
         };
-        console.log(data);
+        this.store.dispatch({
+            type: auth.actionTypes.AUTH_CONFIRM_OTP_SIGNUP,
+            payload: data
+        });
     }
 
     _keyPressNumber(event: any) {

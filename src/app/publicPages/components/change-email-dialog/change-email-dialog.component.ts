@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { MdDialog } from '@angular/material';
+import { Store } from '@ngrx/store';
 import { DataService } from '../../../services/data-service/data.service';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { EmailValidator } from '../../../theme/validators';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
+import * as auth from '../../../auth/state/auth.actions';
 import 'style-loader!./change-email-dialog.scss';
 
 @Component({
@@ -53,6 +55,7 @@ export class ChangeEmailDialog {
     public email: AbstractControl;
 
     constructor(private fb: FormBuilder,
+        private store: Store<any>,
         private dialog: MdDialog,
         private toastrService: ToastrService,
         private dataService: DataService) {
@@ -86,7 +89,10 @@ export class ChangeEmailDialog {
             userId: this.userId,
             email: this.email.value
         };
-        console.log(data);
+        this.store.dispatch({
+            type: auth.actionTypes.AUTH_CHANGE_EMAIL,
+            payload: data
+        });
     }
 }
 

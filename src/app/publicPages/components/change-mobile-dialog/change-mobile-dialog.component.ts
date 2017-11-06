@@ -185,7 +185,10 @@ export class ChangeMobileDialog {
             countryCode: this.countryCode.value,
             phone: this.phone.value
         };
-        console.log(data);
+        this.store.dispatch({
+            type: auth.actionTypes.AUTH_CHANGE_PHONE,
+            payload: data
+        });
     }
 
     _keyPressNumber(event: any) {

@@ -20,6 +20,7 @@ export class Documents {
 
     @ViewChild('profilePictureInput') public _profilePicture: ElementRef;
     @ViewChildren('documentInput') public _document: QueryList<HTMLInputElement>;
+    @ViewChildren('inputDocumentsName') public _documents: QueryList<HTMLInputElement>;
     @ViewChild('inputDocumentName') public _documentName: ElementRef;
     public storeData;
     public form: FormGroup;
@@ -30,6 +31,7 @@ export class Documents {
     public hasBaseDropZoneOver: boolean = false;
     public userId;
     public documentArray;
+    public documentsArray;
 
     public submitted: boolean = false;
 
@@ -199,12 +201,16 @@ export class Documents {
         this._document.changes.subscribe(childern => {
             this.documentArray = childern.toArray();
         });
+        this.documentsArray = this._documents.toArray();
+        this._documents.changes.subscribe(childern => {
+            this.documentsArray = childern.toArray();
+        });
     }
 
     initDocument() {
         return this.fb.group({
-            'documentName': [''],
-            'document': [''],
+            'documentName': ['', Validators.compose([Validators.required])],
+            'document': ['', Validators.compose([Validators.required])],
         });
     }
 
@@ -240,9 +246,20 @@ export class Documents {
             if(!control.value[i].documentName && i == 0) {
                 this.toastrService.clear();
                 this.toastrService.error('Document name is required', 'Error');
-                if (this._documentName) {
-                    this._documentName.nativeElement.focus();
+                if (this.documentsArray[i]) {
+                    this.documentsArray[i].nativeElement.focus();
                 }
+                return;
+            } else if(!control.value[i].documentName && control.value[i].document) {
+                this.toastrService.clear();
+                this.toastrService.error('Document name is required', 'Error');
+                if (this.documentsArray[i]) {
+                    this.documentsArray[i].nativeElement.focus();
+                }
+                return;
+            } else if(control.value[i].documentName && !control.value[i].document) {
+                this.toastrService.clear();
+                this.toastrService.error('Document is required', 'Error');
                 return;
             }
             if (control.value[i] && control.value[i].document) {
@@ -265,6 +282,7 @@ export class Documents {
         if (!this.profilePicture.value) {
             delete data.profilePicture;
         }
+        
         let formData = new FormData();
         formData.append('userId', this.userId);
         formData.append('stepNumber', '3');
@@ -273,6 +291,7 @@ export class Documents {
         }
         formData.append('info', JSON.stringify(documentsName));
         formData.append('documents', JSON.stringify(documents));
+
         this.store.dispatch({
             type: auth.actionTypes.AUTH_REGISTER_DOCUMENTS,
             payload: formData

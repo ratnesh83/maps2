@@ -60,7 +60,16 @@ export class VerificationEmail {
         this.storeData = this.store
             .select('auth')
             .subscribe((res: any) => {
-
+                if (res && res.userDetails) {
+                    console.log(res.userDetails);
+                    this.selectedEmail = res.userDetails.email;
+                }
+                if (res && res.changeEmail && res.changeEmail.statusCode && res.changeEmail.statusCode == 200) {
+                    this.dialog.closeAll();
+                }
+                if (res && res.confirmOtpSignup && res.confirmOtpSignup.statusCode && res.confirmOtpSignup.statusCode == 200) {
+                    this.openApprovalDialog();
+                }
             });
 
         this.form = fb.group({
@@ -80,6 +89,7 @@ export class VerificationEmail {
         if (this.dataService.getUserRegisterationId()) {
             this.userId = this.dataService.getUserRegisterationId();
         }
+        // this.store.dispatch({ type: auth.actionTypes.AUTH_GET_USER_DETAILS });
     }
 
     ngOnDestroy() {
@@ -89,7 +99,17 @@ export class VerificationEmail {
     }
 
     resendVerificationCode() {
-        
+        if (this.dataService.getUserRegisterationId()) {
+            this.userId = this.dataService.getUserRegisterationId();
+        }
+        let data = {
+            userId: this.userId,
+            sendVia: 'EMAIL'
+        };
+        this.store.dispatch({
+            type: auth.actionTypes.AUTH_RESEND_OTP,
+            payload: data
+        });
     }
 
     goto(id) {
@@ -139,7 +159,7 @@ export class VerificationEmail {
         if (!this.codeOne.value) {
             this.toastrService.clear();
             this.toastrService.error('Verification code is required', 'Error');
-            if(this._inputCodeOne) {
+            if (this._inputCodeOne) {
                 this._inputCodeOne.nativeElement.focus();
             }
             return;
@@ -147,7 +167,7 @@ export class VerificationEmail {
         if (!this.codeTwo.value) {
             this.toastrService.clear();
             this.toastrService.error('Verification code is required', 'Error');
-            if(this._inputCodeTwo) {
+            if (this._inputCodeTwo) {
                 this._inputCodeTwo.nativeElement.focus();
             }
             return;
@@ -155,7 +175,7 @@ export class VerificationEmail {
         if (!this.codeThree.value) {
             this.toastrService.clear();
             this.toastrService.error('Verification code is required', 'Error');
-            if(this._inputCodeThree) {
+            if (this._inputCodeThree) {
                 this._inputCodeThree.nativeElement.focus();
             }
             return;
@@ -163,7 +183,7 @@ export class VerificationEmail {
         if (!this.codeFour.value) {
             this.toastrService.clear();
             this.toastrService.error('Verification code is required', 'Error');
-            if(this._inputCodeFour) {
+            if (this._inputCodeFour) {
                 this._inputCodeFour.nativeElement.focus();
             }
             return;
@@ -173,7 +193,10 @@ export class VerificationEmail {
             userId: this.userId,
             otp: otp
         };
-        console.log(data);
+        this.store.dispatch({
+            type: auth.actionTypes.AUTH_CONFIRM_OTP_SIGNUP,
+            payload: data
+        });
 
     }
 

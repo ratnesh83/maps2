@@ -34,7 +34,7 @@
                     <div class="col-12 col-sm-12" *ngFor="let document of form.controls['documents'].controls; let i=index; let last=last; let first=first">
                         <div class="form-group row">
                             <div class="col-12 col-sm-12">
-                                <input type="text" [formControl]="document.controls['documentName']" class="form-control" placeholder="Document Name">
+                                <input #inputDocumentsName type="text" [ngClass]="{'has-input-error': (!document?.controls['documentName']?.valid && (document?.controls['documentName']?.touched || submitted))}" [formControl]="document.controls['documentName']" class="form-control" placeholder="Document Name">
                             </div>
                         </div>
                         <div class="form-group row" style="margin-bottom: 0px">
@@ -60,7 +60,7 @@
 
                             </div>
                         </div>
-                        <div *ngIf="!first" class="text-right">
+                        <div *ngIf="!first" style="line-height: 15px" class="text-right">
                             <span mdTooltip="Remove Document">
                                 <span (click)="removeDocument(i)" class="fa fa-times remove-doc"></span>
                             </span>

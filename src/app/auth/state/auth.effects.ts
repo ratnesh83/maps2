@@ -127,7 +127,11 @@ export class AuthEffects {
             }
                 , (error) => {
                     this.baThemeSpinner.hide();
-                    if (error.message) {
+                    if(error.statusCode == 409) {
+                        this.toastrService.clear();
+                        this.toastrService.error(error.message || 'User already exists, please login to continue', 'Error');
+                        this.router.navigate(['login']);
+                    } else if (error.message) {
                         this.toastrService.clear();
                         this.toastrService.error(error.message || 'Something went wrong', 'Error');
                     }

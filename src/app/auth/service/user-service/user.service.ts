@@ -119,7 +119,7 @@ export class UserService {
         this.utcOffset = false;
         let formData = new FormData();
         formData.append('userId', data.userId);
-        formData.append('emailOrPhone', data.emailOrPhone);
+        formData.append('sendVia', data.sendVia);
         let url = environment.APP.API_URL + environment.APP.RESEND_OTP_API;
         return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
     }
