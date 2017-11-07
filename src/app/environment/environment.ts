@@ -10,7 +10,7 @@ export const environment = {
         REGISTER_API: '/api/v2/web/user/register/step1',
         REGISTER_ADDRESS_API: '/api/v2/web/user/register/step2',
         REGISTER_DOCUMENTS_API: '/api/v2/web/user/register/step3',
-        SEND_VERIFICATION_TYPE_API: '/api/v2/web/user/register/verificationType',
+        SEND_VERIFICATION_TYPE_API: '/api/v2/web/user/register/step4Registeration',
         RESEND_OTP_API: '/api/v2/web/user/register/resendOtp',
         CHANGE_PHONE_NUMBER_API: '/api/v2/web/user/register/changePhoneNumber',
         CHANGE_EMAIL_API: '/api/v2/web/user/register/changeEmail',

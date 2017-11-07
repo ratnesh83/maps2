@@ -129,7 +129,11 @@ export class UserService {
         this.utcOffset = false;
         let formData = new FormData();
         formData.append('userId', data.userId);
-        formData.append('verificationType', data.verificationType);
+        if(data.verificationType == 'EMAIL') {
+            formData.append('isEmail', 'true');
+        } else {
+            formData.append('isEmail', 'false');
+        }
         let url = environment.APP.API_URL + environment.APP.SEND_VERIFICATION_TYPE_API;
         return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
     }
