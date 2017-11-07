@@ -40,6 +40,7 @@ export class AuthEffects {
                         }
                         this.router.navigate([redirect]);
                         this.dataService.removeUserRegisterationId();
+                        this.dataService.removeUserRegisterationAccessToken();
                     }
                 }
                 else {
@@ -79,6 +80,7 @@ export class AuthEffects {
                         }
                         this.router.navigate([redirect]);
                         this.dataService.removeUserRegisterationId();
+                        this.dataService.removeUserRegisterationAccessToken();
                     }
                 }
                 else {
@@ -184,6 +186,9 @@ export class AuthEffects {
                 this.baThemeSpinner.hide();
                 if (result.statusCode === 200 || result.statusCode === 201) {
                     this.store.dispatch(new auth.AuthRegisterDocumentsSuccessAction(result));
+                    if(result.data && result.data.accessToken) {
+                        this.dataService.setUserRegisterationAccessToken(result.data.accessToken);
+                    }
                     this.router.navigate(['verification']);
                 }
                 else {
@@ -284,7 +289,7 @@ export class AuthEffects {
         .ofType(auth.actionTypes.AUTH_CHANGE_PHONE)
         .do((action: any) => {
             this.baThemeSpinner.show();
-            this.UserService.changePhone(action.payload).subscribe((result) => {
+            this.UserService.sendVerificationType(action.payload).subscribe((result) => {
                 this.baThemeSpinner.hide();
                 if (result.statusCode === 200 || result.statusCode === 201) {
                     this.store.dispatch({
@@ -318,7 +323,7 @@ export class AuthEffects {
         .ofType(auth.actionTypes.AUTH_CHANGE_EMAIL)
         .do((action: any) => {
             this.baThemeSpinner.show();
-            this.UserService.changeEmail(action.payload).subscribe((result) => {
+            this.UserService.sendVerificationType(action.payload).subscribe((result) => {
                 this.baThemeSpinner.hide();
                 if (result.statusCode === 200 || result.statusCode === 201) {
                     this.store.dispatch({
@@ -375,6 +380,7 @@ export class AuthEffects {
                         }
                         // this.router.navigate([redirect]);
                     }
+                    this.dataService.removeUserRegisterationAccessToken();
                     this.toastrService.clear();
                     this.toastrService.success(result.message || 'Registered successfully', 'Success');
                 }
@@ -448,6 +454,7 @@ export class AuthEffects {
                     localStorage.removeItem('token');
                     localStorage.removeItem('tokenSession');
                     this.dataService.removeUserRegisterationId();
+                    this.dataService.removeUserRegisterationAccessToken();
                     this.router.navigate(['login']);
                 }
             }
@@ -457,6 +464,7 @@ export class AuthEffects {
                     localStorage.removeItem('token');
                     localStorage.removeItem('tokenSession');
                     this.dataService.removeUserRegisterationId();
+                    this.dataService.removeUserRegisterationAccessToken();
                     this.router.navigate(['login']);
                 }
             );

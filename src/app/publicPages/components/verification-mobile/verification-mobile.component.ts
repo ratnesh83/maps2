@@ -193,8 +193,8 @@ export class VerificationMobile {
         }
         let otp = this.codeOne.value + this.codeTwo.value + this.codeThree.value + this.codeFour.value;
         let data = {
-            userId: this.userId,
-            otp: otp
+            // userId: this.userId,
+            phoneOtp: otp
         };
         this.store.dispatch({
             type: auth.actionTypes.AUTH_CONFIRM_OTP_SIGNUP,

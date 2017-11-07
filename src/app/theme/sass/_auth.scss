@@ -136,6 +136,13 @@ a.forgot-pass {
         }
     }
 }
+.container-inner {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    background-color: #ffffff;
+    box-shadow: 0 5px 5px -4px rgba(0, 0, 0, 0.25);
+    min-height: calc(100vh - 106px);
+}
 .btn-auth {
     color: #ffffff !important;
     min-width: 100px;

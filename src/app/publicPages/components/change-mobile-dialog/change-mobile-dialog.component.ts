@@ -182,6 +182,7 @@ export class ChangeMobileDialog {
         }
         let data = {
             userId: this.userId,
+            verificationType: 'SMS',
             countryCode: this.countryCode.value,
             phone: this.phone.value
         };

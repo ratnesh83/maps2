@@ -61,7 +61,7 @@ export class UserService {
 
     forgotPasswordOtp(data) {
         this.authRequired = false;
-        this.utcOffset = false;
+        this.utcOffset = true;
         let formData = new FormData();
         formData.append('phoneOtp', data.otp);
         formData.append('phoneNumber', data.phoneNumber);
@@ -74,16 +74,17 @@ export class UserService {
         this.utcOffset = false;
         let formData = new FormData();
         formData.append('userId', data.userId);
-        formData.append('otp', data.otp);
+        formData.append('phoneOtp', data.otp);
         let url = environment.APP.API_URL + environment.APP.CONFIRM_SIGNUP_OTP_API;
-        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+        // return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+        return this.apiService.postFileApi(url, data, this.authRequired, this.utcOffset);
     }
 
     resetPassword(data) {
         this.authRequired = false;
         this.utcOffset = false;
         let formData = new FormData();
-        if(data && data.resetToken) {
+        if (data && data.resetToken) {
             formData.append('resetToken', data.resetToken);
         } else {
             formData.append('resetOtp', data.resetOtp);
@@ -126,24 +127,35 @@ export class UserService {
 
     sendVerificationType(data) {
         this.authRequired = false;
-        this.utcOffset = false;
-        let formData = new FormData();
-        formData.append('userId', data.userId);
-        if(data.verificationType == 'EMAIL') {
-            formData.append('isEmail', 'true');
+        this.utcOffset = true;
+        let dataToSend = {
+            isEmail: false,
+            userId: data.userId,
+            emailOrPhone: ''
+        };
+        if (data.verificationType == 'EMAIL') {
+            dataToSend.isEmail = true;
         } else {
-            formData.append('isEmail', 'false');
+            dataToSend.isEmail = false;
+        }
+        if (data.phone) {
+            dataToSend.emailOrPhone = data.phone;
+        } else if (data.email) {
+            dataToSend.emailOrPhone = data.email;
+        } else {
+            delete dataToSend.emailOrPhone;
         }
         let url = environment.APP.API_URL + environment.APP.SEND_VERIFICATION_TYPE_API;
-        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+        // return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+        return this.apiService.postApi(url, dataToSend, this.authRequired, this.utcOffset);
     }
 
     getUserDetails(payload) {
-        this.authRequired = false;
+        this.authRequired = true;
         this.utcOffset = false;
         let url = environment.APP.API_URL + environment.APP.GET_USER_DETAILS_API;
         url += '?userId=' + payload.userId;
-        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+        return this.apiService.getRegisterApi(url, this.authRequired, this.utcOffset);
     }
 
     getCountryCodes(payload) {

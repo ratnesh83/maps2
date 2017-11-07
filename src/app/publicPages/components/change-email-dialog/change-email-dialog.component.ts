@@ -87,6 +87,7 @@ export class ChangeEmailDialog {
         }
         let data = {
             userId: this.userId,
+            verificationType: 'EMAIL',
             email: this.email.value
         };
         this.store.dispatch({
