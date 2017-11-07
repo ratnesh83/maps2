@@ -29,6 +29,8 @@ export class Documents {
     public documents: AbstractControl;
     public uploader: FileUploader[] = [];
     public hasBaseDropZoneOver: boolean = false;
+    public profilePictureUplaod;
+    public documentsUpload = [];
     public userId;
     public documentArray;
     public documentsArray;
@@ -63,6 +65,8 @@ export class Documents {
         if (this.dataService.getUserRegisterationId()) {
             this.userId = this.dataService.getUserRegisterationId();
         }
+        this.profilePictureUplaod = '';
+        this.documentsUpload = [];
     }
 
     ngOnDestroy() {
@@ -76,7 +80,7 @@ export class Documents {
     }
 
     checkFileSize(size): boolean {
-        if (size > 20000000) {
+        if (size > 5000000) {
             return false;
         } else {
             return true;
@@ -120,7 +124,7 @@ export class Documents {
         }
         if (!this.checkFileSize(files[0].size)) {
             this.toastrService.clear();
-            this.toastrService.error('Please select file less than 20MB', 'Error');
+            this.toastrService.error('Please select file less than 5MB', 'Error');
             this.uploader[index] = new FileUploader({ url: '' });
             return;
         }
@@ -149,6 +153,7 @@ export class Documents {
             event.target.value = null;
             return;
         }
+        this.profilePictureUplaod = event.target.files[0];
         const reader = new FileReader();
         reader.addEventListener('load', (element: Event) => {
             this.profilePicture.setValue(reader.result);
@@ -176,6 +181,7 @@ export class Documents {
             event.target.value = null;
             return;
         }
+        this.documentsUpload[index] = event.target.files[0];
         const control = <FormArray>this.form.controls['documents'];
         const reader = new FileReader();
         reader.addEventListener('load', (element: Event) => {
@@ -218,12 +224,14 @@ export class Documents {
         const control = <FormArray>this.form.controls['documents'];
         control.push(this.initDocument());
         this.uploader.push(new FileUploader({ url: '' }));
+        this.documentsUpload.push('');
     }
 
     removeDocument(index) {
         const control = <FormArray>this.form.controls['documents'];
         control.removeAt(index);
         this.uploader.splice(index, 1);
+        this.documentsUpload.splice(index, 1);
     }
 
     onSubmit() {
@@ -275,9 +283,9 @@ export class Documents {
         let data = {
             userId: this.userId,
             stepNumber: 3,
-            profilePicture: this.profilePicture.value,
+            profilePicture: this.profilePictureUplaod,
             info: this.documentName.value,
-            documents: documents
+            documents: this.documentsUpload
         };
         if (!this.profilePicture.value) {
             delete data.profilePicture;
@@ -287,10 +295,12 @@ export class Documents {
         formData.append('userId', this.userId);
         formData.append('stepNumber', '3');
         if (this.profilePicture.value) {
-            formData.append('profilePicture', this.profilePicture.value);
+            formData.append('profilePicture', this.profilePictureUplaod);
         }
         formData.append('info', JSON.stringify(documentsName));
-        formData.append('documents', JSON.stringify(documents));
+        for(let i = 0; i < this.documentsUpload.length; i++) {
+            formData.append('documents', this.documentsUpload[i]);
+        }
 
         this.store.dispatch({
             type: auth.actionTypes.AUTH_REGISTER_DOCUMENTS,
