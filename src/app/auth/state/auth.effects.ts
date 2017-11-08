@@ -67,6 +67,8 @@ export class AuthEffects {
                                 this.router.navigate(['verification']);
                             } else if (error.data.stepNumber == '4') {
                                 this.router.navigate(['verification']);
+                            } else {
+                                this.router.navigate(['address']);
                             }
                         }
                     } else if (error.message) {
@@ -128,6 +130,8 @@ export class AuthEffects {
                                 this.router.navigate(['verification']);
                             } else if (error.data.stepNumber == '4') {
                                 this.router.navigate(['verification']);
+                            } else {
+                                this.router.navigate(['address']);
                             }
                         }
                     } else if (error.message) {

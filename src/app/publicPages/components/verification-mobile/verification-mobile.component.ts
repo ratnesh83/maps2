@@ -63,12 +63,15 @@ export class VerificationMobile {
             .select('auth')
             .subscribe((res: any) => {
                 if (res && res.userDetails) {
-                    console.log(res.userDetails);
                     this.selectedCountryCode = res.userDetails.countryCode;
                     this.selectedPhone = res.userDetails.phoneNumber;
                 }
                 if (res && res.changePhone && res.changePhone.statusCode && res.changePhone.statusCode == 200) {
                     this.dialog.closeAll();
+                    this.codeOne.reset();
+                    this.codeTwo.reset();
+                    this.codeThree.reset();
+                    this.codeFour.reset();
                 }
                 if (res && res.confirmOtpSignup && res.confirmOtpSignup.statusCode && res.confirmOtpSignup.statusCode == 200) {
                     this.openApprovalDialog();
@@ -113,6 +116,10 @@ export class VerificationMobile {
             type: auth.actionTypes.AUTH_SEND_VERIFICATION_TYPE,
             payload: data
         });
+        this.codeOne.reset();
+        this.codeTwo.reset();
+        this.codeThree.reset();
+        this.codeFour.reset();
     }
 
     goto(id) {

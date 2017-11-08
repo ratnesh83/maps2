@@ -65,6 +65,10 @@ export class VerificationEmail {
                 }
                 if (res && res.changeEmail && res.changeEmail.statusCode && res.changeEmail.statusCode == 200) {
                     this.dialog.closeAll();
+                    this.codeOne.reset();
+                    this.codeTwo.reset();
+                    this.codeThree.reset();
+                    this.codeFour.reset();
                 }
                 if (res && res.confirmOtpSignup && res.confirmOtpSignup.statusCode && res.confirmOtpSignup.statusCode == 200) {
                     this.openApprovalDialog();
@@ -109,6 +113,10 @@ export class VerificationEmail {
             type: auth.actionTypes.AUTH_SEND_VERIFICATION_TYPE,
             payload: data
         });
+        this.codeOne.reset();
+        this.codeTwo.reset();
+        this.codeThree.reset();
+        this.codeFour.reset();
     }
 
     goto(id) {
