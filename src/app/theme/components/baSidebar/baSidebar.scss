@@ -4,12 +4,13 @@ $angle-left: "\f100";
 $angle-right: "\f101";
 .al-sidebar {
     width: $sidebar-width;
-    top: $top-height + 15px;
+    top: 15px;
+    left: 0px;
     z-index: 999;
     display: block;
     background-color: $sidebar;
     height: auto;
-    position: fixed;
+    position: absolute;
     transition: width 0.5s ease;
     box-shadow: 0 5px 5px -4px rgba(0, 0, 0, .25);
 }

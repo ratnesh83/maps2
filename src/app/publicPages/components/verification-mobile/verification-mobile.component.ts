@@ -92,7 +92,7 @@ export class VerificationMobile {
         if (this.dataService.getUserRegisterationId()) {
             this.userId = this.dataService.getUserRegisterationId();
         }
-        // this.store.dispatch({ type: auth.actionTypes.AUTH_GET_USER_DETAILS });
+        this.store.dispatch({ type: auth.actionTypes.AUTH_GET_USER_DETAILS, payload: { userId: this.userId } });
     }
 
     ngOnDestroy() {

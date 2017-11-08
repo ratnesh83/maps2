@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'home',
@@ -7,7 +8,23 @@ import { Component } from '@angular/core';
 })
 export class Home {
 
-    constructor() {
+    constructor(private router: Router) {
+    }
+
+    goToPostJobs() {
+        this.router.navigate(['/pages/feedbacks']);
+    }
+
+    goToMyPosts() {
+        
+    }
+
+    goToLaborList() {
+        
+    }
+
+    goToDonations() {
+        
     }
 
 }

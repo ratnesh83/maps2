@@ -3,8 +3,134 @@
     <div class="row animated bounceInUp">
         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
             <div class="container container-inner">
-                <h2>Home</h2>
+                <div class="row text-center">
+                    <div class="col-12 col-sm-6 home-grid">
+                        <div class="hidden-xs-down divider-side"></div>
+                        <div class="divider-bottom"></div>
+                        <div (click)="goToPostJobs()" class="grid-element">
+                            <div class="home-image">
+                                <img src="assets/img/post-jobs.png">
+                            </div>
+                            <h3 class="heading-1">
+                                POST JOBS
+                            </h3>
+                            <h5 class="sub-heading">
+                                Post a new job
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 home-grid">
+                        <div class="divider-bottom"></div>
+                        <div (click)="goToMyPosts()" class="grid-element">
+                            <div class="home-image">
+                                <img src="assets/img/my-post.png">
+                            </div>
+                            <h3 class="heading-1">
+                                MY POSTS
+                            </h3>
+                            <h5 class="sub-heading">
+                                Posted job details
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-12 col-sm-6 home-grid">
+                        <div class="hidden-xs-down divider-side"></div>
+                        <div class="hidden-sm-up divider-bottom"></div>
+                        <div (click)="goToLaborList()" class="grid-element">
+                            <div class="home-image">
+                                <img src="assets/img/labor-list.png">
+                            </div>
+                            <h3 class="heading-1">
+                                LABOR LIST
+                            </h3>
+                            <h5 class="sub-heading">
+                                Employee information
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 home-grid">
+                        <div (click)="goToDonations()" class="grid-element">
+                            <div class="home-image">
+                                <img src="assets/img/donations.png">
+                            </div>
+                            <h3 class="heading-1">
+                                DONATIONS
+                            </h3>
+                            <h5 class="sub-heading">
+                                Give donation to provider
+                            </h5>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
+    </div>
+
+    <div class="hidden-xs-down left-notification-bar">
+        <div class="notification">
+            <div class="notification-banner">
+                Companies just joined
+            </div>
+            <md-card class="left-notification-card">
+                <md-card-header class="left-notification-head animated bounceInRight">
+                    <div md-card-avatar class="notification-header-image">
+                        <img mat-card-avatar [src]="profilePicture ? profilePicture : 'assets/img/kate.png'">
+                    </div>
+                    <md-card-title class="left-notification-title">Kate</md-card-title>
+                    <md-card-subtitle class="left-notification-subtitle">joined 1 min ago</md-card-subtitle>
+                </md-card-header>
+                <md-card-header class="left-notification-head animated bounceInRight">
+                    <div md-card-avatar class="notification-header-image">
+                        <img mat-card-avatar [src]="profilePicture ? profilePicture : 'assets/img/lee.png'">
+                    </div>
+                    <md-card-title class="left-notification-title">Lee</md-card-title>
+                    <md-card-subtitle class="left-notification-subtitle">joined 3 min ago</md-card-subtitle>
+                </md-card-header>
+            </md-card>
+        </div>
+        <div class="notification">
+            <div class="notification-banner">
+                Employer just joined
+            </div>
+            <md-card class="left-notification-card">
+                <md-card-header class="left-notification-head animated bounceInRight">
+                    <div md-card-avatar class="notification-header-image">
+                        <img mat-card-avatar [src]="profilePicture ? profilePicture : 'assets/img/kate.png'">
+                    </div>
+                    <md-card-title class="left-notification-title">Kate</md-card-title>
+                    <md-card-subtitle class="left-notification-subtitle">joined 1 min ago</md-card-subtitle>
+                </md-card-header>
+                <md-card-header class="left-notification-head animated bounceInRight">
+                    <div md-card-avatar class="notification-header-image">
+                        <img mat-card-avatar [src]="profilePicture ? profilePicture : 'assets/img/lee.png'">
+                    </div>
+                    <md-card-title class="left-notification-title">Lee</md-card-title>
+                    <md-card-subtitle class="left-notification-subtitle">joined 3 min ago</md-card-subtitle>
+                </md-card-header>
+            </md-card>
+        </div>
+        <div class="notification">
+            <div class="notification-banner">
+                New jobs
+            </div>
+            <md-card class="left-notification-card">
+                <md-card-header class="left-notification-head animated bounceInRight">
+                    <div md-card-avatar class="notification-header-image">
+                        <img mat-card-avatar [src]="profilePicture ? profilePicture : 'assets/img/kate.png'">
+                    </div>
+                    <md-card-title class="left-notification-title">Kate</md-card-title>
+                    <md-card-subtitle class="left-notification-subtitle">joined 1 min ago</md-card-subtitle>
+                </md-card-header>
+                <md-card-header class="left-notification-head animated bounceInRight">
+                    <div md-card-avatar class="notification-header-image">
+                        <img mat-card-avatar [src]="profilePicture ? profilePicture : 'assets/img/lee.png'">
+                    </div>
+                    <md-card-title class="left-notification-title">Lee</md-card-title>
+                    <md-card-subtitle class="left-notification-subtitle">joined 3 min ago</md-card-subtitle>
+                </md-card-header>
+            </md-card>
         </div>
     </div>
 </div>
