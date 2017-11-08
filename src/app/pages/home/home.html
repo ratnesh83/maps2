@@ -69,25 +69,25 @@
     </div>
 
     <div class="hidden-xs-down left-notification-bar">
-        <div class="notification">
+        <div *ngIf="companiesNotifications && companiesNotifications.length > 0" class="notification">
             <div class="notification-banner">
                 Companies just joined
             </div>
             <md-card class="left-notification-card">
-                <md-card-header class="left-notification-head animated bounceInRight">
+                <md-card-header *ngFor="let company of companiesNotifications" class="left-notification-head animated bounceInRight">
                     <div md-card-avatar class="notification-header-image">
-                        <img mat-card-avatar [src]="profilePicture ? profilePicture : 'assets/img/kate.png'">
+                        <img mat-card-avatar [src]="company?.picture ? company?.picture : 'assets/img/kate.png'">
                     </div>
-                    <md-card-title class="left-notification-title">Kate</md-card-title>
-                    <md-card-subtitle class="left-notification-subtitle">joined 1 min ago</md-card-subtitle>
+                    <md-card-title class="left-notification-title">{{ company.name }}</md-card-title>
+                    <md-card-subtitle class="left-notification-subtitle">joined {{ getDuration(company.time) }} min ago</md-card-subtitle>
                 </md-card-header>
-                <md-card-header class="left-notification-head animated bounceInRight">
+                <!-- <md-card-header class="left-notification-head animated bounceInRight">
                     <div md-card-avatar class="notification-header-image">
                         <img mat-card-avatar [src]="profilePicture ? profilePicture : 'assets/img/lee.png'">
                     </div>
                     <md-card-title class="left-notification-title">Lee</md-card-title>
                     <md-card-subtitle class="left-notification-subtitle">joined 3 min ago</md-card-subtitle>
-                </md-card-header>
+                </md-card-header> -->
             </md-card>
         </div>
         <div class="notification">

@@ -62,7 +62,7 @@ export class ApiService {
     getRegisterToken(authRequired, utcOffset) {
 
         this.headers = new Headers({ 'Content-Type': 'application/json', 'content-language': 'en' });
-        this.token = this.dataService.getUserRegisterationAccessToken(); 
+        this.token = this.dataService.getUserRegisterationAccessToken();
         // this.headerToken = 'Bearer ' + this.token;
         this.headerToken = this.token;
         this.utcOffset = (new Date()).getTimezoneOffset();

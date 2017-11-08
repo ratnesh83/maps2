@@ -58,7 +58,7 @@ export class ApprovalDialog {
     }
 
     submit() {
-        this.router.navigate(['login']);
+        this.router.navigate(['pages/home']);
         this.dialog.closeAll();
     }
 }

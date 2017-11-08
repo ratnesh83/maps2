@@ -79,7 +79,8 @@ export class Verification {
         }
         let data = {
             userId: this.userId,
-            verificationType: this.signUpType.value
+            verificationType: this.signUpType.value,
+            stepNumber: 4
         };
         this.store.dispatch({
             type: auth.actionTypes.AUTH_SEND_VERIFICATION_TYPE,

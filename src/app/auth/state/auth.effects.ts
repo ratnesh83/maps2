@@ -129,7 +129,7 @@ export class AuthEffects {
             }
                 , (error) => {
                     this.baThemeSpinner.hide();
-                    if(error.statusCode == 409) {
+                    if (error.statusCode == 409) {
                         this.toastrService.clear();
                         this.toastrService.error(error.message || 'User already exists, please login to continue', 'Error');
                         this.router.navigate(['login']);
@@ -186,7 +186,7 @@ export class AuthEffects {
                 this.baThemeSpinner.hide();
                 if (result.statusCode === 200 || result.statusCode === 201) {
                     this.store.dispatch(new auth.AuthRegisterDocumentsSuccessAction(result));
-                    if(result.data && result.data.accessToken) {
+                    if (result.data && result.data.accessToken) {
                         this.dataService.setUserRegisterationAccessToken(result.data.accessToken);
                     }
                     this.router.navigate(['verification']);
@@ -260,10 +260,17 @@ export class AuthEffects {
                     let routeState = 'verifyMobile';
                     if (action.payload && action.payload.verificationType == 'SMS') {
                         routeState = 'verifyMobile';
+                        this.router.navigate([routeState]);
                     } else if (action.payload && action.payload.verificationType == 'EMAIL') {
                         routeState = 'verifyEmail';
+                        this.router.navigate([routeState]);
+                    } else if (action.payload && action.payload.type == 'SMS') {
+                        this.toastrService.clear();
+                        this.toastrService.success(result.message || 'Success', 'Success');
+                    } else if (action.payload && action.payload.type == 'EMAIL') {
+                        this.toastrService.clear();
+                        this.toastrService.success(result.message || 'Success', 'Success');
                     }
-                    this.router.navigate([routeState]);
                 }
                 else {
                 }
@@ -316,6 +323,7 @@ export class AuthEffects {
     changePhoneSuccess: Observable<Action> = this.actions$
         .ofType(auth.actionTypes.AUTH_CHANGE_PHONE_SUCCESS)
         .do((action: any) => {
+            this.store.dispatch({ type: auth.actionTypes.AUTH_GET_USER_DETAILS, payload: { userId: this.dataService.getUserRegisterationId() } });
         });
 
     @Effect({ dispatch: false })
@@ -350,6 +358,7 @@ export class AuthEffects {
     changeEmailSuccess: Observable<Action> = this.actions$
         .ofType(auth.actionTypes.AUTH_CHANGE_EMAIL_SUCCESS)
         .do((action: any) => {
+            this.store.dispatch({ type: auth.actionTypes.AUTH_GET_USER_DETAILS, payload: { userId: this.dataService.getUserRegisterationId() } });
         });
 
 
@@ -416,15 +425,17 @@ export class AuthEffects {
                         type: auth.actionTypes.AUTH_GET_USER_DETAILS_SUCCESS,
                         payload: data
                     });
-                    this.toastrService.clear();
-                    this.toastrService.success(result.message || 'Registered successfully', 'Success');
                 }
                 else {
                 }
             }
                 , (error) => {
                     this.baThemeSpinner.hide();
-                    if (error.message) {
+                    if (error.statusCode == 401 || (error.message && error.message.indexOf('Session expired') != -1)) {
+                        this.toastrService.clear();
+                        this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                        // this.router.navigate(['login']);
+                    } else if (error.message) {
                         this.toastrService.clear();
                         this.toastrService.error(error.message || 'Something went wrong', 'Error');
                     }

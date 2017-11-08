@@ -353,6 +353,10 @@ export class Register {
             }
         }
 
+        if (this.description.value == null || this.description.value == '' || this.description.value == undefined) {
+            delete data.description;
+        }
+
         if (this.password.value == null || this.password.value == '' || this.password.value == undefined) {
             delete data.password;
         }

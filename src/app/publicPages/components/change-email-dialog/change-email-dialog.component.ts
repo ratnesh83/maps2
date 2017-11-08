@@ -37,7 +37,7 @@ import 'style-loader!./change-email-dialog.scss';
                     <div class="form-action-btn form-action-btns">
                         <div class="form-group row">
                             <div class="col-12 col-sm-12">
-                                <button md-raised-button type="button" (click)="submit()" color="primary" class="btn btn-warning btn-block btn-login">RESET PASSWORD</button>
+                                <button md-raised-button type="button" (click)="submit()" color="primary" class="btn btn-warning btn-block btn-login">SEND OTP</button>
                             </div>
                         </div>
                     </div>

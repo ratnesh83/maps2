@@ -71,12 +71,12 @@ export class UserService {
 
     confirmSignUpOtp(data) {
         this.authRequired = false;
-        this.utcOffset = false;
+        this.utcOffset = true;
         let formData = new FormData();
         formData.append('userId', data.userId);
         formData.append('phoneOtp', data.otp);
+        formData.append('isEmail', data.isEmail);
         let url = environment.APP.API_URL + environment.APP.CONFIRM_SIGNUP_OTP_API;
-        // return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
         return this.apiService.postFileApi(url, data, this.authRequired, this.utcOffset);
     }
 
@@ -131,7 +131,8 @@ export class UserService {
         let dataToSend = {
             isEmail: false,
             userId: data.userId,
-            emailOrPhone: ''
+            emailOrPhone: '',
+            stepNumber: data.stepNumber
         };
         if (data.verificationType == 'EMAIL') {
             dataToSend.isEmail = true;
@@ -146,7 +147,6 @@ export class UserService {
             delete dataToSend.emailOrPhone;
         }
         let url = environment.APP.API_URL + environment.APP.SEND_VERIFICATION_TYPE_API;
-        // return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
         return this.apiService.postApi(url, dataToSend, this.authRequired, this.utcOffset);
     }
 

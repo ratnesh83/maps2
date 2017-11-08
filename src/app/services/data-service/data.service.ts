@@ -20,7 +20,7 @@ export class DataService {
     }
 
     getUserRegisterationAccessToken() {
-        this.userRegisterationId = localStorage.getItem('userRegisterationAccessToken');
+        this.userRegisterationAccessToken = localStorage.getItem('userRegisterationAccessToken');
         return this.userRegisterationAccessToken;
     }
 

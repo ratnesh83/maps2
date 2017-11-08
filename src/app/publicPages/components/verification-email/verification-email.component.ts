@@ -61,7 +61,6 @@ export class VerificationEmail {
             .select('auth')
             .subscribe((res: any) => {
                 if (res && res.userDetails) {
-                    console.log(res.userDetails);
                     this.selectedEmail = res.userDetails.email;
                 }
                 if (res && res.changeEmail && res.changeEmail.statusCode && res.changeEmail.statusCode == 200) {
@@ -104,10 +103,10 @@ export class VerificationEmail {
         }
         let data = {
             userId: this.userId,
-            sendVia: 'EMAIL'
+            type: 'EMAIL'
         };
         this.store.dispatch({
-            type: auth.actionTypes.AUTH_RESEND_OTP,
+            type: auth.actionTypes.AUTH_SEND_VERIFICATION_TYPE,
             payload: data
         });
     }
@@ -190,8 +189,9 @@ export class VerificationEmail {
         }
         let otp = this.codeOne.value + this.codeTwo.value + this.codeThree.value + this.codeFour.value;
         let data = {
-            // userId: this.userId,
-            phoneOtp: otp
+            userId: this.userId,
+            phoneOtp: otp,
+            isEmail: true
         };
         this.store.dispatch({
             type: auth.actionTypes.AUTH_CONFIRM_OTP_SIGNUP,

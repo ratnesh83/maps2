@@ -14,7 +14,7 @@ export const environment = {
         RESEND_OTP_API: '/api/v2/web/user/register/resendOtp',
         CHANGE_PHONE_NUMBER_API: '/api/v2/web/user/register/changePhoneNumber',
         CHANGE_EMAIL_API: '/api/v2/web/user/register/changeEmail',
-        CONFIRM_SIGNUP_OTP_API: '/api/v2/web/user/register/registrationotp',
+        CONFIRM_SIGNUP_OTP_API: '/api/v2/web/user/registrationotp',
         GET_USER_DETAILS_API: '/api/v2/web/user/detailsById',
 
         GET_ALL_BOOKING: '/admin/getAllAvailabeBooking',

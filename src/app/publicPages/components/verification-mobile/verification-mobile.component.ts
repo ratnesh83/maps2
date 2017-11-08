@@ -105,12 +105,12 @@ export class VerificationMobile {
         if (this.dataService.getUserRegisterationId()) {
             this.userId = this.dataService.getUserRegisterationId();
         }
-        let data = { 
+        let data = {
             userId: this.userId,
-            sendVia: 'SMS'
+            type: 'SMS'
         };
         this.store.dispatch({
-            type: auth.actionTypes.AUTH_RESEND_OTP,
+            type: auth.actionTypes.AUTH_SEND_VERIFICATION_TYPE,
             payload: data
         });
     }
@@ -193,8 +193,9 @@ export class VerificationMobile {
         }
         let otp = this.codeOne.value + this.codeTwo.value + this.codeThree.value + this.codeFour.value;
         let data = {
-            // userId: this.userId,
-            phoneOtp: otp
+            userId: this.userId,
+            phoneOtp: otp,
+            isEmail: false
         };
         this.store.dispatch({
             type: auth.actionTypes.AUTH_CONFIRM_OTP_SIGNUP,
