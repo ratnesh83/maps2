@@ -36,7 +36,7 @@ export class AuthEffects {
                             redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/home';
                         }
                         else if (this.authService.user.userType === 'EMPLOYER') {
-                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/settings/key-message';
+                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/home';
                         }
                         this.router.navigate([redirect]);
                         this.dataService.removeUserRegisterationId();
@@ -48,9 +48,30 @@ export class AuthEffects {
             }
                 , (error) => {
                     this.baThemeSpinner.hide();
-                    if (error.message) {
+                    if (error.statusCode && error.statusCode == 451) {
                         this.toastrService.clear();
-                        this.toastrService.error(error.message || 'Email or password does not match', 'Authentication');
+                        this.toastrService.error(error.message || 'Please complete your registration', 'Error');
+                        if (error.data && error.data.accessToken) {
+                            this.dataService.setUserRegisterationAccessToken(error.data.accessToken);
+                        }
+                        if (error.data && error.data.userId) {
+                            this.dataService.setUserRegisterationId(error.data.userId);
+                        }
+                        if (error.data && error.data.stepNumber) {
+                            this.dataService.setStepNumber(error.data.stepNumber);
+                            if (error.data.stepNumber == '1') {
+                                this.router.navigate(['address']);
+                            } else if (error.data.stepNumber == '2') {
+                                this.router.navigate(['document']);
+                            } else if (error.data.stepNumber == '3') {
+                                this.router.navigate(['verification']);
+                            } else if (error.data.stepNumber == '4') {
+                                this.router.navigate(['verification']);
+                            }
+                        }
+                    } else if (error.message) {
+                        this.toastrService.clear();
+                        this.toastrService.error(error.message || 'Something went wrong', 'Authentication');
                     }
                 }
             );
@@ -88,7 +109,28 @@ export class AuthEffects {
             }
                 , (error) => {
                     this.baThemeSpinner.hide();
-                    if (error.message) {
+                    if (error.statusCode && error.statusCode == 451) {
+                        this.toastrService.clear();
+                        this.toastrService.error(error.message || 'Please complete your registration', 'Error');
+                        if (error.data && error.data.accessToken) {
+                            this.dataService.setUserRegisterationAccessToken(error.data.accessToken);
+                        }
+                        if (error.data && error.data.userId) {
+                            this.dataService.setUserRegisterationId(error.data.userId);
+                        }
+                        if (error.data && error.data.stepNumber) {
+                            this.dataService.setStepNumber(error.data.stepNumber);
+                            if (error.data.stepNumber == '1') {
+                                this.router.navigate(['address']);
+                            } else if (error.data.stepNumber == '2') {
+                                this.router.navigate(['document']);
+                            } else if (error.data.stepNumber == '3') {
+                                this.router.navigate(['verification']);
+                            } else if (error.data.stepNumber == '4') {
+                                this.router.navigate(['verification']);
+                            }
+                        }
+                    } else if (error.message) {
                         this.toastrService.clear();
                         this.toastrService.error(error.message || 'User not found', 'Authentication');
                         this.router.navigate(['register']);
@@ -119,6 +161,9 @@ export class AuthEffects {
                 this.baThemeSpinner.hide();
                 if (result.statusCode === 200 || result.statusCode === 201) {
                     this.store.dispatch(new auth.AuthRegisterSuccessAction(result));
+                    if (result.data && result.data.accessToken) {
+                        this.dataService.setUserRegisterationAccessToken(result.data.accessToken);
+                    }
                     if (result.data._id) {
                         this.dataService.setUserRegisterationId(result.data._id);
                     }
