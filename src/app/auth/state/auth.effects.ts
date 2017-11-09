@@ -436,7 +436,7 @@ export class AuthEffects {
                         } else if (this.authService.user.userType === 'EMPLOYER') {
                             redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/home';
                         }
-                        // this.router.navigate([redirect]);
+                        this.router.navigate([redirect]);
                     }
                     this.dataService.removeUserRegisterationAccessToken();
                     this.toastrService.clear();

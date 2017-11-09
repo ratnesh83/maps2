@@ -71,7 +71,7 @@ export class VerificationEmail {
                     this.codeFour.reset();
                 }
                 if (res && res.confirmOtpSignup && res.confirmOtpSignup.statusCode && res.confirmOtpSignup.statusCode == 200) {
-                    this.openApprovalDialog();
+                    // this.openApprovalDialog();
                 }
             });
 
