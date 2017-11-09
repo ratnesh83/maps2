@@ -28,11 +28,13 @@ import 'style-loader!./change-password-dialog.scss';
                 </div>
                 <div class="forgot-block-inner">
                     <form [formGroup]="form">
-                        <div class="form-group" style="text-align: center">
-                            <input type="password" [formControl]="password" class="form-control" id="inputNewPassword" placeholder="Enter New Password">
+                        <div class="form-group" style="text-align: center; position: relative">
+                            <input (focus)="hidePassword()" type="{{passwordType}}" [formControl]="password" class="form-control" id="inputNewPassword" placeholder="Enter New Password">
+                            <i *ngIf="passwordType == 'password' && password.value" (click)="showPassword()" class="fa fa-eye show-hide-password"></i>
                         </div>
-                        <div class="form-group" style="text-align: center">
-                            <input type="password" [formControl]="repeatPassword" class="form-control" id="inputConfirmPassword" placeholder="Confirm New Password">
+                        <div class="form-group" style="text-align: center; position: relative">
+                            <input (focus)="hidePassword()" type="{{repeatPasswordType}}" [formControl]="repeatPassword" class="form-control" id="inputConfirmPassword" placeholder="Confirm New Password">
+                            <i *ngIf="repeatPasswordType == 'password' && repeatPassword.value" (click)="showRepeatPassword()" class="fa fa-eye show-hide-password"></i>
                         </div>
                         <div class="form-action-btn form-action-btns">
                             <div class="form-group row">
@@ -57,6 +59,8 @@ export class ChangePasswordDialog {
     passwords: FormGroup;
     password: AbstractControl;
     repeatPassword: AbstractControl;
+    passwordType;
+    repeatPasswordType;
 
     constructor(public dialog: MdDialog,
         private fb: FormBuilder,
@@ -80,10 +84,28 @@ export class ChangePasswordDialog {
         this.passwords = <FormGroup>this.form.controls['passwords'];
         this.password = this.passwords.controls['password'];
         this.repeatPassword = this.passwords.controls['repeatPassword'];
+        this.passwordType = 'password';
+        this.repeatPasswordType = 'password';
+    }
+
+    showPassword() {
+        this.passwordType = this.passwordType == 'password' ? 'text' : 'password';
+        this.repeatPasswordType = 'password';
+    }
+
+    showRepeatPassword() {
+        this.repeatPasswordType = this.repeatPasswordType == 'password' ? 'text' : 'password';
+        this.passwordType = 'password';
+    }
+
+    hidePassword() {
+        this.passwordType = 'password';
+        this.repeatPasswordType = 'password';
     }
 
     submit() {
-        if(!this.password.value) {
+        this.hidePassword();
+        if (!this.password.value) {
             this.toastrService.clear();
             this.toastrService.error('Password is required', 'Error');
             return;

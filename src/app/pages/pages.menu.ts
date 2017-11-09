@@ -138,12 +138,12 @@ export class PagesMenuService {
                         path: 'settings',
                         data: {
                             menu: {
-                                title: 'Settings',
+                                title: 'Profile',
                                 icon: 'icon-wrap fa fa-gear fa-spin',
                                 selected: false,
                                 expanded: false,
                                 order: 100,
-                                auth: ['admin']
+                                auth: ['USER']
                             }
                         },
                     },
