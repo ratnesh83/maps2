@@ -9,7 +9,7 @@ import * as setting from './state/setting.actions';
     template: `
             <div>
                 <ba-content-top></ba-content-top>
-                <all-settings></all-settings>
+                <user-profile></user-profile>
             </div>
             `
 })

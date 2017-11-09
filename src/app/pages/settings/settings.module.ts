@@ -21,13 +21,18 @@ import {
     MdDialogModule,
     MdSortModule,
     MdPaginatorModule,
-    MdNativeDateModule
+    MdNativeDateModule,
+    MdCheckboxModule,
 } from '@angular/material';
 
 import { AllSettings } from './components/all-settings/all-settings.component';
+import { EmployeeProfileEdit } from './components/employee-profile-edit/employee-profile-edit.component';
 
 import { Settings } from './settings.component';
 import { NgaModule } from '../../theme/nga.module';
+import { UserProfile } from './components/user-profile/user-profile.component';
+import { UserProfileEdit } from './components/user-profile-edit/user-profile-edit.component';
+import { AvailabilityCalendar } from "./components/availability-calendar/availability-calendar.component";
 
 @NgModule({
     imports: [
@@ -52,11 +57,16 @@ import { NgaModule } from '../../theme/nga.module';
         MdDialogModule,
         MdSortModule,
         MdPaginatorModule,
-        MdTooltipModule
+        MdTooltipModule,
+        MdCheckboxModule,
     ],
     declarations: [
         Settings,
         AllSettings,
+        EmployeeProfileEdit,
+        UserProfile,
+        UserProfileEdit,
+        AvailabilityCalendar
     ],
     entryComponents: [
     ],

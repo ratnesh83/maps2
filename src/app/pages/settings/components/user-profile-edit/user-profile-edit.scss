@@ -9,15 +9,11 @@
   padding-left: 0px;
   padding-right: 0px;
 }
-.btnFollow{
-  width: 180px;
-  height: 40px;
-  border-radius: 3px;
-  background-image: linear-gradient(to top, #f2f4f7, #ffffff);
-  border: solid 1px #ced0da;
+.page-header{
+  margin-bottom:24px 
 }
 .Rectangle-317-Copy-2{
-  margin-left:-40px; 
+  margin-left:-39px; 
 }
 .Employer-Profile {
   padding: 5px 15px 5px 25px;
@@ -77,41 +73,39 @@
 .section-heading{
 margin: 20px 0px 20px 0px;
 }
+.info{
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1.1px;
+  line-height: 20px;
+  text-align: left;
+  color: #1b1b1b;
+}
 .group-5{
   width: 40px;
   height: 40px;
   object-fit: contain;
 }
-.job-title{
-  font-size: 30px;
-  font-weight: 600;
-  letter-spacing: 1.1px;
+.btn-custom{
+  margin: 10px;
+  width: 200px;
+  border-radius: 3px;
+  background-color: #026eff;
+  font-weight: bold;
   text-align: center;
-  color: #474747;
-  line-height: 40px;
-  margin: 0px 10px 0px 10px;
+  color: #ffffff;
 }
-.job-item{
-  margin: 10px 0px 10px 0px;
-  border-radius: 2.5px;
-  border-left: solid 5px #f4ba48;
-  padding: 10px;
-  .content{
-    margin-left: 48px;
-    .rate{
-    font-size: 17px;
-    font-weight: bold;
-    letter-spacing: 0.9px;
-    text-align: left;
-    color: #026eff;
-    }
-    .location{
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 0.7px;
-    text-align: left;
-    color: #a7a7a7;
-    text-overflow: ellipsis;
-    }
-  }
+.editLable{
+  font-size: 14px !important;
+  line-height: 1.5;
+  text-align: left;
+  color: #999999 !important;
+}
+.example-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+}
+.margin-10{
+  margin: 10px;
 }

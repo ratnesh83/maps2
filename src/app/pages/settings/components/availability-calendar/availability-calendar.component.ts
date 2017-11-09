@@ -8,13 +8,13 @@ import { BaThemeSpinner } from '../../../../theme/services';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 
-import 'style-loader!./all-settings.scss';
+import 'style-loader!./availability-calendar.scss';
 
 @Component({
-    selector: 'all-settings',
-    templateUrl: './all-settings.html',
+    selector: 'availability-calendar',
+    templateUrl: './availability-calendar.html',
 })
-export class AllSettings {
+export class AvailabilityCalendar {
 
     @ViewChild('file') public _fileUpload: ElementRef;
     @ViewChildren('file') public _filesUpload: QueryList<HTMLInputElement>;
@@ -31,8 +31,6 @@ export class AllSettings {
     public fileUploadIndex;
     public imageUploadChildrenArray;
     public settingStore;
-    public jobItems;
-    public products;
     constructor(
         private store: Store<any>,
         private modalService: NgbModal,
@@ -46,15 +44,7 @@ export class AllSettings {
                 
             });
     };
-    bringFileSelector(): boolean {
-        this.renderer.invokeElementMethod(this._fileUpload.nativeElement, 'click');
-        return false;
-    }
-    bringFilesSelector(index): boolean {
-        this.renderer.invokeElementMethod(this.imageUploadChildrenArray[index].nativeElement, 'click');
-        return false;
-    }
-
+    
     scrollToBottom() {
         if (this._machineName) {
             setTimeout(() => {
@@ -82,71 +72,7 @@ export class AllSettings {
         }
     }
         
-    checkFileSize(size): boolean {
-        if (size > 5000000) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    checkFileType(type): boolean {
-        if (type.indexOf('image') != -1) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     ngOnInit() {
-        this.jobItems = [
-            {
-            title:'Labor required',
-            subTitle:'Construction: Concre',
-            imgPath:'assets/img/crane.svg',
-            rate:40,
-            location:'1245 West Broadway, Vancouver.',
-            },
-            {
-            title:'Labor required',
-            subTitle:'Construction: Concre',
-            imgPath:'assets/img/electrical.svg',
-            rate:40,
-            location:'1245 West Broadway, Vancouver.',
-            },
-            {
-            title:'Labor required',
-            subTitle:'Construction: Concre',
-            imgPath:'assets/img/heart.svg',
-            rate:40,
-            location:'1245 West Broadway, Vancouver.',
-            },
-            {
-            title:'Labor required',
-            subTitle:'Construction: Concre',
-            imgPath:'assets/img/teeth.svg',
-            rate:40,
-            location:'1245 West Broadway, Vancouver.',
-            }
-        ];
-        this.products = [
-            {
-                title: 'Donec facilisis',
-                subTitle: 'Last updated: Yesterday 3:41 AM ',
-                imgPath: 'assets/img/product_img_1.png'
-            },
-            {
-                title: 'Donec facilisis',
-                subTitle: 'Last updated: Yesterday 3:41 AM ',
-                imgPath: 'assets/img/product_img_2.png'
-            },
-            {
-                title: 'Donec facilisis',
-                subTitle: 'Last updated: Yesterday 3:41 AM ',
-                imgPath: 'assets/img/product_img_3.png'
-            }
-        ];
-        console.log(this.jobItems);
         
     }
 
@@ -156,16 +82,7 @@ export class AllSettings {
         } */
     }
     ngAfterViewInit() {
-        this.imageUploadChildrenArray = this._filesUpload.toArray();
-        this._filesUpload.changes.subscribe(childern => {
-            this.imageUploadChildrenArray = childern.toArray();
-        });
+        
     }
-    _keyPressCsvNumber(event: any) {
-        const pattern = /^[0-9,]*$/;
-        let inputChar = event.target.value + String.fromCharCode(event.charCode);
-        if (!pattern.test(inputChar)) {
-            event.preventDefault();
-        }
-    }
+    
 }

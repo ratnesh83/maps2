@@ -8,13 +8,13 @@ import { BaThemeSpinner } from '../../../../theme/services';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 
-import 'style-loader!./all-settings.scss';
+import 'style-loader!./user-profile.scss';
 
 @Component({
-    selector: 'all-settings',
-    templateUrl: './all-settings.html',
+    selector: 'user-profile',
+    templateUrl: './user-profile.html',
 })
-export class AllSettings {
+export class UserProfile {
 
     @ViewChild('file') public _fileUpload: ElementRef;
     @ViewChildren('file') public _filesUpload: QueryList<HTMLInputElement>;
