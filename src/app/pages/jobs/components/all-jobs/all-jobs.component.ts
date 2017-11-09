@@ -46,9 +46,11 @@ export class AllJobs implements OnInit {
     public countryCode: AbstractControl;
     public phoneNumber: AbstractControl;
     public openFormJob: boolean = false;
+    public searchLocation;
+    public positions = [];
     public updateLoading = false;
     public jobStore;
-    
+
     optionsModel: number[];
     myOptions: IMultiSelectOption[];
     myOptionsSelected;
@@ -112,7 +114,7 @@ export class AllJobs implements OnInit {
     };
 
     ngOnInit() {
-        
+
     }
 
     ngOnDestroy() {
@@ -202,6 +204,7 @@ export class AllJobs implements OnInit {
                 }
             }
         }
+        this.searchLocation = formattedAddress;
     }
 
     createJob(formValue) {

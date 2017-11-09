@@ -23,21 +23,22 @@
             <md-card-content>
                 <div class="form-group row">
                     <div class="col-12 col-sm-6">
-                        <input #inputStreetAddress type="text" class="form-control" placeholder="Category">
+                        <!-- <input #inputStreetAddress type="text" class="form-control" placeholder="Category"> -->
+                        <select #inputStreetAddress>
+                            <option>Construction</option>
+                            <option>Engineering</option>
+                        </select>
                     </div>
                     <div class="col-12 col-sm-6">
-                        <input #inputLocationAddress ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)"
-                            class="form-control" placeholder="City, State or Zip Code">
+                        <input #inputLocationAddress ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)" class="form-control"
+                            placeholder="City, State or Zip Code">
                     </div>
                 </div>
-                <p class="md-card-content-jobs-p">
-                    The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes
-                    very well with mountainous terrain, the Shiba Inu was originally bred for hunting.
-                </p>
-                <p class="md-card-content-jobs-p-date">
-                    12/12/2017
-                </p>
-                <ngui-map center="Brampton, Canada"></ngui-map>
+                <div>
+                    <ngui-map center="{{ searchLocation }}">
+                        
+                    </ngui-map>
+                </div>
             </md-card-content>
         </md-card>
     </div>
