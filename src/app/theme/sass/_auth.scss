@@ -13,6 +13,19 @@ $text-color: #ffffff;
     background: url("assets/img/bg2x.jpg") no-repeat top left; 
     background-size: 50vw 100%;
 }
+.page-input-block {
+    input, select {
+        height: 50px;
+        border-radius: 3px;
+        background-color: #ffffff;
+        border: 1px solid #f0f0f0;
+        font-size: 0.95rem;
+        font-weight: 500;
+    }
+    select {
+        height: 50px !important;
+    }
+}
 .auth-block {
     max-width: 70%;
     margin: 0 auto;

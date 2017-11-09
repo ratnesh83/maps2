@@ -1,93 +1,48 @@
 @import "../../../../theme/sass/conf/conf";
-.all {
-    width: 50px;
-    height: 50px!important;
-}
-.edit {
-    background-color: #209e91;
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-}
-.mat-paginator-pg {
-    background: none;
-}
-.rar-align {
-    text-align: right
-}
 .panel-default {
     .panel-heading {
         margin-bottom: 10px;
     }
 }
-.user-heading {
+.filter-div {
+    font-weight: 500;
+    color: #b1b1b1;
+}
+.user-jobs-heading {
     display: inline-flex;
-    h3 {
+    h2 {
         margin: auto 0px;
         width: auto;
     }
 }
-.create-form {
-    padding-left: 0px;
-    padding-right: 0px;
+.jobs-card-heading {
+    width: 100%;
 }
-.ngx-pagination {
-    margin-top: 20px;
-    padding: 0;
-    .current {
-        background-color: rgba(0, 0, 0, 0.1) !important;
-    }
-    .pagination-next a {
-        &:hover {
-            background: rgba(0, 0, 0, 0.1);
-            ;
-        }
-    }
-    li {
-        a:hover {
-            background: rgba(0, 0, 0, 0.1);
-            ;
-        }
-    }
+.jobs-section {
+    margin-top: 10px;
 }
-.mat-sort-header-container {
-    display: inline-flex !important;
-    align-items: center;
+.jobs-card {
+    margin-bottom: 10px;
 }
-.verticle-middle-align {
-    display: inline-flex;
-    vertical-align: middle;
+.jobs-card-header {
+    position: relative;
 }
-.td-left-align {
-    text-align: left !important;
+.jobs-header-rating {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    text-align: right;
 }
-.user-table-button-a {
-    margin: auto 15px !important;
-    button.btn-primary {
-        border-width: 1px !important;
-        border-color: black !important;
-        color: black !important;
-        background-color: transparent !important;
-        padding: 0.2rem 0.5rem !important;
-        font-size: small !important;
-        line-height: normal !important;
-        &:focus {
-            border-width: 1px !important;
-            background-color: transparent !important;
-            border-color: black !important;
-        }
-        &:hover {
-            border-width: 1px !important;
-            background-color: transparent !important;
-            border-color: black !important;
-            transform: scale(1.05) !important;
-        }
-    }
+.md-card-content-jobs-p {
+    text-align: left;
+    font-weight: 500;
+    color: #1b1b1b;
 }
-.tabs-content-create-form {
-    margin-top: 30px !important;
+.md-card-content-jobs-p-date {
+    text-align: left;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.54);
 }
-.create-form {
-    margin-top: 50px;
-    margin-bottom: 50px;
+.jobs-stars .star-icon {
+    font-size: unset !important;
 }
