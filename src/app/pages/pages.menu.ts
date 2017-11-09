@@ -143,7 +143,7 @@ export class PagesMenuService {
                                 selected: false,
                                 expanded: false,
                                 order: 100,
-                                auth: ['USER']
+                                auth: ['admin']
                             }
                         },
                     },
