@@ -12,8 +12,7 @@ export class AuthGuardCustomer implements CanActivate {
     }
 
     checkAdmin(url): boolean {
-        if (this.authService.user.role === 'customer') {
-            //console.log('Sucessfully checked customer ..... ');
+        if (this.authService.user.role === 'USER') {
             return true;
         }
 

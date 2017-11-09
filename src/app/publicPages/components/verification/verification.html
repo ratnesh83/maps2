@@ -1,9 +1,10 @@
 <div class="row auth-main">
     <div class="col-12 col-sm-6 col-md-6 col-lg-6 left-container">
         <span class="app-logo">
-            <a class="app-logo-link" routerLink="/login">
+            <!-- <a class="app-logo-link" routerLink="/login">
                 <img class="app-logo-image" src="assets/img/logo.png">
-            </a>
+            </a> -->
+            <img class="app-logo-image" src="assets/img/logo.png">
         </span>
     </div>
 
@@ -22,19 +23,19 @@
                 </h4>
             </div>
             <div class="verify-margin"></div>
-            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value, $event)" class="form-horizontal">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-horizontal">
 
                 <div class="form-group">
                     <div class="col-12 col-sm-12 verify-radio">
                         <md-radio-group class="verify-radio-button row" [formControl]="signUpType">
                             <div class="col-6 col-sm-6 radio-left">
                                 <div class="col-12 col-sm-12 radios">
-                                    <md-radio-button class="col-6 col-sm-6" color="primary" value="1">via SMS</md-radio-button>
+                                    <md-radio-button class="col-6 col-sm-6" color="primary" value="SMS">via SMS</md-radio-button>
                                 </div>
                             </div>
                             <div class="col-6 col-sm-6 radio-right">
                                 <div class="col-12 col-sm-12 radios">
-                                    <md-radio-button class="col-6 col-sm-6" color="primary" value="2">via email</md-radio-button>
+                                    <md-radio-button class="col-6 col-sm-6" color="primary" value="EMAIL">via email</md-radio-button>
                                 </div>
                             </div>
                         </md-radio-group>

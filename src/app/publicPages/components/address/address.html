@@ -1,12 +1,13 @@
 <div class="row auth-main">
     <div class="col-12 col-sm-6 col-md-6 col-lg-6 left-container">
         <span class="app-logo">
-            <a class="app-logo-link" routerLink="/login"><img class="app-logo-image" src="assets/img/logo.png"></a>
+            <!-- <a class="app-logo-link" routerLink="/login"><img class="app-logo-image" src="assets/img/logo.png"></a> -->
+            <img class="app-logo-image" src="assets/img/logo.png">
         </span>
     </div>
 
     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-        <div class="auth-block login-auth-block">
+        <div class="auth-block login-auth-block animated bounceInUp">
             <div class="top-label red">
                 <h1>
                     <strong>Address details required</strong>
@@ -15,37 +16,37 @@
                     Enter your address details to continue
                 </h4>
             </div>
-            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" class="form-horizontal">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-horizontal">
                
                 <div class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)" [formControl]="locationAddress" class="form-control" id="inputlocationAddress" placeholder="Street Address 1">
+                        <input #inputLocationAddress ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)" [ngClass]="{'has-input-error': (!locationAddress.valid && (locationAddress.touched || submitted))}" [formControl]="locationAddress" class="form-control" placeholder="Street Address 1*">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input type="text" [formControl]="streetAddress" class="form-control" id="inputName" placeholder="Street Address 2">
+                        <input #inputStreetAddress type="text" [ngClass]="{'has-input-error': (!streetAddress.valid && (streetAddress.touched || submitted))}" [formControl]="streetAddress" class="form-control" placeholder="Street Address 2">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input type="text" [formControl]="city" [ngClass]="{'has-input-error': (!city.valid && city.touched)}" class="form-control"
-                            id="inputCity" placeholder="City">
+                        <input #inputCity type="text" [formControl]="city" [ngClass]="{'has-input-error': (!city.valid && (city.touched || submitted))}" class="form-control"
+                            placeholder="City*">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input type="text" class="form-control" id="inputState" [formControl]="state" placeholder="State / Province">
+                        <input #inputState type="text" [ngClass]="{'has-input-error': (!state.valid && (state.touched || submitted))}" class="form-control" [formControl]="state" placeholder="State / Province*">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input type="text" class="form-control" id="inputZipCode" [formControl]="zipCode" placeholder="Postal / Zip Code">
+                        <input #inputZipCode type="text" [ngClass]="{'has-input-error': (!zipCode.valid && (zipCode.touched || submitted))}" class="form-control" [formControl]="zipCode" placeholder="Postal / Zip Code*">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input type="text" class="form-control" id="inputCountry" [formControl]="country" placeholder="Country">
+                        <input #inputCountry type="text" [ngClass]="{'has-input-error': (!country.valid && (country.touched || submitted))}" class="form-control" [formControl]="country" placeholder="Country*">
                     </div>
                 </div>
                 <div class="form-action-btn">

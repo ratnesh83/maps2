@@ -1,36 +1,55 @@
 @import "../../../../theme/sass/conf/conf";
-.messagePanel {
-    background-color: transparent;
-    min-height: 400px;
+.rar-align {
+    text-align: right
 }
-.pnl-footer {
-    margin-top: 30px;
+.panel-default {
+    .panel-heading {
+        margin-bottom: 10px;
+    }
 }
-.messagePanel .h4 {
-    margin: 13px 0px 14px 13px;
-    size: 30px;
+.avg-rating {
+    font-weight: 500;
+    padding-top: 5px;
+    color: #b1b1b1;
 }
-.messagePanel.form-control {
-    color: black;
+.user-feed-heading {
+    display: inline-flex;
+    h2 {
+        margin: auto 0px;
+        width: auto;
+    }
 }
-.language {
-    margin-top: 20px;
+.feedback-card-heading {
+    width: 100%;
 }
-.languageSelect {
+.feedback-card-header.feedback-card-heading {
+    top: -5px;
+}
+.feeds-section {
+    margin-top: 10px;
+}
+.feedback-card {
+    margin-bottom: 10px;
+}
+.feedback-card-header {
+    position: relative;
+}
+.feedback-header-rating {
     position: absolute;
-    width: 100px;
+    top: 0px;
+    right: 0px;
+    text-align: right;
 }
-// .panel-footer.btn-primary{
-.text {
-    color: black;
+.md-card-content-feedback-p {
+    text-align: left;
+    font-weight: 500;
+    color: #1b1b1b;
 }
-.add-a-key {
-    margin: 13px 0px 24px 0px;
-    text-align: center;
+.md-card-content-feedback-p-date {
+    text-align: left;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.54);
 }
-form-group label {
-    margin-bottom: 5px;
-    color: #ffffff;
-    font-weight: 400;
-    font-size: 17px;
+.feedback-stars .star-icon {
+    font-size: unset !important;
 }

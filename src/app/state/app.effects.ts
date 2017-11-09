@@ -31,7 +31,7 @@ export class AppEffects {
     @Effect({ dispatch: false })
     redirectDashboard: Observable<Action> = this.actions$
         .ofType(app.actionTypes.APP_REDIRECT_DASHBOARD)
-        .do(() => this.router.navigate(['/', 'dashboard']));
+        .do(() => this.router.navigate(['/', 'home']));
 
     @Effect({ dispatch: false })
     redirectLogin: Observable<Action> = this.actions$

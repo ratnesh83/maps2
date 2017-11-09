@@ -53,7 +53,8 @@ import {
 
 import {
     EmailValidator,
-    EqualPasswordsValidator
+    EqualPasswordsValidator,
+    NameValidator
 } from './validators';
 
 const NGA_COMPONENTS = [
@@ -96,7 +97,8 @@ const NGA_SERVICES = [
 
 const NGA_VALIDATORS = [
     EmailValidator,
-    EqualPasswordsValidator
+    EqualPasswordsValidator,
+    NameValidator
 ];
 
 @NgModule({

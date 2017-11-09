@@ -1,9 +1,10 @@
 <div class="row auth-main">
     <div class="col-12 col-sm-6 col-md-6 col-lg-6 left-container">
         <span class="app-logo">
-            <a class="app-logo-link" routerLink="/login">
+            <!-- <a class="app-logo-link" routerLink="/login">
                 <img class="app-logo-image" src="assets/img/logo.png">
-            </a>
+            </a> -->
+            <img class="app-logo-image" src="assets/img/logo.png">
         </span>
     </div>
 
@@ -22,22 +23,26 @@
                 </h4>
             </div>
             <div class="verify-cred-margin"></div>
-            <form [formGroup]="form" (ngSubmit)="onSubmit(form.value, $event)" class="form-horizontal">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-horizontal">
 
                 <div class="form-group row">
                     <div class="col-12 col-sm-12">
                         <div class="row">
                             <div class="col-3 col-sm-3">
-                                <input type="text" class="otp-input" [formControl]="codeOne" maxlength="1" #inputCodeOne (keypress)="_keyPressOtpNumber($event, 'inputCodeTwo')">
+                                <input type="text" [ngClass]="{'has-input-error': (!codeOne.valid && (codeOne.touched || submitted))}" class="otp-input"
+                                    [formControl]="codeOne" maxlength="1" #inputCodeOne (keypress)="_keyPressOtpNumber($event, 'inputCodeTwo')">
                             </div>
                             <div class="col-3 col-sm-3">
-                                <input type="text" class="otp-input" [formControl]="codeTwo" maxlength="1" #inputCodeTwo (keypress)="_keyPressOtpNumber($event, 'inputCodeThree')">
+                                <input type="text" [ngClass]="{'has-input-error': (!codeTwo.valid && (codeTwo.touched || submitted))}" class="otp-input"
+                                    [formControl]="codeTwo" maxlength="1" #inputCodeTwo (keypress)="_keyPressOtpNumber($event, 'inputCodeThree')">
                             </div>
                             <div class="col-3 col-sm-3">
-                                <input type="text" class="otp-input" [formControl]="codeThree" maxlength="1" #inputCodeThree (keypress)="_keyPressOtpNumber($event, 'inputCodeFour')">
+                                <input type="text" [ngClass]="{'has-input-error': (!codeThree.valid && (codeThree.touched || submitted))}" class="otp-input"
+                                    [formControl]="codeThree" maxlength="1" #inputCodeThree (keypress)="_keyPressOtpNumber($event, 'inputCodeFour')">
                             </div>
                             <div class="col-3 col-sm-3">
-                                <input type="text" class="otp-input" [formControl]="codeFour" maxlength="1" #inputCodeFour (keypress)="_keyPressOtpNumber($event, 'inputCodeOne')">
+                                <input type="text" [ngClass]="{'has-input-error': (!codeFour.valid && (codeFour.touched || submitted))}" class="otp-input"
+                                    [formControl]="codeFour" maxlength="1" #inputCodeFour (keypress)="_keyPressOtpNumber($event, 'inputCodeOne')">
                             </div>
                         </div>
                     </div>

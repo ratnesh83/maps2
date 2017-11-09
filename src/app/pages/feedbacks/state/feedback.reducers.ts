@@ -1,18 +1,22 @@
 import { Action, ActionReducer } from '@ngrx/store';
 
 const initialState: any = {
-
-    keys: null,
+    feedbacks: null,
     count: 0,
 };
-export const settings: ActionReducer<any> = (state = initialState, action: Action) => {
+
+export const feedback: ActionReducer<any> = (state = initialState, action: Action) => {
     switch (action.type) {
-
-        case 'SETTINGS_KEY_MESSAGE':
-            return Object.assign({}, state, { messageKey: action.payload });
-
-        case 'SETTINGS_KEY_MESSAGE_SUCCESS':
-            return Object.assign({}, state, { messageKeySuccess: action.payload });
+        case 'GET_FEEDBACKS':
+            return Object.assign({}, state, { error: null });
+        case 'GET_FEEDBACKS_SUCCESS':
+            return Object.assign({}, state, { feedbacks: action.payload, error: null });
+        case 'SEARCH_FEEDBACKS':
+            return Object.assign({}, state, { SearchSuccess: action.payload, error: null });
+        case 'SEARCH_FEEDBACKS_SUCCESS':
+            return Object.assign({}, state, action.payload, { error: null });
+        case 'FEEDBACK_ERROR':
+            return Object.assign({}, state, { error: action.payload });
         default:
             return state;
     }

@@ -10,12 +10,14 @@ import { Register } from './components/register/register.component';
 import { Address } from './components/address/address.component';
 import { Documents } from './components/document/document.component';
 import { Verification } from './components/verification/verification.component';
+import { Terms } from './components/terms/terms.component';
 import { VerificationEmail } from './components/verification-email/verification-email.component';
 import { VerificationMobile } from './components/verification-mobile/verification-mobile.component';
 import { ForgotPasswordDialog } from './components/forgot-password-dialog/forgot-password-dialog.component';
 import { ChangeMobileDialog } from './components/change-mobile-dialog/change-mobile-dialog.component';
 import { ChangeEmailDialog } from './components/change-email-dialog/change-email-dialog.component';
 import { ChangePasswordDialog } from './components/change-password-dialog/change-password-dialog.component';
+import { ApprovalDialog } from './components/approval-dialog/approval-dialog.component';
 import {
     MdInputModule,
     MdButtonModule,
@@ -54,18 +56,21 @@ import { FileUploadModule } from 'ng2-file-upload';
         Address,
         Documents,
         Verification,
+        Terms,
         VerificationEmail,
         VerificationMobile,
         ForgotPasswordDialog,
         ChangeMobileDialog,
         ChangeEmailDialog,
-        ChangePasswordDialog
+        ChangePasswordDialog,
+        ApprovalDialog
     ],
     entryComponents: [
         ForgotPasswordDialog,
         ChangeMobileDialog,
         ChangeEmailDialog,
-        ChangePasswordDialog
+        ChangePasswordDialog,
+        ApprovalDialog
     ]
 })
 export class PublicPageModule { }

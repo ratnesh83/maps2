@@ -20,6 +20,8 @@ import { MdIconRegistry } from '@angular/material';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { ForgotPasswordDialog } from '../forgot-password-dialog/forgot-password-dialog.component';
 import { ChangePasswordDialog } from '../change-password-dialog/change-password-dialog.component';
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
 import 'style-loader!./login.scss';
 
 declare const FB: any;
@@ -31,7 +33,10 @@ declare const FB: any;
 
 export class Login {
 
-    @ViewChild('checkoutForm') public _checkoutForm: ElementRef;
+    @ViewChild('inputCountryCode') public _countryCode: ElementRef;
+    @ViewChild('inputPhone') public _phone: ElementRef;
+    @ViewChild('inputEmail') public _email: ElementRef;
+    @ViewChild('inputPassword') public _password: ElementRef;
     public storeData;
     public form: FormGroup;
     public email: AbstractControl;
@@ -40,6 +45,8 @@ export class Login {
     public password: AbstractControl;
     public submitted: boolean = false;
     public countryCode: AbstractControl;
+    public user: Observable<firebase.User>;
+    public authStore;
     public countryCodes = [];
 
     public roles = [
@@ -55,9 +62,10 @@ export class Login {
         private toastrService: ToastrService,
         private iconRegistry: MdIconRegistry,
         private sanitizer: DomSanitizer,
-        public dialog: MdDialog,
-        public facebook: FacebookService,
-        public http: Http
+        private dialog: MdDialog,
+        private facebook: FacebookService,
+        private http: Http,
+        private afAuth: AngularFireAuth
     ) {
         this.storeData = this.store
             .select('auth')
@@ -100,15 +108,14 @@ export class Login {
         this.store.dispatch({
             type: auth.actionTypes.GET_COUNTRIES
         });
-
     }
 
     ngAfterViewInit() {
-        let passwordresetlink = window.location.href;
+        let passwordResetLink = window.location.href;
         let resetToken;
         let token = '?resetToken=';
-        if (passwordresetlink.indexOf(token) != -1) {
-            resetToken = passwordresetlink.substr(passwordresetlink.indexOf(token) + token.length, passwordresetlink.length);
+        if (passwordResetLink.indexOf(token) != -1) {
+            resetToken = passwordResetLink.substr(passwordResetLink.indexOf(token) + token.length, passwordResetLink.length);
             setTimeout(() => {
                 this.openChangePasswordTokenDialog(resetToken);
             });
@@ -147,29 +154,14 @@ export class Login {
     }
 
     loginTwitter() {
-        this.fetchTwitterToken();
-    }
-
-    fetchTwitterToken() {
-        let headers = new Headers();
-        let consumerKey = 'actualkeyvalue';
-        let consumerSecret = 'actualsecretvalue';
-        headers.append('Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8');
-        headers.append('Authorization', 'Basic ' +
-            btoa(consumerKey) + ':' + btoa(consumerSecret));
-
-        let options = new RequestOptions({ headers: headers });
-        let params = JSON.stringify({
-            'consumerKey': '4Lk7JVYWHCU2gweHfjjNIAUNP',
-            'consumerSecret': 'uhI1UjCHrrnCu5zu8XKM9Gf09VJv3C1eMImIhxJBDLeFTBVqCr',
-            'grant_type': 'client_credentials'
+        localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
+        this.authStore = this.afAuth.authState.subscribe((user: firebase.User) => {
+            if (user && user.providerData && user.providerData[0] && user.providerData[0].uid) {
+                this.onTwitterSubmit(user.providerData[0].uid);
+            } else {
+                this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider());
+            }
         });
-
-        return this.http.post('https://api.twitter.com/oauth/authorize', params, options)
-            .subscribe(token => {
-                console.log(token);
-            });
-
     }
 
     countryCodeClick() {
@@ -187,6 +179,18 @@ export class Login {
                     .map(val => val ? this.filterOptions(val) : this.countryCodes.slice());
             }, 1);
         }
+    }
+
+    getCountryFlag(country) {
+        for (let i = 0; i < this.countryCodes.length; i++) {
+            if (country == this.countryCodes[i].phone_code) {
+                return this.countryCodes[i].country_code;
+            }
+        }
+        if (this.countryCode.value) {
+            return 'default';
+        }
+        return 'us';
     }
 
     openForgotPasswordDialog() {
@@ -212,50 +216,80 @@ export class Login {
             option.phone_code.toString().indexOf(val.replace('+', '')) === 0);
     }
 
-    onFacebookSubmit(value) {
+    onTwitterSubmit(uid) {
         let timezoneOffset = (new Date()).getTimezoneOffset();
-        if (this.form.valid) {
-            let data = {
-                socialId: value.id,
-                socialMode: 'FACEBOOK',
-                deviceType: 'WEB_BROWSER',
-                timezoneOffset: timezoneOffset
-            };
-            this.store.dispatch({
-                type: auth.actionTypes.AUTH_SOCIAL_LOGIN,
-                payload: data
-            });
+        let data = {
+            socialId: uid,
+            socialMode: 'TWITTER',
+            deviceType: 'WEB_BROWSER',
+            timezoneOffset: timezoneOffset
+        };
+        this.store.dispatch({
+            type: auth.actionTypes.AUTH_SOCIAL_LOGIN,
+            payload: data
+        });
+        localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
+        if (this.authStore) {
+            this.authStore.unsubscribe();
         }
     }
 
+    onFacebookSubmit(value) {
+        let timezoneOffset = (new Date()).getTimezoneOffset();
+        let data = {
+            socialId: value.id,
+            socialMode: 'FACEBOOK',
+            deviceType: 'WEB_BROWSER',
+            timezoneOffset: timezoneOffset
+        };
+        this.store.dispatch({
+            type: auth.actionTypes.AUTH_SOCIAL_LOGIN,
+            payload: data
+        });
+    }
+
     onSubmit() {
+        this.submitted = true;
         let timezoneOffset = (new Date()).getTimezoneOffset();
         if (!this.phone.value && !this.email.value) {
             if (this.phone.errors.required) {
                 this.toastrService.clear();
                 this.toastrService.error('Phone number or email is required', 'Error');
             }
+            return;
         } else if ((this.countryCode.value || this.phone.value) && !this.email.value && this.phone.hasError && this.phone.errors) {
             if (this.phone.errors.required) {
                 this.toastrService.clear();
                 this.toastrService.error('Phone number is required', 'Error');
             }
+            if (this._phone) {
+                this._phone.nativeElement.focus();
+            }
+            return;
         } else if (this.email.value && !this.phone.value && this.email.hasError && this.email.errors) {
             if (this.email.errors.required) {
                 this.toastrService.clear();
                 this.toastrService.error('Email is required', 'Error');
-            } else if (this.email.errors.invalid) {
+            } else if (this.email.errors.invalidEmail) {
                 this.toastrService.clear();
                 this.toastrService.error('Email is invalid', 'Error');
             }
+            if (this._email) {
+                this._email.nativeElement.focus();
+            }
+            return;
         } else if (this.password.hasError && this.password.errors) {
             if (this.password.errors.required) {
                 this.toastrService.clear();
                 this.toastrService.error('Password is required', 'Error');
-            } else if (this.password.errors.invalid) {
+            } else if (this.password.errors.invalidPassword) {
                 this.toastrService.clear();
                 this.toastrService.error('Password is invalid', 'Error');
             }
+            if (this._password) {
+                this._password.nativeElement.focus();
+            }
+            return;
         } else {
             let data = {
                 emailOrPhone: this.email.value,

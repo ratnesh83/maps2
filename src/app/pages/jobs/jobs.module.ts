@@ -4,35 +4,23 @@ import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgPipesModule } from 'ngx-pipes';
 import { SelectModule } from 'ng2-select';
-
 import { NgaModule } from '../../theme/nga.module';
-
 import {
     FormsModule,
     ReactiveFormsModule
 } from '@angular/forms';
-
 import {
-    MdTabsModule,
-    MdInputModule,
     MdButtonModule,
     MdAutocompleteModule,
-    MdDatepickerModule,
-    MdSelectModule,
     MdCardModule,
-    MdChipsModule,
-    MdIconModule,
-    MdTooltipModule,
-    MdDialogModule,
-    MdSortModule,
-    MdPaginatorModule,
-    MdNativeDateModule
+    MdDialogModule
 } from '@angular/material';
-
 import { routing } from './jobs.routing';
 import { Jobs } from './jobs.component';
 import { AllJobs } from './components/all-jobs/all-jobs.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { GooglePlaceModule } from 'ng2-google-place-autocomplete';
+import { NguiMapModule } from '@ngui/map';
 
 @NgModule({
     imports: [
@@ -45,21 +33,15 @@ import { NgxPaginationModule } from 'ngx-pagination';
         NgbModalModule,
         NgPipesModule,
         MultiselectDropdownModule,
-        MdTabsModule,
-        MdInputModule,
         MdButtonModule,
         MdAutocompleteModule,
-        MdDatepickerModule,
-        MdSelectModule,
-        MdTooltipModule,
         MdCardModule,
-        MdChipsModule,
-        MdIconModule,
         MdDialogModule,
-        MdSortModule,
-        MdPaginatorModule,
-        MdNativeDateModule,
-        SelectModule
+        SelectModule,
+        GooglePlaceModule,
+        NguiMapModule.forRoot({ 
+            apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyDvIVQbdP34EXfGi0pDfHWetfGqIchpbSQ' 
+        }),
     ],
     declarations: [
         Jobs,
@@ -67,7 +49,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ],
     entryComponents: [
     ],
-
 })
 
 export class JobsModule { }

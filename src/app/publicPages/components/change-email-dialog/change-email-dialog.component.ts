@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
 import { MdDialog } from '@angular/material';
+import { Store } from '@ngrx/store';
+import { DataService } from '../../../services/data-service/data.service';
+import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { EmailValidator } from '../../../theme/validators';
+import { ToastrService, ToastrConfig } from 'ngx-toastr';
+import * as auth from '../../../auth/state/auth.actions';
 import 'style-loader!./change-email-dialog.scss';
 
 @Component({
@@ -24,12 +30,14 @@ import 'style-loader!./change-email-dialog.scss';
                 </div>
                 <div class="forgot-block-inner">
                     <div style="text-align: center">
-                        <input type="text" class="form-control" id="inputUser" placeholder="Email">
+                        <form [formGroup]="form">
+                            <input type="text" [formControl]="email" class="form-control" id="inputEmail" placeholder="Email">
+                        </form>
                     </div>
                     <div class="form-action-btn form-action-btns">
                         <div class="form-group row">
                             <div class="col-12 col-sm-12">
-                                <button md-raised-button type="button" color="primary" class="btn btn-warning btn-block btn-login">RESET PASSWORD</button>
+                                <button md-raised-button type="button" (click)="submit()" color="primary" class="btn btn-warning btn-block btn-login">SEND OTP</button>
                             </div>
                         </div>
                     </div>
@@ -40,9 +48,52 @@ import 'style-loader!./change-email-dialog.scss';
 })
 
 export class ChangeEmailDialog {
-    data;
-    constructor(public dialog: MdDialog) {
 
+    public data;
+    public userId;
+    public form: FormGroup;
+    public email: AbstractControl;
+
+    constructor(private fb: FormBuilder,
+        private store: Store<any>,
+        private dialog: MdDialog,
+        private toastrService: ToastrService,
+        private dataService: DataService) {
+        this.form = fb.group({
+            'email': ['', Validators.compose([Validators.required, EmailValidator.email])]
+        });
+        this.email = this.form.controls['email'];
+    }
+
+    ngOnInit() {
+        if (this.dataService.getUserRegisterationId()) {
+            this.userId = this.dataService.getUserRegisterationId();
+        }
+    }
+
+    submit() {
+        if (this.dataService.getUserRegisterationId()) {
+            this.userId = this.dataService.getUserRegisterationId();
+        }
+        if (!this.email.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Email is required', 'Error');
+            return;
+        }
+        if (this.email.errors && this.email.errors.invalidEmail) {
+            this.toastrService.clear();
+            this.toastrService.error('Please enter a valid email', 'Error');
+            return;
+        }
+        let data = {
+            userId: this.userId,
+            verificationType: 'EMAIL',
+            email: this.email.value
+        };
+        this.store.dispatch({
+            type: auth.actionTypes.AUTH_CHANGE_EMAIL,
+            payload: data
+        });
     }
 }
 

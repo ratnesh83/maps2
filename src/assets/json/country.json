@@ -186,12 +186,6 @@
         "phone_code": 359
     },
     {
-        "country_code": "MP",
-        "country_en": "Northern Mariana Islands",
-        "country_cn": "北马里亚纳群岛",
-        "phone_code": 1670
-    },
-    {
         "country_code": "BJ",
         "country_en": "Benin",
         "country_cn": "贝宁",
@@ -354,18 +348,6 @@
         "phone_code": 689
     },
     {
-        "country_code": "GF",
-        "country_en": "French Guiana",
-        "country_cn": "法属圭亚那",
-        "phone_code": 594
-    },
-    {
-        "country_code": "PM",
-        "country_en": "Saint Pierre and Miquelon",
-        "country_cn": "法属圣皮埃尔和密克隆岛",
-        "phone_code": 508
-    },
-    {
         "country_code": "VA",
         "country_en": "Vatican City",
         "country_cn": "梵蒂冈城",
@@ -394,12 +376,6 @@
         "country_en": "Cape Verde",
         "country_cn": "佛得角",
         "phone_code": 238
-    },
-    {
-        "country_code": "FK",
-        "country_en": "Falkland Islands",
-        "country_cn": "福克兰群岛",
-        "phone_code": 500
     },
     {
         "country_code": "GM",
@@ -504,12 +480,6 @@
         "phone_code": 31
     },
     {
-        "country_code": "BQ",
-        "country_en": "Bonaire, Sint Eustatius and Saba",
-        "country_cn": "荷兰加勒比区",
-        "phone_code": 599
-    },
-    {
         "country_code": "ME",
         "country_en": "Montenegro",
         "country_cn": "黑山共和国",
@@ -612,12 +582,6 @@
         "phone_code": 269
     },
     {
-        "country_code": "XK",
-        "country_en": "Kosovo",
-        "country_cn": "科索沃",
-        "phone_code": 381
-    },
-    {
         "country_code": "CI",
         "country_en": "Côte d'Ivoire",
         "country_cn": "科特迪瓦",
@@ -646,12 +610,6 @@
         "country_en": "Cook Islands",
         "country_cn": "库克群岛",
         "phone_code": 682
-    },
-    {
-        "country_code": "CW",
-        "country_en": "Curaçao",
-        "country_cn": "库拉索",
-        "phone_code": 599
     },
     {
         "country_code": "LV",
@@ -774,22 +732,10 @@
         "phone_code": 389
     },
     {
-        "country_code": "MH",
-        "country_en": "Marshall Islands",
-        "country_cn": "马绍尔群岛",
-        "phone_code": 692
-    },
-    {
         "country_code": "MQ",
         "country_en": "Martinique",
         "country_cn": "马提尼克",
         "phone_code": 596
-    },
-    {
-        "country_code": "YT",
-        "country_en": "Mayotte",
-        "country_cn": "马约特",
-        "phone_code": 262
     },
     {
         "country_code": "MU",
@@ -900,12 +846,6 @@
         "phone_code": 27
     },
     {
-        "country_code": "SS",
-        "country_en": "South Sudan",
-        "country_cn": "南苏丹",
-        "phone_code": 211
-    },
-    {
         "country_code": "NR",
         "country_en": "Nauru",
         "country_cn": "瑙鲁",
@@ -936,22 +876,10 @@
         "phone_code": 234
     },
     {
-        "country_code": "NU",
-        "country_en": "Niue",
-        "country_cn": "纽埃",
-        "phone_code": 683
-    },
-    {
         "country_code": "NO",
         "country_en": "Norway",
         "country_cn": "挪威",
         "phone_code": 47
-    },
-    {
-        "country_code": "NF",
-        "country_en": "Norfolk Island",
-        "country_cn": "诺福克群岛",
-        "phone_code": 672
     },
     {
         "country_code": "PT",
@@ -1026,22 +954,10 @@
         "phone_code": 966
     },
     {
-        "country_code": "BL",
-        "country_en": "Saint Barthélemy",
-        "country_cn": "圣巴泰勒米",
-        "phone_code": 590
-    },
-    {
         "country_code": "ST",
         "country_en": "Sao Tome and Principe",
         "country_cn": "圣多美和普林西比民主共和国",
         "phone_code": 239
-    },
-    {
-        "country_code": "SH",
-        "country_en": "Saint Helena",
-        "country_cn": "圣赫勒拿",
-        "phone_code": 290
     },
     {
         "country_code": "KN",
@@ -1056,16 +972,10 @@
         "phone_code": 1758
     },
     {
-        "country_code": "MF",
-        "country_en": "Saint Martin",
-        "country_cn": "法属圣马丁",
-        "phone_code": 590
-    },
-    {
-        "country_code": "SX",
-        "country_en": "Sint Maarten",
-        "country_cn": "荷属圣马丁",
-        "phone_code": 599
+        "country_code": "MH",
+        "country_en": "Marshall Islands",
+        "country_cn": "马绍尔群岛",
+        "phone_code": 692
     },
     {
         "country_code": "SM",
@@ -1192,18 +1102,6 @@
         "country_en": "Turkmenistan",
         "country_cn": "土库曼斯坦",
         "phone_code": 993
-    },
-    {
-        "country_code": "TK",
-        "country_en": "Tokelau",
-        "country_cn": "托克劳",
-        "phone_code": 690
-    },
-    {
-        "country_code": "WF",
-        "country_en": "Wallis and Futuna",
-        "country_cn": "瓦利斯和富图纳",
-        "phone_code": 681
     },
     {
         "country_code": "VU",
@@ -1372,12 +1270,6 @@
         "country_en": "British Virgin Islands",
         "country_cn": "英属维京群岛",
         "phone_code": 1284
-    },
-    {
-        "country_code": "IO",
-        "country_en": "British Indian Ocean Territory",
-        "country_cn": "英属印度洋领地",
-        "phone_code": 246
     },
     {
         "country_code": "JO",

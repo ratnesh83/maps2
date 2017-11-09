@@ -15,7 +15,6 @@ import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from '../theme
 @Component({
     selector: 'pages',
     template: `
-    
     <ba-page-top></ba-page-top>
     <div class="al-main">
       <div class="container al-content">

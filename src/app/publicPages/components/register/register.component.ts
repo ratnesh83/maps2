@@ -1,14 +1,17 @@
-import { Component, ChangeDetectorRef } from '@angular/core';
+import { Component, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as auth from '../../../auth/state/auth.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { EmailValidator, EqualPasswordsValidator } from '../../../theme/validators';
+import { EmailValidator, EqualPasswordsValidator, NameValidator } from '../../../theme/validators';
 import { FacebookService, LoginResponse, InitParams } from 'ngx-facebook';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MdIconRegistry } from '@angular/material';
 import { DataService } from '../../../services/data-service/data.service';
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
+import { environment } from '../../../environment/environment';
 
 import 'style-loader!./register.scss';
 
@@ -20,6 +23,13 @@ declare const FB: any;
 })
 export class Register {
 
+    @ViewChild('inputName') public _name: ElementRef;
+    @ViewChild('inputCountryCode') public _countryCode: ElementRef;
+    @ViewChild('inputPhone') public _phone: ElementRef;
+    @ViewChild('inputEmail') public _email: ElementRef;
+    @ViewChild('inputPassword') public _password: ElementRef;
+    @ViewChild('inputConfirmPassword') public _confirmPassword: ElementRef;
+    @ViewChild('inputCompanyName') public _companyName: ElementRef;
     public storeData;
     public form: FormGroup;
     public name: AbstractControl;
@@ -48,6 +58,7 @@ export class Register {
         private sanitizer: DomSanitizer,
         private cdRef: ChangeDetectorRef,
         private facebook: FacebookService,
+        private afAuth: AngularFireAuth,
         private dataService: DataService) {
 
         this.storeData = this.store
@@ -66,19 +77,19 @@ export class Register {
             sanitizer.bypassSecurityTrustResourceUrl('assets/img/twitter.svg'));
 
         this.form = fb.group({
-            'name': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
-            'companyName': [''],
+            'name': ['', Validators.compose([Validators.required])],
+            'companyName': ['', Validators.compose([Validators.required])],
             'email': ['', Validators.compose([Validators.required, EmailValidator.email])],
-            'countryCode': [''],
-            'phone': [''],
+            'countryCode': ['', Validators.compose([Validators.required])],
+            'phone': ['', Validators.compose([Validators.required])],
             'signUpType': ['USER'],
             'agreement': [false],
             'socialId': [''],
             'description': [''],
             'expertiseDescription': [''],
             'passwords': fb.group({
-                'password': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
-                'repeatPassword': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
+                'password': ['', Validators.compose([Validators.required, NameValidator.password])],
+                'repeatPassword': ['', Validators.compose([Validators.required])]
             }, { validator: EqualPasswordsValidator.validate('password', 'repeatPassword') })
         });
 
@@ -108,7 +119,6 @@ export class Register {
         if (link.indexOf(token) != -1) {
             baseLink = link.substr(0, link.indexOf(token) + 1);
             this.termsLink = baseLink + 'terms';
-            console.log(this.termsLink);
         }
         this.socialMode = null;
     }
@@ -141,6 +151,18 @@ export class Register {
     filterOptions(val) {
         return this.countryCodes.filter(option =>
             option.phone_code.toString().indexOf(val.replace('+', '')) === 0);
+    }
+
+    getCountryFlag(country) {
+        for (let i = 0; i < this.countryCodes.length; i++) {
+            if (country == this.countryCodes[i].phone_code) {
+                return this.countryCodes[i].country_code;
+            }
+        }
+        if (this.countryCode.value) {
+            return 'default';
+        }
+        return 'us';
     }
 
     changeSignUpType(type) {
@@ -193,47 +215,123 @@ export class Register {
     }
 
     loginTwitter() {
-
+        this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider())
+            .then((response) => {
+                if (response.user && response.user.uid && response.user.providerData && response.user.providerData[0] && response.user.providerData[0].uid) {
+                    this.socialId.setValue(response.user.providerData[0].uid);
+                    if (response.user && response.user.displayName) {
+                        this.name.setValue(response.user.displayName);
+                    }
+                    if (response.user && response.user.email) {
+                        this.email.setValue(response.user.email);
+                    }
+                    this.socialMode = 'TWITTER';
+                }
+                this.cdRef.detectChanges();
+            })
+            .catch((error: any) => {
+                // console.log(error);
+            });
     }
 
-    onSubmit(values) {
+    onSubmit() {
 
+        this.submitted = true;
         let timezoneOffset = (new Date()).getTimezoneOffset();
+
+        if (this.signUpType.value == 'EMPLOYER' && !this.companyName.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Company name is required', 'Error');
+            if (this._companyName) {
+                this._companyName.nativeElement.focus();
+            }
+            return;
+        }
         if (!this.name.value) {
             this.toastrService.clear();
             this.toastrService.error('Name is required', 'Error');
+            if (this._name) {
+                this._name.nativeElement.focus();
+            }
             return;
         }
+        /* if (this.name.errors) {
+            if (this.name.errors.invalidName) {
+                this.toastrService.clear();
+                this.toastrService.error(environment.ERROR.NAME_INVALID, 'Error');
+                if (this._name) {
+                    this._name.nativeElement.focus();
+                }
+                return;
+            }
+        } */
         if (!this.countryCode.value) {
             this.toastrService.clear();
             this.toastrService.error('Country code is required', 'Error');
+            if (this._countryCode) {
+                this._countryCode.nativeElement.focus();
+            }
             return;
         }
         if (!this.phone.value) {
             this.toastrService.clear();
             this.toastrService.error('Phone number is required', 'Error');
+            if (this._phone) {
+                this._phone.nativeElement.focus();
+            }
+            return;
+        }
+        if (this.phone.value && this.phone.value.length < 6) {
+            this.toastrService.clear();
+            this.toastrService.error('Phone number length must be atleast 6 digits', 'Error');
+            if (this._phone) {
+                this._phone.nativeElement.focus();
+            }
             return;
         }
         if (!this.email.value) {
             this.toastrService.clear();
             this.toastrService.error('Email is required', 'Error');
+            if (this._email) {
+                this._email.nativeElement.focus();
+            }
             return;
         }
         if (this.email.errors && this.email.errors.invalidEmail) {
             this.toastrService.clear();
             this.toastrService.error('Please enter a valid email', 'Error');
+            if (this._email) {
+                this._email.nativeElement.focus();
+            }
             return;
         }
-        if (!this.password.value) {
+        if (!this.socialId.value && !this.password.value) {
             this.toastrService.clear();
             this.toastrService.error('Password is required', 'Error');
+            if (this._password) {
+                this._password.nativeElement.focus();
+            }
             return;
         }
-        if (this.passwords.errors && this.passwords.errors.passwordsEqual && !this.passwords.errors.passwordsEqual.valid) {
+        if (!this.socialId.value && this.password.errors) {
+            if (this.password.errors.invalidPassword) {
+                this.toastrService.clear();
+                this.toastrService.error(environment.ERROR.PASSWORD_INVALID, 'Error');
+                if (this._password) {
+                    this._password.nativeElement.focus();
+                }
+                return;
+            }
+        }
+        if (!this.socialId.value && this.passwords.errors && this.passwords.errors.passwordsEqual && !this.passwords.errors.passwordsEqual.valid) {
             this.toastrService.clear();
             this.toastrService.error('Passwords do not match', 'Error');
+            if (this._confirmPassword) {
+                this._confirmPassword.nativeElement.focus();
+            }
             return;
         }
+
         let data = {
             userType: this.signUpType.value,
             email: this.email.value,
@@ -263,7 +361,13 @@ export class Register {
             }
         }
 
-        console.log(data);
+        if (this.description.value == null || this.description.value == '' || this.description.value == undefined) {
+            delete data.description;
+        }
+
+        if (this.password.value == null || this.password.value == '' || this.password.value == undefined) {
+            delete data.password;
+        }
 
         this.store.dispatch({
             type: auth.actionTypes.AUTH_REGISTER,

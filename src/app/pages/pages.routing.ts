@@ -14,7 +14,7 @@ export const routes: Routes = [
         component: Pages,
         canActivate: [AuthGuard],
         children: [
-            { path: 'dashboard', loadChildren: 'app/pages/dashboard/dashboard.module#DashboardModule' },
+            { path: 'home', loadChildren: 'app/pages/home/home.module#HomeModule' },
             { path: 'users', loadChildren: 'app/pages/users/users.module#UsersModule' },
             { path: 'payments', loadChildren: 'app/pages/payments/payments.module#PaymentsModule', canActivate: [AuthGuardAdmin] },
             { path: 'settings', loadChildren: 'app/pages/settings/settings.module#SettingsModule' },

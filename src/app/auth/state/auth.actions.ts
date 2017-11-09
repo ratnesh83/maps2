@@ -21,6 +21,18 @@ export const actionTypes = {
     AUTH_REGISTER_ADDRESS_SUCCESS: 'AUTH_REGISTER_ADDRESS_SUCCESS',
     AUTH_REGISTER_DOCUMENTS: 'AUTH_REGISTER_DOCUMENTS',
     AUTH_REGISTER_DOCUMENTS_SUCCESS: 'AUTH_REGISTER_DOCUMENTS_SUCCESS',
+    AUTH_SEND_VERIFICATION_TYPE: 'AUTH_SEND_VERIFICATION_TYPE',
+    AUTH_SEND_VERIFICATION_TYPE_SUCCESS: 'AUTH_SEND_VERIFICATION_TYPE_SUCCESS',
+    AUTH_RESEND_OTP: 'AUTH_RESEND_OTP',
+    AUTH_RESEND_OTP_SUCCESS: 'AUTH_RESEND_OTP_SUCCESS',
+    AUTH_CHANGE_PHONE: 'AUTH_CHANGE_PHONE',
+    AUTH_CHANGE_PHONE_SUCCESS: 'AUTH_CHANGE_PHONE_SUCCESS',
+    AUTH_CHANGE_EMAIL: 'AUTH_CHANGE_EMAIL',
+    AUTH_CHANGE_EMAIL_SUCCESS: 'AUTH_CHANGE_EMAIL_SUCCESS',
+    AUTH_GET_USER_DETAILS: 'AUTH_GET_USER_DETAILS',
+    AUTH_GET_USER_DETAILS_SUCCESS: 'AUTH_GET_USER_DETAILS_SUCCESS',
+    AUTH_CONFIRM_OTP_SIGNUP: 'AUTH_CONFIRM_OTP_SIGNUP',
+    AUTH_CONFIRM_OTP_SIGNUP_SUCCESS: 'AUTH_CONFIRM_OTP_SIGNUP_SUCCESS',
     AUTH_FORGOT_PASSWORD: 'AUTH_FORGOT_PASSWORD',
     AUTH_FORGOT_PASSWORD_SUCCESS: 'AUTH_FORGOT_PASSWORD_SUCCESS',
     AUTH_FORGOT_PASSWORD_OTP: 'AUTH_FORGOT_PASSWORD_OTP',
@@ -67,7 +79,7 @@ export class AuthLogoutSuccessAction implements Action {
     type = actionTypes.AUTH_LOGOUT_SUCCESS;
     constructor(public payload: any = {}) { }
 }
-/* PASS_REQUEST */
+
 export class AuthPassRequestAction implements Action {
     type = actionTypes.AUTH_PASS_REQUEST;
     constructor(public payload: any) { }
@@ -80,7 +92,7 @@ export class AuthPassRequestSuccessAction implements Action {
     type = actionTypes.AUTH_PASS_REQUEST_SUCCESS;
     constructor(public payload: any) { }
 }
-/*PASS_VERIFY*/
+
 export class AuthPassVerifyAction implements Action {
     type = actionTypes.AUTH_PASS_VERIFY;
     constructor(public payload: any) { }
@@ -93,7 +105,7 @@ export class AuthPassVerifySuccessAction implements Action {
     type = actionTypes.AUTH_PASS_VERIFY_SUCCESS;
     constructor(public payload: any) { }
 }
-/*REGISTER*/
+
 export class AuthRegisterAction implements Action {
     type = actionTypes.AUTH_REGISTER;
     constructor(public payload: any) { }

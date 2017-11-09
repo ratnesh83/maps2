@@ -193,22 +193,27 @@ a.collapse-menu-link {
 }
 
 @media (max-width: $resXXS) {
-  .user-profile{
-    min-width: 126px;
-  }
-  a.refresh-data {
-    margin-right: 10px;
-  }
-  a.collapse-menu-link {
-    margin-left: 10px;
-  }
-  a.al-logo {
-    margin-left: 0px;
-  }
+    .container-page-top {
+        .container {
+            padding: 0px;
+        }
+    }
+    .user-profile{
+        min-width: 126px;
+    }
+    a.refresh-data {
+        margin-right: 10px;
+    }
+    a.collapse-menu-link {
+        margin-left: 10px;
+    }
+    a.al-logo {
+        margin-left: 0px;
+    }
 
-  .al-skin-dropdown {
-    display: none;
-  }
+    .al-skin-dropdown {
+        display: none;
+    }
 }
 
 .profile-toggle-link{

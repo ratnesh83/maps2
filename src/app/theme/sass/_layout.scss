@@ -50,7 +50,7 @@ a {
     color: #444444;
 }
 .al-main {
-    padding: 66px 0 66px 0;
+    padding: 66px 0 15px 0;
     min-height: 500px;
     position: relative;
     transition: margin-left 0.5s ease;
@@ -124,7 +124,8 @@ a {
     padding: 0px;
     > :nth-child(2)   {
         > div {
-            padding-left: 235px;
+            padding-left: 195px;
+            padding-right: 195px;
         }
     }
 }
@@ -134,6 +135,7 @@ a {
         > :nth-child(2)   {
             > div {
                 padding-left: 15px;
+                padding-right: 15px;
             }
         }
     }

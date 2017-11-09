@@ -7,6 +7,7 @@ import {
     FormControl
 } from '@angular/forms';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
+import { DataService } from '../../../services/data-service/data.service';
 import { MdDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { BaThemeSpinner } from '../../../theme/services';
@@ -15,6 +16,7 @@ import * as auth from '../../../auth/state/auth.actions';
 import { EmailValidator } from '../../../theme/validators';
 import { User } from '../../../auth/model/user.model';
 import { ChangeMobileDialog } from '../change-mobile-dialog/change-mobile-dialog.component';
+import { ApprovalDialog } from '../approval-dialog/approval-dialog.component';
 import 'style-loader!./verification-mobile.scss';
 
 @Component({
@@ -36,6 +38,7 @@ export class VerificationMobile {
     public codeThree: AbstractControl;
     public codeFour: AbstractControl;
     public submitted: boolean = false;
+    public userId;
     public selectedPhone;
     public selectedCountryCode;
 
@@ -51,31 +54,48 @@ export class VerificationMobile {
         private store: Store<any>,
         private toastrService: ToastrService,
         private renderer: Renderer,
-        public dialog: MdDialog
+        private dialog: MdDialog,
+        private dataService: DataService
     ) {
         this.selectedCountryCode = '+91';
         this.selectedPhone = '9988776655';
         this.storeData = this.store
             .select('auth')
             .subscribe((res: any) => {
-              
+                if (res && res.userDetails) {
+                    this.selectedCountryCode = res.userDetails.countryCode;
+                    this.selectedPhone = res.userDetails.phoneNumber;
+                }
+                if (res && res.changePhone && res.changePhone.statusCode && res.changePhone.statusCode == 200) {
+                    this.dialog.closeAll();
+                    this.codeOne.reset();
+                    this.codeTwo.reset();
+                    this.codeThree.reset();
+                    this.codeFour.reset();
+                }
+                if (res && res.confirmOtpSignup && res.confirmOtpSignup.statusCode && res.confirmOtpSignup.statusCode == 200) {
+                    // this.openApprovalDialog();
+                }
             });
 
-            this.form = fb.group({
-                'codeOne': [''],
-                'codeTwo': [''],
-                'codeThree': [''],
-                'codeFour': ['']
-            });
-    
-            this.codeOne = this.form.controls['codeOne'];
-            this.codeTwo = this.form.controls['codeTwo'];
-            this.codeThree = this.form.controls['codeThree'];
-            this.codeFour = this.form.controls['codeFour'];
+        this.form = fb.group({
+            'codeOne': ['', Validators.compose([Validators.required])],
+            'codeTwo': ['', Validators.compose([Validators.required])],
+            'codeThree': ['', Validators.compose([Validators.required])],
+            'codeFour': ['', Validators.compose([Validators.required])]
+        });
+
+        this.codeOne = this.form.controls['codeOne'];
+        this.codeTwo = this.form.controls['codeTwo'];
+        this.codeThree = this.form.controls['codeThree'];
+        this.codeFour = this.form.controls['codeFour'];
     }
 
     ngOnInit() {
-  
+        if (this.dataService.getUserRegisterationId()) {
+            this.userId = this.dataService.getUserRegisterationId();
+        }
+        this.store.dispatch({ type: auth.actionTypes.AUTH_GET_USER_DETAILS, payload: { userId: this.userId } });
     }
 
     ngOnDestroy() {
@@ -85,7 +105,21 @@ export class VerificationMobile {
     }
 
     resendVerificationCode() {
-
+        if (this.dataService.getUserRegisterationId()) {
+            this.userId = this.dataService.getUserRegisterationId();
+        }
+        let data = {
+            userId: this.userId,
+            type: 'SMS'
+        };
+        this.store.dispatch({
+            type: auth.actionTypes.AUTH_SEND_VERIFICATION_TYPE,
+            payload: data
+        });
+        this.codeOne.reset();
+        this.codeTwo.reset();
+        this.codeThree.reset();
+        this.codeFour.reset();
     }
 
     goto(id) {
@@ -117,25 +151,63 @@ export class VerificationMobile {
     openChangeDialog() {
         let dialogRef = this.dialog.open(ChangeMobileDialog);
         // dialogRef.disableClose = true;
-        dialogRef.componentInstance.data = 'sa';
+        dialogRef.componentInstance.data = this.dataService.getUserRegisterationId();
+    }
+
+    openApprovalDialog() {
+        let dialogRef = this.dialog.open(ApprovalDialog);
+        dialogRef.disableClose = true;
+        dialogRef.componentInstance.data = this.dataService.getUserRegisterationId();
     }
 
     onSubmit(values: Object, event) {
-       
-        this.submitted = true;
-        console.log(values);
 
-        if (this.form.valid) {
-            let data = {
-                email: values,
-                password: values,
-                rememberMe: values,
-                role: values,
-                deviceType: 'WEB'
-            };
-        } else {
-            //console.log('form is not valid ');
+        this.submitted = true;
+        if (this.dataService.getUserRegisterationId()) {
+            this.userId = this.dataService.getUserRegisterationId();
         }
+        if (!this.codeOne.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Verification code is required', 'Error');
+            if (this._inputCodeOne) {
+                this._inputCodeOne.nativeElement.focus();
+            }
+            return;
+        }
+        if (!this.codeTwo.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Verification code is required', 'Error');
+            if (this._inputCodeTwo) {
+                this._inputCodeTwo.nativeElement.focus();
+            }
+            return;
+        }
+        if (!this.codeThree.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Verification code is required', 'Error');
+            if (this._inputCodeThree) {
+                this._inputCodeThree.nativeElement.focus();
+            }
+            return;
+        }
+        if (!this.codeFour.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Verification code is required', 'Error');
+            if (this._inputCodeFour) {
+                this._inputCodeFour.nativeElement.focus();
+            }
+            return;
+        }
+        let otp = this.codeOne.value + this.codeTwo.value + this.codeThree.value + this.codeFour.value;
+        let data = {
+            userId: this.userId,
+            phoneOtp: otp,
+            isEmail: false
+        };
+        this.store.dispatch({
+            type: auth.actionTypes.AUTH_CONFIRM_OTP_SIGNUP,
+            payload: data
+        });
     }
 
     _keyPressNumber(event: any) {

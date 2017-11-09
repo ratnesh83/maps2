@@ -16,10 +16,10 @@ export class PagesMenuService {
                 path: 'pages',
                 children: [
                     {
-                        path: 'dashboard',
+                        path: 'home',
                         data: {
                             menu: {
-                                title: 'Dashboard',
+                                title: 'Home',
                                 icon: 'icon-wrap fa fa-home',
                                 selected: false,
                                 expanded: false,
@@ -69,6 +69,19 @@ export class PagesMenuService {
                                 expanded: false,
                                 order: 100,
                                 auth: ['admin']
+                            }
+                        },
+                    },
+                    {
+                        path: 'jobs',
+                        data: {
+                            menu: {
+                                title: 'Jobs',
+                                icon: 'icon-wrap fa fa-tasks',
+                                selected: false,
+                                expanded: false,
+                                order: 100,
+                                auth: ['USER']
                             }
                         },
                     },
@@ -130,7 +143,7 @@ export class PagesMenuService {
                                 selected: false,
                                 expanded: false,
                                 order: 100,
-                                auth: ['USER']
+                                auth: ['admin']
                             }
                         },
                     },

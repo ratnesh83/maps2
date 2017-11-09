@@ -6,11 +6,27 @@ export class DataService {
 
     private data: {};
     private userRegisterationId;
+    private userRegisterationAccessToken;
     private stepNumber;
 
     constructor() {
         this.data = {};
         this.stepNumber = 1;
+    }
+
+    setUserRegisterationAccessToken(token) {
+        localStorage.setItem('userRegisterationAccessToken', token);
+        this.userRegisterationAccessToken = token;
+    }
+
+    getUserRegisterationAccessToken() {
+        this.userRegisterationAccessToken = localStorage.getItem('userRegisterationAccessToken');
+        return this.userRegisterationAccessToken;
+    }
+
+    removeUserRegisterationAccessToken() {
+        localStorage.removeItem('userRegisterationAccessToken');
+        this.userRegisterationAccessToken = null;
     }
 
     setUserRegisterationId(id) {

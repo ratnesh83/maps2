@@ -1,7 +1,10 @@
 <div class="row auth-main">
     <div class="col-12 col-sm-6 col-md-6 col-lg-6 left-container">
         <span class="app-logo">
-            <a class="app-logo-link" routerLink="/login"><img class="app-logo-image" src="assets/img/logo.png"></a>
+            <!-- <a class="app-logo-link" routerLink="/login">
+                <img class="app-logo-image" src="assets/img/logo.png">
+            </a> -->
+            <img class="app-logo-image" src="assets/img/logo.png">
         </span>
     </div>
 
@@ -44,11 +47,13 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-3 col-sm-3 phone-number-cc">
-                        <input type="text" [formControl]="countryCode" (focus)="countryCodeClick()" class="form-control" id="inputCode" placeholder="+1"
-                            [mdAutocomplete]="auto" maxlength="5" (keypress)="_keyPressCountryCode($event)">
+                        <img class="flag-placeholder" src="{{ 'assets/img/flags/iso/' + getCountryFlag(countryCode.value)?.toString()?.toLowerCase() + '.png' }}">
+                        <input #inputCountryCode type="text" [formControl]="countryCode" [ngClass]="{'has-input-error': (!countryCode.valid && (countryCode.touched || submitted))}"
+                            (focus)="countryCodeClick()" class="form-control" placeholder="+1" [mdAutocomplete]="auto" maxlength="5"
+                            (keypress)="_keyPressCountryCode($event)">
                         <md-autocomplete #auto="mdAutocomplete">
                             <md-option *ngFor="let country of countries | async" [value]="'+' + country.phone_code">
-                                {{ '+' + country.phone_code }}
+                                <img class="flag-options" src="{{ 'assets/img/flags/iso/' + country.country_code?.toString()?.toLowerCase() + '.png' }}"> {{ ' +' + country.phone_code }}
                                 <span style="color: rgba(0, 0, 0, 0.3)">
                                     {{ country.country_code }}
                                 </span>
@@ -59,7 +64,8 @@
                         </span>
                     </div>
                     <div class="col-9 col-sm-9 phone-number-phone">
-                        <input type="text" class="form-control" id="inputPhone" [formControl]="phone" placeholder="Phone Number" (keypress)="_keyPressNumber($event)">
+                        <input #inputPhone type="text" [ngClass]="{'has-input-error': (!phone.valid && (phone.touched || submitted))}" class="form-control"
+                            [formControl]="phone" placeholder="Phone Number" maxlength="15" (keypress)="_keyPressNumber($event)">
                     </div>
                 </div>
                 <div class="or-sep">
@@ -77,14 +83,14 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input [formControl]="email" type="email" [ngClass]="{'has-input-error': (!email.valid && email.touched)}" class="form-control"
-                            id="inputEmail" (keypress)="_keyPressEmail($event)" placeholder="Email">
+                        <input #inputEmail [formControl]="email" type="email" [ngClass]="{'has-input-error': (!email.valid && (email.touched || submitted))}"
+                            class="form-control" (keypress)="_keyPressEmail($event)" placeholder="Email">
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input type="password" [ngClass]="{'has-input-error': (!password.valid && password.touched)}" class="form-control" id="inputPassword"
-                            placeholder="Password*" [formControl]="password">
+                        <input #inputPassword type="password" [ngClass]="{'has-input-error': (!password.valid && (password.touched || submitted))}"
+                            class="form-control" placeholder="Password*" [formControl]="password">
                     </div>
                 </div>
                 <div class="form-action-btn">
@@ -120,4 +126,3 @@
         </div>
     </div>
 </div>
-
