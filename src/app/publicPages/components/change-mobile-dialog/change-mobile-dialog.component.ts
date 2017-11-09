@@ -55,7 +55,7 @@ import 'style-loader!./change-mobile-dialog.scss';
                                 </span>
                             </div>
                             <div class="col-8 col-sm-8 col-md-8 col-lg-8 col-xl-8 phone-number-phone">
-                                <input #inputPhone type="text" class="form-control" [formControl]="phone" placeholder="Mobile Number" (keypress)="_keyPressNumber($event)">
+                                <input #inputPhone type="text" class="form-control" [formControl]="phone" placeholder="Mobile Number" maxlength="15" (keypress)="_keyPressNumber($event)">
                             </div>
                         </div>
                     </div>

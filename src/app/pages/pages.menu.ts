@@ -73,6 +73,19 @@ export class PagesMenuService {
                         },
                     },
                     {
+                        path: 'jobs',
+                        data: {
+                            menu: {
+                                title: 'Jobs',
+                                icon: 'icon-wrap fa fa-tasks',
+                                selected: false,
+                                expanded: false,
+                                order: 100,
+                                auth: ['USER']
+                            }
+                        },
+                    },
+                    {
                         path: 'payments',
                         data: {
                             menu: {
@@ -130,7 +143,7 @@ export class PagesMenuService {
                                 selected: false,
                                 expanded: false,
                                 order: 100,
-                                auth: ['USER']
+                                auth: ['admin']
                             }
                         },
                     },

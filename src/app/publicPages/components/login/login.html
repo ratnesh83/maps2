@@ -65,7 +65,7 @@
                     </div>
                     <div class="col-9 col-sm-9 phone-number-phone">
                         <input #inputPhone type="text" [ngClass]="{'has-input-error': (!phone.valid && (phone.touched || submitted))}" class="form-control"
-                            [formControl]="phone" placeholder="Phone Number" (keypress)="_keyPressNumber($event)">
+                            [formControl]="phone" placeholder="Phone Number" maxlength="15" (keypress)="_keyPressNumber($event)">
                     </div>
                 </div>
                 <div class="or-sep">

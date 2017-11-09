@@ -77,7 +77,7 @@ export class Register {
             sanitizer.bypassSecurityTrustResourceUrl('assets/img/twitter.svg'));
 
         this.form = fb.group({
-            'name': ['', Validators.compose([Validators.required, NameValidator.nameValid])],
+            'name': ['', Validators.compose([Validators.required])],
             'companyName': ['', Validators.compose([Validators.required])],
             'email': ['', Validators.compose([Validators.required, EmailValidator.email])],
             'countryCode': ['', Validators.compose([Validators.required])],
@@ -255,7 +255,7 @@ export class Register {
             }
             return;
         }
-        if (this.name.errors) {
+        /* if (this.name.errors) {
             if (this.name.errors.invalidName) {
                 this.toastrService.clear();
                 this.toastrService.error(environment.ERROR.NAME_INVALID, 'Error');
@@ -264,7 +264,7 @@ export class Register {
                 }
                 return;
             }
-        }
+        } */
         if (!this.countryCode.value) {
             this.toastrService.clear();
             this.toastrService.error('Country code is required', 'Error');
@@ -276,6 +276,14 @@ export class Register {
         if (!this.phone.value) {
             this.toastrService.clear();
             this.toastrService.error('Phone number is required', 'Error');
+            if (this._phone) {
+                this._phone.nativeElement.focus();
+            }
+            return;
+        }
+        if (this.phone.value && this.phone.value.length < 6) {
+            this.toastrService.clear();
+            this.toastrService.error('Phone number length must be atleast 6 digits', 'Error');
             if (this._phone) {
                 this._phone.nativeElement.focus();
             }
