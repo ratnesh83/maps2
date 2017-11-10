@@ -46,3 +46,57 @@
 .jobs-stars .star-icon {
     font-size: unset !important;
 }
+.category-select {
+    min-width: 100%;
+    height: 50px;
+    border-radius: 3px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    .mat-select-trigger {
+        height: 100%;
+    }
+    .mat-select-underline {
+        display: none;
+    }
+}
+.jobs-input-box {
+    margin-bottom: 15px;
+    label {
+        color: #7d7d7d;
+        font-size: medium;
+        margin-bottom: 10px;
+    }
+}
+.info-window-bar {
+    width: 100%;
+    background-color: #ffffff;
+    .left-notification-card.mat-card {
+        padding: 5px;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    .left-notification-title.mat-card-title {
+        color: #1b1b1b;
+        font-weight: 600;
+    }
+    .left-notification-subtitle.mat-card-subtitle {
+        font-size: small;
+        color: #a3a3a3;
+        margin-bottom: 0px;
+    }
+    .left-notification-head.mat-card-header {
+        .mat-card-header-text {
+            margin-right: 0px !important;
+        }
+    }
+    .jobs-header-contact { 
+        .fa {
+            padding-left: 10px; 
+            color: #68d426;
+            font-size: large;
+        }
+    }
+}

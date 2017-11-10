@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer, ViewChildren, QueryList } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
@@ -49,8 +49,11 @@ export class AllJobs implements OnInit {
     public searchLocation;
     public positions = [];
     public markers = [];
+    public info;
     public updateLoading = false;
     public jobStore;
+    public categories = [];
+    public center;
 
     optionsModel: number[];
     myOptions: IMultiSelectOption[];
@@ -68,7 +71,19 @@ export class AllJobs implements OnInit {
         private toastrService: ToastrService,
         public dialog: MdDialog
     ) {
+        this.center = '30.7333148, 76.7794179';
+        let marker = [
+            30.7333148,
+            76.7794179
+        ];
 
+        let marker2 = [
+            30.7333148,
+            76.7894179
+        ];
+
+        this.markers.push(marker);
+        this.markers.push(marker2);
         this.myOptions = [
 
         ];
@@ -84,6 +99,11 @@ export class AllJobs implements OnInit {
             'countryCode': [''],
             'mobile': ['']
         });
+        this.categories = [
+            'Health Care',
+            'Construction',
+            'Engineering'
+        ];
 
         this.empName = this.form.controls['name'];
         this.email = this.form.controls['email'];
@@ -115,12 +135,7 @@ export class AllJobs implements OnInit {
     };
 
     ngOnInit() {
-        let marker = {
-            display: true,
-            lat: 30.7333,
-            lng: 76.7794,
-        };
-        this.markers.push(marker);
+
     }
 
     ngOnDestroy() {
@@ -180,6 +195,10 @@ export class AllJobs implements OnInit {
         this.phoneNumber.reset();
     }
 
+    changeMap(lat, lng) {
+        this.center = lat + ', ' + lng;
+    }
+
     getAddress(event) {
         let addressComponents = event.address_components;
         let latitude = event.geometry.location.lat();
@@ -211,6 +230,7 @@ export class AllJobs implements OnInit {
             }
         }
         this.searchLocation = formattedAddress;
+        this.changeMap(latitude, longitude);
     }
 
     createJob(formValue) {
@@ -245,11 +265,8 @@ export class AllJobs implements OnInit {
         });
     }
 
-    log(event, str) {
-        console.log('event .... >', event, str);
-    }
-
-    clicked({ target: marker }) {
+    showMarkerInfo({ target: marker }, data) {
+        this.info = data;
         marker.nguiMapComponent.openInfoWindow('iw', marker);
     }
 

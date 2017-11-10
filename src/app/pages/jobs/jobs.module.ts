@@ -13,6 +13,7 @@ import {
     MdButtonModule,
     MdAutocompleteModule,
     MdCardModule,
+    MdSelectModule,
     MdDialogModule
 } from '@angular/material';
 import { routing } from './jobs.routing';
@@ -36,6 +37,7 @@ import { NguiMapModule } from '@ngui/map';
         MdButtonModule,
         MdAutocompleteModule,
         MdCardModule,
+        MdSelectModule,
         MdDialogModule,
         SelectModule,
         GooglePlaceModule,
