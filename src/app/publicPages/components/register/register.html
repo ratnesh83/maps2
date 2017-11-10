@@ -74,7 +74,7 @@
                             (focus)="countryCodeClick()" class="form-control" placeholder="+1" [mdAutocomplete]="auto" maxlength="5"
                             (keypress)="_keyPressCountryCode($event)">
                         <md-autocomplete #auto="mdAutocomplete">
-                            <md-option *ngFor="let country of countries | async" [value]="'+' + country.phone_code">
+                            <md-option *ngFor="let country of countries | async" (onSelectionChange)="setCountry('+' + country.phone_code, country.country_code, $event)" [value]="'+' + country.phone_code">
                                 <img class="flag-options" src="{{ 'assets/img/flags/iso/' + country.country_code?.toString()?.toLowerCase() + '.png' }}"> {{ ' +' + country.phone_code }}
                                 <span style="color: rgba(0, 0, 0, 0.3)">
                                     {{ country.country_code }}

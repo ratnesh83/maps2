@@ -48,6 +48,7 @@ export class Register {
     public termsLink;
     public socialMode;
     public countryCodes = [];
+    public country_code;
 
     public submitted: boolean = false;
 
@@ -121,6 +122,7 @@ export class Register {
             this.termsLink = baseLink + 'terms';
         }
         this.socialMode = null;
+        this.country_code = null;
     }
 
     ngOnDestroy() {
@@ -153,9 +155,12 @@ export class Register {
             option.phone_code.toString().indexOf(val.replace('+', '')) === 0);
     }
 
-    getCountryFlag(country) {
+    getCountryFlag(country, country_code) {
         for (let i = 0; i < this.countryCodes.length; i++) {
-            if (country == this.countryCodes[i].phone_code) {
+            if(country == '+1' && this.country_code == this.countryCodes[i].country_code) {
+                return this.countryCodes[i].country_code;
+            } else if (country != '+1' && country == this.countryCodes[i].phone_code) {
+                this.country_code = null;
                 return this.countryCodes[i].country_code;
             }
         }
@@ -163,6 +168,13 @@ export class Register {
             return 'default';
         }
         return 'us';
+    }
+
+    setCountry(phone_code, country_code, event) {
+        if (event && event.isUserInput) {
+            this.country_code = country_code;
+            this.getCountryFlag(phone_code, country_code);
+        }
     }
 
     changeSignUpType(type) {

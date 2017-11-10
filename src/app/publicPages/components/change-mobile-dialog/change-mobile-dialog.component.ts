@@ -43,7 +43,7 @@ import 'style-loader!./change-mobile-dialog.scss';
                                 <input type="text" [formControl]="countryCode" class="form-control" (focus)="countryCodeClick()" id="inputCode" placeholder="+1"
                                     [mdAutocomplete]="auto" maxlength="5" (keypress)="_keyPressCountryCode($event)">
                                 <md-autocomplete #auto="mdAutocomplete">
-                                    <md-option *ngFor="let country of countries | async" [value]="'+' + country.phone_code">
+                                    <md-option *ngFor="let country of countries | async" (onSelectionChange)="setCountry('+' + country.phone_code, country.country_code, $event)" [value]="'+' + country.phone_code">
                                         <img class="flag-options" src="{{ 'assets/img/flags/iso/' + country.country_code?.toString()?.toLowerCase() + '.png' }}"> {{ ' +' + country.phone_code }}
                                         <span style="color: rgba(0, 0, 0, 0.3)">
                                             {{ country.country_code }}
@@ -84,6 +84,7 @@ export class ChangeMobileDialog {
     public countryCode: AbstractControl;
     public phone: AbstractControl;
     public countryCodes = [];
+    public country_code;
 
     constructor(private fb: FormBuilder,
         private store: Store<any>,
@@ -114,6 +115,7 @@ export class ChangeMobileDialog {
         if (this.dataService.getUserRegisterationId()) {
             this.userId = this.dataService.getUserRegisterationId();
         }
+        this.country_code = null;
     }
 
     ngAfterViewInit() {
@@ -154,16 +156,26 @@ export class ChangeMobileDialog {
             option.phone_code.toString().indexOf(val.replace('+', '')) === 0);
     }
 
-    getCountryFlag(country) {
+    getCountryFlag(country, country_code) {
         for (let i = 0; i < this.countryCodes.length; i++) {
-            if (country == this.countryCodes[i].phone_code) {
+            if(country == '+1' && this.country_code == this.countryCodes[i].country_code) {
+                return this.countryCodes[i].country_code;
+            } else if (country != '+1' && country == this.countryCodes[i].phone_code) {
+                this.country_code = null;
                 return this.countryCodes[i].country_code;
             }
         }
-        if(this.countryCode.value) {
+        if (this.countryCode.value) {
             return 'default';
         }
         return 'us';
+    }
+
+    setCountry(phone_code, country_code, event) {
+        if (event && event.isUserInput) {
+            this.country_code = country_code;
+            this.getCountryFlag(phone_code, country_code);
+        }
     }
 
     submit() {
