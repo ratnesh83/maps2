@@ -165,7 +165,7 @@ export class ChangeMobileDialog {
                 return this.countryCodes[i].country_code;
             }
         }
-        if (this.countryCode.value) {
+        if (this.countryCode.value && country != '+1') {
             return 'default';
         }
         return 'us';
