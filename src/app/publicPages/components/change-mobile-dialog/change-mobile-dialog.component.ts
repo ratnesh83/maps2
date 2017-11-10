@@ -163,6 +163,8 @@ export class ChangeMobileDialog {
             } else if (country != '+1' && country == this.countryCodes[i].phone_code) {
                 this.country_code = null;
                 return this.countryCodes[i].country_code;
+            } else if(country == '+1') {
+                return 'us';
             }
         }
         if (this.countryCode.value) {

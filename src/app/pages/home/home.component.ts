@@ -74,7 +74,7 @@ export class Home {
                 timeDiffString = Math.round(timeOfEvent / 3600000).toString() + 'day';
             }
         }
-        console.log(timeDiffString);
+        // console.log(timeDiffString);
     }
 
     goToPostJobs() {

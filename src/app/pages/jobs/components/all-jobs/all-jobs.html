@@ -35,10 +35,9 @@
                     </div>
                 </div>
                 <div>
-                    <ngui-map center="30.7333, 76.7794" [zoomControlOptions]="{ position: 'TOP_CENTER' }" [fullscreenControl]="false"
-                        [fullscreenControlOptions]="{ position: 'TOP_CENTER' }" (click)="log($event)" [scrollwheel]="false">
-                        <marker position="markers[0]" (click)="clicked($event)" draggable="false" 
-                        [icon]="{
+                    <ngui-map center="30.7333, 76.7794" [zoomControlOptions]="{ position: 'TOP_CENTER' }" [fullscreenControl]="false" [fullscreenControlOptions]="{ position: 'TOP_CENTER' }"
+                        (click)="log($event)" [scrollwheel]="false">
+                        <marker position="markers[0]" (click)="clicked($event)" draggable="false" [icon]="{
                             url: 'assets/img/labor-search.png',
                             anchor: [16,16],
                             size: [16,24],
