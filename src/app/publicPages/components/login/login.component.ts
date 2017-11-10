@@ -48,6 +48,7 @@ export class Login {
     public user: Observable<firebase.User>;
     public authStore;
     public countryCodes = [];
+    public country_code;
 
     public roles = [
         { value: 'admin', display: 'Admin' },
@@ -108,6 +109,7 @@ export class Login {
         this.store.dispatch({
             type: auth.actionTypes.GET_COUNTRIES
         });
+        this.country_code = null;
     }
 
     ngAfterViewInit() {
@@ -183,6 +185,12 @@ export class Login {
 
     getCountryFlag(country) {
         for (let i = 0; i < this.countryCodes.length; i++) {
+            /* if(this.country_code && country == this.countryCodes[i].phone_code && this.country_code == this.countryCodes[i].country_code) {
+                console.log(country, this.country_code);
+                return this.countryCodes[i].country_code;
+            } else if (country == this.countryCodes[i].phone_code) {
+                return this.countryCodes[i].country_code;
+            } */
             if (country == this.countryCodes[i].phone_code) {
                 return this.countryCodes[i].country_code;
             }
@@ -191,6 +199,12 @@ export class Login {
             return 'default';
         }
         return 'us';
+    }
+
+    setCountry(phone_code, country_code) {
+        //console.log(country_code);
+        //this.country_code = country_code;
+        //this.getCountryFlag(phone_code);
     }
 
     openForgotPasswordDialog() {

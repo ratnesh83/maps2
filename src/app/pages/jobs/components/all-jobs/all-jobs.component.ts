@@ -48,6 +48,7 @@ export class AllJobs implements OnInit {
     public openFormJob: boolean = false;
     public searchLocation;
     public positions = [];
+    public markers = [];
     public updateLoading = false;
     public jobStore;
 
@@ -114,7 +115,12 @@ export class AllJobs implements OnInit {
     };
 
     ngOnInit() {
-
+        let marker = {
+            display: true,
+            lat: 30.7333,
+            lng: 76.7794,
+        };
+        this.markers.push(marker);
     }
 
     ngOnDestroy() {
@@ -237,6 +243,14 @@ export class AllJobs implements OnInit {
                 role: 'all'
             }
         });
+    }
+
+    log(event, str) {
+        console.log('event .... >', event, str);
+    }
+
+    clicked({ target: marker }) {
+        marker.nguiMapComponent.openInfoWindow('iw', marker);
     }
 
     _keyPressNumber(event: any) {

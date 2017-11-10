@@ -24,7 +24,7 @@
                 <div class="form-group row">
                     <div class="col-12 col-sm-6">
                         <!-- <input #inputStreetAddress type="text" class="form-control" placeholder="Category"> -->
-                        <select #inputStreetAddress>
+                        <select #inputStreetAddress sr>
                             <option>Construction</option>
                             <option>Engineering</option>
                         </select>
@@ -35,8 +35,21 @@
                     </div>
                 </div>
                 <div>
-                    <ngui-map center="{{ searchLocation }}">
-                        
+                    <ngui-map center="30.7333, 76.7794" [zoomControlOptions]="{ position: 'TOP_CENTER' }" [fullscreenControl]="false"
+                        [fullscreenControlOptions]="{ position: 'TOP_CENTER' }" (click)="log($event)" [scrollwheel]="false">
+                        <marker position="markers[0]" (click)="clicked($event)" draggable="false" 
+                        [icon]="{
+                            url: 'assets/img/labor-search.png',
+                            anchor: [16,16],
+                            size: [16,24],
+                            scaledSize: [16,24]
+                          }">
+                            <info-window id="iw">
+                                <div>
+                                    lat: , lng:
+                                </div>
+                            </info-window>
+                        </marker>
                     </ngui-map>
                 </div>
             </md-card-content>

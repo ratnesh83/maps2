@@ -341,6 +341,7 @@ export class Register {
             phoneNumber: this.phone.value,
             timezoneOffset: timezoneOffset,
             stepNumber: 1,
+            deviceType: 'WEB_BROWSER',
             description: this.description.value,
             companyName: this.companyName.value,
             socialId: this.socialId.value,
