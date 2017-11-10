@@ -185,15 +185,15 @@ export class Login {
 
     getCountryFlag(country) {
         for (let i = 0; i < this.countryCodes.length; i++) {
-            if(this.country_code && country == this.countryCodes[i].phone_code && this.country_code == this.countryCodes[i].country_code) {
+            /* if(this.country_code && country == this.countryCodes[i].phone_code && this.country_code == this.countryCodes[i].country_code) {
                 console.log(country, this.country_code);
                 return this.countryCodes[i].country_code;
             } else if (country == this.countryCodes[i].phone_code) {
                 return this.countryCodes[i].country_code;
-            }
-            /* if (country == this.countryCodes[i].phone_code) {
-                return this.countryCodes[i].country_code;
             } */
+            if (country == this.countryCodes[i].phone_code) {
+                return this.countryCodes[i].country_code;
+            }
         }
         if (this.countryCode.value) {
             return 'default';
@@ -202,9 +202,9 @@ export class Login {
     }
 
     setCountry(phone_code, country_code) {
-        console.log(country_code);
+        /* console.log(country_code);
         this.country_code = country_code;
-        this.getCountryFlag(phone_code);
+        this.getCountryFlag(phone_code); */
     }
 
     openForgotPasswordDialog() {
