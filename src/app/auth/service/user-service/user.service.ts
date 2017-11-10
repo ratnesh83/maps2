@@ -136,7 +136,12 @@ export class UserService {
         };
         if (data.verificationType == 'EMAIL') {
             dataToSend.isEmail = true;
-        } else {
+        } else if (data.verificationType == 'SMS') {
+            dataToSend.isEmail = false;
+        }
+        if (data.type == 'EMAIL') {
+            dataToSend.isEmail = true;
+        } else if (data.type == 'SMS') {
             dataToSend.isEmail = false;
         }
         if (data.phone) {
