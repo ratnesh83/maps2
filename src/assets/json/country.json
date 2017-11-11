@@ -84,6 +84,24 @@
         "phone_code": 244
     },
     {
+        "country_code": "US",
+        "country_en": "United States",
+        "country_cn": "美国",
+        "phone_code": 1
+    },
+    {
+        "country_code": "CA",
+        "country_en": "Canada",
+        "country_cn": "加拿大",
+        "phone_code": 1
+    },
+    {
+        "country_code": "PR",
+        "country_en": "Puerto Rico",
+        "country_cn": "波多黎各",
+        "phone_code": 1
+    },
+    {
         "country_code": "AI",
         "country_en": "Anguilla",
         "country_cn": "安圭拉",
@@ -202,12 +220,6 @@
         "country_en": "Iceland",
         "country_cn": "冰岛",
         "phone_code": 354
-    },
-    {
-        "country_code": "PR",
-        "country_en": "Puerto Rico",
-        "country_cn": "波多黎各",
-        "phone_code": 1
     },
     {
         "country_code": "PL",
@@ -522,12 +534,6 @@
         "phone_code": 245
     },
     {
-        "country_code": "CA",
-        "country_en": "Canada",
-        "country_cn": "加拿大",
-        "phone_code": 1
-    },
-    {
         "country_code": "GH",
         "country_en": "Ghana",
         "country_cn": "加纳",
@@ -748,12 +754,6 @@
         "country_en": "Mauritania",
         "country_cn": "毛里塔尼亚",
         "phone_code": 222
-    },
-    {
-        "country_code": "US",
-        "country_en": "United States",
-        "country_cn": "美国",
-        "phone_code": 1
     },
     {
         "country_code": "AS",
