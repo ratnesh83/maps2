@@ -45,7 +45,7 @@
                 </div>
                 <div>
                     <ngui-map center="{{ center }}" [zoomControlOptions]="{ position: 'TOP_RIGHT' }" [fullscreenControl]="false" [scrollwheel]="false">
-                        <marker *ngFor="let position of markers" [position]="position" (click)="showMarkerInfo($event, position)" draggable="false"
+                        <marker *ngFor="let job of jobs" [position]="job.coordinates" (click)="showMarkerInfo($event, job)" draggable="false"
                             [icon]="{
                             url: 'assets/img/labor-search.png',
                             anchor: [16,24],
@@ -59,7 +59,7 @@
                                             <div md-card-avatar class="notification-header-image">
                                                 <img mat-card-avatar [src]="profilePicture ? profilePicture : 'assets/img/kate.png'">
                                             </div>
-                                            <md-card-title class="left-notification-title">{{info}}</md-card-title>
+                                            <md-card-title class="left-notification-title">{{info ? info.id : ''}}</md-card-title>
                                             <md-card-subtitle class="left-notification-subtitle">joined 1 min ago</md-card-subtitle>
                                             <div class="jobs-header-contact">
                                                 <i class="fa fa-phone-square"></i>

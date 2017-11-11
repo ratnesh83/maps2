@@ -71,19 +71,8 @@ export class AllJobs implements OnInit {
         private toastrService: ToastrService,
         public dialog: MdDialog
     ) {
-        this.center = '30.7333148, 76.7794179';
-        let marker = [
-            30.7333148,
-            76.7794179
-        ];
-
-        let marker2 = [
-            30.7333148,
-            76.7894179
-        ];
-
-        this.markers.push(marker);
-        this.markers.push(marker2);
+        this.center = '30.71889493430725, 76.81024353951216';
+     
         this.myOptions = [
 
         ];
@@ -115,27 +104,31 @@ export class AllJobs implements OnInit {
         this.jobStore = this.store
             .select('job')
             .subscribe((res: any) => {
-                this.jobs = res.jobs;
-                this.count = res.count;
-                this.length = this.count;
-                this.limit = this.pageSize;
-                this.activeJob = (res.activeJob) ? res.activeJob : null;
-                this.pageIndex = res.currentPage - 1;
-                if (res.createJob) {
-                    this.updateLoading = false;
-                    this.empName.reset();
-                    this.email.reset();
-                    this.countryCode.reset();
-                    this.phoneNumber.reset();
-                    setTimeout(() => {
-                        this.openFormJob = false;
-                    }, 500);
+                if (res) {
+                    console.log(res);
+                    this.count = res.count;
+                    this.jobs = [];
+                    if (res.jobs) {
+                        
+                        for (let i = 0; i < res.jobs.length; i++) {
+                            let coordinates = [0, 0];
+                            if (res.jobs[i].employerAddress && res.jobs[i].employerAddress.location) {
+                                coordinates = [res.jobs[i].employerAddress.location.coordinates[1], res.jobs[i].employerAddress.location.coordinates[0]];
+                            }
+                            let job = {
+                                id: res.jobs[i]._id,
+                                coordinates: coordinates,
+
+                            };
+                            this.jobs.push(job);
+                        }
+                    }
                 }
             });
     };
 
     ngOnInit() {
-
+        this.getAllJobs();
     }
 
     ngOnDestroy() {

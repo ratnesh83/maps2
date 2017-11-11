@@ -20,17 +20,13 @@ export class JobEffects {
         .ofType('APP_GETALL_JOB')
         .do((action) => {
             this._spinner.show();
-            this.JobService.getAllJobs(action.payload).subscribe((result) => {
+            this.JobService.getAllStaticJobs(action.payload).subscribe((result) => {
                 this._spinner.hide();
                 if (result.message == 'Success') {
-                    // console.log(result);
                     let filters = (action.payload.filter) ? action.payload.filter : null;
                     let payload = {
-                        jobs: result.data.jobs,
-                        count: result.data.count,
-                        currentPage: action.payload.currentPage,
-                        limit: action.payload.limit,
-                        filter: filters
+                        jobs: result.data,
+                        count: result.data.length
                     };
 
                     this.store.dispatch(new job.AppJobDetailSuccess(payload));

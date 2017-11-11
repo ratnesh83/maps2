@@ -29,6 +29,14 @@ export class JobService {
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     };
 
+    getAllStaticJobs(payload) {
+        let url;
+        url = 'assets/json/jobs.json';
+        this.authRequired = false;
+        this.utcOffset = false;
+        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+    };
+
     getJobDetail(payload) {
         let url;
         url = environment.APP.API_URL + environment.APP.GET_USER;
