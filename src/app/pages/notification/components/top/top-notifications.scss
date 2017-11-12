@@ -35,7 +35,7 @@
                 display: inline-block;
                 min-width: 10px;
                 padding: 2px 4px 2px 4px;
-                color: $sidebar-text;
+                color: white;
                 vertical-align: baseline;
                 white-space: nowrap;
                 text-align: center;
@@ -107,14 +107,14 @@
     left: auto;
     right: -45px;
     top: 35px;
-    background: darken(#e1692c, 5%);
+    background: darken(#ffffff, 5%);
     box-shadow: 0 5px 10px 2px rgba(0, 0, 0, .25);
     @include scrollbars(.4em, #026eff, hsla(0, 0%, 100%, .2));
     a.text-muted .msg-area div {
-        color: #fff;
+        color: #474747;
     }
     a.text-muted .msg-area span {
-        color: #fff;
+        color: #474747;
     }
     a.text-primary .msg-area div {
         color: $warning !important;
@@ -203,12 +203,12 @@
                 }
             }
             &:hover {
-                background: darken(#e1692c, 15%);
+                background: darken(#ffffff, 15%);
             }
         }
     }
     & > a {
-        background: darken(#e1692c, 10%);
+        background: darken(#ffffff, 10%);
         border-top: 1px solid rgba(7, 34, 62, .05);
         border-radius: 0px 0px 4px 4px;
         display: block;
@@ -252,7 +252,7 @@
         width: 0;
         height: 0;
         border: 11px solid transparent;
-        border-bottom-color: darken(#e1692c, 5%);
+        border-bottom-color: darken(#ffffff, 5%);
         &:after {
             top: -9px;
             left: 0px;
@@ -263,7 +263,7 @@
             width: 0;
             height: 0;
             border: 10px solid transparent;
-            border-bottom-color: darken(#e1692c, 5%);
+            border-bottom-color: darken(#ffffff, 5%);
         }
     }
 }

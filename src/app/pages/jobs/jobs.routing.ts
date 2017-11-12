@@ -9,8 +9,8 @@ const routes: Routes = [
         component: Jobs,
         children: [
 
-            { path: '', redirectTo: 'jobs', pathMatch: 'full' },
-            { path: 'jobs', component: AllJobs }
+            { path: '', redirectTo: 'alljobs', pathMatch: 'full' },
+            { path: 'alljobs', component: AllJobs }
 
         ]
     }

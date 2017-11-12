@@ -15,8 +15,8 @@ $input-background: rgba(255, 255, 255, 0.1); // input border color for hover
 $dropdown-text: #7d7d7d; // dropdown text color
 
 // sidebar colors
-$sidebar: #e1692c;
-$sidebar-text: #ffffff;
+$sidebar: #ffffff;
+$sidebar-text: #474747;
 
 // specific components colors
 $mail-box: whitesmoke;
@@ -27,7 +27,7 @@ $progress-default: rgba($default-text, 0.95);
 // bootstrap card panel styles
 $bootstrap-panel-radius: 7px;
 $bootstrap-panel-text: #ffffff;
-$bootstrap-panel-bg: darken(#e1692c, 10%);
+$bootstrap-panel-bg: darken(#ffffff, 10%);
 $bootstrap-panel-card-bg : rgba(44, 67, 91, 0.6);
 $bootstrap-panel-header-bg: transparent;
 $bootstrap-panel-header-border: 1px solid $border-light;

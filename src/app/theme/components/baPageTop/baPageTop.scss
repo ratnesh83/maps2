@@ -8,7 +8,7 @@
     background-color: $sidebar;
     position: fixed;
     z-index: 904;
-    box-shadow: 2px 0 3px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 10px 14px 0 rgba(0, 0, 0, 0.04);
     height: 66px;
     width: 100%;
     min-width: $resMin;
@@ -18,7 +18,7 @@
     }
 }
 .dropdown-menu{
-    background-color: darken(#e1692c, 5%);
+    background-color: darken(#ffffff, 5%);
     box-shadow: 0 5px 10px 2px rgba(0,0,0,.25);
 }
 
@@ -71,7 +71,7 @@ a.al-logo:hover {
         position: absolute;
         pointer-events: none;
         border-color: rgba(255, 255, 255, 0);
-        border-bottom-color: darken(#e1692c, 5%);
+        border-bottom-color: darken(#ffffff, 5%);
         border-width: 10px;
         margin-right: 28px;
     }
@@ -81,7 +81,7 @@ a.al-logo:hover {
     }
     span {
         margin: auto 10px;
-        color: white;
+        color: #474747;
         cursor: pointer;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -90,6 +90,7 @@ a.al-logo:hover {
     i {
         margin: auto 0px;
         cursor: pointer;
+        color: #474747;
     }
     img {
         margin: auto 0px;
@@ -148,11 +149,11 @@ a.collapse-menu-link {
 .top-dropdown-menu[_ngcontent-c1] > a[_ngcontent-c1]
 {
     &:hover{
-        background: darken(#e1692c, 15%);
+        background: darken(#ffffff, 15%);
         color:#fff !important;
     }
-    background:darken(#e1692c, 5%);
-    color:#fff;
+    background:darken(#ffffff, 5%);
+    color:#474747;
 }
 .icon-palette {
     display: inline-block;

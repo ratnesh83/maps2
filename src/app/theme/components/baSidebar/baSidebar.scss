@@ -6,7 +6,7 @@ $angle-right: "\f101";
     width: $sidebar-width;
     top: 15px;
     left: 0px;
-    z-index: 999;
+    z-index: 901;
     display: block;
     background-color: $sidebar;
     height: auto;
@@ -20,7 +20,7 @@ $angle-right: "\f101";
 .al-sidebar-list {
     margin: 0;
     overflow: hidden;
-    padding: 18px 0 18px 0;
+    padding: 0px;
     list-style: none;
     height: auto !important;
 }
@@ -37,14 +37,14 @@ $angle-right: "\f101";
     position: relative;
     float: none;
     padding: 0;
-    margin-bottom: 10px;
+    transition: all 0.3s ease-out;
     &.selected {
-        color: $warning;
-        //background-color: $primary;
+        color: #ffffff;
         > a.al-sidebar-list-link {
-            color: $warning;
+            background-color: #026eff;
+            color: #ffffff;
             b {
-                color: $warning;
+                color: #ffffff;
             }
         }
     }
@@ -69,20 +69,24 @@ $angle-right: "\f101";
 }
 a.al-sidebar-list-link {
     display: block;
-    height: 42px;
-    padding-left: 18px;
+    height: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
     text-shadow: none;
     font-size: 13px;
+    font-weight: 500;
     text-decoration: none;
     color: $sidebar-text;
-    line-height: 42px;
+    line-height: 50px;
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
     cursor: pointer;
+    transition: all 0.3s ease-out;
     &:hover {
-        color: $warning;
+        color: #026eff;
         b {
-            color: $warning;
+            color: #026eff;
         }
     }
     i {
@@ -103,10 +107,9 @@ a.al-sidebar-list-link {
         height: 14px;
         line-height: 14px;
         text-shadow: none;
-        font-size: 18px;
         position: absolute;
         right: 10px;
-        top: 12px;
+        top: 18px;
         padding: 0;
         text-align: center;
         color: $sidebar-text;
@@ -141,26 +144,25 @@ a.al-sidebar-list-link {
         padding: 0;
         border-bottom: none;
         position: relative;
-        height: 42px;
+        height: 50px;
         a {
             display: block;
             text-shadow: none;
             font-size: 13px;
             text-decoration: none;
             color: $sidebar-text;
-            padding-left: 68px;
+            padding-left: 50px;
             height: auto;
-            line-height: 42px;
+            line-height: 50px;
             &:hover {
-                color: $warning;
+                color: #026eff;
             }
         }
         &.selected > a {
             border: none;
-            color: $warning;
-            //background-color: $primary;
+            color: #026eff;
             &:hover {
-                color: $warning;
+                color: #026eff;
             }
         }
     }

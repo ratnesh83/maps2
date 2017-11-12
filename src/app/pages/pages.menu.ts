@@ -19,7 +19,7 @@ export class PagesMenuService {
                         path: 'home',
                         data: {
                             menu: {
-                                title: 'Home',
+                                title: 'HOME',
                                 icon: 'icon-wrap fa fa-home',
                                 selected: false,
                                 expanded: false,
@@ -32,7 +32,7 @@ export class PagesMenuService {
                         path: 'users',
                         data: {
                             menu: {
-                                title: 'Users',
+                                title: 'USERS',
                                 icon: 'icon-wrap fa fa-user-o',
                                 selected: false,
                                 expanded: false,
@@ -45,7 +45,7 @@ export class PagesMenuService {
                                 path: 'employers',
                                 data: {
                                     menu: {
-                                        title: 'Employers',
+                                        title: 'EMPLOYERS',
                                     }
                                 }
                             },
@@ -53,7 +53,7 @@ export class PagesMenuService {
                                 path: 'workers',
                                 data: {
                                     menu: {
-                                        title: 'Workers',
+                                        title: 'WORKERS',
                                     }
                                 }
                             },
@@ -63,7 +63,7 @@ export class PagesMenuService {
                         path: 'subscriptions',
                         data: {
                             menu: {
-                                title: 'Subscriptions',
+                                title: 'SUBSCRIPTIONS',
                                 icon: 'icon-wrap fa fa-newspaper-o',
                                 selected: false,
                                 expanded: false,
@@ -76,7 +76,7 @@ export class PagesMenuService {
                         path: 'jobs',
                         data: {
                             menu: {
-                                title: 'Jobs',
+                                title: 'JOBS',
                                 icon: 'icon-wrap fa fa-tasks',
                                 selected: false,
                                 expanded: false,
@@ -89,7 +89,7 @@ export class PagesMenuService {
                         path: 'payments',
                         data: {
                             menu: {
-                                title: 'Payments',
+                                title: 'PAYMENTS',
                                 icon: 'icon-wrap fa fa-money',
                                 selected: false,
                                 expanded: false,
@@ -102,7 +102,7 @@ export class PagesMenuService {
                         path: 'feedbacks',
                         data: {
                             menu: {
-                                title: 'Feedbacks',
+                                title: 'MY RATINGS',
                                 icon: 'icon-wrap fa fa-comments-o',
                                 selected: false,
                                 expanded: false,
@@ -114,7 +114,7 @@ export class PagesMenuService {
                         path: 'helpcenter',
                         data: {
                             menu: {
-                                title: 'Help Center',
+                                title: 'HELP CENTER',
                                 icon: 'icon-wrap fa fa-question',
                                 selected: false,
                                 expanded: false,
@@ -126,7 +126,7 @@ export class PagesMenuService {
                         path: 'appversion',
                         data: {
                             menu: {
-                                title: 'App Version',
+                                title: 'APP VERSION',
                                 icon: 'icon-wrap fa fa-code-fork',
                                 selected: false,
                                 expanded: false,
@@ -138,7 +138,7 @@ export class PagesMenuService {
                         path: 'settings',
                         data: {
                             menu: {
-                                title: 'Profile',
+                                title: 'PROFILE',
                                 icon: 'icon-wrap fa fa-gear fa-spin',
                                 selected: false,
                                 expanded: false,
