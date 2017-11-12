@@ -85,18 +85,67 @@
     .left-notification-subtitle.mat-card-subtitle {
         font-size: small;
         color: #a3a3a3;
+        font-weight: 500;
         margin-bottom: 0px;
     }
     .left-notification-head.mat-card-header {
         .mat-card-header-text {
             margin-right: 0px !important;
         }
+        .mat-card-avatar {
+            cursor: pointer;
+        }
+        .left-notification-title.mat-card-title {
+            cursor: pointer;
+            width: max-content;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        .left-notification-subtitle.mat-card-subtitle {
+            cursor: pointer;
+            width: max-content;
+        }
+    }
+    .left-notification-subhead.mat-card-header {
+        cursor: pointer;
+        padding-top: 10px;
+        .mat-card-header-text {
+            margin-right: 0px !important;
+        }
+        .left-notification-title.mat-card-title {
+            width: max-content;
+            font-size: small;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+        .left-notification-subtitle.mat-card-subtitle {
+            width: max-content;
+            font-size: smaller;
+        }
     }
     .jobs-header-contact { 
+        width: -webkit-fill-available;
+        margin-top: 5px;
+        text-align: right;
         .fa {
+            cursor: pointer;
             padding-left: 10px; 
             color: #68d426;
             font-size: large;
+        }
+        div {
+            font-size: smaller;
+            color: #a3a3a3;
+            font-weight: 500;
+        }
+    }
+    .jobs-header-contact-rate {
+        width: -webkit-fill-available;
+        font-weight: 600;
+        font-size: small;
+        color: #026eff;
+        span {
+            padding-left: 5px;
         }
     }
 }

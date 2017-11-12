@@ -253,7 +253,7 @@
                 "email": "sakshii@yopmail.com",
                 "firstName": "sakshi",
                 "userType": "EMPLOYER",
-                "lastName": "sr",
+                "lastName": "Srivastav",
                 "companyName": "cdcl",
                 "websiteUrl": "+91",
                 "companyPhone": "87878",
@@ -279,7 +279,7 @@
                 },
                 "profilePicture": {
                     "thumb": null,
-                    "original": null
+                    "original": "assets/img/lee.png"
                 },
                 "description": ""
             },
@@ -329,7 +329,7 @@
                 "email": "sakshii@yopmail.com",
                 "firstName": "sakshi",
                 "userType": "EMPLOYER",
-                "lastName": "sr",
+                "lastName": "srivas",
                 "companyName": "cdcl",
                 "websiteUrl": "+91",
                 "companyPhone": "87878",
@@ -355,7 +355,7 @@
                 },
                 "profilePicture": {
                     "thumb": null,
-                    "original": null
+                    "original": "assets/img/lee.png"
                 },
                 "description": ""
             },

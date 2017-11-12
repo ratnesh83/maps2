@@ -46,6 +46,8 @@ export class AllJobs implements OnInit {
     public countryCode: AbstractControl;
     public phoneNumber: AbstractControl;
     public openFormJob: boolean = false;
+    public showPhone: boolean = false;
+    public showEmail: boolean = false;
     public searchLocation;
     public positions = [];
     public markers = [];
@@ -72,7 +74,19 @@ export class AllJobs implements OnInit {
         public dialog: MdDialog
     ) {
         this.center = '30.71889493430725, 76.81024353951216';
-     
+
+        this.info = {
+            employerName: null,
+            employerEmail: null,
+            employerPhoneNumber: null,
+            isPhoneNumberHidden: false,
+            profilePicture: null,
+            distance: 0,
+            address: null,
+            rate: 0,
+            requiredLabourers: 0,
+        };
+
         this.myOptions = [
 
         ];
@@ -109,7 +123,7 @@ export class AllJobs implements OnInit {
                     this.count = res.count;
                     this.jobs = [];
                     if (res.jobs) {
-                        
+
                         for (let i = 0; i < res.jobs.length; i++) {
                             let coordinates = [0, 0];
                             if (res.jobs[i].employerAddress && res.jobs[i].employerAddress.location) {
@@ -117,8 +131,17 @@ export class AllJobs implements OnInit {
                             }
                             let job = {
                                 id: res.jobs[i]._id,
+                                employerName: res.jobs[i].employerId ? res.jobs[i].employerId.firstName + ' ' + res.jobs[i].employerId.lastName : null,
+                                employerEmail: res.jobs[i].employerId ? res.jobs[i].employerId.email : null,
+                                employerPhoneNumber: res.jobs[i].employerId ? res.jobs[i].employerId.countryCode + res.jobs[i].employerId.phoneNumber : null,
+                                isPhoneNumberHidden: res.jobs[i].employerId ? res.jobs[i].employerId.isPhoneNumberHidden : false,
+                                profilePicture: res.jobs[i].employerId ? res.jobs[i].employerId.profilePicture ? res.jobs[i].employerId.profilePicture.original : '' : null,
                                 coordinates: coordinates,
-
+                                distance: res.jobs[i].distance,
+                                rate: res.jobs[i].rate,
+                                rateType: res.jobs[i].rateType,
+                                title: res.jobs[i].title,
+                                address: res.jobs[i].employerAddress ? res.jobs[i].employerAddress.addressLine1 + ', ' + res.jobs[i].employerAddress.city : ''
                             };
                             this.jobs.push(job);
                         }
@@ -150,8 +173,9 @@ export class AllJobs implements OnInit {
     };
 
     showJobDetail(data) {
-        //localStorage.setItem('viewJobId', data._id);
+        //localStorage.setItem('viewJobId', data.id);
         //this.router.navigate(['pages/users/viewjob']);
+        console.log(data.id);
     }
 
     SearchJob(name) {
@@ -259,8 +283,33 @@ export class AllJobs implements OnInit {
     }
 
     showMarkerInfo({ target: marker }, data) {
-        this.info = data;
+        if (data) {
+            this.info = {
+                id: data.id,
+                employerName: data.employerName,
+                employerEmail: data.employerEmail,
+                employerPhoneNumber: data.employerPhoneNumber,
+                isPhoneNumberHidden: data.isPhoneNumberHidden,
+                profilePicture: data.profilePicture,
+                distance: data.distance ? data.distance.toFixed(1) : data.distance,
+                address: data.address,
+                rate: data.rate,
+                rateType: data.rateType,
+                title: data.title
+            };
+        }
+        this.showPhone = false;
+        this.showEmail = false;
+        console.log(data);
         marker.nguiMapComponent.openInfoWindow('iw', marker);
+    }
+
+    showPhoneInfo() {
+        this.showPhone = true;
+    }
+
+    showEmailInfo() {
+        this.showEmail = true;
     }
 
     _keyPressNumber(event: any) {
