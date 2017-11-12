@@ -32,15 +32,15 @@
                 <div class="form-group row">
                     <div class="col-12 col-sm-6 jobs-input-box">
                         <label for="category">Category</label>
-                        <md-select class="category-select">
-                            <md-option *ngFor="let category of categories" [value]="category">
+                        <md-select [(ngModel)]="selectedCategory" class="category-select">
+                            <md-option (onSelectionChange)="changeCategory($event, category)" *ngFor="let category of categories" [value]="category">
                                 {{ category }}
                             </md-option>
                         </md-select>
                     </div>
                     <div class="col-12 col-sm-6 jobs-input-box">
                         <label for="address">Address</label>
-                        <input #inputLocationAddress ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)" class="form-control"
+                        <input #inputLocationAddress [(ngModel)]="searchLocation" ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)" class="form-control"
                             placeholder="">
                     </div>
                 </div>

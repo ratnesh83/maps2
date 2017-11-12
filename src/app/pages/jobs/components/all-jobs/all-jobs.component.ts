@@ -1,14 +1,9 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer, ViewChildren, QueryList } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import {
-    MdSort,
-    MdDialog,
-    MdPaginator
-} from '@angular/material';
 import * as job from '../../state/job.actions';
 import * as app from '../../../../state/app.actions';
 import { BaThemeSpinner } from '../../../../theme/services';
@@ -24,56 +19,42 @@ import 'style-loader!./all-jobs.scss';
 })
 
 export class AllJobs implements OnInit {
-    @ViewChild('scrollBottom') private _scrollContainer: ElementRef;
-    @ViewChild('jobsPaginator') private _paginator: MdPaginator;
+
     public jobs;
     public page = 1;
     public limit;
-    public searchKey = '';
     public pageIndex;
     public count: number;
-    public activeJob;
     public name: string;
     public role: string;
-    public searchString: string;
-    public searchFilter: boolean;
     public value: 'all';
     public filter;
-    public form: FormGroup;
-    public empName: AbstractControl;
-    public userName: AbstractControl;
-    public email: AbstractControl;
-    public countryCode: AbstractControl;
-    public phoneNumber: AbstractControl;
-    public openFormJob: boolean = false;
     public showPhone: boolean = false;
     public showEmail: boolean = false;
     public searchLocation;
     public positions = [];
     public markers = [];
     public info;
-    public updateLoading = false;
     public jobStore;
+    public selectedCategory;
     public categories = [];
     public center;
-
-    optionsModel: number[];
-    myOptions: IMultiSelectOption[];
-    myOptionsSelected;
-
-    length;
-    pageSize = 5;
-    pageSizeOptions = [5, 10, 25, 100, 500];
 
     constructor(
         private store: Store<any>,
         private modalService: NgbModal,
         private router: Router,
-        private fb: FormBuilder,
         private toastrService: ToastrService,
-        public dialog: MdDialog
+        private cdRef: ChangeDetectorRef
     ) {
         this.center = '30.71889493430725, 76.81024353951216';
+
+        if (navigator.geolocation) {
+            let self = this;
+            navigator.geolocation.getCurrentPosition((response) => {
+                self.showPosition(response, self);
+            });
+        }
 
         this.info = {
             employerName: null,
@@ -87,39 +68,18 @@ export class AllJobs implements OnInit {
             requiredLabourers: 0,
         };
 
-        this.myOptions = [
-
-        ];
-        this.myOptionsSelected = [
-            { id: 'isAdminVerified', value: 'all' },
-            { id: 'isDeleted', value: false },
-            { id: 'isBlocked', value: 'all' }
-        ];
-
-        this.form = fb.group({
-            'name': [''],
-            'email': [''],
-            'countryCode': [''],
-            'mobile': ['']
-        });
         this.categories = [
             'Health Care',
             'Construction',
             'Engineering'
         ];
 
-        this.empName = this.form.controls['name'];
-        this.email = this.form.controls['email'];
-        this.countryCode = this.form.controls['countryCode'];
-        this.phoneNumber = this.form.controls['mobile'];
-
-        this.limit = this.pageSize;
+        this.selectedCategory = this.categories[0];
 
         this.jobStore = this.store
             .select('job')
             .subscribe((res: any) => {
                 if (res) {
-                    console.log(res);
                     this.count = res.count;
                     this.jobs = [];
                     if (res.jobs) {
@@ -154,9 +114,24 @@ export class AllJobs implements OnInit {
         this.getAllJobs();
     }
 
+    showPosition(position, self) {
+        if (position && position.coords) {
+            // let latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            let latlng = new google.maps.LatLng(30.71889493430725, 76.81024353951216);
+            let geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ 'location': latlng }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        self.searchLocation = results[0].formatted_address;
+                    }
+                }
+            });
+        }
+    }
+
     ngOnDestroy() {
         if (this.jobStore) {
-            // this.jobStore.unsubscribe();
+            this.jobStore.unsubscribe();
         }
     }
 
@@ -164,7 +139,7 @@ export class AllJobs implements OnInit {
         this.store.dispatch({
             type: job.actionTypes.APP_GETALL_JOB, payload: {
                 currentPage: this.page,
-                limit: this.pageSize,
+                limit: 10,
                 role: this.role,
                 filter: this.filter,
                 value: this.value
@@ -175,45 +150,16 @@ export class AllJobs implements OnInit {
     showJobDetail(data) {
         //localStorage.setItem('viewJobId', data.id);
         //this.router.navigate(['pages/users/viewjob']);
-        console.log(data.id);
-    }
-
-    SearchJob(name) {
-        this.searchKey = name;
-        if (name.length > 0) {
-            this.searchFilter = true;
-            this.page = 1;
-            this.store.dispatch({
-                type: job.actionTypes.SEARCH_JOB_DETAIL,
-                payload: {
-                    job: name,
-                    currentPage: 1,
-                    limit: this.pageSize,
-                    skip: 0,
-                    role: this.role,
-                    filter: this.filter
-                }
-            });
-        } else if (name.length == 0) {
-            this.page = 1;
-            this.getAllJobs();
-        }
-    }
-
-    blockJobConfirm(uData) {
-
-    }
-
-    createJobOpen() {
-        this.openFormJob = true;
-        this.empName.reset();
-        this.email.reset();
-        this.countryCode.reset();
-        this.phoneNumber.reset();
     }
 
     changeMap(lat, lng) {
         this.center = lat + ', ' + lng;
+    }
+
+    changeCategory(event, data) {
+        if (event && event.isUserInput) {
+            // console.log(data);
+        }
     }
 
     getAddress(event) {
@@ -250,38 +196,6 @@ export class AllJobs implements OnInit {
         this.changeMap(latitude, longitude);
     }
 
-    createJob(formValue) {
-        if (formValue.name === '' || formValue.name == null) {
-            this.toastrService.clear();
-            this.toastrService.error('Name is required', 'Error');
-            return;
-        }
-        if (formValue.email === '' || formValue.email == null) {
-            this.toastrService.clear();
-            this.toastrService.error('Email is required', 'Error');
-            return;
-        }
-        if (formValue.countryCode === '' || formValue.countryCode == null) {
-            this.toastrService.clear();
-            this.toastrService.error('Country code is required', 'Error');
-            return;
-        }
-        if (formValue.mobile === '' || formValue.mobile == null) {
-            this.toastrService.clear();
-            this.toastrService.error('Phone Number is required', 'Error');
-            return;
-        }
-        formValue.deviceType = 'WEB';
-        this.updateLoading = true;
-        this.store.dispatch({
-            type: job.actionTypes.CREATE_JOB,
-            payload: {
-                data: formValue,
-                role: 'all'
-            }
-        });
-    }
-
     showMarkerInfo({ target: marker }, data) {
         if (data) {
             this.info = {
@@ -300,7 +214,6 @@ export class AllJobs implements OnInit {
         }
         this.showPhone = false;
         this.showEmail = false;
-        console.log(data);
         marker.nguiMapComponent.openInfoWindow('iw', marker);
     }
 
@@ -312,19 +225,4 @@ export class AllJobs implements OnInit {
         this.showEmail = true;
     }
 
-    _keyPressNumber(event: any) {
-        const pattern = /^[0-9]*$/;
-        let inputChar = event.target.value + String.fromCharCode(event.charCode);
-        if (event.charCode != 0 && !pattern.test(inputChar)) {
-            event.preventDefault();
-        }
-    }
-
-    _keyPressCountryCode(event: any) {
-        const pattern = /^([+])?[0-9]*$/;
-        let inputChar = event.target.value + String.fromCharCode(event.charCode);
-        if (event.charCode != 0 && !pattern.test(inputChar)) {
-            event.preventDefault();
-        }
-    }
 }
