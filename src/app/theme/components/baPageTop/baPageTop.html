@@ -3,29 +3,34 @@
         <div class="container">
             <a href (click)="toggleMenu()" class="hidden-sm-up collapse-menu-link ion-navicon"></a>
             <a routerLink="/pages/home" class="al-logo clearfix">
-                <span>
-                    Labor Go
-                </span>
+                <img style="margin: auto 0px; max-height: 30px" src="assets/img/logo-2.png">
             </a>
 
             <div class="user-profile clearfix">
                 <div class="dropdown al-user-profile">
+                    <top-notification class="hidden-sm-up top-notify"></top-notification>
                     <img src="assets/img/lee.png" data-toggle="dropdown" aria-expanded="false">
-                    <!-- <a class="profile-toggle-link dropdown-toggle" id="user-profile-dd" data-toggle="dropdown" aria-expanded="false">
-                        <i class="fa fa-user-o" style="color: white"></i>
-                    </a> -->
+                    <span class="hidden-xs-down" data-toggle="dropdown" aria-expanded="false">
+                        Kate
+                    </span>
+                    <i data-toggle="dropdown" aria-expanded="false" class="fa fa-caret-down hidden-xs-down" style="color: white"></i>
+
                     <ul class="dropdown-menu top-dropdown-menu profile-dropdown" aria-labelledby="user-profile-dd">
                         <li class="dropdown-item">
                             <a href routerLink="/pages/settings" class="signout">
-                                <i class="fa fa-user"></i>Profile</a>
+                                <i class="fa fa-user"></i>
+                                Profile
+                            </a>
                         </li>
                         <li class="dropdown-item">
                             <a (click)="logout()" class="signout">
-                                <i class="fa fa-power-off"></i>Sign out</a>
+                                <i class="fa fa-power-off"></i>
+                                Sign out
+                            </a>
                         </li>
                     </ul>
                 </div>
-                <top-notification class="hidden-sm-up"></top-notification>
+
 
             </div>
         </div>

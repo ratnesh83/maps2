@@ -87,7 +87,7 @@
 }
 @media (max-width: $resXXS) {
     .top-notification {
-        margin-right: 20px;
+        margin: auto 20px;
         li {
             margin-left: 20px;
             &:first-child {
@@ -269,7 +269,7 @@
 }
 @media (max-width: 415px) {
     .top-dropdown-menu {
-        right: -81px;
+        right: -78px;
         i.dropdown-arr {
             right: 75px;
         }

@@ -32,7 +32,7 @@ import { Settings } from './settings.component';
 import { NgaModule } from '../../theme/nga.module';
 import { UserProfile } from './components/user-profile/user-profile.component';
 import { UserProfileEdit } from './components/user-profile-edit/user-profile-edit.component';
-import { AvailabilityCalendar } from "./components/availability-calendar/availability-calendar.component";
+import { AvailabilityCalendar } from './components/availability-calendar/availability-calendar.component';
 
 @NgModule({
     imports: [

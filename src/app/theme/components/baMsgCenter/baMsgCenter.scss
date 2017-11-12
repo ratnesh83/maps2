@@ -266,7 +266,10 @@
 
 @media (max-width: 415px) {
   .top-dropdown-menu {
-    right: -81px;
+    right: -76px;
+    &.profile-dropdown {
+        right: -19px;
+    }
     i.dropdown-arr {
       right: 75px;
     }
