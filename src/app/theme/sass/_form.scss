@@ -624,3 +624,23 @@ input {
     border-color: $flame-warning !important;
     box-shadow: 0 3px 1px -2px rgba(217, 73, 89, 0.6), 0 2px 2px 0 rgba(217, 73, 89, 0.42), 0 1px 5px 0 rgba(217, 73, 89, 0.36) !important;
 }
+.mat-select .mat-select-trigger, .mat-select .mat-select-arrow {
+    color: #999999 !important;
+    font-size: 0.95rem !important;
+}
+.mat-select:focus:not(.mat-select-disabled).mat-primary .mat-select-trigger, .mat-select:focus:not(.mat-select-disabled).mat-primary .mat-select-arrow {
+    color: #999999 !important;
+    font-size: 0.95rem !important;
+}
+.date-picker {
+    .mat-input-element {
+        width: -webkit-fill-available;
+        box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+        font-family: Roboto, "Helvetica Neue", sans-serif !important;
+    }
+    .mat-datepicker-toggle {
+        position: absolute;
+        top: 13px;
+        right: 25px;
+    }
+}

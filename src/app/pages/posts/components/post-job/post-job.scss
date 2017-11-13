@@ -73,6 +73,20 @@
     .mat-select-underline {
         display: none;
     }
+    .mat-select-placeholder.mat-floating-placeholder {
+        opacity: 0 !important;
+    }
+    .mat-select-placeholder {
+        top: unset !important;
+        left: unset !important;
+        transform: unset !important;
+    }
+    .mat-select-placeholder.ng-trigger.ng-trigger-transformPlaceholder.ng-animating {
+        opacity: 0 !important;
+        top: unset !important;
+        left: unset !important;
+        transform: unset !important;
+    }
 }
 .posts-input-box {
     margin-bottom: 15px;

@@ -23,14 +23,14 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-12 col-sm-6 posts-input-box">
-                        <md-select [(ngModel)]="selectedCategory" class="category-select">
+                        <md-select [(ngModel)]="selectedCategory" class="category-select" placeholder="Select Category*">
                             <md-option (onSelectionChange)="changeCategory($event, category)" *ngFor="let category of categories" [value]="category">
                                 {{ category }}
                             </md-option>
                         </md-select>
                     </div>
                     <div class="col-12 col-sm-6 posts-input-box">
-                        <md-select [(ngModel)]="selectedCategory" class="category-select">
+                        <md-select [(ngModel)]="selectedCategory" class="category-select" placeholder="Select Sub Category*">
                             <md-option (onSelectionChange)="changeCategory($event, category)" *ngFor="let category of categories" [value]="category">
                                 {{ category }}
                             </md-option>
@@ -43,6 +43,18 @@
                             class="form-control" placeholder="Service Location*">
                     </div>
                 </div>
+                <div class="form-group row date-picker">
+                    <div class="col-12 col-sm-6 posts-input-box">
+                        <input readonly [mdDatepicker]="pickerStart" class="form-control" placeholder="Start Date">
+                        <button mdSuffix [mdDatepickerToggle]="pickerStart"></button>
+                    </div>
+                    <md-datepicker #pickerStart></md-datepicker>
+                    <div class="col-12 col-sm-6 posts-input-box">
+                        <input readonly [mdDatepicker]="pickerEnd" class="form-control" placeholder="End Date">
+                        <button mdSuffix [mdDatepickerToggle]="pickerEnd"></button>
+                    </div>
+                    <md-datepicker #pickerEnd></md-datepicker>
+                </div>
                 <div class="form-group row">
                     <div class="col-12 col-sm-12 posts-input-box">
                         <textarea #inputJobDetails class="form-control" placeholder="Job Details"></textarea>
@@ -50,7 +62,7 @@
                 </div>
                 <div class="form-group row">
                     <div class="col-12 col-sm-6 posts-input-box">
-                        <md-select [(ngModel)]="selectedCategory" class="category-select">
+                        <md-select [(ngModel)]="selectedCategory" class="category-select" placeholder="Select Rate Type*">
                             <md-option (onSelectionChange)="changeCategory($event, category)" *ngFor="let category of categories" [value]="category">
                                 {{ category }}
                             </md-option>

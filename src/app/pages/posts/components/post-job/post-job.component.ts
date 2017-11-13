@@ -73,7 +73,7 @@ export class PostJob implements OnInit {
             'Engineering'
         ];
 
-        this.selectedCategory = this.categories[0];
+        // this.selectedCategory = this.categories[0];
 
         this.postStore = this.store
             .select('post')
@@ -121,7 +121,7 @@ export class PostJob implements OnInit {
             geocoder.geocode({ 'location': latlng }, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     if (results[0]) {
-                        self.searchLocation = results[0].formatted_address;
+                        // self.searchLocation = results[0].formatted_address;
                     }
                 }
             });

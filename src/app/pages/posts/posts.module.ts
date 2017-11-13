@@ -11,12 +11,15 @@ import {
 } from '@angular/forms';
 import {
     MdTabsModule,
+    MdInputModule,
     MdButtonModule,
     MdAutocompleteModule,
     MdCardModule,
     MdSelectModule,
     MdDialogModule,
-    MdTooltipModule
+    MdTooltipModule,
+    MdDatepickerModule,
+    MdNativeDateModule
 } from '@angular/material';
 import { routing } from './posts.routing';
 import { Posts } from './posts.component';
@@ -39,11 +42,14 @@ import { NguiMapModule } from '@ngui/map';
         MultiselectDropdownModule,
         MdTabsModule,
         MdButtonModule,
+        MdInputModule,
         MdAutocompleteModule,
         MdCardModule,
         MdSelectModule,
         MdDialogModule,
         MdTooltipModule,
+        MdDatepickerModule,
+        MdNativeDateModule,
         SelectModule,
         GooglePlaceModule,
         NguiMapModule.forRoot({ 
