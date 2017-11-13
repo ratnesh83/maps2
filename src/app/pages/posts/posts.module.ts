@@ -21,6 +21,7 @@ import {
 import { routing } from './posts.routing';
 import { Posts } from './posts.component';
 import { AllPosts } from './components/all-posts/all-posts.component';
+import { PostJob } from './components/post-job/post-job.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { GooglePlaceModule } from 'ng2-google-place-autocomplete';
 import { NguiMapModule } from '@ngui/map';
@@ -51,7 +52,8 @@ import { NguiMapModule } from '@ngui/map';
     ],
     declarations: [
         Posts,
-        AllPosts
+        AllPosts,
+        PostJob
     ],
     entryComponents: [
     ],

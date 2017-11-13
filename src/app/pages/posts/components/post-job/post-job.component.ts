@@ -11,14 +11,14 @@ import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { NguiMapComponent } from '@ngui/map';
 
-import 'style-loader!./all-posts.scss';
+import 'style-loader!./post-job.scss';
 
 @Component({
-    selector: 'all-posts',
-    templateUrl: 'all-posts.html',
+    selector: 'post-job',
+    templateUrl: 'post-job.html',
 })
 
-export class AllPosts implements OnInit {
+export class PostJob implements OnInit {
 
     public posts;
     public page = 1;
@@ -44,8 +44,7 @@ export class AllPosts implements OnInit {
         private store: Store<any>,
         private modalService: NgbModal,
         private router: Router,
-        private toastrService: ToastrService,
-        private cdRef: ChangeDetectorRef
+        private toastrService: ToastrService
     ) {
         this.center = '30.71889493430725, 76.81024353951216';
 
@@ -114,10 +113,6 @@ export class AllPosts implements OnInit {
         this.getAllPosts();
     }
 
-    addPost() {
-        this.router.navigate(['/pages/posts/postjob']);
-    }
-
     showPosition(position, self) {
         if (position && position.coords) {
             // let latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
@@ -139,6 +134,10 @@ export class AllPosts implements OnInit {
         }
     }
 
+    postJob() {
+        // console.log('Job posted');
+    }
+
     getAllPosts() {
         this.store.dispatch({
             type: post.actionTypes.APP_GETALL_JOB, payload: {
@@ -152,7 +151,7 @@ export class AllPosts implements OnInit {
     };
 
     showPostDetail(data) {
-        //localStorage.setItem('viewPostId', data.id);
+        //localStorage.setItem('viewJobId', data.id);
         //this.router.navigate(['pages/users/viewpost']);
     }
 

@@ -1,0 +1,85 @@
+<div class="container-fluid animated bounce">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-12 col-sm-12 user-posts-heading">
+                <md-card class="posts-card-heading">
+                    <md-card-header class="posts-card-header posts-card-heading">
+                        <md-card-title style="font-weight: 600; color: #474747; margin-bottom: 0px">
+                            <h2>Post Job</h2>
+                        </md-card-title>
+                    </md-card-header>
+                </md-card>
+            </div>
+        </div>
+    </div>
+
+    <div class="posts-section page-input-block">
+        <md-card class="posts-card posts-card-post">
+            <md-card-content>
+                <div class="form-group row">
+                    <div class="col-12 col-sm-12 posts-input-box">
+                        <input #inputJobTitle class="form-control" placeholder="Job Title*">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12 col-sm-6 posts-input-box">
+                        <md-select [(ngModel)]="selectedCategory" class="category-select">
+                            <md-option (onSelectionChange)="changeCategory($event, category)" *ngFor="let category of categories" [value]="category">
+                                {{ category }}
+                            </md-option>
+                        </md-select>
+                    </div>
+                    <div class="col-12 col-sm-6 posts-input-box">
+                        <md-select [(ngModel)]="selectedCategory" class="category-select">
+                            <md-option (onSelectionChange)="changeCategory($event, category)" *ngFor="let category of categories" [value]="category">
+                                {{ category }}
+                            </md-option>
+                        </md-select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12 col-sm-12 posts-input-box">
+                        <input #inputLocationAddress [(ngModel)]="searchLocation" ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)"
+                            class="form-control" placeholder="Service Location*">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12 col-sm-12 posts-input-box">
+                        <textarea #inputJobDetails class="form-control" placeholder="Job Details"></textarea>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12 col-sm-6 posts-input-box">
+                        <md-select [(ngModel)]="selectedCategory" class="category-select">
+                            <md-option (onSelectionChange)="changeCategory($event, category)" *ngFor="let category of categories" [value]="category">
+                                {{ category }}
+                            </md-option>
+                        </md-select>
+                    </div>
+                    <div class="col-12 col-sm-6 posts-input-box">
+                        <input #inputJobRate class="form-control" placeholder="Enter Rate">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12 col-sm-6 posts-input-box">
+                        <input #inputJobLabours class="form-control" placeholder="No. of Labors Required*">
+                    </div>
+                </div>
+            </md-card-content>
+        </md-card>
+        <div class="form-group row">
+            <div class="hidden-xs-down col-sm-12 posts-input-box text-center">
+                <div class="col-12 col-sm-6 posts-input-box input-box-button text-center">
+                    <button md-raised-button color="primary" type="button" class="btn btn-block btn-submit" (click)="postJob()">
+                        POST JOB
+                    </button>
+                </div>
+            </div>
+            <div class="col-12 hidden-sm-up text-center">
+                <button md-raised-button color="primary" type="button" class="btn btn-block btn-submit" (click)="postJob()">
+                    POST JOB
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
