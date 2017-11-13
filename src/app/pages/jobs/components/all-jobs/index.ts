@@ -1,1 +1,1 @@
-export * from './all-employers.component';
+export * from './all-jobs.component';

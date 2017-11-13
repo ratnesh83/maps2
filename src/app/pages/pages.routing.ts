@@ -20,6 +20,7 @@ export const routes: Routes = [
             { path: 'settings', loadChildren: 'app/pages/settings/settings.module#SettingsModule' },
             { path: 'subscriptions', loadChildren: 'app/pages/subscriptions/subscriptions.module#SubscriptionsModule' },
             { path: 'jobs', loadChildren: 'app/pages/jobs/jobs.module#JobsModule' },
+            { path: 'posts', loadChildren: 'app/pages/posts/posts.module#PostsModule' },
             { path: 'notification', loadChildren: 'app/pages/notification/notifications.module#NotificationsModule' },
             { path: 'feedbacks', loadChildren: 'app/pages/feedbacks/feedbacks.module#FeedbacksModule' },
             { path: 'helpcenter', loadChildren: 'app/pages/help-center/help-center.module#HelpCenterModule' },
