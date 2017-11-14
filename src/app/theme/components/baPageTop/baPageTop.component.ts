@@ -19,6 +19,8 @@ export class BaPageTop {
     public jwtHelper: JwtHelper = new JwtHelper();
     public user;
     public storeData;
+    public name;
+    public profilePicture;
 
     constructor(private _state: GlobalState,
         private store: Store<any>,
@@ -29,11 +31,14 @@ export class BaPageTop {
             this.isMenuCollapsed = isCollapsed;
         });
 
+        this.profilePicture = 'assets/img/user.png';
+
         this.storeData = this.store
             .select('auth')
             .subscribe((res: any) => {
-                if (res) {
-
+                if (res && res.userDetails) {
+                    this.name = this.titleCase(res.userDetails.firstName);
+                    this.profilePicture = res.userDetails.profilePicture ? res.userDetails.profilePicture.thumb ? res.userDetails.profilePicture.thumb : res.userDetails.profilePicture.original : null;
                 }
             });
     }
@@ -42,24 +47,28 @@ export class BaPageTop {
         let token = localStorage.getItem('tokenSession');
         if (token && !this.jwtHelper.isTokenExpired(token)) {
             this.user = this.jwtHelper.decodeToken(token);
-            // this.store.dispatch({ type: auth.actionTypes.AUTH_GET_USER_DETAILS, payload: { userId: this.user._id } });
+            this.store.dispatch({
+                type: auth.actionTypes.AUTH_GET_USER_DETAILS_BY_ID,
+                payload: {
+                    userId: this.user._id
+                }
+            });
         }
-
     }
 
     ngOnDestroy() {
         if (this.storeData) {
-            //this.storeData.unsubscribe();
+            this.storeData.unsubscribe();
         }
     }
 
-    public toggleMenu() {
+    toggleMenu() {
         this.isMenuCollapsed = !this.isMenuCollapsed;
         this._state.notifyDataChanged('menu.isCollapsed', this.isMenuCollapsed);
         return false;
     }
 
-    public scrolledChanged(isScrolled) {
+    scrolledChanged(isScrolled) {
         if (this.isScrolled != undefined) {
             this.isScrolled = isScrolled;
         }
@@ -67,6 +76,25 @@ export class BaPageTop {
 
     logout() {
         this.store.dispatch(new auth.AuthLogoutAction());
+    }
+
+    titleCase(input) {
+        if (input != undefined) {
+            let smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|vs?\.?|via)$/i;
+            input = input.toLowerCase();
+            return input.replace(/[A-Za-z0-9\u00C0-\u00FF]+[^\s-]*/g, function (match, index, title) {
+                if (index > 0 && index + match.length !== title.length &&
+                    match.search(smallWords) > -1 && title.charAt(index - 2) !== ':' &&
+                    (title.charAt(index + match.length) !== '-' || title.charAt(index - 1) === '-') &&
+                    title.charAt(index - 1).search(/[^\s-]/) < 0) {
+                    return match.toLowerCase();
+                }
+                if (match.substr(1).search(/[A-Z]|\../) > -1) {
+                    return match;
+                }
+                return match.charAt(0).toUpperCase() + match.substr(1);
+            });
+        }
     }
 
 }

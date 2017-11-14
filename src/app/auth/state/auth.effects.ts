@@ -10,6 +10,7 @@ import { BaThemeSpinner } from '../../theme/services';
 import { Router } from '@angular/router';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { cloneDeep, random } from 'lodash';
+import * as app from '../../state/app.actions';
 import * as auth from './auth.actions';
 
 const types = ['success', 'error', 'info', 'warning'];
@@ -484,6 +485,37 @@ export class AuthEffects {
                         this.toastrService.clear();
                         this.toastrService.error(error.message || 'Something went wrong', 'Error');
                         // this.router.navigate(['login']);
+                    } else if (error.message) {
+                        this.toastrService.clear();
+                        this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    getUser: Observable<Action> = this.actions$
+        .ofType(auth.actionTypes.AUTH_GET_USER_DETAILS_BY_ID)
+        .do((action: any) => {
+            this.baThemeSpinner.show();
+            this.UserService.getUser(action.payload).subscribe((result) => {
+                this.baThemeSpinner.hide();
+                if (result.statusCode === 200 || result.statusCode === 201) {
+                    let data = result.data;
+                    this.store.dispatch({
+                        type: auth.actionTypes.AUTH_GET_USER_DETAILS_SUCCESS,
+                        payload: data
+                    });
+                }
+                else {
+                }
+            }
+                , (error) => {
+                    this.baThemeSpinner.hide();
+                    if (error.statusCode == 401 || (error.message && error.message.indexOf('Session expired') != -1)) {
+                        this.store.dispatch({
+                            type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                        });
                     } else if (error.message) {
                         this.toastrService.clear();
                         this.toastrService.error(error.message || 'Something went wrong', 'Error');
