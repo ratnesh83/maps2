@@ -1,1 +1,34 @@
 @import "../../../../theme/sass/conf/conf";
+.support-section {
+    margin-top: 10px;
+}
+.support-card {
+    margin-bottom: 10px;
+}
+.inner-content{
+}
+.support-image{
+    width:140px !important;
+}
+.text-content{
+    margin-top:35px;
+    .head{
+    height: 27px;
+    font-family: "Roboto", sans-serif;;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-align: left;
+    color: #1b1b1b;
+}
+.content{
+    height: 24px;
+    font-family: "Roboto", sans-serif;;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.9px;
+    text-align: left;
+    color: #b1b1b1;
+}
+
+}

@@ -10,6 +10,14 @@ import { routing } from './help-center.routing';
 import { HelpCenter } from './help-center.component';
 import { Help } from './components/help/help.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import {
+    MdButtonModule,
+    MdAutocompleteModule,
+    MdCardModule,
+    MdSelectModule,
+    MdDialogModule
+} from '@angular/material';
+
 
 @NgModule({
     imports: [
@@ -21,7 +29,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
         routing,
         NgPipesModule,
         NgbModule,
-
+        MdButtonModule,
+        MdAutocompleteModule,
+        MdCardModule,
+        MdSelectModule,
+        MdDialogModule
     ],
     declarations: [
         HelpCenter,
