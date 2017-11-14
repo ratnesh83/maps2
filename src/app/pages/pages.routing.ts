@@ -16,7 +16,7 @@ export const routes: Routes = [
         children: [
             { path: 'home', loadChildren: 'app/pages/home/home.module#HomeModule' },
             { path: 'users', loadChildren: 'app/pages/users/users.module#UsersModule' },
-            { path: 'payments', loadChildren: 'app/pages/payments/payments.module#PaymentsModule', canActivate: [AuthGuardAdmin] },
+            { path: 'payments', loadChildren: 'app/pages/payments/payments.module#PaymentsModule' },
             { path: 'settings', loadChildren: 'app/pages/settings/settings.module#SettingsModule' },
             { path: 'subscriptions', loadChildren: 'app/pages/subscriptions/subscriptions.module#SubscriptionsModule' },
             { path: 'jobs', loadChildren: 'app/pages/jobs/jobs.module#JobsModule' },
