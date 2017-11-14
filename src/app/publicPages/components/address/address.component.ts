@@ -49,8 +49,8 @@ export class Address {
         this.form = fb.group({
             'streetAddress': [''],
             'locationAddress': ['', Validators.compose([Validators.required])],
-            'latitude': [0],
-            'longitude': [0],
+            'latitude': ['', Validators.compose([Validators.required])],
+            'longitude': ['', Validators.compose([Validators.required])],
             'city': ['', Validators.compose([Validators.required])],
             'state': ['', Validators.compose([Validators.required])],
             'zipCode': ['', Validators.compose([Validators.required])],
@@ -129,6 +129,14 @@ export class Address {
             this.toastrService.clear();
             this.toastrService.error('Street address 1 is required', 'Error');
             if(this._locationAddress) {
+                this._locationAddress.nativeElement.focus();
+            }
+            return;
+        }
+        if (!this.latitude.value || !this.longitude.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Please select a location from google autocomplete', 'Error');
+            if (this._locationAddress) {
                 this._locationAddress.nativeElement.focus();
             }
             return;

@@ -20,7 +20,7 @@
                
                 <div class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input #inputLocationAddress ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)" [ngClass]="{'has-input-error': (!locationAddress.valid && (locationAddress.touched || submitted))}" [formControl]="locationAddress" class="form-control" placeholder="Street Address 1*">
+                        <input #inputLocationAddress ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)" [ngClass]="{'has-input-error': ((!locationAddress.valid || !latitude.valid || !longitude.valid) && (locationAddress.touched || submitted))}" [formControl]="locationAddress" class="form-control" placeholder="Street Address 1*">
                     </div>
                 </div>
                 <div class="form-group row">
