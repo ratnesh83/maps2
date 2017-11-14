@@ -12,6 +12,13 @@ import { routing } from './payments.routing';
 import { Payments } from './payments.component';
 import { AllPayments } from './components/all-payments/all-payments.component';
 import { NgxPaginationModule } from 'ngx-pagination'; //
+import {
+    MdButtonModule,
+    MdAutocompleteModule,
+    MdCardModule,
+    MdSelectModule,
+    MdDialogModule
+} from '@angular/material';
 
 @NgModule({
     imports: [
@@ -23,7 +30,12 @@ import { NgxPaginationModule } from 'ngx-pagination'; //
         routing,
         NgbModalModule,
         NgPipesModule,
-        RouterModule
+        RouterModule,
+        MdButtonModule,
+        MdAutocompleteModule,
+        MdCardModule,
+        MdSelectModule,
+        MdDialogModule
     ],
     declarations: [
         Payments,

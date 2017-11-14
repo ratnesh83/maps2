@@ -163,30 +163,30 @@ export class AllSubscriptions {
     };
 
     getAllSubscription() {
-        this.store.dispatch({
-            type: subscription.actionTypes.APP_GET_ALL_SUBSCRIPTIONS, payload: {
-                currentPage: this.page,
-                limit: this.pageSize,
-                role: this.role,
-                filter: this.filter,
-                value: this.value,
-                applicableFor: this.applicableFor
-            }
-        });
-    };
+    //     this.store.dispatch({
+    //         type: subscription.actionTypes.APP_GET_ALL_SUBSCRIPTIONS, payload: {
+    //             currentPage: this.page,
+    //             limit: this.pageSize,
+    //             role: this.role,
+    //             filter: this.filter,
+    //             value: this.value,
+    //             applicableFor: this.applicableFor
+    //         }
+    //     });
+    }
 
     pageChange(page) {
-        this.store.dispatch({
-            type: subscription.actionTypes.APP_GET_ALL_SUBSCRIPTIONS, payload: {
-                subscription: (this.searchKey != '') ? this.searchKey : undefined,
-                currentPage: page.pageIndex + 1,
-                limit: page.pageSize,
-                role: this.role,
-                filter: this.filter,
-                applicableFor: this.applicableFor
-            }
-        });
-        this.pageSize = page.pageSize;
+        // this.store.dispatch({
+        //     type: subscription.actionTypes.APP_GET_ALL_SUBSCRIPTIONS, payload: {
+        //         subscription: (this.searchKey != '') ? this.searchKey : undefined,
+        //         currentPage: page.pageIndex + 1,
+        //         limit: page.pageSize,
+        //         role: this.role,
+        //         filter: this.filter,
+        //         applicableFor: this.applicableFor
+        //     }
+        // });
+        // this.pageSize = page.pageSize;
     }
 
     goToLastPage(index) {
