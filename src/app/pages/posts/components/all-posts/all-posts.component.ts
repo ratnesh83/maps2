@@ -140,7 +140,7 @@ export class AllPosts implements OnInit {
     }
 
     getAllPosts() {
-        this.store.dispatch({
+        /* this.store.dispatch({
             type: post.actionTypes.APP_GETALL_JOB, payload: {
                 currentPage: this.page,
                 limit: 10,
@@ -148,7 +148,7 @@ export class AllPosts implements OnInit {
                 filter: this.filter,
                 value: this.value
             }
-        });
+        }); */
     };
 
     showPostDetail(data) {

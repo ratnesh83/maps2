@@ -27,87 +27,29 @@ export class PostService {
         this.authRequired = true;
         this.utcOffset = false;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
-    };
-
-    getAllStaticPosts(payload) {
-        let url;
-        url = 'assets/json/jobs.json';
-        this.authRequired = false;
-        this.utcOffset = false;
-        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
-    };
-
-    getPostDetail(payload) {
-        let url;
-        url = environment.APP.API_URL + environment.APP.GET_USER;
-        url += '?userID=' + payload.userId;
-        this.authRequired = true;
-        this.utcOffset = false;
-        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
-    };
-
-    blockThisPost(payload) {
-        this.authRequired = true;
-        this.utcOffset = false;
-        let url = environment.APP.API_URL + environment.APP.BLOCK_USER_BY_ID;
-        return this.apiService.putApi(url, payload, this.authRequired, this.utcOffset);
-    };
-
-    createPost(payload) {
-        this.authRequired = true;
-        this.utcOffset = false;
-        let url = environment.APP.API_URL + environment.APP.ADD_EMPLOYER;
-        return this.apiService.postFileApi(url, payload, this.authRequired, this.utcOffset);
-    }
-    
-    updatePost(payload) {
-        this.authRequired = true;
-        this.utcOffset = false;
-        let url = environment.APP.API_URL + environment.APP.EDIT_EMPLOYER_BY_ID_SUCCESS;
-        return this.apiService.putApi(url, payload, this.authRequired, this.utcOffset);
-    };
-
-    approvePost(payload) {
-        this.authRequired = true;
-        this.utcOffset = false;
-        let url = environment.APP.API_URL + environment.APP.APPROVE_USER_BY_ID;
-        return this.apiService.putApi(url, payload, this.authRequired, this.utcOffset);
-    };
-
-    rejectPost(payload) {
-        this.authRequired = true;
-        this.utcOffset = false;
-        let url = environment.APP.API_URL + environment.APP.REJECT_USER_BY_ID;
-        return this.apiService.putApi(url, payload, this.authRequired, this.utcOffset);
-    };
-
-    changePostDocumentApproval(payload) {
-        this.authRequired = true;
-        this.utcOffset = false;
-        let url = environment.APP.API_URL + environment.APP.CHANGE_EMPLOYER_DOCUMENT_APPROVAL;
-        return this.apiService.putApi(url, payload, this.authRequired, this.utcOffset);
-    };
-
-    uploadFile(payload) {
-        this.authRequired = false;
-        this.utcOffset = false;
-        let url = environment.APP.API_URL + environment.APP.UPLOAD_FILE;
-        return this.apiService.postFileApi(url, payload, this.authRequired, this.utcOffset);
     }
 
-    uploadMultipleFile(payload) {
+    getAllCategories(payload) {
+        let url;
         this.authRequired = false;
         this.utcOffset = false;
-        let url = environment.APP.API_URL + environment.APP.UPLOAD_MULTIPLE_FILES;
-        return this.apiService.postFileApi(url, payload, this.authRequired, this.utcOffset);
+        url = environment.APP.API_URL + environment.APP.GET_ALL_CATEGORIES;
+        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
 
-    getCountryCodes(payload) {
+    getAllSubCategories(payload) {
         let url;
-        url = 'assets/json/country.json';
         this.authRequired = false;
         this.utcOffset = false;
+        url = environment.APP.API_URL + environment.APP.GET_ALL_SUB_CATEGORIES + '?categoryId=' + payload.id;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
-    };
+    }
+
+    postJob(data) {
+        let url = environment.APP.API_URL + environment.APP.POST_JOB;
+        this.authRequired = true;
+        this.utcOffset = false;
+        return this.apiService.postApi(url, data, this.authRequired, this.utcOffset);
+    }
 
 }
