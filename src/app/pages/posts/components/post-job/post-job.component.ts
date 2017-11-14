@@ -83,7 +83,7 @@ export class PostJob implements OnInit {
             'endDate': ['', Validators.compose([Validators.required])],
             'jobDetails': [''],
             'rateType': ['', Validators.compose([Validators.required])],
-            'jobRate': [''],
+            'jobRate': ['', Validators.compose([Validators.required])],
             'labourCount': ['', Validators.compose([Validators.required])]
         });
 
@@ -117,19 +117,16 @@ export class PostJob implements OnInit {
             .select('post')
             .subscribe((res: any) => {
                 if (res) {
-                    console.log(res);
                     if (res.categories) {
                         this.categories = [];
                         for (let i = 0; i < res.categories.length; i++) {
                             this.categories.push(res.categories[i]);
-                            console.log(this.categories);
                         }
                     }
                     if (res.subCategories) {
                         this.subCategories = [];
                         for (let i = 0; i < res.subCategories.length; i++) {
                             this.subCategories.push(res.subCategories[i]);
-                            console.log(this.subCategories);
                         }
                     }
                 }
@@ -222,11 +219,58 @@ export class PostJob implements OnInit {
             }
             return;
         }
-        if (!this.jobDetail.value) {
+        if (!this.category.value) {
             this.toastrService.clear();
-            this.toastrService.error('Job title is required', 'Error');
-            if (this._inputJobDetail) {
-                this._inputJobDetail.nativeElement.focus();
+            this.toastrService.error('Category is required', 'Error');
+            return;
+        }
+        if (!this.subCategory.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Sub category is required', 'Error');
+            return;
+        }
+        if (!this.locationAddress.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Location is required', 'Error');
+            if (this._inputLocationAddress) {
+                this._inputLocationAddress.nativeElement.focus();
+            }
+            return;
+        }
+        if (!this.startDate.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Start date is required', 'Error');
+            if (this._inputStartDate) {
+                this._inputStartDate.nativeElement.focus();
+            }
+            return;
+        }
+        if (!this.endDate.value) {
+            this.toastrService.clear();
+            this.toastrService.error('End date is required', 'Error');
+            if (this._inputEndDate) {
+                this._inputEndDate.nativeElement.focus();
+            }
+            return;
+        }
+        if (!this.rateType.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Rate type is required', 'Error');
+            return;
+        }
+        if (!this.jobRate.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Rate is required', 'Error');
+            if (this._inputJobRate) {
+                this._inputJobRate.nativeElement.focus();
+            }
+            return;
+        }
+        if (!this.labourCount.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Number of labours is required', 'Error');
+            if (this._inputJobLabours) {
+                this._inputJobLabours.nativeElement.focus();
             }
             return;
         }
@@ -263,8 +307,6 @@ export class PostJob implements OnInit {
             delete locationDetails.country;
         }
 
-        this.getDateString(this.startDate.value);
-
         let data = {
             title: this.jobDetail.value,
             employerAddress: locationDetails,
@@ -297,6 +339,14 @@ export class PostJob implements OnInit {
         let month = (localDate.getMonth() + 1).toString();
         let day = localDate.getDate().toString();
         return (year + '-' + month + '-' + day);
+    }
+
+    _keyPressNumber(event: any) {
+        const pattern = /^[0-9]*$/;
+        let inputChar = event.target.value + String.fromCharCode(event.charCode);
+        if (event.charCode != 0 && !pattern.test(inputChar)) {
+            event.preventDefault();
+        }
     }
 
 }
