@@ -4,6 +4,8 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { EmailValidator, EqualPasswordsValidator, NameValidator } from '../../../theme/validators';
+import { DataService } from '../../../../services/data-service/data.service';
 import * as post from '../../state/post.actions';
 import * as app from '../../../../state/app.actions';
 import { BaThemeSpinner } from '../../../../theme/services';
@@ -20,89 +22,114 @@ import 'style-loader!./post-job.scss';
 
 export class PostJob implements OnInit {
 
-    public posts;
-    public page = 1;
-    public limit;
-    public pageIndex;
-    public count: number;
-    public name: string;
-    public role: string;
-    public value: 'all';
-    public filter;
-    public showPhone: boolean = false;
-    public showEmail: boolean = false;
-    public searchLocation;
-    public positions = [];
-    public markers = [];
-    public info;
+    @ViewChild('inputJobTitle') public _inputJobDetail: ElementRef;
+    @ViewChild('inputCategory') public _inputCategory: ElementRef;
+    @ViewChild('inputSubCategory') public _inputSubCategory: ElementRef;
+    @ViewChild('inputLocationAddress') public _inputLocationAddress: ElementRef;
+    @ViewChild('inputStartDate') public _inputStartDate: ElementRef;
+    @ViewChild('inputEndDate') public _inputEndDate: ElementRef;
+    @ViewChild('inputJobDetails') public _inputJobDetails: ElementRef;
+    @ViewChild('inputRateType') public _inputRateType: ElementRef;
+    @ViewChild('inputJobRate') public _inputJobRate: ElementRef;
+    @ViewChild('inputJobLabours') public _inputJobLabours: ElementRef;
+    public form: FormGroup;
+    public jobDetail: AbstractControl;
+    public category: AbstractControl;
+    public subCategory: AbstractControl;
+    public categoryId: AbstractControl;
+    public subCategoryId: AbstractControl;
+    public locationAddress: AbstractControl;
+    public startDate: AbstractControl;
+    public endDate: AbstractControl;
+    public jobDetails: AbstractControl;
+    public rateType: AbstractControl;
+    public jobRate: AbstractControl;
+    public labourCount: AbstractControl;
+    public city: AbstractControl;
+    public zipCode: AbstractControl;
+    public state: AbstractControl;
+    public country: AbstractControl;
+    public latitude: AbstractControl;
+    public longitude: AbstractControl;
     public postStore;
-    public selectedCategory;
     public categories = [];
-    public center;
+    public subCategories = [];
+    public rateTypes = [];
+    public submitted: boolean = false;
+    public minDate = new Date();
 
-    constructor(
+    constructor(private fb: FormBuilder,
         private store: Store<any>,
         private modalService: NgbModal,
         private router: Router,
-        private toastrService: ToastrService
+        private toastrService: ToastrService,
+        private dataService: DataService
     ) {
-        this.center = '30.71889493430725, 76.81024353951216';
 
-        if (navigator.geolocation) {
-            let self = this;
-            navigator.geolocation.getCurrentPosition((response) => {
-                self.showPosition(response, self);
-            });
-        }
+        this.form = fb.group({
+            'jobDetail': ['', Validators.compose([Validators.required])],
+            'category': ['', Validators.compose([Validators.required])],
+            'subCategory': ['', Validators.compose([Validators.required])],
+            'categoryId': ['', Validators.compose([Validators.required])],
+            'subCategoryId': ['', Validators.compose([Validators.required])],
+            'locationAddress': ['', Validators.compose([Validators.required])],
+            'latitude': [0],
+            'longitude': [0],
+            'city': ['', Validators.compose([Validators.required])],
+            'state': ['', Validators.compose([Validators.required])],
+            'zipCode': ['', Validators.compose([Validators.required])],
+            'country': ['', Validators.compose([Validators.required])],
+            'startDate': ['', Validators.compose([Validators.required])],
+            'endDate': ['', Validators.compose([Validators.required])],
+            'jobDetails': [''],
+            'rateType': ['', Validators.compose([Validators.required])],
+            'jobRate': [''],
+            'labourCount': ['', Validators.compose([Validators.required])]
+        });
 
-        this.info = {
-            employerName: null,
-            employerEmail: null,
-            employerPhoneNumber: null,
-            isPhoneNumberHidden: false,
-            profilePicture: null,
-            distance: 0,
-            address: null,
-            rate: 0,
-            requiredLabourers: 0,
-        };
+        this.jobDetail = this.form.controls['jobDetail'];
+        this.category = this.form.controls['category'];
+        this.subCategory = this.form.controls['subCategory'];
+        this.categoryId = this.form.controls['categoryId'];
+        this.subCategoryId = this.form.controls['subCategoryId'];
+        this.locationAddress = this.form.controls['locationAddress'];
+        this.latitude = this.form.controls['latitude'];
+        this.longitude = this.form.controls['longitude'];
+        this.city = this.form.controls['city'];
+        this.state = this.form.controls['state'];
+        this.zipCode = this.form.controls['zipCode'];
+        this.country = this.form.controls['country'];
+        this.startDate = this.form.controls['startDate'];
+        this.endDate = this.form.controls['endDate'];
+        this.jobDetails = this.form.controls['jobDetails'];
+        this.rateType = this.form.controls['rateType'];
+        this.jobRate = this.form.controls['jobRate'];
+        this.labourCount = this.form.controls['labourCount'];
 
-        this.categories = [
-            'Health Care',
-            'Construction',
-            'Engineering'
+        this.rateTypes = [
+            'HOURLY',
+            'DAILY',
+            'WEEKLY',
+            'MONTHLY'
         ];
-
-        // this.selectedCategory = this.categories[0];
 
         this.postStore = this.store
             .select('post')
             .subscribe((res: any) => {
                 if (res) {
-                    this.count = res.count;
-                    this.posts = [];
-                    if (res.posts) {
-
-                        for (let i = 0; i < res.posts.length; i++) {
-                            let coordinates = [0, 0];
-                            if (res.posts[i].employerAddress && res.posts[i].employerAddress.location) {
-                                coordinates = [res.posts[i].employerAddress.location.coordinates[1], res.posts[i].employerAddress.location.coordinates[0]];
-                            }
-                            let post = {
-                                id: res.posts[i]._id,
-                                employerName: res.posts[i].employerId ? res.posts[i].employerId.firstName + ' ' + res.posts[i].employerId.lastName : null,
-                                employerEmail: res.posts[i].employerId ? res.posts[i].employerId.email : null,
-                                employerPhoneNumber: res.posts[i].employerId ? res.posts[i].employerId.countryCode + res.posts[i].employerId.phoneNumber : null,
-                                isPhoneNumberHidden: res.posts[i].employerId ? res.posts[i].employerId.isPhoneNumberHidden : false,
-                                profilePicture: res.posts[i].employerId ? res.posts[i].employerId.profilePicture ? res.posts[i].employerId.profilePicture.original : '' : null,
-                                coordinates: coordinates,
-                                distance: res.posts[i].distance,
-                                rate: res.posts[i].rate,
-                                rateType: res.posts[i].rateType,
-                                title: res.posts[i].title,
-                                address: res.posts[i].employerAddress ? res.posts[i].employerAddress.addressLine1 + ', ' + res.posts[i].employerAddress.city : ''
-                            };
-                            this.posts.push(post);
+                    console.log(res);
+                    if (res.categories) {
+                        this.categories = [];
+                        for (let i = 0; i < res.categories.length; i++) {
+                            this.categories.push(res.categories[i]);
+                            console.log(this.categories);
+                        }
+                    }
+                    if (res.subCategories) {
+                        this.subCategories = [];
+                        for (let i = 0; i < res.subCategories.length; i++) {
+                            this.subCategories.push(res.subCategories[i]);
+                            console.log(this.subCategories);
                         }
                     }
                 }
@@ -110,58 +137,15 @@ export class PostJob implements OnInit {
     };
 
     ngOnInit() {
-        this.getAllPosts();
-    }
-
-    showPosition(position, self) {
-        if (position && position.coords) {
-            // let latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            let latlng = new google.maps.LatLng(30.71889493430725, 76.81024353951216);
-            let geocoder = new google.maps.Geocoder();
-            geocoder.geocode({ 'location': latlng }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[0]) {
-                        // self.searchLocation = results[0].formatted_address;
-                    }
-                }
-            });
-        }
+        this.store.dispatch({
+            type: post.actionTypes.APP_GET_CATEGORIES,
+            payload: {}
+        });
     }
 
     ngOnDestroy() {
         if (this.postStore) {
             this.postStore.unsubscribe();
-        }
-    }
-
-    postJob() {
-        // console.log('Job posted');
-    }
-
-    getAllPosts() {
-        this.store.dispatch({
-            type: post.actionTypes.APP_GETALL_JOB, payload: {
-                currentPage: this.page,
-                limit: 10,
-                role: this.role,
-                filter: this.filter,
-                value: this.value
-            }
-        });
-    };
-
-    showPostDetail(data) {
-        //localStorage.setItem('viewJobId', data.id);
-        //this.router.navigate(['pages/users/viewpost']);
-    }
-
-    changeMap(lat, lng) {
-        this.center = lat + ', ' + lng;
-    }
-
-    changeCategory(event, data) {
-        if (event && event.isUserInput) {
-            // console.log(data);
         }
     }
 
@@ -195,37 +179,124 @@ export class PostJob implements OnInit {
                 }
             }
         }
-        this.searchLocation = formattedAddress;
-        this.changeMap(latitude, longitude);
+        this.locationAddress.setValue(formattedAddress);
+        this.latitude.setValue(latitude);
+        this.longitude.setValue(longitude);
+        this.city.setValue(city);
+        this.state.setValue(state);
+        this.zipCode.setValue(postal);
+        this.country.setValue(country);
     }
 
-    showMarkerInfo({ target: marker }, data) {
-        if (data) {
-            this.info = {
-                id: data.id,
-                employerName: data.employerName,
-                employerEmail: data.employerEmail,
-                employerPhoneNumber: data.employerPhoneNumber,
-                isPhoneNumberHidden: data.isPhoneNumberHidden,
-                profilePicture: data.profilePicture,
-                distance: data.distance ? data.distance.toFixed(1) : data.distance,
-                address: data.address,
-                rate: data.rate,
-                rateType: data.rateType,
-                title: data.title
-            };
+    changeCategory(event, data) {
+        if (event && event.isUserInput) {
+            this.categoryId.setValue(data._id);
+            this.subCategories = [];
+            this.store.dispatch({
+                type: post.actionTypes.APP_GET_SUB_CATEGORIES,
+                payload: { id: data._id }
+            });
         }
-        this.showPhone = false;
-        this.showEmail = false;
-        marker.nguiMapComponent.openInfoWindow('iw', marker);
     }
 
-    showPhoneInfo() {
-        this.showPhone = true;
+    changeSubCategory(event, data) {
+        if (event && event.isUserInput) {
+            this.subCategoryId.setValue(data._id);
+        }
     }
 
-    showEmailInfo() {
-        this.showEmail = true;
+    changeRateType(event, data) {
+        if (event && event.isUserInput) {
+
+        }
+    }
+
+    postJob() {
+        this.submitted = true;
+
+        if (!this.jobDetail.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Job title is required', 'Error');
+            if (this._inputJobDetail) {
+                this._inputJobDetail.nativeElement.focus();
+            }
+            return;
+        }
+        if (!this.jobDetail.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Job title is required', 'Error');
+            if (this._inputJobDetail) {
+                this._inputJobDetail.nativeElement.focus();
+            }
+            return;
+        }
+
+        let locationDetails = {
+            latitude: this.latitude.value,
+            longitude: this.longitude.value,
+            addressLine1: this.locationAddress.value,
+            addressLine2: this.locationAddress.value,
+            city: this.city.value,
+            cityShort: this.city.value,
+            state: this.state.value,
+            stateShort: this.state.value,
+            country: this.country.value,
+            zipCode: this.zipCode.value
+        };
+
+        if(!this.locationAddress.value || this.locationAddress.value == '' || this.locationAddress.value == null) {
+            delete locationDetails.addressLine1;
+            delete locationDetails.addressLine2;
+        }
+        if(!this.city.value || this.city.value == '' || this.city.value == null) {
+            delete locationDetails.city;
+            delete locationDetails.cityShort;
+        }
+        if(!this.state.value || this.state.value == '' || this.state.value == null) {
+            delete locationDetails.state;
+            delete locationDetails.stateShort;
+        }
+        if(!this.zipCode.value || this.zipCode.value == '' || this.zipCode.value == null) {
+            delete locationDetails.zipCode;
+        }
+        if(!this.country.value || this.country.value == '' || this.country.value == null) {
+            delete locationDetails.country;
+        }
+
+        this.getDateString(this.startDate.value);
+
+        let data = {
+            title: this.jobDetail.value,
+            employerAddress: locationDetails,
+            categoryId: this.categoryId.value,
+            subCategoryId: this.subCategoryId.value,
+            jobDetails: this.jobDetails.value,
+            startDate: this.getDateString(this.startDate.value),
+            endDate: this.getDateString(this.endDate.value),
+            rateType: this.rateType.value,
+            rate: this.jobRate.value,
+            requiredLabourers: this.labourCount.value
+        };
+
+        if (!this.jobDetails.value || this.jobDetails.value == '' || this.jobDetails.value == null) {
+            delete data.jobDetails;
+        }
+
+        this.store.dispatch({
+            type: post.actionTypes.APP_POST_JOB,
+            payload: data
+        });
+    }
+
+    getDateString(date) {
+        let localDate = new Date();
+        if (date) {
+            localDate = new Date(date);
+        }
+        let year = localDate.getFullYear().toString();
+        let month = (localDate.getMonth() + 1).toString();
+        let day = localDate.getDate().toString();
+        return (year + '-' + month + '-' + day);
     }
 
 }
