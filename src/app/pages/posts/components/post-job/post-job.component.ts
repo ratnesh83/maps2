@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
@@ -8,10 +8,7 @@ import { EmailValidator, EqualPasswordsValidator, NameValidator } from '../../..
 import { DataService } from '../../../../services/data-service/data.service';
 import * as post from '../../state/post.actions';
 import * as app from '../../../../state/app.actions';
-import { BaThemeSpinner } from '../../../../theme/services';
-import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
-import { NguiMapComponent } from '@ngui/map';
 
 import 'style-loader!./post-job.scss';
 
@@ -26,6 +23,9 @@ export class PostJob implements OnInit {
     @ViewChild('inputCategory') public _inputCategory: ElementRef;
     @ViewChild('inputSubCategory') public _inputSubCategory: ElementRef;
     @ViewChild('inputLocationAddress') public _inputLocationAddress: ElementRef;
+    @ViewChild('inputCity') public _inputCity: ElementRef;
+    @ViewChild('inputState') public _inputState: ElementRef;
+    @ViewChild('inputZipCode') public _inputZipCode: ElementRef;
     @ViewChild('inputStartDate') public _inputStartDate: ElementRef;
     @ViewChild('inputEndDate') public _inputEndDate: ElementRef;
     @ViewChild('inputJobDetails') public _inputJobDetails: ElementRef;
@@ -73,8 +73,8 @@ export class PostJob implements OnInit {
             'categoryId': ['', Validators.compose([Validators.required])],
             'subCategoryId': ['', Validators.compose([Validators.required])],
             'locationAddress': ['', Validators.compose([Validators.required])],
-            'latitude': [0],
-            'longitude': [0],
+            'latitude': ['', Validators.compose([Validators.required])],
+            'longitude': ['', Validators.compose([Validators.required])],
             'city': ['', Validators.compose([Validators.required])],
             'state': ['', Validators.compose([Validators.required])],
             'zipCode': ['', Validators.compose([Validators.required])],
@@ -237,6 +237,38 @@ export class PostJob implements OnInit {
             }
             return;
         }
+        if (!this.latitude.value || !this.longitude.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Please select a location from google autocomplete', 'Error');
+            if (this._inputLocationAddress) {
+                this._inputLocationAddress.nativeElement.focus();
+            }
+            return;
+        }
+        if (!this.city.value) {
+            this.toastrService.clear();
+            this.toastrService.error('City is required', 'Error');
+            if (this._inputCity) {
+                this._inputCity.nativeElement.focus();
+            }
+            return;
+        }
+        if (!this.state.value) {
+            this.toastrService.clear();
+            this.toastrService.error('State is required', 'Error');
+            if (this._inputState) {
+                this._inputState.nativeElement.focus();
+            }
+            return;
+        }
+        if (!this.zipCode.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Zip code is required', 'Error');
+            if (this._inputZipCode) {
+                this._inputZipCode.nativeElement.focus();
+            }
+            return;
+        }
         if (!this.startDate.value) {
             this.toastrService.clear();
             this.toastrService.error('Start date is required', 'Error');
@@ -287,25 +319,6 @@ export class PostJob implements OnInit {
             country: this.country.value,
             zipCode: this.zipCode.value
         };
-
-        if(!this.locationAddress.value || this.locationAddress.value == '' || this.locationAddress.value == null) {
-            delete locationDetails.addressLine1;
-            delete locationDetails.addressLine2;
-        }
-        if(!this.city.value || this.city.value == '' || this.city.value == null) {
-            delete locationDetails.city;
-            delete locationDetails.cityShort;
-        }
-        if(!this.state.value || this.state.value == '' || this.state.value == null) {
-            delete locationDetails.state;
-            delete locationDetails.stateShort;
-        }
-        if(!this.zipCode.value || this.zipCode.value == '' || this.zipCode.value == null) {
-            delete locationDetails.zipCode;
-        }
-        if(!this.country.value || this.country.value == '' || this.country.value == null) {
-            delete locationDetails.country;
-        }
 
         let data = {
             title: this.jobDetail.value,

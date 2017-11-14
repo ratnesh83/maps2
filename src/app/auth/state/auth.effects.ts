@@ -345,7 +345,7 @@ export class AuthEffects {
         .ofType(auth.actionTypes.AUTH_CHANGE_PHONE)
         .do((action: any) => {
             this.baThemeSpinner.show();
-            this.UserService.sendVerificationType(action.payload).subscribe((result) => {
+            this.UserService.changeVerification(action.payload).subscribe((result) => {
                 this.baThemeSpinner.hide();
                 if (result.statusCode === 200 || result.statusCode === 201) {
                     this.store.dispatch({
