@@ -10,7 +10,7 @@ import * as payment from './state/payment.actions';
         <div>
             <ba-content-top></ba-content-top>
             <all-payments></all-payments>
-        </div
+        </div>
     `
 })
 export class Payments {

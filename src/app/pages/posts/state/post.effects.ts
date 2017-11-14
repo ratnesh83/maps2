@@ -4,13 +4,11 @@ import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
-const types = ['success', 'error', 'info', 'warning'];
 import { cloneDeep, random } from 'lodash';
 import { PostService } from '../../../services/post-service/post.service';
 import * as post from './post.actions';
 import * as app from '../../../state/app.actions';
 import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from '../../../theme/services';
-
 
 @Injectable()
 export class PostEffects {
@@ -29,12 +27,14 @@ export class PostEffects {
             }
                 , (error) => {
                     this._spinner.hide();
-                    if (error.statusCode === 401 || error.statusCode === 403) {
-                        this.store.dispatch({
-                            type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
-                        });
-                    } else {
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        } else {
 
+                        }
                     }
                 }
             );
@@ -55,24 +55,25 @@ export class PostEffects {
             this._spinner.show();
             this.PostService.getAllSubCategories(action.payload).subscribe((result) => {
                 this._spinner.hide();
-                if (result.message == 'Action complete.' || result.statusCode == 200) {
+                if (result.message == 'Action complete.' || result.statusCode == 200 || result.statusCode == 201) {
                     let payload = result.data;
                     this.store.dispatch(new post.AppGetSubCategoriesSuccess(payload));
                 }
             }
                 , (error) => {
                     this._spinner.hide();
-                    if (error.statusCode === 401 || error.statusCode === 403) {
-                        this.store.dispatch({
-                            type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
-                        });
-                    } else {
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        } else {
 
+                        }
                     }
                 }
             );
         });
-
 
     @Effect({ dispatch: false })
     getSubCategoriesSuccess: Observable<Action> = this.actions$
@@ -88,19 +89,25 @@ export class PostEffects {
             this._spinner.show();
             this.PostService.postJob(action.payload).subscribe((result) => {
                 this._spinner.hide();
-                if (result.message == 'Action complete.' || result.statusCode == 200) {
+                if (result.message == 'Action complete.' || result.statusCode == 200 || result.statusCode == 201) {
                     let payload = result.data;
                     this.store.dispatch(new post.AppPostJobSuccess(payload));
+                    this.toastrService.clear();
+                    this.toastrService.success(result.message || 'Job posted successfully', 'Success');
+                    this.router.navigate(['/pages/posts/allposts']);
                 }
             }
                 , (error) => {
                     this._spinner.hide();
-                    if (error.statusCode === 401 || error.statusCode === 403) {
-                        this.store.dispatch({
-                            type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
-                        });
-                    } else {
-
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        } else {
+                            this.toastrService.clear();
+                            this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                        }
                     }
                 }
             );

@@ -155,6 +155,38 @@ export class UserService {
         return this.apiService.postApi(url, dataToSend, this.authRequired, this.utcOffset);
     }
 
+    changeVerification(data) {
+        this.authRequired = false;
+        this.utcOffset = true;
+        let dataToSend = {
+            isEmail: false,
+            userId: data.userId,
+            countryCode: data.countryCode,
+            emailOrPhone: '',
+            stepNumber: data.stepNumber
+        };
+        if (data.verificationType == 'EMAIL') {
+            dataToSend.isEmail = true;
+        } else if (data.verificationType == 'SMS') {
+            dataToSend.isEmail = false;
+        }
+        if (data.type == 'EMAIL') {
+            dataToSend.isEmail = true;
+        } else if (data.type == 'SMS') {
+            dataToSend.isEmail = false;
+        }
+        if (data.phone) {
+            dataToSend.emailOrPhone = data.phone;
+        } else if (data.email) {
+            delete dataToSend.countryCode;
+            dataToSend.emailOrPhone = data.email;
+        } else {
+            delete dataToSend.emailOrPhone;
+        }
+        let url = environment.APP.API_URL + environment.APP.SEND_VERIFICATION_TYPE_API;
+        return this.apiService.postApi(url, dataToSend, this.authRequired, this.utcOffset);
+    }
+
     getUserDetails(payload) {
         this.authRequired = true;
         this.utcOffset = false;

@@ -78,11 +78,11 @@ export class Home {
     }
 
     goToPostJobs() {
-        this.router.navigate(['/pages/feedbacks']);
+        this.router.navigate(['/pages/posts/postjob']);
     }
 
     goToMyPosts() {
-
+        this.router.navigate(['/pages/posts/allposts']);
     }
 
     goToLaborList() {

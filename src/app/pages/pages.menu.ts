@@ -68,7 +68,7 @@ export class PagesMenuService {
                                 selected: false,
                                 expanded: false,
                                 order: 100,
-                                auth: ['USER']
+                                auth: ['admin']
                             }
                         },
                     },
@@ -107,7 +107,7 @@ export class PagesMenuService {
                                 selected: false,
                                 expanded: false,
                                 order: 100,
-                                auth: ['admin']
+                                auth: ['USER']
                             }
                         },
                     },
