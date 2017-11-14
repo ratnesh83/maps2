@@ -68,7 +68,7 @@ export class PagesMenuService {
                                 selected: false,
                                 expanded: false,
                                 order: 100,
-                                auth: ['admin']
+                                auth: ['USER']
                             }
                         },
                     },
@@ -127,7 +127,7 @@ export class PagesMenuService {
                         path: 'helpcenter',
                         data: {
                             menu: {
-                                title: 'HELP CENTER',
+                                title: 'CONTACT US',
                                 icon: 'icon-wrap fa fa-question',
                                 selected: false,
                                 expanded: false,
@@ -139,7 +139,7 @@ export class PagesMenuService {
                         path: 'appversion',
                         data: {
                             menu: {
-                                title: 'APP VERSION',
+                                title: 'SUPPORT',
                                 icon: 'icon-wrap fa fa-code-fork',
                                 selected: false,
                                 expanded: false,
