@@ -10,6 +10,7 @@ import { payment, PaymentEffects } from './pages/payments/state';
 import { home, HomeEffects } from './pages/home/state';
 import { customer, worker, employer, UserEffects } from './pages/users/state';
 import { setting, SettingEffects } from './pages/settings/state';
+import { donation, DonationsEffects } from './pages/donations/state';
 import { job, JobEffects } from './pages/jobs/state';
 import { post, PostEffects } from './pages/posts/state';
 import { subscription, SubscriptionEffects } from './pages/subscriptions/state';
@@ -29,6 +30,7 @@ import { feedback, FeedbackEffects } from './pages/feedbacks/state';
             employer,
             job,
             post,
+            donation,
             notification,
             setting,
             subscription,
@@ -54,6 +56,7 @@ import { feedback, FeedbackEffects } from './pages/feedbacks/state';
         EffectsModule.run(ChangePasswordEffects),
         EffectsModule.run(FeedbackEffects),
         EffectsModule.run(JobEffects),
+        EffectsModule.run(DonationsEffects),
         EffectsModule.run(PostEffects)
     ],
 })

@@ -37,7 +37,11 @@ export class BaPageTop {
             .select('auth')
             .subscribe((res: any) => {
                 if (res && res.userDetails) {
-                    this.name = this.titleCase(res.userDetails.firstName);
+                    if (res.userDetails.fullName) {
+                        this.name = this.titleCase(res.userDetails.fullName);
+                    } else if (res.userDetails.firstName) {
+                        this.name = this.titleCase(res.userDetails.firstName);
+                    }
                     this.profilePicture = res.userDetails.profilePicture ? res.userDetails.profilePicture.thumb ? res.userDetails.profilePicture.thumb : res.userDetails.profilePicture.original : null;
                 }
             });
