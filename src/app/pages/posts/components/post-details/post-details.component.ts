@@ -22,6 +22,7 @@ import 'style-loader!./post-details.scss';
 export class PostDetails implements OnInit {
 
     public post;
+    public labours;
     public showPhone: boolean = false;
     public showEmail: boolean = false;
     public postStore;
@@ -38,8 +39,16 @@ export class PostDetails implements OnInit {
         this.postStore = this.store
             .select('post')
             .subscribe((res: any) => {
+
                 if (res && res.post) {
                     this.post = res.post;
+                }
+                if (res && res.labours) {
+                    this.labours = res.labours;
+                    for (let i = 0; i < this.labours.length; i++) {
+                        this.labours[i].showPhone = false;
+                        this.labours[i].showEmail = false;
+                    }
                 }
             });
     };
@@ -66,14 +75,23 @@ export class PostDetails implements OnInit {
                 jobId: this.dataService.getData('jobId')
             }
         });
+        this.store.dispatch({
+            type: post.actionTypes.APP_GET_LABORS, payload: {
+                jobId: this.dataService.getData('jobId')
+            }
+        });
     };
 
     showPhoneInfo(id) {
-       
+        if (this.labours && this.labours[id]) {
+            this.labours[id].showPhone = true;
+        }
     }
 
     showEmailInfo(id) {
-        
+        if (this.labours && this.labours[id]) {
+            this.labours[id].showEmail = true;
+        }
     }
 
 }

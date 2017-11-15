@@ -64,6 +64,8 @@ export class BaPageTop {
         if (this.storeData) {
             this.storeData.unsubscribe();
         }
+        this.name = null;
+        this.profilePicture = null;
     }
 
     toggleMenu() {

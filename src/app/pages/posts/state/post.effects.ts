@@ -90,8 +90,8 @@ export class PostEffects {
             this.PostService.getJob(action.payload).subscribe((result) => {
                 this._spinner.hide();
                 if (result.message == 'Action complete.' || result.statusCode == 200) {
-                    let payload = result.data;
-                    this.store.dispatch(new post.AppGetJobsSuccess(payload));
+                    let payload = result.data[0];
+                    this.store.dispatch(new post.AppGetJobSuccess(payload));
                 }
             }
                 , (error) => {
@@ -118,14 +118,14 @@ export class PostEffects {
 
     @Effect({ dispatch: false })
     getLabors$ = this.actions$
-        .ofType('APP_GET_JOB')
+        .ofType('APP_GET_LABORS')
         .do((action) => {
             this._spinner.show();
             this.PostService.getLabors(action.payload).subscribe((result) => {
                 this._spinner.hide();
                 if (result.message == 'Action complete.' || result.statusCode == 200) {
                     let payload = result.data;
-                    this.store.dispatch(new post.AppGetJobsSuccess(payload));
+                    this.store.dispatch(new post.AppGetLaborsSuccess(payload));
                 }
             }
                 , (error) => {
@@ -145,7 +145,7 @@ export class PostEffects {
 
     @Effect({ dispatch: false })
     getLaborsSuccess: Observable<Action> = this.actions$
-        .ofType('APP_GET_JOB_SUCCESS')
+        .ofType('APP_GET_LABORS_SUCCESS')
         .do((action) => {
 
         });
