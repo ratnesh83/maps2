@@ -8,6 +8,7 @@ import * as post from '../../state/post.actions';
 import * as app from '../../../../state/app.actions';
 import { MdPaginator } from '@angular/material';
 import { BaThemeSpinner } from '../../../../theme/services';
+import { DataService } from '../../../../services/data-service/data.service';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { NguiMapComponent } from '@ngui/map';
@@ -40,7 +41,8 @@ export class AllPosts implements OnInit {
         private modalService: NgbModal,
         private router: Router,
         private toastrService: ToastrService,
-        private cdRef: ChangeDetectorRef
+        private cdRef: ChangeDetectorRef,
+        private dataService: DataService
     ) {
 
         this.postStore = this.store
@@ -75,9 +77,9 @@ export class AllPosts implements OnInit {
     }
     
 
-    showPostDetail(data) {
-        //localStorage.setItem('viewPostId', data.id);
-        //this.router.navigate(['pages/users/viewpost']);
+    showPostDetail(id) {
+        this.dataService.setData('jobId', id);
+        this.router.navigate(['pages/posts/postdetails']);
     }
 
     selectTab(event) {

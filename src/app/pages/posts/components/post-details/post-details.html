@@ -4,13 +4,21 @@
             <div class="col-12 col-sm-12 user-feed-heading">
                 <md-card class="posts-card-heading">
                     <md-card-header class="posts-card-header posts-card-heading">
-                        <md-card-title style="font-weight: 600; color: #1b1b1b; margin-bottom: 0px"><h2>My Post</h2></md-card-title>
-                        <div class="posts-header-rating">
-                            
+                        <md-card-title style="font-weight: 600; color: #1b1b1b">
+                            <h3>Labors required</h3>
+                        </md-card-title>
+                        <md-card-subtitle style="font-weight: 500; margin-bottom: 0px; font-size: medium">sub</md-card-subtitle>
+                        <div class="posts-header-right">
+                            <div style="margin-bottom: 0.5rem; color: #026eff; font-weight: 600">
+                                <h4>$40/hr</h4>
+                            </div>
+                            <div style="color: #1c9f7f; font-weight: 500; font-size: small">
+                                ACTIVE
+                            </div>
                         </div>
                     </md-card-header>
                     <md-card-content>
-                       
+
                     </md-card-content>
                 </md-card>
             </div>
@@ -18,27 +26,49 @@
     </div>
     <div class="posts-section">
         <md-card class="posts-card">
-            <md-card-header class="posts-card-header">
-                <div md-card-avatar class="posts-header-image">
-                    <img mat-card-avatar [src]="profilePicture ? profilePicture : 'assets/img/default-profile.jpg'">
-                </div>
-                <md-card-title style="font-weight: 600; color: #1b1b1b">Charles Bates</md-card-title>
-                <md-card-subtitle style="font-weight: 500">Electrical: Air-Conditioning</md-card-subtitle>
-                <div class="posts-header-rating">
-                    
-                </div>
-            </md-card-header>
+
             <md-card-content>
-                <p class="md-card-content-posts-p">
+                <p class="md-card-content-posts-label">
+                    12/12/2017
+                </p>
+                <p class="md-card-content-posts-content">
                     The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes
                     very well with mountainous terrain, the Shiba Inu was originally bred for hunting.
                 </p>
-                <p class="md-card-content-posts-p-date">
+                <p class="md-card-content-posts-label">
                     12/12/2017
+                </p>
+                <p class="md-card-content-posts-content">
+                    The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes
+                    very well with mountainous terrain, the Shiba Inu was originally bred for hunting.
                 </p>
             </md-card-content>
         </md-card>
-        
+
+    </div>
+    <div class="posts-section">
+        <md-card class="posts-card">
+            <div>
+                <md-card-subtitle style="font-weight: 500">Labor List</md-card-subtitle>
+                <md-card-header class="posts-card-header">
+                    <div md-card-avatar class="posts-header-image">
+                        <img mat-card-avatar [src]="profilePicture ? profilePicture : 'assets/img/default-profile.jpg'">
+                    </div>
+                    <md-card-title style="font-weight: 600; color: #1b1b1b">Charles Bates</md-card-title>
+                    <md-card-subtitle style="font-weight: 500; color: #026eff; cursor: pointer" (click)="viewProfile('id')">View Profile</md-card-subtitle>
+                    <div class="posts-header-contact">
+                        <div>
+                            <i (click)="showPhoneInfo('id')" *ngIf="true" class="fa fa-phone-square"></i>
+                            <i (click)="showEmailInfo('id')" *ngIf="true" class="fa fa-envelope"></i>
+                        </div>
+                        <div *ngIf="false">56789457689</div>
+                        <div *ngIf="false">ewe@sdsd.sd</div>
+                    </div>
+                </md-card-header>
+            </div>
+
+        </md-card>
+
     </div>
 
 </div>

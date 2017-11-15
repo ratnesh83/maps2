@@ -27,18 +27,19 @@
 .posts-card-header {
     position: relative;
 }
-.posts-header-rating {
+.posts-header-right {
     position: absolute;
     top: 0px;
     right: 0px;
     text-align: right;
 }
-.md-card-content-posts-p {
+.md-card-content-posts-content {
     text-align: left;
     font-weight: 500;
     color: #1b1b1b;
+    margin-bottom: 1.5rem;
 }
-.md-card-content-posts-p-date {
+.md-card-content-posts-label {
     text-align: left;
     font-weight: 500;
     color: rgba(0, 0, 0, 0.54);
@@ -50,6 +51,23 @@
     input {
         font-family: Roboto, "Helvetica Neue", sans-serif;
         font-weight: 400 !important;
+    }
+}
+.posts-header-contact {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    text-align: right;
+    .fa {
+        cursor: pointer;
+        padding-left: 10px; 
+        color: #68d426;
+        font-size: large;
+    }
+    div {
+        font-size: smaller;
+        color: #a3a3a3;
+        font-weight: 500;
     }
 }
 .category-select {

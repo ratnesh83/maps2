@@ -11,10 +11,32 @@
             <div class="posts-section page-input-block">
                 <md-card class="posts-card">
                     <md-card-content *ngIf="posts">
-                        <md-card class="posts-card posts-card-inner" *ngFor="let post of posts">
-                            <md-card-content>
-                                {{post.title}}
-
+                        <md-card class="posts-card posts-card-inner" *ngFor="let post of posts; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
+                            <md-card-header class="posts-card-header">
+                                <div md-card-avatar class="posts-header-image">
+                                    <img mat-card-avatar [src]="post.categoryId ? post.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
+                                </div>
+                                <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{post.title}}</md-card-title>
+                                <md-card-subtitle style="font-weight: 500">{{post.category ? post.category + ': ' + post.subCategory : post.category}}</md-card-subtitle>
+                                <div class="posts-header-view">
+                                    <div class="view-link" (click)="showPostDetail(post._id)">
+                                        <span class="hidden-xs-down">
+                                            View Details &gt;&gt;
+                                        </span>
+                                        <span class="hidden-sm-up">
+                                            <i class="fa fa-info"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </md-card-header>
+                            <md-card-content class="posts-card with-margin">
+                                <p class="md-card-content-posts-p-rate">
+                                    {{'$' + post.rate + '/' + (post.rateType == 'DAILY' ? 'day' : post.rateType == 'WEEKLY' ? 'week' : post.rateType == 'MONTHLY'
+                                    ? 'month' : 'hr')}}
+                                </p>
+                                <p class="md-card-content-posts-p-address">
+                                    {{ post.employerAddress ? post.employerAddress.addressLine1 : '' }}
+                                </p>
                             </md-card-content>
                         </md-card>
                         <div *ngIf="posts && posts.length == 0">
@@ -32,15 +54,34 @@
                         <md-card class="posts-card posts-card-inner" *ngFor="let post of posts; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
                             <md-card-header class="posts-card-header">
                                 <div md-card-avatar class="posts-header-image">
-                                    <img mat-card-avatar [src]="profilePicture ? profilePicture : 'assets/img/default-profile.jpg'">
+                                    <img mat-card-avatar [src]="post.categoryId ? post.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
                                 </div>
-                                <md-card-title style="font-weight: 600; color: #1b1b1b">{{post.title}}</md-card-title>
+                                <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{post.title}}</md-card-title>
                                 <md-card-subtitle style="font-weight: 500">{{post.category ? post.category + ': ' + post.subCategory : post.category}}</md-card-subtitle>
+                                <div class="posts-header-view">
+                                    <div class="view-link" (click)="showPostDetail(post._id)">
+                                        <span class="hidden-xs-down">
+                                            View Details &gt;&gt;
+                                        </span>
+                                        <span class="hidden-sm-up">
+                                            <i class="fa fa-info"></i>
+                                        </span>
+                                    </div>
+                                </div>
                             </md-card-header>
-                            <md-card-content class="posts-card">
-
+                            <md-card-content class="posts-card with-margin">
+                                <p class="md-card-content-posts-p-rate">
+                                    {{'$' + post.rate + '/' + (post.rateType == 'DAILY' ? 'day' : post.rateType == 'WEEKLY' ? 'week' : post.rateType == 'MONTHLY'
+                                    ? 'month' : 'hr')}}
+                                </p>
+                                <p class="md-card-content-posts-p-address">
+                                    {{ post.employerAddress ? post.employerAddress.addressLine1 : '' }}
+                                </p>
                             </md-card-content>
                         </md-card>
+                        <div *ngIf="posts && posts.length == 0">
+                            No jobs found.
+                        </div>
                     </md-card-content>
                 </md-card>
             </div>
@@ -50,9 +91,31 @@
                 <md-card class="posts-card">
                     <md-card-content *ngIf="posts">
                         <md-card class="posts-card posts-card-inner" *ngFor="let post of posts; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
-                            <md-card-content>
-                                {{post.title}}
-
+                            <md-card-header class="posts-card-header">
+                                <div md-card-avatar class="posts-header-image">
+                                    <img mat-card-avatar [src]="post.categoryId ? post.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
+                                </div>
+                                <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{post.title}}</md-card-title>
+                                <md-card-subtitle style="font-weight: 500">{{post.category ? post.category + ': ' + post.subCategory : post.category}}</md-card-subtitle>
+                                <div class="posts-header-view">
+                                    <div class="view-link" (click)="showPostDetail(post._id)">
+                                        <span class="hidden-xs-down">
+                                            View Details &gt;&gt;
+                                        </span>
+                                        <span class="hidden-sm-up">
+                                            <i class="fa fa-info"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </md-card-header>
+                            <md-card-content class="posts-card with-margin">
+                                <p class="md-card-content-posts-p-rate">
+                                    {{'$' + post.rate + '/' + (post.rateType == 'DAILY' ? 'day' : post.rateType == 'WEEKLY' ? 'week' : post.rateType == 'MONTHLY'
+                                    ? 'month' : 'hr')}}
+                                </p>
+                                <p class="md-card-content-posts-p-address">
+                                    {{ post.employerAddress ? post.employerAddress.addressLine1 : '' }}
+                                </p>
                             </md-card-content>
                         </md-card>
                         <div *ngIf="posts && posts.length == 0">

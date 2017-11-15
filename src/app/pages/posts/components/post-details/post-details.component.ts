@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import * as post from '../../state/post.actions';
 import * as app from '../../../../state/app.actions';
+import { DataService } from '../../../../services/data-service/data.service';
 import { BaThemeSpinner } from '../../../../theme/services';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
@@ -20,15 +21,7 @@ import 'style-loader!./post-details.scss';
 
 export class PostDetails implements OnInit {
 
-    public posts;
-    public page = 1;
-    public limit;
-    public pageIndex;
-    public count: number;
-    public name: string;
-    public role: string;
-    public value: 'all';
-    public filter;
+    public post;
     public showPhone: boolean = false;
     public showEmail: boolean = false;
     public postStore;
@@ -38,18 +31,15 @@ export class PostDetails implements OnInit {
         private modalService: NgbModal,
         private router: Router,
         private toastrService: ToastrService,
-        private cdRef: ChangeDetectorRef
+        private cdRef: ChangeDetectorRef,
+        private dataService: DataService
     ) {
 
         this.postStore = this.store
             .select('post')
             .subscribe((res: any) => {
-                if (res) {
-                    this.count = res.count;
-                    this.posts = [];
-                    if (res.posts) {
-
-                    }
+                if (res && res.post) {
+                    this.post = res.post;
                 }
             });
     };
@@ -58,26 +48,32 @@ export class PostDetails implements OnInit {
         this.getPostDetails();
     }
 
-    addPost() {
-        this.router.navigate(['/pages/posts/postjob']);
+    viewProfile(id) {
+        // this.dataService.setData('userId', id);
+        this.router.navigate(['/pages/settings']);
     }
 
     ngOnDestroy() {
         if (this.postStore) {
             this.postStore.unsubscribe();
         }
+        this.dataService.removeData('jobId');
     }
 
     getPostDetails() {
-        /* this.store.dispatch({
-            type: post.actionTypes.APP_GETALL_JOB, payload: {
-                currentPage: this.page,
-                limit: 10,
-                role: this.role,
-                filter: this.filter,
-                value: this.value
+        this.store.dispatch({
+            type: post.actionTypes.APP_GET_JOB, payload: {
+                jobId: this.dataService.getData('jobId')
             }
-        }); */
+        });
     };
+
+    showPhoneInfo(id) {
+       
+    }
+
+    showEmailInfo(id) {
+        
+    }
 
 }

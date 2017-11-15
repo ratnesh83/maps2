@@ -23,6 +23,10 @@
 }
 .posts-card {
     margin-bottom: 10px;
+    .with-margin {
+        margin-top: 8px;
+        margin-left: 48px;
+    }
 }
 .posts-card-inner {
     border-left: 8px solid #f4ba48;
@@ -36,18 +40,24 @@
 .posts-card-header {
     position: relative;
 }
-.posts-header-rating {
+.posts-header-view {
     position: absolute;
     top: 0px;
     right: 0px;
     text-align: right;
+    .view-link {
+        color: #026eff;
+        font-weight: 500;
+        cursor: pointer;
+    }
 }
-.md-card-content-posts-p {
+.md-card-content-posts-p-rate {
+    margin-bottom: 8px;
+    font-weight: 600;
     text-align: left;
-    font-weight: 500;
-    color: #1b1b1b;
+    color: #026eff;
 }
-.md-card-content-posts-p-date {
+.md-card-content-posts-p-address {
     text-align: left;
     font-weight: 500;
     color: rgba(0, 0, 0, 0.54);
