@@ -13,7 +13,6 @@
 .text-content{
     margin-top:35px;
     .head{
-    height: 27px;
     font-family: "Roboto", sans-serif;;
     font-size: 20px;
     font-weight: bold;
@@ -32,6 +31,9 @@
 }
 .jobs-card-heading {
     width: 100%;
+}
+@media only screen and (max-width: 768px) {
+    .line{}
 }
 
 }

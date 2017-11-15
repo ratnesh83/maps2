@@ -1,1 +1,80 @@
 @import "../../../../theme/sass/conf/conf";
+.jobs-card-heading {
+    width: 100%;
+}
+.support-section {
+    margin-top: 10px;
+}
+.support-card {
+    margin-bottom: 10px;
+}
+.donation-head{
+    font-size: 40px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-align: center;
+    color: #1b1b1b;
+    margin-top:20px;
+    h1{
+        font-size:40px;
+    }
+}
+h3{
+    font-size: 20px;
+    letter-spacing: 1px;
+    text-align: center;
+    color: #1b1b1b;
+}
+.image{
+    margin-top:35px;
+}
+.price-btns{
+    margin-top:30px;
+}    
+   
+.side-margin{    
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.price{
+    border-radius: 100px;
+    background-color: #ffffff;
+    border: solid 2px #026eff;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.09;
+    text-align: center;
+    color: #000000;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    margin-top:20px;
+}
+.or-text{
+    margin-top:30px;
+    margin-bottom:30px;
+    div{
+    font-size: 16px;
+    font-weight: 300;
+    color: #999999;
+    height: 22px;
+}}
+.lower-input-box{
+    input{
+    height: 60px;
+    border-radius: 3px;
+    background-color: #ffffff;
+    border: solid 1px #f0f0;
+    box-shadow: none;
+}}
+.donation-input{
+    text-decoration: none;
+    box-shadow: none !important;
+    border:2px solid lightgrey;
+    padding:22px;
+    border-radius: 3px;
+    font-size: 16px;
+}
+.input-div{
+    padding:0 calc(10% + 15px) 0 calc(10% + 15px);
+}
