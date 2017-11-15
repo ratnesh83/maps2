@@ -9,9 +9,9 @@
             <div class="user-profile clearfix">
                 <div class="dropdown al-user-profile">
                     <top-notification class="hidden-sm-up top-notify"></top-notification>
-                    <img src="assets/img/lee.png" data-toggle="dropdown" aria-expanded="false">
+                    <img [src]="profilePicture" data-toggle="dropdown" aria-expanded="false">
                     <span class="hidden-xs-down" data-toggle="dropdown" aria-expanded="false">
-                        Kate
+                        {{ name }}
                     </span>
                     <i data-toggle="dropdown" aria-expanded="false" class="fa fa-caret-down hidden-xs-down"></i>
 

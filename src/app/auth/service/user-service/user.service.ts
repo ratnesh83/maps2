@@ -195,6 +195,14 @@ export class UserService {
         return this.apiService.getRegisterApi(url, this.authRequired, this.utcOffset);
     }
 
+    getUser(payload) {
+        this.authRequired = true;
+        this.utcOffset = false;
+        let url = environment.APP.API_URL + environment.APP.GET_USER_DETAILS_API;
+        url += '?userId=' + payload.userId;
+        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+    }
+
     getCountryCodes(payload) {
         let url;
         url = 'assets/json/country.json';

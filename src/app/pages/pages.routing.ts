@@ -25,6 +25,7 @@ export const routes: Routes = [
             { path: 'feedbacks', loadChildren: 'app/pages/feedbacks/feedbacks.module#FeedbacksModule' },
             { path: 'helpcenter', loadChildren: 'app/pages/help-center/help-center.module#HelpCenterModule' },
             { path: 'appversion', loadChildren: 'app/pages/app-version/app-version.module#AppVersionModule' },
+            { path: 'donations', loadChildren: 'app/pages/donations/donations.module#DonationsModule' },
             { path: 'changepassword', loadChildren: 'app/pages/change-password/change-password.module#ChangePasswordModule' } 
         ]
     }
