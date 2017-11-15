@@ -6,22 +6,20 @@ import { Router } from '@angular/router';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import * as post from '../../state/post.actions';
 import * as app from '../../../../state/app.actions';
-import { MdPaginator } from '@angular/material';
 import { BaThemeSpinner } from '../../../../theme/services';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { NguiMapComponent } from '@ngui/map';
 
-import 'style-loader!./all-posts.scss';
+import 'style-loader!./post-details.scss';
 
 @Component({
-    selector: 'all-posts',
-    templateUrl: 'all-posts.html',
+    selector: 'post-details',
+    templateUrl: 'post-details.html',
 })
 
-export class AllPosts implements OnInit {
+export class PostDetails implements OnInit {
 
-    @ViewChild('postsPaginator') private _paginator: MdPaginator;
     public posts;
     public page = 1;
     public limit;
@@ -46,14 +44,18 @@ export class AllPosts implements OnInit {
         this.postStore = this.store
             .select('post')
             .subscribe((res: any) => {
-                if (res && res.posts) {
-                    this.posts = res.posts;
+                if (res) {
+                    this.count = res.count;
+                    this.posts = [];
+                    if (res.posts) {
+
+                    }
                 }
             });
     };
 
     ngOnInit() {
-        this.getAllPosts();
+        this.getPostDetails();
     }
 
     addPost() {
@@ -66,48 +68,16 @@ export class AllPosts implements OnInit {
         }
     }
 
-    getAllPosts() {
-        this.store.dispatch({
-            type: post.actionTypes.APP_GET_JOBS, payload: {
-                type: 'ACTIVE'
+    getPostDetails() {
+        /* this.store.dispatch({
+            type: post.actionTypes.APP_GETALL_JOB, payload: {
+                currentPage: this.page,
+                limit: 10,
+                role: this.role,
+                filter: this.filter,
+                value: this.value
             }
-        });
-    }
-    
-
-    showPostDetail(data) {
-        //localStorage.setItem('viewPostId', data.id);
-        //this.router.navigate(['pages/users/viewpost']);
-    }
-
-    selectTab(event) {
-        if (event.index == 0) {
-            this.store.dispatch({
-                type: post.actionTypes.APP_GET_JOBS, payload: {
-                    type: 'ACTIVE'
-                }
-            });
-        } else if (event.index == 1) {
-            this.store.dispatch({
-                type: post.actionTypes.APP_GET_JOBS, payload: {
-                    type: 'IN_PROGRESS'
-                }
-            });
-        } else if (event.index == 2) {
-            this.store.dispatch({
-                type: post.actionTypes.APP_GET_JOBS, payload: {
-                    type: 'COMPLETED'
-                }
-            });
-        }
-    }
-
-    showPhoneInfo() {
-        this.showPhone = true;
-    }
-
-    showEmailInfo() {
-        this.showEmail = true;
-    }
+        }); */
+    };
 
 }

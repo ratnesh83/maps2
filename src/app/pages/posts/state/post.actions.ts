@@ -4,6 +4,8 @@ export const actionTypes = {
 
     APP_GET_CATEGORIES: 'APP_GET_CATEGORIES',
     APP_GET_CATEGORIES_SUCCESS: 'APP_GET_CATEGORIES_SUCCESS',
+    APP_GET_JOBS: 'APP_GET_JOBS',
+    APP_GET_JOBS_SUCCESS: 'APP_GET_JOBS_SUCCESS',
     APP_GET_SUB_CATEGORIES: 'APP_GET_SUB_CATEGORIES',
     APP_GET_SUB_CATEGORIES_SUCCESS: 'APP_GET_SUB_CATEGORIES_SUCCESS',
     APP_POST_JOB: 'APP_POST_JOB',
@@ -20,6 +22,16 @@ export class AppGetCategories implements Action {
 
 export class AppGetCategoriesSuccess implements Action {
     type = actionTypes.APP_GET_CATEGORIES_SUCCESS;
+    constructor(public payload: credentials) { }
+}
+
+export class AppGetJobs implements Action {
+    type = actionTypes.APP_GET_JOBS;
+    constructor(public payload: credentials) { }
+}
+
+export class AppGetJobsSuccess implements Action {
+    type = actionTypes.APP_GET_JOBS_SUCCESS;
     constructor(public payload: credentials) { }
 }
 
@@ -46,6 +58,8 @@ export class AppPostJobSuccess implements Action {
 export type Actions
     = AppGetCategories
     | AppGetCategoriesSuccess
+    | AppGetJobs
+    | AppGetJobsSuccess
     | AppGetSubCategories
     | AppGetSubCategoriesSuccess
     | AppPostJob

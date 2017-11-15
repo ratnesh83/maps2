@@ -49,6 +49,41 @@ export class PostEffects {
         });
 
     @Effect({ dispatch: false })
+    getJobs$ = this.actions$
+        .ofType('APP_GET_JOBS')
+        .do((action) => {
+            this._spinner.show();
+            this.PostService.getAllJobs(action.payload).subscribe((result) => {
+                this._spinner.hide();
+                if (result.message == 'Action complete.' || result.statusCode == 200) {
+                    let payload = result.data;
+                    this.store.dispatch(new post.AppGetJobsSuccess(payload));
+                }
+            }
+                , (error) => {
+                    this._spinner.hide();
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        } else {
+
+                        }
+                    }
+                }
+            );
+        });
+
+
+    @Effect({ dispatch: false })
+    getJobsSuccess: Observable<Action> = this.actions$
+        .ofType('APP_GET_JOBS_SUCCESS')
+        .do((action) => {
+
+        });
+
+    @Effect({ dispatch: false })
     getSubCategories$ = this.actions$
         .ofType('APP_GET_SUB_CATEGORIES')
         .do((action) => {
