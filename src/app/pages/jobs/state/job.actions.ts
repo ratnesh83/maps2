@@ -32,6 +32,8 @@ export class AppJobDetailSuccess implements Action {
 }
 
 export type Actions
-    = AppGetAllJobDetail
+    = AppGetCategories
+    | AppGetCategoriesSuccess 
+    | AppGetAllJobDetail
     | AppJobDetailSuccess;
 

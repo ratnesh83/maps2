@@ -58,7 +58,6 @@ export class AllJobs implements OnInit {
         private dataService: DataService
     ) {
         this.addressType = 'COUNTRY';
-        this.center = '30.71889493430725, 76.81024353951216';
 
         this.info = {
             employerName: null,
@@ -91,7 +90,6 @@ export class AllJobs implements OnInit {
                         }
                     }
                     this.count = res.count;
-                    console.log(res);
                     this.jobs = [];
                     if (res.jobs) {
                         for (let i = 0; i < res.jobs.length; i++) {
@@ -140,9 +138,8 @@ export class AllJobs implements OnInit {
 
     showPosition(position, self) {
         if (position && position.coords) {
-            // let latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            // self.center = '\'' + position.coords.latitude + ','  + position.coords.longitude;
-            let latlng = new google.maps.LatLng(30.71889493430725, 76.81024353951216);
+            let latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            self.center = position.coords.latitude + ','  + position.coords.longitude;
             let geocoder = new google.maps.Geocoder();
             geocoder.geocode({ 'location': latlng }, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
@@ -252,7 +249,6 @@ export class AllJobs implements OnInit {
 
     changeCategory(event, data) {
         if (event && event.isUserInput) {
-            console.log(data);
             this.categoryId = data._id;
         }
     }
