@@ -42,7 +42,10 @@ export class BaPageTop {
                     } else if (res.userDetails.firstName) {
                         this.name = this.titleCase(res.userDetails.firstName);
                     }
-                    this.profilePicture = res.userDetails.profilePicture ? res.userDetails.profilePicture.thumb ? res.userDetails.profilePicture.thumb : 'assets/img/user.png': 'assets/img/user.png';
+                    this.profilePicture = res.userDetails.profilePicture ? res.userDetails.profilePicture.thumb ? res.userDetails.profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png';
+                    if (res.userDetails.categoryId) {
+                        this.dataService.setCategoryId(res.userDetails.categoryId);
+                    }
                 }
             });
     }

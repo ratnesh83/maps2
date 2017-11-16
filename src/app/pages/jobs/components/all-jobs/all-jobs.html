@@ -33,8 +33,8 @@
                     <div class="col-12 col-sm-6 jobs-input-box">
                         <label for="category">Category</label>
                         <md-select [(ngModel)]="selectedCategory" class="category-select">
-                            <md-option (onSelectionChange)="changeCategory($event, category)" *ngFor="let category of categories" [value]="category">
-                                {{ category }}
+                            <md-option (onSelectionChange)="changeCategory($event, category)" *ngFor="let category of categories" [value]="category.name">
+                                {{ category.name }}
                             </md-option>
                         </md-select>
                     </div>

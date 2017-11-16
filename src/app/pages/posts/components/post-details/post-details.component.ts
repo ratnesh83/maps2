@@ -39,15 +39,16 @@ export class PostDetails implements OnInit {
         this.postStore = this.store
             .select('post')
             .subscribe((res: any) => {
-
-                if (res && res.post) {
+                if (res) {
                     this.post = res.post;
                 }
-                if (res && res.labours) {
+                if (res) {
                     this.labours = res.labours;
-                    for (let i = 0; i < this.labours.length; i++) {
-                        this.labours[i].showPhone = false;
-                        this.labours[i].showEmail = false;
+                    if (this.labours) {
+                        for (let i = 0; i < this.labours.length; i++) {
+                            this.labours[i].showPhone = false;
+                            this.labours[i].showEmail = false;
+                        }
                     }
                 }
             });

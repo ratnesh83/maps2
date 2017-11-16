@@ -107,12 +107,14 @@
         .left-notification-title.mat-card-title {
             cursor: pointer;
             width: max-content;
+            max-width: 240px;
             margin-top: 5px;
             margin-bottom: 10px;
         }
         .left-notification-subtitle.mat-card-subtitle {
             cursor: pointer;
             width: max-content;
+            max-width: 240px;
         }
     }
     .left-notification-subhead.mat-card-header {

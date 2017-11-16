@@ -39,8 +39,10 @@ export class PostService {
 
     getAllJobs(payload) {
         let url;
+        // let skip = payload.hasOwnProperty('skip') ? payload.skip : ((payload.currentPage - 1) * payload.limit);
         this.authRequired = true;
         this.utcOffset = false;
+        // url = environment.APP.API_URL + environment.APP.GET_ALL_POSTS + '?type=' + payload.type + '&limit=' + payload.limit + '&skip=' + skip;;
         url = environment.APP.API_URL + environment.APP.GET_ALL_POSTS + '?type=' + payload.type;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }

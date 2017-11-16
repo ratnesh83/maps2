@@ -547,6 +547,7 @@ export class AuthEffects {
                     localStorage.removeItem('tokenSession');
                     this.dataService.removeUserRegisterationId();
                     this.dataService.removeUserRegisterationAccessToken();
+                    this.dataService.removeCategoryId();
                     this.router.navigate(['login']);
                 }
             }
@@ -557,6 +558,7 @@ export class AuthEffects {
                     localStorage.removeItem('tokenSession');
                     this.dataService.removeUserRegisterationId();
                     this.dataService.removeUserRegisterationAccessToken();
+                    this.dataService.removeCategoryId();
                     this.router.navigate(['login']);
                 }
             );

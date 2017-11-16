@@ -29,6 +29,18 @@ export class DataService {
         this.userRegisterationAccessToken = null;
     }
 
+    setCategoryId(id) {
+        localStorage.setItem('CategoryId', id);
+    }
+
+    getCategoryId() {
+        return localStorage.getItem('CategoryId');
+    }
+
+    removeCategoryId() {
+        localStorage.removeItem('CategoryId');
+    }
+
     setUserRegisterationId(id) {
         localStorage.setItem('userRegisterationId', id);
         this.userRegisterationId = id;

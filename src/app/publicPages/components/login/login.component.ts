@@ -278,6 +278,12 @@ export class Login {
                 this._phone.nativeElement.focus();
             }
             return;
+        } else if(this.phone.value && !this.countryCode.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Country code is required', 'Error');
+            if (this._countryCode) {
+                this._countryCode.nativeElement.focus();
+            }
         } else if (this.email.value && !this.phone.value && this.email.hasError && this.email.errors) {
             if (this.email.errors.required) {
                 this.toastrService.clear();
