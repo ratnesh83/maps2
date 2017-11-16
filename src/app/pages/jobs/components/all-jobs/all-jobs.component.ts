@@ -58,7 +58,7 @@ export class AllJobs implements OnInit {
         private toastrService: ToastrService,
         private cdRef: ChangeDetectorRef,
         private dataService: DataService,
-        public dialog: MdDialog
+        private dialog: MdDialog
     ) {
         this.addressType = 'COUNTRY';
 
@@ -109,7 +109,8 @@ export class AllJobs implements OnInit {
                                 employerEmail: res.jobs[i].employerId ? res.jobs[i].employerId.email : null,
                                 employerPhoneNumber: res.jobs[i].employerId ? res.jobs[i].employerId.countryCode + res.jobs[i].employerId.phoneNumber : null,
                                 isPhoneNumberHidden: res.jobs[i].employerId ? res.jobs[i].employerId.isPhoneNumberHidden : false,
-                                profilePicture: res.jobs[i].employerId ? res.jobs[i].employerId.profilePicture ? res.jobs[i].employerId.profilePicture.original : '' : null,
+                                profilePicture: res.jobs[i].employerId ? res.jobs[i].employerId.profilePicture ? res.jobs[i].employerId.profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png',
+                                categoryImage: res.jobs[i].categoryId ? res.jobs[i].categoryId.image ? res.jobs[i].categoryId.image.thumb : 'assets/img/image-placeholder.jpg' : 'assets/img/image-placeholder.jpg',
                                 coordinates: coordinates,
                                 distance: res.jobs[i].distance,
                                 rate: res.jobs[i].rate,
@@ -257,6 +258,7 @@ export class AllJobs implements OnInit {
 
     changeMap(lat, lng) {
         this.center = lat + ', ' + lng;
+        this.cdRef.detectChanges();
     }
 
     changeCategory(event, data) {
@@ -387,6 +389,7 @@ export class AllJobs implements OnInit {
                 employerPhoneNumber: data.employerPhoneNumber,
                 isPhoneNumberHidden: data.isPhoneNumberHidden,
                 profilePicture: data.profilePicture,
+                categoryImage: data.categoryImage,
                 distance: data.distance ? data.distance.toFixed(1) : data.distance,
                 address: data.address,
                 rate: data.rate,
