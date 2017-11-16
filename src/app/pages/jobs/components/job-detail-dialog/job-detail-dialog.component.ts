@@ -46,7 +46,7 @@ import 'style-loader!./job-detail-dialog.scss';
                             Job Date
                         </p>
                         <p class="md-card-content-posts-content">
-                            {{jobDetails.startDate | date : 'dd/mm/yyyy'}} - {{jobDetails.endDate | date : 'dd/mm/yyyy'}}
+                            {{jobDetails.startDate | date : 'dd/MM/yyyy'}} - {{jobDetails.endDate | date : 'dd/MM/yyyy'}}
                         </p>
                         <p class="md-card-content-posts-label">
                             Job Details

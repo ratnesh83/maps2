@@ -4,70 +4,56 @@
             <div class="col-12 col-sm-12 user-feed-heading">
                 <md-card class="feedback-card-heading">
                     <md-card-header class="feedback-card-header feedback-card-heading">
-                        <md-card-title style="font-weight: 600; color: #1b1b1b; margin-bottom: 0px"><h2>My Ratings</h2></md-card-title>
-                        <div class="feedback-header-rating">
-                            <rating class="feedback-stars" [(ngModel)]="rating" [max]="5" fullIcon="★" emptyIcon="☆" [readonly]="true" [disabled]="false"
-                                [required]="false" [float]="true" [titles]="['1', '2', '3', '4', '5']">
+                        <md-card-title style="font-weight: 600; color: #1b1b1b; margin-bottom: 0px">
+                            <h2>My Ratings</h2>
+                        </md-card-title>
+                        <div *ngIf="feedbacks && feedbacks.ratings" class="feedback-header-rating">
+                            <rating class="feedback-stars" [(ngModel)]="feedbacks.averageRating" [max]="5" fullIcon="★" emptyIcon="☆" [readonly]="true"
+                                [disabled]="false" [required]="false" [float]="true" [titles]="['1', '2', '3', '4', '5']">
                             </rating>
                             <div class="avg-rating">Average Rating</div>
                         </div>
                     </md-card-header>
                     <md-card-content>
-                       
+
                     </md-card-content>
                 </md-card>
             </div>
         </div>
     </div>
-    <div class="feeds-section">
-        <md-card class="feedback-card">
+    <div *ngIf="feedbacks && feedbacks.ratings" class="feeds-section">
+        <md-card class="feedback-card" *ngFor="let feedback of feedbacks.ratings; let i = index">
             <md-card-header class="feedback-card-header">
                 <div md-card-avatar class="feedback-header-image">
-                    <img mat-card-avatar [src]="profilePicture ? profilePicture : 'assets/img/default-profile.jpg'">
+                    <img mat-card-avatar *ngIf="feedback.givenBy == 'LABOUR' && feedback.labourId && feedback.labourId.profilePicture" [src]="feedback.labourId.profilePicture.thumb ? feedback.labourId.profilePicture.thumb : 'assets/img/default-profile.jpg'">
+                    <img mat-card-avatar *ngIf="feedback.givenBy == 'EMPLOYER' && feedback.employerId && feedback.employerId.profilePicture" [src]="feedback.employerId.profilePicture.thumb ? feedback.employerId.profilePicture.thumb : 'assets/img/default-profile.jpg'">
                 </div>
-                <md-card-title style="font-weight: 600; color: #1b1b1b">Charles Bates</md-card-title>
-                <md-card-subtitle style="font-weight: 500">Electrical: Air-Conditioning</md-card-subtitle>
+                <md-card-title *ngIf="feedback.givenBy == 'LABOUR' && feedback.labourId" style="font-weight: 600; color: #1b1b1b">
+                    {{ feedback.labourId.fullName ? feedback.labourId.fullName : feedback.labourId.firstName ? feedback.labourId.firstName +
+                    ' ' + feedback.labourId.lastName : '' }}
+                </md-card-title>
+                <md-card-title *ngIf="feedback.givenBy == 'EMPLOYER' && feedback.employerId" style="font-weight: 600; color: #1b1b1b">
+                    {{ feedback.employerId.fullName ? feedback.employerId.fullName : feedback.employerId.firstName ? feedback.employerId.firstName
+                    + ' ' + feedback.employerId.lastName : '' }}
+                </md-card-title>
+                <md-card-subtitle *ngIf="feedback.jobId" style="font-weight: 500">{{ feedback.jobId.category + ': ' + feedback.jobId.subCategory }}</md-card-subtitle>
                 <div class="feedback-header-rating">
-                    <rating class="feedback-stars" [(ngModel)]="rating" [max]="5" fullIcon="★" emptyIcon="☆" [readonly]="true" [disabled]="false"
+                    <rating class="feedback-stars" [(ngModel)]="feedback.rating" [max]="5" fullIcon="★" emptyIcon="☆" [readonly]="true" [disabled]="false"
                         [required]="false" [float]="true" [titles]="['1', '2', '3', '4', '5']">
                     </rating>
                 </div>
             </md-card-header>
             <md-card-content>
                 <p class="md-card-content-feedback-p">
-                    The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes
-                    very well with mountainous terrain, the Shiba Inu was originally bred for hunting.
+                    {{ feedback.feedback }}
                 </p>
                 <p class="md-card-content-feedback-p-date">
-                    12/12/2017
-                </p>
-            </md-card-content>
-        </md-card>
-        <md-card class="feedback-card">
-            <md-card-header class="feedback-card-header">
-                <div md-card-avatar class="feedback-header-image">
-                    <img mat-card-avatar [src]="profilePicture ? profilePicture : 'assets/img/default-profile.jpg'">
-                </div>
-                <md-card-title style="font-weight: 600; color: #1b1b1b">Larry Perez</md-card-title>
-                <md-card-subtitle style="font-weight: 500">Electrical: Air-Conditioning</md-card-subtitle>
-                <div class="feedback-header-rating">
-                    <rating class="feedback-stars" [(ngModel)]="rating" [max]="5" fullIcon="★" emptyIcon="☆" [readonly]="true" [disabled]="false"
-                        [required]="true" [float]="true" [titles]="['one', 'two', 'three', 'four', 'five']">
-                    </rating>
-                </div>
-            </md-card-header>
-            <md-card-content>
-                <p class="md-card-content-feedback-p">
-                    The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan. A small, agile dog that copes
-                    very well with mountainous terrain, the Shiba Inu was originally bred for hunting.
-                </p>
-                <p class="md-card-content-feedback-p-date">
-                    12/12/2017
+                    {{ feedback.createdAt | date: 'dd/MM/yyyy' }}
                 </p>
             </md-card-content>
         </md-card>
     </div>
-    <div class="panel-footer">
+    <!-- <div class="panel-footer">
         <div class="row">
             <div *ngIf="count > 4" class="col-sm-12 rar-align page-select">
                 <span class="first-last-ctrl">
@@ -88,5 +74,5 @@
                 </md-paginator>
             </div>
         </div>
-    </div>
+    </div> -->
 </div>
