@@ -35,7 +35,8 @@ export class JobEffects {
                                 type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
                             });
                         } else {
-
+                            this.toastrService.clear();
+                            this.toastrService.error(error.message || 'Something went wrong', 'Error');
                         }
                     }
                 }
@@ -64,6 +65,8 @@ export class JobEffects {
                         count: result.data.length
                     };
                     this.store.dispatch(new job.AppJobDetailSuccess(payload));
+                    this.toastrService.clear();
+                    this.toastrService.info(payload.count > 1 ? payload.count  + ' jobs found' : payload.count == 0 ? 'No jobs found' : '1 job found', 'Success');
                 }
             }
                 , (error) => {

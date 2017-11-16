@@ -1,4 +1,3 @@
-@import "../../../../theme/sass/conf/conf";
 .panel-default {
     .panel-heading {
         margin-bottom: 10px;
@@ -8,48 +7,63 @@
     font-weight: 500;
     color: #b1b1b1;
 }
-.user-jobs-heading {
+.user-posts-heading {
     display: inline-flex;
     h2 {
         margin: auto 0px;
         width: auto;
     }
 }
-.jobs-card-heading {
+.posts-card-heading {
     width: 100%;
 }
-.jobs-section {
+.posts-section {
     margin-top: 10px;
 }
-.jobs-card {
-    margin-bottom: 10px;
-}
-.jobs-card-header {
+.posts-card-header {
     position: relative;
 }
-.jobs-header-rating {
+.posts-header-right {
     position: absolute;
     top: 0px;
     right: 0px;
     text-align: right;
 }
-.md-card-content-jobs-p {
+.md-card-content-posts-content {
     text-align: left;
     font-weight: 500;
     color: #1b1b1b;
+    margin-bottom: 1.5rem;
 }
-.md-card-content-jobs-p-date {
+.md-card-content-posts-label {
     text-align: left;
     font-weight: 500;
     color: rgba(0, 0, 0, 0.54);
 }
-.jobs-stars .star-icon {
+.posts-stars .star-icon {
     font-size: unset !important;
 }
-.jobs-input-box {
+.posts-input-box {
     input {
         font-family: Roboto, "Helvetica Neue", sans-serif;
         font-weight: 400 !important;
+    }
+}
+.posts-header-contact {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    text-align: right;
+    .fa {
+        cursor: pointer;
+        padding-left: 10px; 
+        color: #68d426;
+        font-size: large;
+    }
+    div {
+        font-size: smaller;
+        color: #a3a3a3;
+        font-weight: 500;
     }
 }
 .category-select {
@@ -71,7 +85,7 @@
         display: none;
     }
 }
-.jobs-input-box {
+.posts-input-box {
     margin-bottom: 15px;
     label {
         color: #7d7d7d;
@@ -107,14 +121,12 @@
         .left-notification-title.mat-card-title {
             cursor: pointer;
             width: max-content;
-            max-width: 240px;
             margin-top: 5px;
             margin-bottom: 10px;
         }
         .left-notification-subtitle.mat-card-subtitle {
             cursor: pointer;
             width: max-content;
-            max-width: 240px;
         }
     }
     .left-notification-subhead.mat-card-header {
@@ -125,7 +137,6 @@
         }
         .left-notification-title.mat-card-title {
             width: max-content;
-            max-width: 240px;
             font-size: small;
             margin-top: 5px;
             margin-bottom: 10px;
@@ -133,13 +144,11 @@
         .left-notification-subtitle.mat-card-subtitle {
             width: max-content;
             font-size: smaller;
-            max-width: 240px;
         }
     }
-    .jobs-header-contact { 
+    .posts-header-contact { 
         width: -webkit-fill-available;
         margin-top: 5px;
-        margin-left: 5px;
         text-align: right;
         .fa {
             cursor: pointer;
@@ -153,13 +162,73 @@
             font-weight: 500;
         }
     }
-    .jobs-header-contact-rate {
+    .posts-header-contact-rate {
         width: -webkit-fill-available;
         font-weight: 600;
         font-size: small;
         color: #026eff;
         span {
             padding-left: 5px;
+        }
+    }
+}
+.my-posts-tabs-group {
+    .mat-tab-label-container {
+        height: 75px;
+        .mat-tab-list {
+            display: flex;
+            .mat-tab-labels {
+                margin: auto 20px;
+            }
+        }
+    }
+    .mat-tab-header {
+        background-color: #ffffff;
+        border: 0px;
+        box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    }
+    .mat-tab-label.mat-ripple.mat-tab-label-active {
+        background-color: #026eff;
+        opacity: 1;
+        color: #ffffff;
+        border: 0px;
+    }
+    .mat-tab-label.mat-ripple {
+        border: 1px solid #474747;
+        border-left: 0px;
+    }
+    .mat-tab-labels {
+        width: max-content;
+        >:nth-child(1) {
+            border-radius: 50% 0px 0px 50%;
+            border-left: 1px solid #474747;
+        }
+        >:nth-child(3) {
+            border-radius: 0px 50% 50% 0px;
+        }
+    }
+    .mat-tab-label, .mat-tab-link {
+        color: #333333;
+    }
+}
+.post-container {
+    position: relative;
+}
+.add-post-div {
+    display: flex;
+    position: absolute;
+    z-index: 2;
+    top: 0px;
+    right: 15px;
+    height: 75px;
+    .add-post-span {
+        margin: auto 0px;
+        margin-right: 20px;
+        .add-post-btn {
+            background-color: #026eff;
+            .fa {
+                font-size: medium;
+            }
         }
     }
 }

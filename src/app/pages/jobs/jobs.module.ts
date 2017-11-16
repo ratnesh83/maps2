@@ -19,6 +19,7 @@ import {
 import { routing } from './jobs.routing';
 import { Jobs } from './jobs.component';
 import { AllJobs } from './components/all-jobs/all-jobs.component';
+import { JobDetailDialog } from './components/job-detail-dialog/job-detail-dialog.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { GooglePlaceModule } from 'ng2-google-place-autocomplete';
 import { NguiMapModule } from '@ngui/map';
@@ -47,9 +48,11 @@ import { NguiMapModule } from '@ngui/map';
     ],
     declarations: [
         Jobs,
-        AllJobs
+        AllJobs,
+        JobDetailDialog
     ],
     entryComponents: [
+        JobDetailDialog
     ],
 })
 

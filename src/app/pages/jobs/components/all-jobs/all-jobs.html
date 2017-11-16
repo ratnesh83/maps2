@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div>
-                    <ngui-map center="{{ center }}" [zoomControlOptions]="{ position: 'TOP_RIGHT' }" [fullscreenControl]="false" [scrollwheel]="false">
+                    <ngui-map style="height: 60vh; max-height: 480px;" zoom="{{ zoom }}" center="{{ center }}" [zoomControlOptions]="{ position: 'TOP_RIGHT' }" [fullscreenControl]="false" [scrollwheel]="false">
                         <marker *ngFor="let job of jobs" [position]="job.coordinates" (click)="showMarkerInfo($event, job)" draggable="false" [icon]="{
                             url: 'assets/img/labor-search.png',
                             anchor: [16,24],

@@ -3,12 +3,13 @@ import { Store } from '@ngrx/store';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
+import { MdDialog } from '@angular/material';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import { DataService } from '../../../../services/data-service/data.service';
 import * as job from '../../state/job.actions';
 import * as app from '../../../../state/app.actions';
 import { BaThemeSpinner } from '../../../../theme/services';
-import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
+import { JobDetailDialog } from '../job-detail-dialog/job-detail-dialog.component';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { NguiMapComponent } from '@ngui/map';
 
@@ -48,6 +49,7 @@ export class AllJobs implements OnInit {
     public country;
     public zipCode;
     public addressType;
+    public zoom = 13;
 
     constructor(
         private store: Store<any>,
@@ -55,7 +57,8 @@ export class AllJobs implements OnInit {
         private router: Router,
         private toastrService: ToastrService,
         private cdRef: ChangeDetectorRef,
-        private dataService: DataService
+        private dataService: DataService,
+        public dialog: MdDialog
     ) {
         this.addressType = 'COUNTRY';
 
@@ -79,13 +82,16 @@ export class AllJobs implements OnInit {
                         this.categories = [];
                         for (let i = 0; i < res.categories.length; i++) {
                             this.categories.push(res.categories[i]);
-                            this.selectedCategory = this.categories[0].name;
-                            this.categoryId = this.categories[0]._id;
                         }
-                        for (let i = 0; i < this.categories.length; i++) {
-                            if (this.dataService.getCategoryId() == this.categories[i]._id) {
-                                this.selectedCategory = this.categories[i].name;
-                                this.categoryId = this.categories[i]._id;
+                        if (!res.getJobHit) {
+                            for (let i = 0; i < this.categories.length; i++) {
+                                if (this.dataService.getCategoryId() == this.categories[i]._id) {
+                                    this.selectedCategory = this.categories[i].name;
+                                    this.categoryId = this.categories[i]._id;
+                                } else if(i == this.categories.length) {
+                                    this.selectedCategory = this.categories[0].name;
+                                    this.categoryId = this.categories[0]._id;
+                                }
                             }
                         }
                     }
@@ -99,7 +105,7 @@ export class AllJobs implements OnInit {
                             }
                             let job = {
                                 id: res.jobs[i]._id,
-                                employerName: res.jobs[i].employerId ? res.jobs[i].employerId.firstName + ' ' + res.jobs[i].employerId.lastName : null,
+                                employerName: res.jobs[i].employerId ? res.jobs[i].employerId.fullName ? res.jobs[i].employerId.fullName : (res.jobs[i].employerId.lastName ? (res.jobs[i].employerId.firstName + ' ' + res.jobs[i].employerId.lastName) : res.jobs[i].employerId.firstName) : null,
                                 employerEmail: res.jobs[i].employerId ? res.jobs[i].employerId.email : null,
                                 employerPhoneNumber: res.jobs[i].employerId ? res.jobs[i].employerId.countryCode + res.jobs[i].employerId.phoneNumber : null,
                                 isPhoneNumberHidden: res.jobs[i].employerId ? res.jobs[i].employerId.isPhoneNumberHidden : false,
@@ -139,7 +145,6 @@ export class AllJobs implements OnInit {
     showPosition(position, self) {
         if (position && position.coords) {
             let latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            self.center = position.coords.latitude + ','  + position.coords.longitude;
             let geocoder = new google.maps.Geocoder();
             geocoder.geocode({ 'location': latlng }, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
@@ -181,12 +186,16 @@ export class AllJobs implements OnInit {
                         self.zipCode = postal;
                         if (postal) {
                             self.addressType = 'ZIPCODE';
+                            self.zoom = 13;
                         } else if (city) {
                             self.addressType = 'CITY';
+                            self.zoom = 12;
                         } else if (state) {
                             self.addressType = 'STATE';
+                            self.zoom = 11;
                         } else if (country) {
                             self.addressType = 'COUNTRY';
+                            self.zoom = 6;
                         }
                         let address = {
                             city: city,
@@ -217,6 +226,7 @@ export class AllJobs implements OnInit {
                             addressType: self.addressType,
                             address: address
                         };
+                        self.changeMap(latitude, longitude);
                         self.getAllJobs(data);
                     }
                 }
@@ -238,9 +248,11 @@ export class AllJobs implements OnInit {
         });
     };
 
-    showJobDetail(data) {
-        //localStorage.setItem('viewJobId', data.id);
-        //this.router.navigate(['pages/users/viewjob']);
+    showJobDetail(job) {
+        this.dataService.setData('jobId', job.id);
+        this.router.navigate(['pages/posts/postdetails']);
+        // let dialogRef = this.dialog.open(JobDetailDialog);
+        // dialogRef.componentInstance.jobDetails = job;
     }
 
     changeMap(lat, lng) {
@@ -250,6 +262,36 @@ export class AllJobs implements OnInit {
     changeCategory(event, data) {
         if (event && event.isUserInput) {
             this.categoryId = data._id;
+            let address = {
+                city: this.city,
+                cityShort: this.city,
+                state: this.state,
+                stateShort: this.state,
+                country: this.country,
+                zipCode: this.zipCode,
+                latitude: this.latitude,
+                longitude: this.longitude
+            };
+            if (!this.city || this.city == null || this.city == undefined) {
+                delete address.city;
+                delete address.cityShort;
+            }
+            if (!this.state || this.state == null || this.state == undefined) {
+                delete address.state;
+                delete address.stateShort;
+            }
+            if (!this.zipCode || this.zipCode == null || this.zipCode == undefined) {
+                delete address.zipCode;
+                delete address.zipCode;
+            }
+            let dataToSend = {
+                latitude: this.latitude,
+                longitude: this.longitude,
+                categoryId: this.categoryId,
+                addressType: this.addressType,
+                address: address
+            };
+            this.getAllJobs(dataToSend);
         }
     }
 
@@ -292,12 +334,16 @@ export class AllJobs implements OnInit {
         this.zipCode = postal;
         if (postal) {
             this.addressType = 'ZIPCODE';
+            this.zoom = 13;
         } else if (city) {
             this.addressType = 'CITY';
+            this.zoom = 12;
         } else if (state) {
             this.addressType = 'STATE';
+            this.zoom = 11;
         } else if (country) {
             this.addressType = 'COUNTRY';
+            this.zoom = 6;
         }
         let address = {
             city: city,
