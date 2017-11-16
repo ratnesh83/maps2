@@ -53,15 +53,15 @@ export class DataService {
     }
 
     setData(key, data) {
-        this.data[key] = data;
+        localStorage.setItem(key, data);
     }
 
-    getData() {
-        return this.data;
+    getData(key) {
+        return localStorage.getItem(key);
     }
 
     removeData(key) {
-        delete this.data[key];
+        localStorage.removeItem(key);
     }
 
 }

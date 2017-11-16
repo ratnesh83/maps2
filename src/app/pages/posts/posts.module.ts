@@ -19,11 +19,13 @@ import {
     MdDialogModule,
     MdTooltipModule,
     MdDatepickerModule,
-    MdNativeDateModule
+    MdNativeDateModule,
+    MdPaginatorModule
 } from '@angular/material';
 import { routing } from './posts.routing';
 import { Posts } from './posts.component';
 import { AllPosts } from './components/all-posts/all-posts.component';
+import { PostDetails } from './components/post-details/post-details.component';
 import { PostJob } from './components/post-job/post-job.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { GooglePlaceModule } from 'ng2-google-place-autocomplete';
@@ -50,6 +52,7 @@ import { NguiMapModule } from '@ngui/map';
         MdTooltipModule,
         MdDatepickerModule,
         MdNativeDateModule,
+        MdPaginatorModule,
         SelectModule,
         GooglePlaceModule,
         NguiMapModule.forRoot({ 
@@ -59,6 +62,7 @@ import { NguiMapModule } from '@ngui/map';
     declarations: [
         Posts,
         AllPosts,
+        PostDetails,
         PostJob
     ],
     entryComponents: [

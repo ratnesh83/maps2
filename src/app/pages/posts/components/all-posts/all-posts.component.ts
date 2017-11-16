@@ -6,7 +6,9 @@ import { Router } from '@angular/router';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import * as post from '../../state/post.actions';
 import * as app from '../../../../state/app.actions';
+import { MdPaginator } from '@angular/material';
 import { BaThemeSpinner } from '../../../../theme/services';
+import { DataService } from '../../../../services/data-service/data.service';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { NguiMapComponent } from '@ngui/map';
@@ -20,6 +22,7 @@ import 'style-loader!./all-posts.scss';
 
 export class AllPosts implements OnInit {
 
+    @ViewChild('postsPaginator') private _paginator: MdPaginator;
     public posts;
     public page = 1;
     public limit;
@@ -31,81 +34,22 @@ export class AllPosts implements OnInit {
     public filter;
     public showPhone: boolean = false;
     public showEmail: boolean = false;
-    public searchLocation;
-    public positions = [];
-    public markers = [];
-    public info;
     public postStore;
-    public selectedCategory;
-    public categories = [];
-    public center;
 
     constructor(
         private store: Store<any>,
         private modalService: NgbModal,
         private router: Router,
         private toastrService: ToastrService,
-        private cdRef: ChangeDetectorRef
+        private cdRef: ChangeDetectorRef,
+        private dataService: DataService
     ) {
-        this.center = '30.71889493430725, 76.81024353951216';
-
-        if (navigator.geolocation) {
-            let self = this;
-            navigator.geolocation.getCurrentPosition((response) => {
-                self.showPosition(response, self);
-            });
-        }
-
-        this.info = {
-            employerName: null,
-            employerEmail: null,
-            employerPhoneNumber: null,
-            isPhoneNumberHidden: false,
-            profilePicture: null,
-            distance: 0,
-            address: null,
-            rate: 0,
-            requiredLabourers: 0,
-        };
-
-        this.categories = [
-            'Health Care',
-            'Construction',
-            'Engineering'
-        ];
-
-        this.selectedCategory = this.categories[0];
 
         this.postStore = this.store
             .select('post')
             .subscribe((res: any) => {
-                if (res) {
-                    this.count = res.count;
-                    this.posts = [];
-                    if (res.posts) {
-
-                        for (let i = 0; i < res.posts.length; i++) {
-                            let coordinates = [0, 0];
-                            if (res.posts[i].employerAddress && res.posts[i].employerAddress.location) {
-                                coordinates = [res.posts[i].employerAddress.location.coordinates[1], res.posts[i].employerAddress.location.coordinates[0]];
-                            }
-                            let post = {
-                                id: res.posts[i]._id,
-                                employerName: res.posts[i].employerId ? res.posts[i].employerId.firstName + ' ' + res.posts[i].employerId.lastName : null,
-                                employerEmail: res.posts[i].employerId ? res.posts[i].employerId.email : null,
-                                employerPhoneNumber: res.posts[i].employerId ? res.posts[i].employerId.countryCode + res.posts[i].employerId.phoneNumber : null,
-                                isPhoneNumberHidden: res.posts[i].employerId ? res.posts[i].employerId.isPhoneNumberHidden : false,
-                                profilePicture: res.posts[i].employerId ? res.posts[i].employerId.profilePicture ? res.posts[i].employerId.profilePicture.original : '' : null,
-                                coordinates: coordinates,
-                                distance: res.posts[i].distance,
-                                rate: res.posts[i].rate,
-                                rateType: res.posts[i].rateType,
-                                title: res.posts[i].title,
-                                address: res.posts[i].employerAddress ? res.posts[i].employerAddress.addressLine1 + ', ' + res.posts[i].employerAddress.city : ''
-                            };
-                            this.posts.push(post);
-                        }
-                    }
+                if (res && res.posts) {
+                    this.posts = res.posts;
                 }
             });
     };
@@ -118,21 +62,6 @@ export class AllPosts implements OnInit {
         this.router.navigate(['/pages/posts/postjob']);
     }
 
-    showPosition(position, self) {
-        if (position && position.coords) {
-            // let latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            let latlng = new google.maps.LatLng(30.71889493430725, 76.81024353951216);
-            let geocoder = new google.maps.Geocoder();
-            geocoder.geocode({ 'location': latlng }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[0]) {
-                        self.searchLocation = results[0].formatted_address;
-                    }
-                }
-            });
-        }
-    }
-
     ngOnDestroy() {
         if (this.postStore) {
             this.postStore.unsubscribe();
@@ -140,85 +69,39 @@ export class AllPosts implements OnInit {
     }
 
     getAllPosts() {
-        /* this.store.dispatch({
-            type: post.actionTypes.APP_GETALL_JOB, payload: {
-                currentPage: this.page,
-                limit: 10,
-                role: this.role,
-                filter: this.filter,
-                value: this.value
+        this.store.dispatch({
+            type: post.actionTypes.APP_GET_JOBS, payload: {
+                type: 'ACTIVE'
             }
-        }); */
-    };
+        });
+    }
+    
 
-    showPostDetail(data) {
-        //localStorage.setItem('viewPostId', data.id);
-        //this.router.navigate(['pages/users/viewpost']);
+    showPostDetail(id) {
+        this.dataService.setData('jobId', id);
+        this.router.navigate(['pages/posts/postdetails']);
     }
 
-    changeMap(lat, lng) {
-        this.center = lat + ', ' + lng;
-    }
-
-    changeCategory(event, data) {
-        if (event && event.isUserInput) {
-            // console.log(data);
-        }
-    }
-
-    getAddress(event) {
-        let addressComponents = event.address_components;
-        let latitude = event.geometry.location.lat();
-        let longitude = event.geometry.location.lng();
-        let formattedAddress = event.formatted_address;
-        let locationName = event.streetAddress;
-        let route = '';
-        let locality = '';
-        let city = '';
-        let state = '';
-        let country = '';
-        let postal = '';
-        for (let i = 0; i < addressComponents.length; i++) {
-            let types = addressComponents[i].types;
-            for (let j = 0; j < types.length; j++) {
-                if (types[j] == 'administrative_area_level_1') {
-                    state = addressComponents[i].long_name;
-                } else if (types[j] == 'administrative_area_level_2') {
-                    city = addressComponents[i].long_name;
-                } else if (types[j] == 'locality') {
-                    locality = addressComponents[i].long_name;
-                } else if (types[j] == 'country') {
-                    country = addressComponents[i].long_name;
-                } else if (types[j] == 'postal_code') {
-                    postal = addressComponents[i].long_name;
-                } else if (types[j] == 'route') {
-                    route = addressComponents[i].long_name;
+    selectTab(event) {
+        if (event.index == 0) {
+            this.store.dispatch({
+                type: post.actionTypes.APP_GET_JOBS, payload: {
+                    type: 'ACTIVE'
                 }
-            }
+            });
+        } else if (event.index == 1) {
+            this.store.dispatch({
+                type: post.actionTypes.APP_GET_JOBS, payload: {
+                    type: 'IN_PROGRESS'
+                }
+            });
+        } else if (event.index == 2) {
+            this.store.dispatch({
+                type: post.actionTypes.APP_GET_JOBS, payload: {
+                    type: 'COMPLETED'
+                }
+            });
         }
-        this.searchLocation = formattedAddress;
-        this.changeMap(latitude, longitude);
-    }
-
-    showMarkerInfo({ target: marker }, data) {
-        if (data) {
-            this.info = {
-                id: data.id,
-                employerName: data.employerName,
-                employerEmail: data.employerEmail,
-                employerPhoneNumber: data.employerPhoneNumber,
-                isPhoneNumberHidden: data.isPhoneNumberHidden,
-                profilePicture: data.profilePicture,
-                distance: data.distance ? data.distance.toFixed(1) : data.distance,
-                address: data.address,
-                rate: data.rate,
-                rateType: data.rateType,
-                title: data.title
-            };
-        }
-        this.showPhone = false;
-        this.showEmail = false;
-        marker.nguiMapComponent.openInfoWindow('iw', marker);
     }
 
     showPhoneInfo() {

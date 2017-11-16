@@ -6,76 +6,41 @@
             </button>
         </span>
     </div>
-    <md-tab-group class="my-posts-tabs-group">
+    <md-tab-group class="my-posts-tabs-group" (selectChange)="selectTab($event)">
         <md-tab label="ACTIVE">
             <div class="posts-section page-input-block">
                 <md-card class="posts-card">
-                    <md-card-content>
-                        <div class="form-group row">
-                            <div class="col-12 col-sm-6">
-
-                            </div>
-                            <div class="col-12 col-sm-6">
-
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-12 col-sm-6 posts-input-box">
-                                <label for="category">Category</label>
-                                <md-select [(ngModel)]="selectedCategory" class="category-select">
-                                    <md-option (onSelectionChange)="changeCategory($event, category)" *ngFor="let category of categories" [value]="category">
-                                        {{ category }}
-                                    </md-option>
-                                </md-select>
-                            </div>
-                            <div class="col-12 col-sm-6 posts-input-box">
-                                <label for="address">Address</label>
-                                <input #inputLocationAddress [(ngModel)]="searchLocation" ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)"
-                                    class="form-control" placeholder="">
-                            </div>
-                        </div>
-                        <div>
-                            <ngui-map center="{{ center }}" [zoomControlOptions]="{ position: 'TOP_RIGHT' }" [fullscreenControl]="false" [scrollwheel]="false">
-                                <marker *ngFor="let post of posts" [position]="post.coordinates" (click)="showMarkerInfo($event, post)" draggable="false"
-                                    [icon]="{
-                                            url: 'assets/img/labor-search.png',
-                                            anchor: [16,24],
-                                            size: [32,48],
-                                            scaledSize: [32,48]
-                                          }" animation="DROP">
-                                    <info-window *ngIf="info" id="iw">
-                                        <div class="info-window-bar">
-                                            <md-card class="left-notification-card">
-                                                <md-card-header class="left-notification-head animated bounceInRight">
-                                                    <div (click)="showPostDetail(info)" md-card-avatar class="notification-header-image">
-                                                        <img mat-card-avatar [src]="info.profilePicture ? info.profilePicture : 'assets/img/kate.png'">
-                                                    </div>
-                                                    <md-card-title (click)="showPostDetail(info)" class="left-notification-title">{{info.employerName}}</md-card-title>
-                                                    <md-card-subtitle (click)="showPostDetail(info)" class="left-notification-subtitle">{{info.distance + ' mile away'}}</md-card-subtitle>
-                                                    <div class="posts-header-contact">
-                                                        <div>
-                                                            <i (click)="showPhoneInfo()" *ngIf="!info.isPhoneNumberHidden && !showPhone" class="fa fa-phone-square"></i>
-                                                            <i (click)="showEmailInfo()" *ngIf="!showEmail" class="fa fa-envelope"></i>
-                                                        </div>
-                                                        <div *ngIf="showPhone">{{info.employerPhoneNumber}}</div>
-                                                        <div *ngIf="showEmail">{{info.employerEmail}}</div>
-                                                    </div>
-                                                </md-card-header>
-                                                <md-card-header (click)="showPostDetail(info)" class="left-notification-subhead animated bounceInRight">
-                                                    <div md-card-avatar class="notification-header-image">
-                                                        <img mat-card-avatar [src]="info.profilePicture ? info.profilePicture : 'assets/img/kate.png'">
-                                                    </div>
-                                                    <md-card-title class="left-notification-title">{{info.title}}</md-card-title>
-                                                    <md-card-subtitle class="left-notification-subtitle">{{info.address}}</md-card-subtitle>
-                                                    <div class="posts-header-contact posts-header-contact-rate">
-                                                        <span>{{'$' + info.rate + '/hr'}}</span>
-                                                    </div>
-                                                </md-card-header>
-                                            </md-card>
-                                        </div>
-                                    </info-window>
-                                </marker>
-                            </ngui-map>
+                    <md-card-content *ngIf="posts">
+                        <md-card class="posts-card posts-card-inner" *ngFor="let post of posts; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
+                            <md-card-header class="posts-card-header">
+                                <div md-card-avatar class="posts-header-image">
+                                    <img mat-card-avatar [src]="post.categoryId ? post.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
+                                </div>
+                                <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{post.title}}</md-card-title>
+                                <md-card-subtitle style="font-weight: 500">{{post.category ? post.category + ': ' + post.subCategory : post.category}}</md-card-subtitle>
+                                <div class="posts-header-view">
+                                    <div class="view-link" (click)="showPostDetail(post._id)">
+                                        <span class="hidden-xs-down">
+                                            View Details &gt;&gt;
+                                        </span>
+                                        <span class="hidden-sm-up">
+                                            <i class="fa fa-info"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </md-card-header>
+                            <md-card-content class="posts-card with-margin">
+                                <p class="md-card-content-posts-p-rate">
+                                    {{'$' + post.rate + '/' + (post.rateType == 'DAILY' ? 'day' : post.rateType == 'WEEKLY' ? 'week' : post.rateType == 'MONTHLY'
+                                    ? 'month' : 'hr')}}
+                                </p>
+                                <p class="md-card-content-posts-p-address">
+                                    {{ post.employerAddress ? post.employerAddress.addressLine1 : '' }}
+                                </p>
+                            </md-card-content>
+                        </md-card>
+                        <div *ngIf="posts && posts.length == 0">
+                            No jobs found.
                         </div>
                     </md-card-content>
                 </md-card>
@@ -85,72 +50,37 @@
         <md-tab label="IN PROGRESS">
             <div class="posts-section page-input-block">
                 <md-card class="posts-card">
-                    <md-card-content>
-                        <div class="form-group row">
-                            <div class="col-12 col-sm-6">
-
-                            </div>
-                            <div class="col-12 col-sm-6">
-
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-12 col-sm-6 posts-input-box">
-                                <label for="category">Category</label>
-                                <md-select [(ngModel)]="selectedCategory" class="category-select">
-                                    <md-option (onSelectionChange)="changeCategory($event, category)" *ngFor="let category of categories" [value]="category">
-                                        {{ category }}
-                                    </md-option>
-                                </md-select>
-                            </div>
-                            <div class="col-12 col-sm-6 posts-input-box">
-                                <label for="address">Address</label>
-                                <input #inputLocationAddress [(ngModel)]="searchLocation" ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)"
-                                    class="form-control" placeholder="">
-                            </div>
-                        </div>
-                        <div>
-                            <ngui-map center="{{ center }}" [zoomControlOptions]="{ position: 'TOP_RIGHT' }" [fullscreenControl]="false" [scrollwheel]="false">
-                                <marker *ngFor="let post of posts" [position]="post.coordinates" (click)="showMarkerInfo($event, post)" draggable="false"
-                                    [icon]="{
-                                                    url: 'assets/img/labor-search.png',
-                                                    anchor: [16,24],
-                                                    size: [32,48],
-                                                    scaledSize: [32,48]
-                                                  }" animation="DROP">
-                                    <info-window *ngIf="info" id="iw">
-                                        <div class="info-window-bar">
-                                            <md-card class="left-notification-card">
-                                                <md-card-header class="left-notification-head animated bounceInRight">
-                                                    <div (click)="showPostDetail(info)" md-card-avatar class="notification-header-image">
-                                                        <img mat-card-avatar [src]="info.profilePicture ? info.profilePicture : 'assets/img/kate.png'">
-                                                    </div>
-                                                    <md-card-title (click)="showPostDetail(info)" class="left-notification-title">{{info.employerName}}</md-card-title>
-                                                    <md-card-subtitle (click)="showPostDetail(info)" class="left-notification-subtitle">{{info.distance + ' mile away'}}</md-card-subtitle>
-                                                    <div class="posts-header-contact">
-                                                        <div>
-                                                            <i (click)="showPhoneInfo()" *ngIf="!info.isPhoneNumberHidden && !showPhone" class="fa fa-phone-square"></i>
-                                                            <i (click)="showEmailInfo()" *ngIf="!showEmail" class="fa fa-envelope"></i>
-                                                        </div>
-                                                        <div *ngIf="showPhone">{{info.employerPhoneNumber}}</div>
-                                                        <div *ngIf="showEmail">{{info.employerEmail}}</div>
-                                                    </div>
-                                                </md-card-header>
-                                                <md-card-header (click)="showPostDetail(info)" class="left-notification-subhead animated bounceInRight">
-                                                    <div md-card-avatar class="notification-header-image">
-                                                        <img mat-card-avatar [src]="info.profilePicture ? info.profilePicture : 'assets/img/kate.png'">
-                                                    </div>
-                                                    <md-card-title class="left-notification-title">{{info.title}}</md-card-title>
-                                                    <md-card-subtitle class="left-notification-subtitle">{{info.address}}</md-card-subtitle>
-                                                    <div class="posts-header-contact posts-header-contact-rate">
-                                                        <span>{{'$' + info.rate + '/hr'}}</span>
-                                                    </div>
-                                                </md-card-header>
-                                            </md-card>
-                                        </div>
-                                    </info-window>
-                                </marker>
-                            </ngui-map>
+                    <md-card-content *ngIf="posts">
+                        <md-card class="posts-card posts-card-inner" *ngFor="let post of posts; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
+                            <md-card-header class="posts-card-header">
+                                <div md-card-avatar class="posts-header-image">
+                                    <img mat-card-avatar [src]="post.categoryId ? post.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
+                                </div>
+                                <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{post.title}}</md-card-title>
+                                <md-card-subtitle style="font-weight: 500">{{post.category ? post.category + ': ' + post.subCategory : post.category}}</md-card-subtitle>
+                                <div class="posts-header-view">
+                                    <div class="view-link" (click)="showPostDetail(post._id)">
+                                        <span class="hidden-xs-down">
+                                            View Details &gt;&gt;
+                                        </span>
+                                        <span class="hidden-sm-up">
+                                            <i class="fa fa-info"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </md-card-header>
+                            <md-card-content class="posts-card with-margin">
+                                <p class="md-card-content-posts-p-rate">
+                                    {{'$' + post.rate + '/' + (post.rateType == 'DAILY' ? 'day' : post.rateType == 'WEEKLY' ? 'week' : post.rateType == 'MONTHLY'
+                                    ? 'month' : 'hr')}}
+                                </p>
+                                <p class="md-card-content-posts-p-address">
+                                    {{ post.employerAddress ? post.employerAddress.addressLine1 : '' }}
+                                </p>
+                            </md-card-content>
+                        </md-card>
+                        <div *ngIf="posts && posts.length == 0">
+                            No jobs found.
                         </div>
                     </md-card-content>
                 </md-card>
@@ -159,77 +89,63 @@
         <md-tab label="COMPLETED">
             <div class="posts-section page-input-block">
                 <md-card class="posts-card">
-                    <md-card-content>
-                        <div class="form-group row">
-                            <div class="col-12 col-sm-6">
-
-                            </div>
-                            <div class="col-12 col-sm-6">
-
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-12 col-sm-6 posts-input-box">
-                                <label for="category">Category</label>
-                                <md-select [(ngModel)]="selectedCategory" class="category-select">
-                                    <md-option (onSelectionChange)="changeCategory($event, category)" *ngFor="let category of categories" [value]="category">
-                                        {{ category }}
-                                    </md-option>
-                                </md-select>
-                            </div>
-                            <div class="col-12 col-sm-6 posts-input-box">
-                                <label for="address">Address</label>
-                                <input #inputLocationAddress [(ngModel)]="searchLocation" ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)"
-                                    class="form-control" placeholder="">
-                            </div>
-                        </div>
-                        <div>
-                            <ngui-map center="{{ center }}" [zoomControlOptions]="{ position: 'TOP_RIGHT' }" [fullscreenControl]="false" [scrollwheel]="false">
-                                <marker *ngFor="let post of posts" [position]="post.coordinates" (click)="showMarkerInfo($event, post)" draggable="false"
-                                    [icon]="{
-                                                    url: 'assets/img/labor-search.png',
-                                                    anchor: [16,24],
-                                                    size: [32,48],
-                                                    scaledSize: [32,48]
-                                                  }" animation="DROP">
-                                    <info-window *ngIf="info" id="iw">
-                                        <div class="info-window-bar">
-                                            <md-card class="left-notification-card">
-                                                <md-card-header class="left-notification-head animated bounceInRight">
-                                                    <div (click)="showPostDetail(info)" md-card-avatar class="notification-header-image">
-                                                        <img mat-card-avatar [src]="info.profilePicture ? info.profilePicture : 'assets/img/kate.png'">
-                                                    </div>
-                                                    <md-card-title (click)="showPostDetail(info)" class="left-notification-title">{{info.employerName}}</md-card-title>
-                                                    <md-card-subtitle (click)="showPostDetail(info)" class="left-notification-subtitle">{{info.distance + ' mile away'}}</md-card-subtitle>
-                                                    <div class="posts-header-contact">
-                                                        <div>
-                                                            <i (click)="showPhoneInfo()" *ngIf="!info.isPhoneNumberHidden && !showPhone" class="fa fa-phone-square"></i>
-                                                            <i (click)="showEmailInfo()" *ngIf="!showEmail" class="fa fa-envelope"></i>
-                                                        </div>
-                                                        <div *ngIf="showPhone">{{info.employerPhoneNumber}}</div>
-                                                        <div *ngIf="showEmail">{{info.employerEmail}}</div>
-                                                    </div>
-                                                </md-card-header>
-                                                <md-card-header (click)="showPostDetail(info)" class="left-notification-subhead animated bounceInRight">
-                                                    <div md-card-avatar class="notification-header-image">
-                                                        <img mat-card-avatar [src]="info.profilePicture ? info.profilePicture : 'assets/img/kate.png'">
-                                                    </div>
-                                                    <md-card-title class="left-notification-title">{{info.title}}</md-card-title>
-                                                    <md-card-subtitle class="left-notification-subtitle">{{info.address}}</md-card-subtitle>
-                                                    <div class="posts-header-contact posts-header-contact-rate">
-                                                        <span>{{'$' + info.rate + '/hr'}}</span>
-                                                    </div>
-                                                </md-card-header>
-                                            </md-card>
-                                        </div>
-                                    </info-window>
-                                </marker>
-                            </ngui-map>
+                    <md-card-content *ngIf="posts">
+                        <md-card class="posts-card posts-card-inner" *ngFor="let post of posts; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
+                            <md-card-header class="posts-card-header">
+                                <div md-card-avatar class="posts-header-image">
+                                    <img mat-card-avatar [src]="post.categoryId ? post.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
+                                </div>
+                                <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{post.title}}</md-card-title>
+                                <md-card-subtitle style="font-weight: 500">{{post.category ? post.category + ': ' + post.subCategory : post.category}}</md-card-subtitle>
+                                <div class="posts-header-view">
+                                    <div class="view-link" (click)="showPostDetail(post._id)">
+                                        <span class="hidden-xs-down">
+                                            View Details &gt;&gt;
+                                        </span>
+                                        <span class="hidden-sm-up">
+                                            <i class="fa fa-info"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </md-card-header>
+                            <md-card-content class="posts-card with-margin">
+                                <p class="md-card-content-posts-p-rate">
+                                    {{'$' + post.rate + '/' + (post.rateType == 'DAILY' ? 'day' : post.rateType == 'WEEKLY' ? 'week' : post.rateType == 'MONTHLY'
+                                    ? 'month' : 'hr')}}
+                                </p>
+                                <p class="md-card-content-posts-p-address">
+                                    {{ post.employerAddress ? post.employerAddress.addressLine1 : '' }}
+                                </p>
+                            </md-card-content>
+                        </md-card>
+                        <div *ngIf="posts && posts.length == 0">
+                            No jobs found.
                         </div>
                     </md-card-content>
                 </md-card>
             </div>
         </md-tab>
     </md-tab-group>
-
+    <div class="panel-footer">
+        <div class="row">
+            <div *ngIf="count > 4" class="col-sm-12 rar-align page-select">
+                <span class="first-last-ctrl">
+                    <span [ngClass]="{'enabled': pageIndex > 0}" class="page-controls" (click)="pageIndex > 0 && goToFirstPage($event)">
+                        <span mdTooltip="{{(pageIndex > 0) ? 'First page' : ''}}">
+                            <i [ngClass]="{'enabled': pageIndex > 0}" class="fa fa-fast-backward"></i>
+                        </span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                    <span [ngClass]="{'enabled': pageIndex * pageSize + pageSize < length}" class="page-controls" (click)="pageIndex * pageSize + pageSize < length && goToLastPage($event)">
+                        <span mdTooltip="{{(pageIndex * pageSize + pageSize < length) ? 'Last page' : ''}}">
+                            <i [ngClass]="{'enabled': pageIndex * pageSize + pageSize < length}" class="fa fa-fast-forward"></i>
+                        </span>
+                    </span>
+                </span>
+                <md-paginator #postsPaginator class="mat-paginator-pg" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                    (page)="pageChange($event)">
+                </md-paginator>
+            </div>
+        </div>
+    </div>
 </div>

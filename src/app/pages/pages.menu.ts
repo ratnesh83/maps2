@@ -89,7 +89,7 @@ export class PagesMenuService {
                         path: 'posts',
                         data: {
                             menu: {
-                                title: 'POSTS',
+                                title: 'MY POSTS',
                                 icon: 'icon-wrap fa fa-tasks',
                                 selected: false,
                                 expanded: false,

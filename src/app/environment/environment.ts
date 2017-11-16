@@ -19,6 +19,9 @@ export const environment = {
         GET_ALL_CATEGORIES: '/api/v1/category',
         GET_ALL_SUB_CATEGORIES: '/api/v1/subCategory',
         POST_JOB: '/api/v2/webJobs/postJobs',
+        GET_ALL_POSTS: '/api/v2/webJobs/myPostsWeb',
+        GET_POST: '/api/v2/webJobs/jobById',
+        GET_LABORS: '/api/v2/webJobs/getLaboursWeb',
 
         GET_ALL_BOOKING: '/admin/getAllAvailabeBooking',
         GET_ALL_OUTGOING_BOOKING: '/admin/getOngoingBooking',
