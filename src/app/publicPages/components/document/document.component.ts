@@ -88,7 +88,6 @@ export class Documents {
     }
 
     checkFileType(type): boolean {
-        console.log(type);
         if (type.indexOf('image') != -1 || type.indexOf('pdf') != -1 || type.indexOf('doc') != -1) {
             return true;
         } else {
