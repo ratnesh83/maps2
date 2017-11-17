@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Renderer, ViewChildren, QueryList, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Renderer, ViewChildren, QueryList } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
@@ -56,7 +56,6 @@ export class AllJobs implements OnInit {
         private modalService: NgbModal,
         private router: Router,
         private toastrService: ToastrService,
-        private cdRef: ChangeDetectorRef,
         private dataService: DataService,
         private dialog: MdDialog
     ) {
@@ -227,8 +226,8 @@ export class AllJobs implements OnInit {
                             addressType: self.addressType,
                             address: address
                         };
-                        self.changeMap(latitude, longitude);
-                        self.getAllJobs(data);
+                        self.getAllJobsCallback(data, self);
+                        self.changeMap(latitude, longitude, self);
                     }
                 }
             });
@@ -237,9 +236,17 @@ export class AllJobs implements OnInit {
 
     ngOnDestroy() {
         if (this.jobStore) {
-            this.jobStore.unsubscribe();
+            // this.jobStore.unsubscribe();
         }
     }
+
+    getAllJobsCallback(data, self) {
+        self.store.dispatch({
+            type: job.actionTypes.APP_GETALL_JOB, payload: {
+                data: data
+            }
+        });
+    };
 
     getAllJobs(data) {
         this.store.dispatch({
@@ -256,9 +263,12 @@ export class AllJobs implements OnInit {
         // dialogRef.componentInstance.jobDetails = job;
     }
 
+    changeMapCallback(lat, lng, self) {
+        self.center = lat + ', ' + lng;
+    }
+
     changeMap(lat, lng) {
         this.center = lat + ', ' + lng;
-        this.cdRef.detectChanges();
     }
 
     changeCategory(event, data) {

@@ -66,7 +66,11 @@ export class JobEffects {
                     };
                     this.store.dispatch(new job.AppJobDetailSuccess(payload));
                     this.toastrService.clear();
-                    this.toastrService.info(payload.count > 1 ? payload.count  + ' jobs found' : payload.count == 0 ? 'No jobs found' : '1 job found', 'Success');
+                    if (payload.count == 0) {
+                        this.toastrService.warning(payload.count > 1 ? payload.count + ' jobs found' : payload.count == 0 ? 'No jobs found in this area' : '1 job found', 'Success');
+                    } else {
+                        this.toastrService.info(payload.count > 1 ? payload.count + ' jobs found' : payload.count == 0 ? 'No jobs found in this area' : '1 job found', 'Success');
+                    }
                 }
             }
                 , (error) => {

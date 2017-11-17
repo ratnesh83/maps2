@@ -28,10 +28,7 @@ export class Feeds {
     public pageSizeOptions = [5, 10, 25, 100, 500];
 
     constructor(private activeModal: NgbActiveModal, private store: Store<any>) {
-        this.count = 1;
-        this.length = 1;
-        this.pageIndex = 0;
-        this.rating = 4.6;
+        
         this.feedbackStore = this.store
             .select('feedback')
             .subscribe((res: any) => {
@@ -47,7 +44,7 @@ export class Feeds {
 
     ngOnDestroy() {
         if (this.feedbackStore) {
-            this.feedbackStore.unsubscribe();
+            // this.feedbackStore.unsubscribe();
         }
     }
 

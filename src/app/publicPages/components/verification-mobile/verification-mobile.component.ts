@@ -100,7 +100,7 @@ export class VerificationMobile {
 
     ngOnDestroy() {
         if (this.storeData) {
-            //this.storeData.unsubscribe();
+            // this.storeData.unsubscribe();
         }
     }
 

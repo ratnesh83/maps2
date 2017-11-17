@@ -106,6 +106,7 @@ export class Login {
     }
 
     ngOnInit() {
+        localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
         this.store.dispatch({
             type: auth.actionTypes.GET_COUNTRIES
         });
@@ -128,6 +129,7 @@ export class Login {
         if (this.storeData) {
             // this.storeData.unsubscribe();
         }
+        localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
     }
 
     getFacebookData() {
