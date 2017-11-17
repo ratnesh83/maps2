@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div>
-                    <ngui-map style="height: 60vh; max-height: 480px;" zoom="{{ zoom }}" center="{{ center }}" [geoFallbackCenter]="[42.99, -77.79]" [zoomControlOptions]="{ position: 'TOP_RIGHT' }" [fullscreenControl]="false" [scrollwheel]="false">
+                    <ngui-map style="height: 60vh; max-height: 480px;" (mapReady$)="onMapReady($event)" (idle)="onIdle($event)" [geoFallbackCenter]="[42.99, -77.79]" [zoomControlOptions]="{ position: 'TOP_RIGHT' }" [fullscreenControl]="false" [scrollwheel]="false">
                         <marker *ngFor="let labor of labors" [position]="labor.coordinates" (click)="showMarkerInfo($event, labor)" draggable="false" [icon]="{
                             url: 'assets/img/labor-search.png',
                             anchor: [16,24],

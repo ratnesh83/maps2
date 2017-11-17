@@ -48,6 +48,8 @@ export class AllLabors implements OnInit {
     public country;
     public zipCode;
     public addressType;
+    public bounds;
+    public map: google.maps.Map;
     public zoom = 13;
 
     constructor(
@@ -58,6 +60,7 @@ export class AllLabors implements OnInit {
         private dataService: DataService
     ) {
         this.addressType = 'COUNTRY';
+        this.bounds = new google.maps.LatLngBounds();
 
         this.info = {
             employerName: null,
@@ -85,7 +88,7 @@ export class AllLabors implements OnInit {
                                 if (this.dataService.getCategoryId() == this.categories[i]._id) {
                                     this.selectedCategory = this.categories[i].name;
                                     this.categoryId = this.categories[i]._id;
-                                } else if(i == this.categories.length) {
+                                } else if (i == this.categories.length) {
                                     this.selectedCategory = this.categories[0].name;
                                     this.categoryId = this.categories[0]._id;
                                 }
@@ -97,16 +100,20 @@ export class AllLabors implements OnInit {
                     if (res.labors) {
                         for (let i = 0; i < res.labors.length; i++) {
                             let coordinates = [0, 0];
-                            if (res.labors[i].labourAddress && res.labors[i].labourAddress.location) {
-                                coordinates = [res.labors[i].labourAddress.location.coordinates[1], res.labors[i].labourAddress.location.coordinates[0]];
+                            if (res.labors[i].locationDetails && res.labors[i].locationDetails.location) {
+                                coordinates = [res.labors[i].locationDetails.location.coordinates[1], res.labors[i].locationDetails.location.coordinates[0]];
+                                this.bounds.extend(new google.maps.LatLng(coordinates[0], coordinates[1]));
+                                if (this.map) {
+                                    this.map.fitBounds(this.bounds);
+                                }
                             }
                             let labor = {
                                 id: res.labors[i]._id,
-                                employerName: res.labors[i].labourId ? res.labors[i].labourId.fullName ? res.labors[i].labourId.fullName : (res.labors[i].labourId.lastName ? (res.labors[i].labourId.firstName + ' ' + res.labors[i].labourId.lastName) : res.labors[i].labourId.firstName) : null,
-                                employerEmail: res.labors[i].labourId ? res.labors[i].labourId.email : null,
-                                employerPhoneNumber: res.labors[i].labourId ? res.labors[i].labourId.countryCode + res.labors[i].labourId.phoneNumber : null,
-                                isPhoneNumberHidden: res.labors[i].labourId ? res.labors[i].labourId.isPhoneNumberHidden : false,
-                                profilePicture: res.labors[i].labourId ? res.labors[i].labourId.profilePicture ? res.labors[i].labourId.profilePicture.thumb ? res.labors[i].labourId.profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png' : 'assets/img/user.png',
+                                employerName: res.labors[i] ? res.labors[i].fullName ? res.labors[i].fullName : (res.labors[i].lastName ? (res.labors[i].firstName + ' ' + res.labors[i].lastName) : res.labors[i].firstName) : null,
+                                employerEmail: res.labors[i] ? res.labors[i].email : null,
+                                employerPhoneNumber: res.labors[i] ? res.labors[i].countryCode + res.labors[i].phoneNumber : null,
+                                isPhoneNumberHidden: res.labors[i] ? res.labors[i].isPhoneNumberHidden : false,
+                                profilePicture: res.labors[i] ? res.labors[i].profilePicture ? res.labors[i].profilePicture.thumb ? res.labors[i].profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png' : 'assets/img/user.png',
                                 categoryImage: res.labors[i].categoryId ? res.labors[i].categoryId.image ? res.labors[i].categoryId.image.thumb ? res.labors[i].categoryId.image.thumb : 'assets/img/image-placeholder.jpg' : 'assets/img/image-placeholder.jpg' : 'assets/img/image-placeholder.jpg',
                                 coordinates: coordinates,
                                 distance: res.labors[i].distance,
@@ -263,10 +270,20 @@ export class AllLabors implements OnInit {
     }
 
     changeMapCallback(lat, lng, self) {
+        self.bounds = new google.maps.LatLngBounds();
+        self.bounds.extend(new google.maps.LatLng(lat, lng));
+        if (self.map) {
+            self.map.fitBounds(this.bounds);
+        }
         self.center = lat + ', ' + lng;
     }
 
     changeMap(lat, lng) {
+        this.bounds = new google.maps.LatLngBounds();
+        this.bounds.extend(new google.maps.LatLng(lat, lng));
+        if (this.map) {
+            this.map.fitBounds(this.bounds);
+        }
         this.center = lat + ', ' + lng;
     }
 
@@ -419,6 +436,14 @@ export class AllLabors implements OnInit {
 
     showEmailInfo() {
         this.showEmail = true;
+    }
+
+    onMapReady(map) {
+        this.map = map;
+    }
+
+    onIdle(event) {
+
     }
 
 }

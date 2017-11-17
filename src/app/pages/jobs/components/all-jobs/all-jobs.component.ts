@@ -49,6 +49,8 @@ export class AllJobs implements OnInit {
     public country;
     public zipCode;
     public addressType;
+    public bounds;
+    public map: google.maps.Map;
     public zoom = 13;
 
     constructor(
@@ -60,6 +62,7 @@ export class AllJobs implements OnInit {
         private dialog: MdDialog
     ) {
         this.addressType = 'COUNTRY';
+        this.bounds = new google.maps.LatLngBounds();
 
         this.info = {
             employerName: null,
@@ -101,6 +104,10 @@ export class AllJobs implements OnInit {
                             let coordinates = [0, 0];
                             if (res.jobs[i].employerAddress && res.jobs[i].employerAddress.location) {
                                 coordinates = [res.jobs[i].employerAddress.location.coordinates[1], res.jobs[i].employerAddress.location.coordinates[0]];
+                                this.bounds.extend(new google.maps.LatLng(coordinates[0], coordinates[1]));
+                                if (this.map) {
+                                    this.map.fitBounds(this.bounds);
+                                }
                             }
                             let job = {
                                 id: res.jobs[i]._id,
@@ -264,10 +271,20 @@ export class AllJobs implements OnInit {
     }
 
     changeMapCallback(lat, lng, self) {
+        self.bounds = new google.maps.LatLngBounds();
+        self.bounds.extend(new google.maps.LatLng(lat, lng));
+        if (self.map) {
+            self.map.fitBounds(this.bounds);
+        }
         self.center = lat + ', ' + lng;
     }
 
     changeMap(lat, lng) {
+        this.bounds = new google.maps.LatLngBounds();
+        this.bounds.extend(new google.maps.LatLng(lat, lng));
+        if (this.map) {
+            this.map.fitBounds(this.bounds);
+        }
         this.center = lat + ', ' + lng;
     }
 
@@ -418,6 +435,14 @@ export class AllJobs implements OnInit {
 
     showEmailInfo() {
         this.showEmail = true;
+    }
+
+    onMapReady(map) {
+        this.map = map;
+    }
+
+    onIdle(event) {
+
     }
 
 }

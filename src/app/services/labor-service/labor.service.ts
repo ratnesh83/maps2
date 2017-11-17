@@ -20,7 +20,7 @@ export class LaborService {
         let url;
         let query;
         if (payload && payload.data) {
-            query = '?latitude=' + payload.data.latitude + '&longitude=' + payload.data.longitude + '&sortBy=' + payload.data.sortBy;
+            query = '?latitude=' + payload.data.latitude + '&longitude=' + payload.data.longitude + '&categoryId=' + payload.data.categoryId + '&addressType=' + payload.data.addressType + '&address=' + JSON.stringify(payload.data.address);
         }
         url = environment.APP.API_URL + environment.APP.GET_ALL_LABORS + query;
         this.authRequired = true;
