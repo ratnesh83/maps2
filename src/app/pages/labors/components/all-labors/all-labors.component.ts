@@ -233,7 +233,7 @@ export class AllLabors implements OnInit {
                             address: address
                         };
                         self.getAllLaborsCallback(data, self);
-                        self.changeMap(latitude, longitude, self);
+                        self.changeMapCallback(latitude, longitude, self);
                     }
                 }
             });
@@ -274,6 +274,7 @@ export class AllLabors implements OnInit {
         self.bounds.extend(new google.maps.LatLng(lat, lng));
         if (self.map) {
             self.map.fitBounds(this.bounds);
+            self.map.setZoom(13);
         }
         self.center = lat + ', ' + lng;
     }
@@ -283,6 +284,7 @@ export class AllLabors implements OnInit {
         this.bounds.extend(new google.maps.LatLng(lat, lng));
         if (this.map) {
             this.map.fitBounds(this.bounds);
+            this.map.setZoom(13);
         }
         this.center = lat + ', ' + lng;
     }
