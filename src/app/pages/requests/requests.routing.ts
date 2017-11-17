@@ -10,7 +10,7 @@ const routes: Routes = [
         component: Requests,
         children: [
 
-            { path: '', redirectTo: 'allposts', pathMatch: 'full' },
+            { path: '', redirectTo: 'allrequests', pathMatch: 'full' },
             { path: 'allrequests', component: AllRequests },
             { path: 'requestdetails', component: RequestDetails }
 

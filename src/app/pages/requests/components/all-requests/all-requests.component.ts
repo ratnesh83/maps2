@@ -20,7 +20,7 @@ import 'style-loader!./all-requests.scss';
 
 export class AllRequests implements OnInit {
 
-    @ViewChild('postsPaginator') private _paginator: MdPaginator;
+    @ViewChild('requestsPaginator') private _paginator: MdPaginator;
     public requests;
     public page = 1;
     public tabIndex = 0;
@@ -33,7 +33,7 @@ export class AllRequests implements OnInit {
     public filter;
     public showPhone: boolean = false;
     public showEmail: boolean = false;
-    public postStore;
+    public requestStore;
     public length;
     public pageSize = 5;
     public pageSizeOptions = [5, 10, 25, 100, 500];
@@ -47,7 +47,7 @@ export class AllRequests implements OnInit {
     ) {
         this.length = 1;
         this.pageIndex = 0;
-        this.postStore = this.store
+        this.requestStore = this.store
             .select('request')
             .subscribe((res: any) => {
                 if (res) {
@@ -64,22 +64,22 @@ export class AllRequests implements OnInit {
     };
 
     ngOnInit() {
-        this.getAllPosts();
+        this.getAllRequests();
     }
 
-    addPost() {
-        this.router.navigate(['/pages/requests/postjob']);
+    addRequest() {
+        this.router.navigate(['/pages/requests/requestjob']);
     }
 
     ngOnDestroy() {
-        if (this.postStore) {
-            // this.postStore.unsubscribe();
+        if (this.requestStore) {
+            // this.requestStore.unsubscribe();
         }
     }
 
-    getAllPosts() {
+    getAllRequests() {
         this.store.dispatch({
-            type: request.actionTypes.APP_GET_JOBS, payload: {
+            type: request.actionTypes.APP_GET_REQUESTS, payload: {
                 type: 'ACTIVE',
                 currentPage: this.page,
                     limit: this.pageSize
@@ -88,16 +88,16 @@ export class AllRequests implements OnInit {
     }
     
 
-    showPostDetail(id) {
+    showRequestDetail(id) {
         this.dataService.setData('jobId', id);
-        this.router.navigate(['pages/requests/postdetails']);
+        this.router.navigate(['pages/requests/requestdetails']);
     }
 
     selectTab(event) {
         if (event.index == 0) {
             this.tabIndex = 0;
             this.store.dispatch({
-                type: request.actionTypes.APP_GET_JOBS, payload: {
+                type: request.actionTypes.APP_GET_REQUESTS, payload: {
                     type: 'ACTIVE',
                     currentPage: this.page,
                     limit: this.pageSize
@@ -106,7 +106,7 @@ export class AllRequests implements OnInit {
         } else if (event.index == 1) {
             this.tabIndex = 1;
             this.store.dispatch({
-                type: request.actionTypes.APP_GET_JOBS, payload: {
+                type: request.actionTypes.APP_GET_REQUESTS, payload: {
                     type: 'IN_PROGRESS',
                     currentPage: this.page,
                     limit: this.pageSize
@@ -115,7 +115,7 @@ export class AllRequests implements OnInit {
         } else if (event.index == 2) {
             this.tabIndex = 2;
             this.store.dispatch({
-                type: request.actionTypes.APP_GET_JOBS, payload: {
+                type: request.actionTypes.APP_GET_REQUESTS, payload: {
                     type: 'COMPLETED',
                     currentPage: this.page,
                     limit: this.pageSize
@@ -127,7 +127,7 @@ export class AllRequests implements OnInit {
     pageChange(page) {
         if (this.tabIndex == 0) {
             this.store.dispatch({
-                type: request.actionTypes.APP_GET_JOBS, payload: {
+                type: request.actionTypes.APP_GET_REQUESTS, payload: {
                     type: 'ACTIVE',
                     currentPage: page.pageIndex + 1,
                     limit: page.pageSize,
@@ -135,7 +135,7 @@ export class AllRequests implements OnInit {
             });
         } else if (this.tabIndex == 1) {
             this.store.dispatch({
-                type: request.actionTypes.APP_GET_JOBS, payload: {
+                type: request.actionTypes.APP_GET_REQUESTS, payload: {
                     type: 'IN_PROGRESS',
                     currentPage: page.pageIndex + 1,
                     limit: page.pageSize,
@@ -143,7 +143,7 @@ export class AllRequests implements OnInit {
             });
         } else if (this.tabIndex== 2) {
             this.store.dispatch({
-                type: request.actionTypes.APP_GET_JOBS, payload: {
+                type: request.actionTypes.APP_GET_REQUESTS, payload: {
                     type: 'COMPLETED',
                     currentPage: page.pageIndex + 1,
                     limit: page.pageSize,

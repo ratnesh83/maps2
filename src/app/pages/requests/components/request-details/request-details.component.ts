@@ -25,7 +25,7 @@ export class RequestDetails implements OnInit {
     public labours;
     public showPhone: boolean = false;
     public showEmail: boolean = false;
-    public postStore;
+    public requestStore;
 
     constructor(
         private store: Store<any>,
@@ -35,7 +35,7 @@ export class RequestDetails implements OnInit {
         private dataService: DataService
     ) {
 
-        this.postStore = this.store
+        this.requestStore = this.store
             .select('request')
             .subscribe((res: any) => {
                 if (res) {
@@ -54,7 +54,7 @@ export class RequestDetails implements OnInit {
     };
 
     ngOnInit() {
-        this.getPostDetails();
+        this.getRequestDetails();
     }
 
     viewProfile(id) {
@@ -63,15 +63,15 @@ export class RequestDetails implements OnInit {
     }
 
     ngOnDestroy() {
-        if (this.postStore) {
-            // this.postStore.unsubscribe();
+        if (this.requestStore) {
+            // this.requestStore.unsubscribe();
         }
         this.dataService.removeData('jobId');
     }
 
-    getPostDetails() {
+    getRequestDetails() {
         this.store.dispatch({
-            type: request.actionTypes.APP_GET_JOB, payload: {
+            type: request.actionTypes.APP_GET_REQUEST, payload: {
                 jobId: this.dataService.getData('jobId')
             }
         });

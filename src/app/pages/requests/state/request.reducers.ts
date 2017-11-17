@@ -8,7 +8,7 @@ const initialState: any = {
     count: 0,
     currentPage: 0,
     limit: 5,
-    activePost: null,
+    activeRequest: null,
     filter: null,
     role: 'all',
     error: null
@@ -23,16 +23,16 @@ export const request: ActionReducer<any> = (state = initialState, action: Action
         case 'APP_GET_SUB_CATEGORIES_SUCCESS':
             return Object.assign({}, state, { subCategories: action.payload });
 
-        case 'APP_GET_JOBS':
+        case 'APP_GET_REQUESTS':
             return Object.assign({}, state, { requests: null });
 
-        case 'APP_GET_JOBS_SUCCESS':
+        case 'APP_GET_REQUESTS_SUCCESS':
             return Object.assign({}, state, { requests: action.payload });
 
-        case 'APP_GET_JOB':
+        case 'APP_GET_REQUEST':
             return Object.assign({}, state, { request: null });
 
-        case 'APP_GET_JOB_SUCCESS':
+        case 'APP_GET_REQUEST_SUCCESS':
             return Object.assign({}, state, { request: action.payload });
 
         case 'APP_GET_LABORS':

@@ -50,7 +50,7 @@ export class RequestEffects {
 
     @Effect({ dispatch: false })
     getJobs$ = this.actions$
-        .ofType('APP_GET_JOBS')
+        .ofType('APP_GET_REQUESTS')
         .do((action) => {
             this._spinner.show();
             this.RequestService.getAllJobs(action.payload).subscribe((result) => {
@@ -83,14 +83,14 @@ export class RequestEffects {
 
     @Effect({ dispatch: false })
     getJobsSuccess: Observable<Action> = this.actions$
-        .ofType('APP_GET_JOBS_SUCCESS')
+        .ofType('APP_GET_REQUESTS_SUCCESS')
         .do((action) => {
 
         });
 
     @Effect({ dispatch: false })
     getJob$ = this.actions$
-        .ofType('APP_GET_JOB')
+        .ofType('APP_GET_REQUEST')
         .do((action) => {
             this._spinner.show();
             this.RequestService.getJob(action.payload).subscribe((result) => {
@@ -117,7 +117,7 @@ export class RequestEffects {
 
     @Effect({ dispatch: false })
     getJobSuccess: Observable<Action> = this.actions$
-        .ofType('APP_GET_JOB_SUCCESS')
+        .ofType('APP_GET_REQUEST_SUCCESS')
         .do((action) => {
 
         });
@@ -191,18 +191,18 @@ export class RequestEffects {
         });
 
     @Effect({ dispatch: false })
-    postJob$ = this.actions$
-        .ofType('APP_POST_JOB')
+    requestJob$ = this.actions$
+        .ofType('APP_POST_REQUEST')
         .do((action) => {
             this._spinner.show();
-            this.RequestService.postJob(action.payload).subscribe((result) => {
+            this.RequestService.requestJob(action.payload).subscribe((result) => {
                 this._spinner.hide();
                 if (result.message == 'Action complete.' || result.statusCode == 200 || result.statusCode == 201) {
                     let payload = result.data;
-                    this.store.dispatch(new request.AppPostJobSuccess(payload));
+                    this.store.dispatch(new request.AppRequestJobSuccess(payload));
                     this.toastrService.clear();
-                    this.toastrService.success(result.message || 'Job posted successfully', 'Success');
-                    this.router.navigate(['/pages/requests/allposts']);
+                    this.toastrService.success(result.message || 'Job requested successfully', 'Success');
+                    this.router.navigate(['/pages/requests/allrequests']);
                 }
             }
                 , (error) => {
@@ -223,8 +223,8 @@ export class RequestEffects {
 
 
     @Effect({ dispatch: false })
-    postJobSuccess: Observable<Action> = this.actions$
-        .ofType('APP_POST_JOB_SUCCESS')
+    requestJobSuccess: Observable<Action> = this.actions$
+        .ofType('APP_POST_REQUEST_SUCCESS')
         .do((action) => {
 
         });

@@ -88,7 +88,8 @@ export class Documents {
     }
 
     checkFileType(type): boolean {
-        if (type.indexOf('image') != -1 || type.indexOf('pdf') != -1) {
+        console.log(type);
+        if (type.indexOf('image') != -1 || type.indexOf('pdf') != -1 || type.indexOf('doc') != -1) {
             return true;
         } else {
             return false;
@@ -118,7 +119,7 @@ export class Documents {
         }
         if (!this.checkFileType(files[0].type)) {
             this.toastrService.clear();
-            this.toastrService.error('Only images and pdf are allowed', 'Error');
+            this.toastrService.error('Only images and pdf, doc, ppt format documents are allowed', 'Error');
             this.uploader[index].queue.pop();
             return;
         }
@@ -169,7 +170,7 @@ export class Documents {
         }
         if (!this.checkFileType(event.target.files[0].type)) {
             this.toastrService.clear();
-            this.toastrService.error('Only images and pdf are allowed', 'Error');
+            this.toastrService.error('Only images and pdf, doc, ppt format documents are allowed', 'Error');
             this.uploader[index].queue.pop();
             event.target.value = null;
             return;

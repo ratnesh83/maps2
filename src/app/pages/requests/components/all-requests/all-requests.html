@@ -1,7 +1,7 @@
 <div class="container-fluid animated bounce request-container">
     <div class="add-request-div">
-        <span class="add-request-span" mdTooltip="Post Job">
-            <button md-mini-fab color="primary" type="button" class="add-request-btn" (click)="addPost()">
+        <span class="add-request-span" mdTooltip="Request Job">
+            <button md-mini-fab color="primary" type="button" class="add-request-btn" (click)="addRequest()">
                 <i class="fa fa-plus"></i>
             </button>
         </span>
@@ -19,7 +19,7 @@
                                 <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{request.title}}</md-card-title>
                                 <md-card-subtitle style="font-weight: 500">{{request.category ? request.category + ': ' + request.subCategory : request.category}}</md-card-subtitle>
                                 <div class="requests-header-view">
-                                    <div class="view-link" (click)="showPostDetail(request._id)">
+                                    <div class="view-link" (click)="showRequestDetail(request._id)">
                                         <span class="hidden-xs-down">
                                             View Details &gt;&gt;
                                         </span>
@@ -59,7 +59,7 @@
                                 <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{request.title}}</md-card-title>
                                 <md-card-subtitle style="font-weight: 500">{{request.category ? request.category + ': ' + request.subCategory : request.category}}</md-card-subtitle>
                                 <div class="requests-header-view">
-                                    <div class="view-link" (click)="showPostDetail(request._id)">
+                                    <div class="view-link" (click)="showRequestDetail(request._id)">
                                         <span class="hidden-xs-down">
                                             View Details &gt;&gt;
                                         </span>
@@ -98,7 +98,7 @@
                                 <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{request.title}}</md-card-title>
                                 <md-card-subtitle style="font-weight: 500">{{request.category ? request.category + ': ' + request.subCategory : request.category}}</md-card-subtitle>
                                 <div class="requests-header-view">
-                                    <div class="view-link" (click)="showPostDetail(request._id)">
+                                    <div class="view-link" (click)="showRequestDetail(request._id)">
                                         <span class="hidden-xs-down">
                                             View Details &gt;&gt;
                                         </span>
@@ -142,7 +142,7 @@
                         </span>
                     </span>
                 </span>
-                <md-paginator #postsPaginator class="mat-paginator-pg" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                <md-paginator #requestsPaginator class="mat-paginator-pg" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
                     (page)="pageChange($event)">
                 </md-paginator>
             </div>

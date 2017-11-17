@@ -14,14 +14,14 @@ export class RequestService {
 
     }
 
-    getAllPosts(payload) {
+    getAllRequests(payload) {
         let url;
         let skip = payload.hasOwnProperty('skip') ? payload.skip : ((payload.currentPage - 1) * payload.limit);
 
         url = environment.APP.API_URL + environment.APP.GET_ALL_JOBS + '?limit=' + payload.limit + '&skip=' + skip;
 
-        if (payload.post && payload.post != null) {
-            url += '&searchUser=' + payload.post;
+        if (payload.request && payload.request != null) {
+            url += '&searchUser=' + payload.request;
         }
 
         this.authRequired = true;
@@ -71,7 +71,7 @@ export class RequestService {
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
 
-    postJob(data) {
+    requestJob(data) {
         let url = environment.APP.API_URL + environment.APP.POST_JOB;
         this.authRequired = true;
         this.utcOffset = false;
