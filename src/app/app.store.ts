@@ -12,6 +12,7 @@ import { customer, worker, employer, UserEffects } from './pages/users/state';
 import { setting, SettingEffects } from './pages/settings/state';
 import { donation, DonationsEffects } from './pages/donations/state';
 import { job, JobEffects } from './pages/jobs/state';
+import { labor, LaborEffects } from './pages/labors/state';
 import { post, PostEffects } from './pages/posts/state';
 import { request, RequestEffects } from './pages/requests/state';
 import { subscription, SubscriptionEffects } from './pages/subscriptions/state';
@@ -30,6 +31,7 @@ import { feedback, FeedbackEffects } from './pages/feedbacks/state';
             worker,
             employer,
             job,
+            labor,
             post,
             request,
             donation,
@@ -58,6 +60,7 @@ import { feedback, FeedbackEffects } from './pages/feedbacks/state';
         EffectsModule.run(ChangePasswordEffects),
         EffectsModule.run(FeedbackEffects),
         EffectsModule.run(JobEffects),
+        EffectsModule.run(LaborEffects),
         EffectsModule.run(DonationsEffects),
         EffectsModule.run(PostEffects),
         EffectsModule.run(RequestEffects)
