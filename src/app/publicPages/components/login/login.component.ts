@@ -102,6 +102,7 @@ export class Login {
         this.checkboxRemember = this.form.controls['checkboxRemember'];
         this.phone = this.form.controls['phone'];
         this.countryCode = this.form.controls['countryCode'];
+        this.countryCode.setValue('+1');
 
     }
 

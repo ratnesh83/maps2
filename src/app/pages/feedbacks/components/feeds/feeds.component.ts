@@ -28,7 +28,8 @@ export class Feeds {
     public pageSizeOptions = [5, 10, 25, 100, 500];
 
     constructor(private activeModal: NgbActiveModal, private store: Store<any>) {
-        
+        this.length = 1;
+        this.pageIndex = 0;
         this.feedbackStore = this.store
             .select('feedback')
             .subscribe((res: any) => {

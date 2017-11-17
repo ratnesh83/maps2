@@ -22,6 +22,7 @@ import { UserService } from './services/user-service/user.service';
 import { DataService } from './services/data-service/data.service';
 import { JobService } from './services/job-service/job.service';
 import { PostService } from './services/post-service/post.service';
+import { RequestService } from './services/request-service/request.service';
 import { FeedbackService } from './services/feedback-service/feedback.service';
 import { ChangePasswordService } from './services/change-password/change-password.service';
 import { HomeService } from './services/home-service/home.service';
@@ -118,6 +119,7 @@ export type StoreType = {
         DataService,
         JobService,
         PostService,
+        RequestService,
         FeedbackService,
         NgbActiveModal,
         CommonService,

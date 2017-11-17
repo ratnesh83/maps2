@@ -99,6 +99,19 @@ export class PagesMenuService {
                         },
                     },
                     {
+                        path: 'requests',
+                        data: {
+                            menu: {
+                                title: 'MY REQUESTS',
+                                icon: 'icon-wrap fa fa-tasks',
+                                selected: false,
+                                expanded: false,
+                                order: 100,
+                                auth: ['USER']
+                            }
+                        },
+                    },
+                    {
                         path: 'payments',
                         data: {
                             menu: {

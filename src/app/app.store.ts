@@ -13,6 +13,7 @@ import { setting, SettingEffects } from './pages/settings/state';
 import { donation, DonationsEffects } from './pages/donations/state';
 import { job, JobEffects } from './pages/jobs/state';
 import { post, PostEffects } from './pages/posts/state';
+import { request, RequestEffects } from './pages/requests/state';
 import { subscription, SubscriptionEffects } from './pages/subscriptions/state';
 import { notification, NotificationEffects } from './pages/notification/state';
 import { pass, ChangePasswordEffects } from './pages/change-password/state';
@@ -30,6 +31,7 @@ import { feedback, FeedbackEffects } from './pages/feedbacks/state';
             employer,
             job,
             post,
+            request,
             donation,
             notification,
             setting,
@@ -57,7 +59,8 @@ import { feedback, FeedbackEffects } from './pages/feedbacks/state';
         EffectsModule.run(FeedbackEffects),
         EffectsModule.run(JobEffects),
         EffectsModule.run(DonationsEffects),
-        EffectsModule.run(PostEffects)
+        EffectsModule.run(PostEffects),
+        EffectsModule.run(RequestEffects)
     ],
 })
 

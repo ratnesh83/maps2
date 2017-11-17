@@ -107,6 +107,7 @@ export class Register {
         this.socialId = this.form.controls['socialId'];
         this.password = this.passwords.controls['password'];
         this.repeatPassword = this.passwords.controls['repeatPassword'];
+        this.countryCode.setValue('+1');
 
     }
 

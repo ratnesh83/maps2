@@ -1,0 +1,151 @@
+<div class="container-fluid animated bounce request-container">
+    <div class="add-request-div">
+        <span class="add-request-span" mdTooltip="Post Job">
+            <button md-mini-fab color="primary" type="button" class="add-request-btn" (click)="addPost()">
+                <i class="fa fa-plus"></i>
+            </button>
+        </span>
+    </div>
+    <md-tab-group class="my-requests-tabs-group" (selectChange)="selectTab($event)">
+        <md-tab label="ACTIVE">
+            <div class="requests-section page-input-block">
+                <md-card class="requests-card">
+                    <md-card-content *ngIf="requests">
+                        <md-card class="requests-card requests-card-inner" *ngFor="let request of requests; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
+                            <md-card-header class="requests-card-header">
+                                <div md-card-avatar class="requests-header-image">
+                                    <img mat-card-avatar [src]="request.categoryId ? request.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
+                                </div>
+                                <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{request.title}}</md-card-title>
+                                <md-card-subtitle style="font-weight: 500">{{request.category ? request.category + ': ' + request.subCategory : request.category}}</md-card-subtitle>
+                                <div class="requests-header-view">
+                                    <div class="view-link" (click)="showPostDetail(request._id)">
+                                        <span class="hidden-xs-down">
+                                            View Details &gt;&gt;
+                                        </span>
+                                        <span class="hidden-sm-up">
+                                            <i class="fa fa-info"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </md-card-header>
+                            <md-card-content class="requests-card with-margin">
+                                <p class="md-card-content-requests-p-rate">
+                                    {{'$' + request.rate + '/' + (request.rateType == 'DAILY' ? 'day' : request.rateType == 'WEEKLY' ? 'week' : request.rateType == 'MONTHLY'
+                                    ? 'month' : 'hr')}}
+                                </p>
+                                <p class="md-card-content-requests-p-address">
+                                    {{ request.employerAddress ? request.employerAddress.addressLine1 : '' }}
+                                </p>
+                            </md-card-content>
+                        </md-card>
+                        <div *ngIf="requests && requests.length == 0">
+                            No jobs found.
+                        </div>
+                    </md-card-content>
+                </md-card>
+            </div>
+
+        </md-tab>
+        <md-tab label="IN PROGRESS">
+            <div class="requests-section page-input-block">
+                <md-card class="requests-card">
+                    <md-card-content *ngIf="requests">
+                        <md-card class="requests-card requests-card-inner" *ngFor="let request of requests; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
+                            <md-card-header class="requests-card-header">
+                                <div md-card-avatar class="requests-header-image">
+                                    <img mat-card-avatar [src]="request.categoryId ? request.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
+                                </div>
+                                <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{request.title}}</md-card-title>
+                                <md-card-subtitle style="font-weight: 500">{{request.category ? request.category + ': ' + request.subCategory : request.category}}</md-card-subtitle>
+                                <div class="requests-header-view">
+                                    <div class="view-link" (click)="showPostDetail(request._id)">
+                                        <span class="hidden-xs-down">
+                                            View Details &gt;&gt;
+                                        </span>
+                                        <span class="hidden-sm-up">
+                                            <i class="fa fa-info"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </md-card-header>
+                            <md-card-content class="requests-card with-margin">
+                                <p class="md-card-content-requests-p-rate">
+                                    {{'$' + request.rate + '/' + (request.rateType == 'DAILY' ? 'day' : request.rateType == 'WEEKLY' ? 'week' : request.rateType == 'MONTHLY'
+                                    ? 'month' : 'hr')}}
+                                </p>
+                                <p class="md-card-content-requests-p-address">
+                                    {{ request.employerAddress ? request.employerAddress.addressLine1 : '' }}
+                                </p>
+                            </md-card-content>
+                        </md-card>
+                        <div *ngIf="requests && requests.length == 0">
+                            No jobs found.
+                        </div>
+                    </md-card-content>
+                </md-card>
+            </div>
+        </md-tab>
+        <md-tab label="COMPLETED">
+            <div class="requests-section page-input-block">
+                <md-card class="requests-card">
+                    <md-card-content *ngIf="requests">
+                        <md-card class="requests-card requests-card-inner" *ngFor="let request of requests; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
+                            <md-card-header class="requests-card-header">
+                                <div md-card-avatar class="requests-header-image">
+                                    <img mat-card-avatar [src]="request.categoryId ? request.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
+                                </div>
+                                <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{request.title}}</md-card-title>
+                                <md-card-subtitle style="font-weight: 500">{{request.category ? request.category + ': ' + request.subCategory : request.category}}</md-card-subtitle>
+                                <div class="requests-header-view">
+                                    <div class="view-link" (click)="showPostDetail(request._id)">
+                                        <span class="hidden-xs-down">
+                                            View Details &gt;&gt;
+                                        </span>
+                                        <span class="hidden-sm-up">
+                                            <i class="fa fa-info"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </md-card-header>
+                            <md-card-content class="requests-card with-margin">
+                                <p class="md-card-content-requests-p-rate">
+                                    {{'$' + request.rate + '/' + (request.rateType == 'DAILY' ? 'day' : request.rateType == 'WEEKLY' ? 'week' : request.rateType == 'MONTHLY'
+                                    ? 'month' : 'hr')}}
+                                </p>
+                                <p class="md-card-content-requests-p-address">
+                                    {{ request.employerAddress ? request.employerAddress.addressLine1 : '' }}
+                                </p>
+                            </md-card-content>
+                        </md-card>
+                        <div *ngIf="requests && requests.length == 0">
+                            No jobs found.
+                        </div>
+                    </md-card-content>
+                </md-card>
+            </div>
+        </md-tab>
+    </md-tab-group>
+    <!-- <div class="panel-footer">
+        <div class="row">
+            <div *ngIf="count > 4" class="col-sm-12 rar-align page-select">
+                <span class="first-last-ctrl">
+                    <span [ngClass]="{'enabled': pageIndex > 0}" class="page-controls" (click)="pageIndex > 0 && goToFirstPage($event)">
+                        <span mdTooltip="{{(pageIndex > 0) ? 'First page' : ''}}">
+                            <i [ngClass]="{'enabled': pageIndex > 0}" class="fa fa-fast-backward"></i>
+                        </span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                    <span [ngClass]="{'enabled': pageIndex * pageSize + pageSize < length}" class="page-controls" (click)="pageIndex * pageSize + pageSize < length && goToLastPage($event)">
+                        <span mdTooltip="{{(pageIndex * pageSize + pageSize < length) ? 'Last page' : ''}}">
+                            <i [ngClass]="{'enabled': pageIndex * pageSize + pageSize < length}" class="fa fa-fast-forward"></i>
+                        </span>
+                    </span>
+                </span>
+                <md-paginator #postsPaginator class="mat-paginator-pg" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                    (page)="pageChange($event)">
+                </md-paginator>
+            </div>
+        </div>
+    </div> -->
+</div>
