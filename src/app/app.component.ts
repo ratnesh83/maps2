@@ -16,9 +16,7 @@ import 'style-loader!./theme/initial.scss';
     template: `
         <main [ngClass]="{'menu-collapsed': isMenuCollapsed}" baThemeRun>
         <div class="additional-bg"></div>
-        <div dir={{direction}}>
         <router-outlet></router-outlet>
-        </div>
         </main>
     `
 })
