@@ -17,7 +17,6 @@ import { post, PostEffects } from './pages/posts/state';
 import { request, RequestEffects } from './pages/requests/state';
 import { subscription, SubscriptionEffects } from './pages/subscriptions/state';
 import { notification, NotificationEffects } from './pages/notification/state';
-import { pass, ChangePasswordEffects } from './pages/change-password/state';
 import { feedback, FeedbackEffects } from './pages/feedbacks/state';
 
 @NgModule({
@@ -38,7 +37,6 @@ import { feedback, FeedbackEffects } from './pages/feedbacks/state';
             notification,
             setting,
             subscription,
-            pass,
             feedback,
         }),
 
@@ -57,7 +55,6 @@ import { feedback, FeedbackEffects } from './pages/feedbacks/state';
         EffectsModule.run(NotificationEffects),
         EffectsModule.run(SettingEffects),
         EffectsModule.run(SubscriptionEffects),
-        EffectsModule.run(ChangePasswordEffects),
         EffectsModule.run(FeedbackEffects),
         EffectsModule.run(JobEffects),
         EffectsModule.run(LaborEffects),

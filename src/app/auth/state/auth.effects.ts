@@ -446,9 +446,9 @@ export class AuthEffects {
                     if (loggedIn) {
                         let redirect = 'pages/home';
                         if (this.authService.user.userType === 'USER') {
-                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/home';
+                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/jobs';
                         } else if (this.authService.user.userType === 'EMPLOYER') {
-                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/home';
+                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/labors';
                         }
                         this.router.navigate([redirect]);
                     }

@@ -25,7 +25,6 @@ import { LaborService } from './services/labor-service/labor.service';
 import { PostService } from './services/post-service/post.service';
 import { RequestService } from './services/request-service/request.service';
 import { FeedbackService } from './services/feedback-service/feedback.service';
-import { ChangePasswordService } from './services/change-password/change-password.service';
 import { HomeService } from './services/home-service/home.service';
 import { DonationsService } from './services/donations-service/donations.service';
 import { NotificationService } from './services/notification/notification.service';
@@ -136,7 +135,6 @@ export type StoreType = {
         AuthGuardDriver,
         JwtHelper,
         NotificationService,
-        ChangePasswordService,
         SettingsService,
         SubscriptionService,
         provideAuth({

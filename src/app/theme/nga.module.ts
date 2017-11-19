@@ -3,7 +3,6 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgUploaderModule } from 'ngx-uploader';
-import { ChangePasswordModal } from '../pages/change-password/component/change-password-modal.component';
 import { TopNotifications } from '../pages/notification/components/top/top-notifications-component.ts';
 
 import { BaThemeConfig } from './theme.config';
@@ -106,11 +105,9 @@ const NGA_VALIDATORS = [
         ...NGA_PIPES,
         ...NGA_DIRECTIVES,
         ...NGA_COMPONENTS,
-        TopNotifications,
-        ChangePasswordModal
+        TopNotifications
     ],
     entryComponents: [
-        ChangePasswordModal,
 
     ],
     imports: [
