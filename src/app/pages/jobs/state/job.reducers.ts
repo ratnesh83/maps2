@@ -17,13 +17,15 @@ export const job: ActionReducer<any> = (state = initialState, action: Action) =>
 
         case 'APP_GET_CATEGORIES_JOB':
             delete state.getJobHit;
+            delete state.getJobCategoryHit;
             return Object.assign({}, state);
 
         case 'APP_GET_CATEGORIES_JOB_SUCCESS':
-            return Object.assign({}, state, { categories: action.payload });
+            return Object.assign({}, state, { categories: action.payload, getJobCategoryHit: true });
 
         case 'APP_GETALL_JOB':
             delete state.getJobHit;
+            delete state.getJobCategoryHit;
             return Object.assign({}, state, action.payload);
 
         case 'APP_JOB_DETAIL_SUCCESS':

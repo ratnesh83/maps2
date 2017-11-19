@@ -81,23 +81,25 @@ export class AllJobs implements OnInit {
             .subscribe((res: any) => {
                 if (res) {
                     if (res.categories) {
-                        this.categories = [];
-                        for (let i = 0; i < res.categories.length; i++) {
-                            this.categories.push(res.categories[i]);
+                        if (res.getJobCategoryHit) {
+                            this.categories = [];
+                            for (let i = 0; i < res.categories.length; i++) {
+                                this.categories.push(res.categories[i]);
+                            }
                         }
-                        if (!res.getJobHit) {
+                        if (!res.getJobHit && res.getJobCategoryHit) {
                             for (let i = 0; i < this.categories.length; i++) {
                                 if (this.dataService.getCategoryId() == this.categories[i]._id) {
                                     this.selectedCategory = this.categories[i].name;
                                     this.categoryId = this.categories[i]._id;
-                                } else if(i == this.categories.length) {
+                                } else if (i == this.categories.length) {
                                     this.selectedCategory = this.categories[0].name;
                                     this.categoryId = this.categories[0]._id;
                                 }
                             }
                         }
                     }
-                    
+
                     if (res.jobs && res.getJobHit) {
                         this.count = res.count;
                         this.jobs = [];

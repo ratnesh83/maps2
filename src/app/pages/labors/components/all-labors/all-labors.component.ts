@@ -79,11 +79,13 @@ export class AllLabors implements OnInit {
             .subscribe((res: any) => {
                 if (res) {
                     if (res.categories) {
-                        this.categories = [];
-                        for (let i = 0; i < res.categories.length; i++) {
-                            this.categories.push(res.categories[i]);
+                        if (res.getLaborCategoryHit) {
+                            this.categories = [];
+                            for (let i = 0; i < res.categories.length; i++) {
+                                this.categories.push(res.categories[i]);
+                            }
                         }
-                        if (!res.getLaborHit) {
+                        if (!res.getLaborHit && res.getLaborCategoryHit) {
                             for (let i = 0; i < this.categories.length; i++) {
                                 if (this.dataService.getCategoryId() == this.categories[i]._id) {
                                     this.selectedCategory = this.categories[i].name;
@@ -95,7 +97,7 @@ export class AllLabors implements OnInit {
                             }
                         }
                     }
-                    
+
                     if (res.labors && res.getLaborHit) {
                         this.count = res.count;
                         this.labors = [];
@@ -264,8 +266,6 @@ export class AllLabors implements OnInit {
     };
 
     showLaborDetail(labor) {
-        // this.dataService.setData('laborId', labor.id);
-        // this.router.navigate(['pages/labors/labordetails']);
         // let dialogRef = this.dialog.open(LaborDetailDialog);
         // dialogRef.componentInstance.laborDetails = labor;
     }
