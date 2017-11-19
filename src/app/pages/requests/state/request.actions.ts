@@ -2,8 +2,6 @@ import { Action } from '@ngrx/store';
 
 export const actionTypes = {
 
-    APP_GET_CATEGORIES: 'APP_GET_CATEGORIES',
-    APP_GET_CATEGORIES_SUCCESS: 'APP_GET_CATEGORIES_SUCCESS',
     APP_GET_REQUESTS: 'APP_GET_REQUESTS',
     APP_GET_REQUESTS_SUCCESS: 'APP_GET_REQUESTS_SUCCESS',
     APP_GET_LABORS: 'APP_GET_LABORS',
@@ -18,16 +16,6 @@ export const actionTypes = {
 };
 
 type credentials = {};
-
-export class AppGetCategories implements Action {
-    type = actionTypes.APP_GET_CATEGORIES;
-    constructor(public payload: credentials) { }
-}
-
-export class AppGetCategoriesSuccess implements Action {
-    type = actionTypes.APP_GET_CATEGORIES_SUCCESS;
-    constructor(public payload: credentials) { }
-}
 
 export class AppGetJobs implements Action {
     type = actionTypes.APP_GET_REQUESTS;
@@ -80,9 +68,7 @@ export class AppRequestJobSuccess implements Action {
 }
 
 export type Actions
-    = AppGetCategories
-    | AppGetCategoriesSuccess
-    | AppGetJobs
+    = AppGetJobs
     | AppGetJobsSuccess
     | AppGetSubCategories
     | AppGetSubCategoriesSuccess

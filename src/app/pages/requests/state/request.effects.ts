@@ -14,41 +14,6 @@ import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from '../../..
 export class RequestEffects {
 
     @Effect({ dispatch: false })
-    getCategories$ = this.actions$
-        .ofType('APP_GET_CATEGORIES')
-        .do((action) => {
-            this._spinner.show();
-            this.RequestService.getAllCategories(action.payload).subscribe((result) => {
-                this._spinner.hide();
-                if (result.message == 'Action complete.' || result.statusCode == 200) {
-                    let payload = result.data;
-                    this.store.dispatch(new request.AppGetCategoriesSuccess(payload));
-                }
-            }
-                , (error) => {
-                    this._spinner.hide();
-                    if (error) {
-                        if (error.statusCode === 401 || error.statusCode === 403) {
-                            this.store.dispatch({
-                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
-                            });
-                        } else {
-
-                        }
-                    }
-                }
-            );
-        });
-
-
-    @Effect({ dispatch: false })
-    getCategoriesSuccess: Observable<Action> = this.actions$
-        .ofType('APP_GET_CATEGORIES_SUCCESS')
-        .do((action) => {
-
-        });
-
-    @Effect({ dispatch: false })
     getJobs$ = this.actions$
         .ofType('APP_GET_REQUESTS')
         .do((action) => {
