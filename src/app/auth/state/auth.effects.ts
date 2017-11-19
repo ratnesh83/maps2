@@ -27,17 +27,24 @@ export class AuthEffects {
                 this.baThemeSpinner.hide();
                 if (result.statusCode === 200) {
                     this.store.dispatch(new auth.AuthLoginSuccessAction(result));
-                    localStorage.setItem('token', result.data.accessToken);
-                    let tokenSession = localStorage.getItem('token');
-                    localStorage.setItem('tokenSession', JSON.stringify(result.data.accessToken));
+                    if (result.data && result.data.accessToken) {
+                        localStorage.setItem('token', result.data.accessToken);
+                    }
+                    if (result.data.categoryId) {
+                        this.dataService.setCategoryId(result.data.categoryId);
+                    }
+                    if (result.data && result.data.accessToken) {
+                        let tokenSession = localStorage.getItem('token');
+                        localStorage.setItem('tokenSession', JSON.stringify(result.data.accessToken));
+                    }
                     let loggedIn = this.authService.login();
                     if (loggedIn) {
                         let redirect = 'pages/home';
                         if (this.authService.user.userType === 'USER') {
-                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/home';
+                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/jobs';
                         }
                         else if (this.authService.user.userType === 'EMPLOYER') {
-                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/home';
+                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/labors';
                         }
                         this.router.navigate([redirect]);
                         this.dataService.removeUserRegisterationId();
@@ -94,13 +101,16 @@ export class AuthEffects {
                         let tokenSession = localStorage.getItem('token');
                         localStorage.setItem('tokenSession', JSON.stringify(result.data.accessToken));
                     }
+                    if (result.data.categoryId) {
+                        this.dataService.setCategoryId(result.data.categoryId);
+                    }
                     let loggedIn = this.authService.login();
                     if (loggedIn) {
                         let redirect = 'pages/home';
                         if (this.authService.user.userType === 'USER') {
-                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/home';
+                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/jobs';
                         } else if (this.authService.user.userType === 'EMPLOYER') {
-                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/home';
+                            redirect = this.authService.redirectUrl ? this.authService.redirectUrl : 'pages/labors';
                         }
                         this.router.navigate([redirect]);
                         this.dataService.removeUserRegisterationId();
@@ -428,6 +438,9 @@ export class AuthEffects {
                         localStorage.setItem('token', result.data.accessToken);
                         let tokenSession = localStorage.getItem('token');
                         localStorage.setItem('tokenSession', JSON.stringify(result.data.accessToken));
+                    }
+                    if (result.data.categoryId) {
+                        this.dataService.setCategoryId(result.data.categoryId);
                     }
                     let loggedIn = this.authService.login();
                     if (loggedIn) {
