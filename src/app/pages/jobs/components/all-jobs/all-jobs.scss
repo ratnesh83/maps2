@@ -15,6 +15,25 @@
         width: auto;
     }
 }
+.map-div {
+    position: relative;
+    .map-loading {
+        display: none;
+        position: absolute;
+        top: 0px;
+        height: 60vh;
+        width: 100%;
+        max-height: 480px;
+        transition: all ease 0.7s;
+        span {
+            margin: auto;
+            text-align: center;
+            font-weight: 500;
+            color: #1b1b1b;
+            font-size: large;
+        }
+    }
+}
 .jobs-card-heading {
     width: 100%;
 }

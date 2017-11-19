@@ -275,7 +275,7 @@ export class AllLabors implements OnInit {
         self.bounds.extend(new google.maps.LatLng(lat, lng));
         if (self.map) {
             self.map.fitBounds(this.bounds);
-            self.map.setZoom(13);
+            self.map.setZoom(self.zoom);
         }
         self.center = lat + ', ' + lng;
     }
@@ -285,7 +285,7 @@ export class AllLabors implements OnInit {
         this.bounds.extend(new google.maps.LatLng(lat, lng));
         if (this.map) {
             this.map.fitBounds(this.bounds);
-            this.map.setZoom(13);
+            this.map.setZoom(this.zoom);
         }
         this.center = lat + ', ' + lng;
     }

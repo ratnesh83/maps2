@@ -40,13 +40,15 @@
                     </div>
                     <div class="col-12 col-sm-6 labors-input-box">
                         <label for="address">Address</label>
-                        <input #inputLocationAddress [(ngModel)]="searchLocation" ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)" class="form-control"
-                            placeholder="">
+                        <input #inputLocationAddress [(ngModel)]="searchLocation" ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)"
+                            class="form-control" placeholder="">
                     </div>
                 </div>
-                <div>
-                    <ngui-map style="height: 60vh; max-height: 480px;" (mapReady$)="onMapReady($event)" (idle)="onIdle($event)" [geoFallbackCenter]="[42.99, -77.79]" [zoomControlOptions]="{ position: 'TOP_RIGHT' }" [fullscreenControl]="false" [scrollwheel]="false">
-                        <marker *ngFor="let labor of labors" [position]="labor.coordinates" (click)="showMarkerInfo($event, labor)" draggable="false" [icon]="{
+                <div class="map-div">
+                    <ngui-map style="height: 60vh; max-height: 480px;" (mapReady$)="onMapReady($event)" (idle)="onIdle($event)" [geoFallbackCenter]="[42.99, -77.79]"
+                        [zoomControlOptions]="{ position: 'TOP_RIGHT' }" [fullscreenControl]="false" [scrollwheel]="false">
+                        <marker *ngFor="let labor of labors" [position]="labor.coordinates" (click)="showMarkerInfo($event, labor)" draggable="false"
+                            [icon]="{
                             url: 'assets/img/labor-search.png',
                             anchor: [16,24],
                             size: [32,48],
@@ -85,6 +87,11 @@
                             </info-window>
                         </marker>
                     </ngui-map>
+                    <div class="map-loading" [ngStyle]="{'display' : !map ? 'flex' : 'none'}">
+                        <span>
+                            Loading...
+                        </span>
+                    </div>
                 </div>
             </md-card-content>
         </md-card>

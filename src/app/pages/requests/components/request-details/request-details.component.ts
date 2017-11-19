@@ -75,11 +75,11 @@ export class RequestDetails implements OnInit {
                 jobId: this.dataService.getData('jobId')
             }
         });
-        this.store.dispatch({
+        /* this.store.dispatch({
             type: request.actionTypes.APP_GET_LABORS, payload: {
                 jobId: this.dataService.getData('jobId')
             }
-        });
+        }); */
     };
 
     showPhoneInfo(id) {

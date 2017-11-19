@@ -67,10 +67,6 @@ export class AllRequests implements OnInit {
         this.getAllRequests();
     }
 
-    addRequest() {
-        this.router.navigate(['/pages/requests/requestjob']);
-    }
-
     ngOnDestroy() {
         if (this.requestStore) {
             // this.requestStore.unsubscribe();
