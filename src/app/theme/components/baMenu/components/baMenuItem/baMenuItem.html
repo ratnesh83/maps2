@@ -5,7 +5,7 @@
     <span>{{ menuItem.title }}</span>
   </a>
 
-  <a *ngIf="!menuItem.children && menuItem.url" (mouseenter)="onHoverItem($event, item)" [href]="menuItem.url" [target]="menuItem.target" class="al-sidebar-list-link">
+  <a *ngIf="!menuItem.children && menuItem.url" (click)="closeMenu()" (mouseenter)="onHoverItem($event, item)" [href]="menuItem.url" [target]="menuItem.target" class="al-sidebar-list-link">
     <!-- <i *ngIf="menuItem.icon" class="{{ menuItem.icon }}"></i> -->
     <span>{{ menuItem.title }}</span>
   </a>
@@ -19,6 +19,7 @@
   <ul *ngIf="menuItem.children" class="al-sidebar-sublist" [ngClass]="{'slide-right': menuItem.slideRight}">
     <ba-menu-item [menuItem]="subItem"
                 [child]="true"
+                (click)="closeMenu()"
                 (itemHover)="onHoverItem($event)"
                 (toggleSubMenu)="onToggleSubMenu($event, subItem)"
                 *ngFor="let subItem of menuItem.children">

@@ -123,11 +123,13 @@ a.al-sidebar-list-link {
     left: $sidebar-width - $sidebar-scroll-width;
 }
 @mixin layout-collapsed() {
-    .al-main {
-        // margin-left: 50px !important;
-    }
-    .al-footer {
-        padding-left: 83px
+    @media (max-width: $resL) {
+        .al-main {
+            // margin-left: 50px !important;
+        }
+        .al-footer {
+            padding-left: 83px !important;
+        }
     }
 }
 @mixin default-sublist() {
