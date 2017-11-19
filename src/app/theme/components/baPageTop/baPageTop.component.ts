@@ -27,10 +27,6 @@ export class BaPageTop {
         private router: Router,
         private dataService: DataService) {
 
-        this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
-            this.isMenuCollapsed = isCollapsed;
-        });
-
         this.profilePicture = 'assets/img/user.png';
 
         this.storeData = this.store
@@ -61,6 +57,14 @@ export class BaPageTop {
                 }
             });
         }
+    }
+
+    public ngAfterViewInit() {
+        this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
+            setTimeout(() => {
+                this.isMenuCollapsed = isCollapsed;
+            });
+        });
     }
 
     ngOnDestroy() {
