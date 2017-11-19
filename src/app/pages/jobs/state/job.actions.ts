@@ -4,20 +4,20 @@ export const actionTypes = {
 
     APP_GETALL_JOB: 'APP_GETALL_JOB',
     APP_JOB_DETAIL_SUCCESS: 'APP_JOB_DETAIL_SUCCESS',
-    APP_GET_CATEGORIES: 'APP_GET_CATEGORIES',
-    APP_GET_CATEGORIES_SUCCESS: 'APP_GET_CATEGORIES_SUCCESS'
+    APP_GET_CATEGORIES_JOB: 'APP_GET_CATEGORIES_JOB',
+    APP_GET_CATEGORIES_JOB_SUCCESS: 'APP_GET_CATEGORIES_JOB_SUCCESS'
 
 };
 
 type credentials = {};
 
 export class AppGetCategories implements Action {
-    type = actionTypes.APP_GET_CATEGORIES;
+    type = actionTypes.APP_GET_CATEGORIES_JOB;
     constructor(public payload: credentials) { }
 }
 
 export class AppGetCategoriesSuccess implements Action {
-    type = actionTypes.APP_GET_CATEGORIES_SUCCESS;
+    type = actionTypes.APP_GET_CATEGORIES_JOB_SUCCESS;
     constructor(public payload: credentials) { }
 }
 

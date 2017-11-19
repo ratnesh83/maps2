@@ -15,12 +15,16 @@ const initialState: any = {
 export const job: ActionReducer<any> = (state = initialState, action: Action) => {
     switch (action.type) {
 
-        case 'APP_GET_CATEGORIES':
+        case 'APP_GET_CATEGORIES_JOB':
             delete state.getJobHit;
             return Object.assign({}, state);
 
-        case 'APP_GET_CATEGORIES_SUCCESS':
+        case 'APP_GET_CATEGORIES_JOB_SUCCESS':
             return Object.assign({}, state, { categories: action.payload });
+
+        case 'APP_GETALL_JOB':
+            delete state.getJobHit;
+            return Object.assign({}, state, action.payload);
 
         case 'APP_JOB_DETAIL_SUCCESS':
             return Object.assign({}, state, action.payload, { getJobHit: true });

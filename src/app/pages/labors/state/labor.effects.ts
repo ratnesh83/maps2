@@ -16,7 +16,7 @@ export class LaborEffects {
 
     @Effect({ dispatch: false })
     getCategories$ = this.actions$
-        .ofType('APP_GET_CATEGORIES')
+        .ofType('APP_GET_CATEGORIES_LABOR')
         .do((action) => {
             this._spinner.show();
             this.LaborService.getAllCategories(action.payload).subscribe((result) => {
@@ -45,7 +45,7 @@ export class LaborEffects {
 
     @Effect({ dispatch: false })
     getCategoriesSuccess: Observable<Action> = this.actions$
-        .ofType('APP_GET_CATEGORIES_SUCCESS')
+        .ofType('APP_GET_CATEGORIES_LABOR_SUCCESS')
         .do((action) => {
 
         });

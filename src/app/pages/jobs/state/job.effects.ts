@@ -17,7 +17,7 @@ export class JobEffects {
 
     @Effect({ dispatch: false })
     getCategories$ = this.actions$
-        .ofType('APP_GET_CATEGORIES')
+        .ofType('APP_GET_CATEGORIES_JOB')
         .do((action) => {
             this._spinner.show();
             this.JobService.getAllCategories(action.payload).subscribe((result) => {
@@ -46,7 +46,7 @@ export class JobEffects {
 
     @Effect({ dispatch: false })
     getCategoriesSuccess: Observable<Action> = this.actions$
-        .ofType('APP_GET_CATEGORIES_SUCCESS')
+        .ofType('APP_GET_CATEGORIES_JOB_SUCCESS')
         .do((action) => {
 
         });

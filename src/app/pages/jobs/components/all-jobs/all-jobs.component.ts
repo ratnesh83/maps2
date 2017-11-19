@@ -97,9 +97,10 @@ export class AllJobs implements OnInit {
                             }
                         }
                     }
-                    this.count = res.count;
-                    this.jobs = [];
-                    if (res.jobs) {
+                    
+                    if (res.jobs && res.getJobHit) {
+                        this.count = res.count;
+                        this.jobs = [];
                         for (let i = 0; i < res.jobs.length; i++) {
                             let coordinates = [0, 0];
                             if (res.jobs[i].employerAddress && res.jobs[i].employerAddress.location) {
@@ -144,7 +145,7 @@ export class AllJobs implements OnInit {
 
     ngOnInit() {
         this.store.dispatch({
-            type: job.actionTypes.APP_GET_CATEGORIES,
+            type: job.actionTypes.APP_GET_CATEGORIES_JOB,
             payload: {}
         });
     }

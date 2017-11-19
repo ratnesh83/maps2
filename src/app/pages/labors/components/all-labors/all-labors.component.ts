@@ -95,9 +95,10 @@ export class AllLabors implements OnInit {
                             }
                         }
                     }
-                    this.count = res.count;
-                    this.labors = [];
-                    if (res.labors) {
+                    
+                    if (res.labors && res.getLaborHit) {
+                        this.count = res.count;
+                        this.labors = [];
                         for (let i = 0; i < res.labors.length; i++) {
                             let coordinates = [0, 0];
                             if (res.labors[i].locationDetails && res.labors[i].locationDetails.location) {
@@ -142,7 +143,7 @@ export class AllLabors implements OnInit {
 
     ngOnInit() {
         this.store.dispatch({
-            type: labor.actionTypes.APP_GET_CATEGORIES,
+            type: labor.actionTypes.APP_GET_CATEGORIES_LABOR,
             payload: {}
         });
     }

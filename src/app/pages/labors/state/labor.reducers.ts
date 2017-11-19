@@ -15,12 +15,16 @@ const initialState: any = {
 export const labor: ActionReducer<any> = (state = initialState, action: Action) => {
     switch (action.type) {
 
-        case 'APP_GET_CATEGORIES':
+        case 'APP_GET_CATEGORIES_LABOR':
             delete state.getLaborHit;
             return Object.assign({}, state);
 
-        case 'APP_GET_CATEGORIES_SUCCESS':
+        case 'APP_GET_CATEGORIES_LABOR_SUCCESS':
             return Object.assign({}, state, { categories: action.payload });
+
+        case 'APP_GETALL_LABOR':
+            delete state.getLaborHit;
+            return Object.assign({}, state, action.payload);
 
         case 'APP_LABOR_DETAIL_SUCCESS':
             return Object.assign({}, state, action.payload, { getLaborHit: true });
