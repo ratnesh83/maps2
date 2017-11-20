@@ -1,0 +1,33 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/home/ratnesh/laborgo-frontend/node_modules/.bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'server:dev' ]
+2 info using npm@3.10.10
+3 info using node@v8.6.0
+4 warn invalid config loglevel="notice"
+5 verbose run-script [ 'preserver:dev', 'server:dev', 'postserver:dev' ]
+6 info lifecycle cladmin@0.9.0~preserver:dev: cladmin@0.9.0
+7 silly lifecycle cladmin@0.9.0~preserver:dev: no script for preserver:dev, continuing
+8 info lifecycle cladmin@0.9.0~server:dev: cladmin@0.9.0
+9 verbose lifecycle cladmin@0.9.0~server:dev: unsafe-perm in lifecycle true
+10 verbose lifecycle cladmin@0.9.0~server:dev: PATH: /home/ratnesh/laborgo-frontend/node_modules/npm/bin/node-gyp-bin:/home/ratnesh/laborgo-frontend/node_modules/.bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/home/ratnesh/laborgo-frontend/node_modules/.bin:/home/ratnesh/bin:/home/ratnesh/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+11 verbose lifecycle cladmin@0.9.0~server:dev: CWD: /home/ratnesh/laborgo-frontend
+12 silly lifecycle cladmin@0.9.0~server:dev: Args: [ '-c',
+12 silly lifecycle   'npm run lint &&  webpack-dev-server --config config/webpack.dev.js --progress --profile --watch --content-base src/' ]
+13 silly lifecycle cladmin@0.9.0~server:dev: Returned: code: null  signal: SIGHUP
+14 verbose stack Error: write EIO
+14 verbose stack     at _errnoException (util.js:1019:11)
+14 verbose stack     at WriteWrap.afterWrite [as oncomplete] (net.js:860:14)
+15 verbose cwd /home/ratnesh/laborgo-frontend
+16 error Linux 4.8.0-53-generic
+17 error argv "/usr/local/bin/node" "/home/ratnesh/laborgo-frontend/node_modules/.bin/npm" "run" "server:dev"
+18 error node v8.6.0
+19 error npm  v3.10.10
+20 error code EIO
+21 error errno EIO
+22 error syscall write
+23 error write EIO
+24 error If you need help, you may report this error at:
+24 error     <https://github.com/npm/npm/issues>
+25 verbose exit [ 1, true ]

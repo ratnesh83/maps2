@@ -132,6 +132,14 @@ export class SettingsService {
         let url = environment.APP.API_URL + environment.APP.UPLOAD_FILE;
         return this.apiService.postFileApi(url, payload, this.authRequired, this.utcOffset);
     }
+    getProfileInfo(payload) {
+        // let skip = (payload.currentPage - 1) * payload.limit;
+        let url = environment.APP.API_URL + environment.APP.GET_PROFILE_INFO+"?userId=5a0c0843cae082269e86b39e";
+        this.authRequired = true;
+        this.utcOffset = false;
+        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+      }
+
 
 }
 

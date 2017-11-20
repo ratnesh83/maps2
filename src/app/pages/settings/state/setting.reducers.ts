@@ -92,6 +92,13 @@ export const setting: ActionReducer<any> = (state = initialState, action: Action
         case 'SETTINGS_ERROR':
             return Object.assign({}, state, { error: action.payload });
 
+        case 'GET_PROFILE_INFO':
+            return Object.assign({}, state);
+            
+        case 'GET_PROFILE_INFO_SUCCESS':
+            return Object.assign({}, action.payload);
+       
+        
         default:
             return state;
     }

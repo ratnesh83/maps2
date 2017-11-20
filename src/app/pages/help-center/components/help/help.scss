@@ -9,7 +9,7 @@
 .inner-content{
 }
 .support-image{
-    width:140px !important;
+    padding:0 10px 0 10px;
 }
 .text-content{
     margin-top:35px;
@@ -22,7 +22,6 @@
     color: #1b1b1b;
 }
 .content{
-    height: 24px;
     font-family: "Roboto", sans-serif;;
     font-size: 18px;
     font-weight: 600;
@@ -30,8 +29,13 @@
     text-align: left;
     color: #b1b1b1;
 }
+}
 .jobs-card-heading {
     width: 100%;
-}
-
+.line{
+    border:2px dashed lightgrey;
+    width:1px;
+    height:100%;
+    margin-left:95px;
+  }
 }

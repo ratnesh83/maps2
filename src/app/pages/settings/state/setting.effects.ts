@@ -517,6 +517,27 @@ export class SettingEffects {
             this.toastrService.error(message, title);
         });
 
+  @Effect({dispatch: false})
+  getProfileInfo$ = this.actions$
+    .ofType('GET_PROFILE_INFO')
+    .do((action) => {
+      this.SettingsService.getProfileInfo(action.payload).subscribe((result) => {
+          if (result.statusCode == 200) {
+            let payload = result.data;
+            console.log("hi");
+            console.log(payload);
+            //token store in localstorage
+            // localStorage.setItem('token', result.data.token);
+            this.store.dispatch(new setting.GetProfileInfoSuccessAction(payload));            
+          }
+        }
+        , (error) => {
+          if (error.statusCode === 401 || error.statusCode === 403) {
+          }
+        }
+      );
+    });
+
     constructor(
         private actions$: Actions,
         private store: Store<any>,

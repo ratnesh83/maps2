@@ -130,7 +130,7 @@
 .inner-content{
 }
 .support-image{
-    width:140px !important;
+    padding: 0 10px 0 10px;
 }
 .text-content{
     margin-top:15px;
@@ -151,6 +151,7 @@
     text-align: left;
     color: #b1b1b1;
 }
+}
 .buy-btn{
     font-family: "Roboto", sans-serif;;
     font-size: 18.8px;
@@ -159,10 +160,11 @@
     color: #ffffff;
     border-radius: 4.4px;
     background-color: #025acc;
-    position: absolute;
-    bottom:0;
+    margin-top:8px;
 }
-.jobs-card-heading {
-    width: 100%;
-}
+.line{
+      border:2px dashed lightgrey;
+      width:1px;
+      height:100%;
+      margin-left:95px;
 }

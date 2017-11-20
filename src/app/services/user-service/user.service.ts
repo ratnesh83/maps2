@@ -322,5 +322,5 @@ export class UserService {
         this.utcOffset = false;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     };
-
+    
 }

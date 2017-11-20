@@ -82,7 +82,9 @@ export const environment = {
         GET_ALL_JOBS: '/admin/getAllJobs',
 
         UPLOAD_FILE: '/user/uploadFile',
-        UPLOAD_MULTIPLE_FILES: '/user/uploadMultipleFiles'
+        UPLOAD_MULTIPLE_FILES: '/user/uploadMultipleFiles',
+
+        GET_PROFILE_INFO: '/api/v2/web/user/detailsById'
 
     },
 

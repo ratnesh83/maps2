@@ -27,7 +27,9 @@ export const actionTypes = {
     APP_UPDATE_MACHINE_SUCCESS: 'APP_UPDATE_MACHINE_SUCCESS',
     UPLOAD_FILE: 'UPLOAD_FILE',
     UPLOAD_FILE_SUCCESS: 'UPLOAD_FILE_SUCCESS',
-    SETTINGS_ERROR: 'SETTINGS_ERROR'
+    SETTINGS_ERROR: 'SETTINGS_ERROR',
+    GET_PROFILE_INFO: 'GET_PROFILE_INFO',
+    GET_PROFILE_INFO_SUCCESS: 'GET_PROFILE_INFO_SUCCESS'
 };
 
 type credentials = {};
@@ -157,6 +159,14 @@ export class AppSettingsError implements Action {
     constructor() { }
 }
 
+export class GetProfileInfo implements Action {
+    type = actionTypes.GET_PROFILE_INFO;
+    constructor(public payload:credentials) { }
+}
+export class GetProfileInfoSuccessAction implements Action {
+    type = actionTypes.GET_PROFILE_INFO_SUCCESS;
+    constructor(public payload: any) { }
+  }
 export type Actions
 = AppGetServiceRadii
 | AppGetServiceRadiiSuccess
@@ -182,5 +192,7 @@ export type Actions
 | AppAddMachine
 | AppAddMachineSuccess
 | AppUploadFile
-| AppUploadFileSuccess;
+| AppUploadFileSuccess
+| GetProfileInfo
+| GetProfileInfoSuccessAction;
 
