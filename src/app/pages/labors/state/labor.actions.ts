@@ -5,7 +5,8 @@ export const actionTypes = {
     APP_GETALL_LABOR: 'APP_GETALL_LABOR',
     APP_LABOR_DETAIL_SUCCESS: 'APP_LABOR_DETAIL_SUCCESS',
     APP_GET_CATEGORIES_LABOR: 'APP_GET_CATEGORIES_LABOR',
-    APP_GET_CATEGORIES_LABOR_SUCCESS: 'APP_GET_CATEGORIES_LABOR_SUCCESS'
+    APP_GET_CATEGORIES_LABOR_SUCCESS: 'APP_GET_CATEGORIES_LABOR_SUCCESS',
+    APP_LABOR_DETAIL_SUCCESS_CONSUMED: 'APP_LABOR_DETAIL_SUCCESS_CONSUMED'
 
 };
 
@@ -31,9 +32,15 @@ export class AppLaborDetailSuccess implements Action {
     constructor(public payload: credentials) { }
 }
 
+export class AppLaborDetailSuccessConsumed implements Action {
+    type = actionTypes.APP_LABOR_DETAIL_SUCCESS_CONSUMED;
+    constructor(public payload: credentials) { }
+}
+
 export type Actions
     = AppGetCategories
     | AppGetCategoriesSuccess 
     | AppGetAllLaborDetail
-    | AppLaborDetailSuccess;
+    | AppLaborDetailSuccess
+    | AppLaborDetailSuccessConsumed;
 

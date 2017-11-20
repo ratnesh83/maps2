@@ -25,11 +25,15 @@ export const labor: ActionReducer<any> = (state = initialState, action: Action) 
 
         case 'APP_GETALL_LABOR':
             delete state.getLaborHit;
-            delete state.getLaborCategoryHit;            
+            delete state.getLaborCategoryHit;
             return Object.assign({}, state, action.payload);
 
         case 'APP_LABOR_DETAIL_SUCCESS':
             return Object.assign({}, state, action.payload, { getLaborHit: true });
+
+        case 'APP_LABOR_DETAIL_SUCCESS_CONSUMED':
+            delete state.getLaborHit;
+            return Object.assign({}, state);
 
         default:
             return state;

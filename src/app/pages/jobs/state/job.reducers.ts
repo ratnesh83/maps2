@@ -31,6 +31,10 @@ export const job: ActionReducer<any> = (state = initialState, action: Action) =>
         case 'APP_JOB_DETAIL_SUCCESS':
             return Object.assign({}, state, action.payload, { getJobHit: true });
 
+        case 'APP_JOB_DETAIL_SUCCESS_CONSUMED':
+            delete state.getJobHit;
+            return Object.assign({}, state);
+
         default:
             return state;
     }

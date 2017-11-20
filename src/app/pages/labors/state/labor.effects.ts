@@ -86,6 +86,13 @@ export class LaborEffects {
             );
         });
 
+    @Effect({ dispatch: false })
+    getAllLaborsConsumed: Observable<Action> = this.actions$
+        .ofType('APP_LABOR_DETAIL_SUCCESS_CONSUMED')
+        .do((action) => {
+            this.store.dispatch(new labor.AppLaborDetailSuccessConsumed(action.payload));
+        });
+
     constructor(
         private actions$: Actions,
         private store: Store<any>,

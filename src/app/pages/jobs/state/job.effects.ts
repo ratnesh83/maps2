@@ -87,6 +87,13 @@ export class JobEffects {
             );
         });
 
+    @Effect({ dispatch: false })
+    getAllJobsConsumed: Observable<Action> = this.actions$
+        .ofType('APP_JOB_DETAIL_SUCCESS_CONSUMED')
+        .do((action) => {
+            this.store.dispatch(new job.AppJobDetailSuccessConsumed(action.payload));
+        });
+
     constructor(
         private actions$: Actions,
         private store: Store<any>,
