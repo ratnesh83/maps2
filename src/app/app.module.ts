@@ -21,9 +21,10 @@ import { CommonService } from './services/common.service';
 import { UserService } from './services/user-service/user.service';
 import { DataService } from './services/data-service/data.service';
 import { JobService } from './services/job-service/job.service';
+import { LaborService } from './services/labor-service/labor.service';
 import { PostService } from './services/post-service/post.service';
+import { RequestService } from './services/request-service/request.service';
 import { FeedbackService } from './services/feedback-service/feedback.service';
-import { ChangePasswordService } from './services/change-password/change-password.service';
 import { HomeService } from './services/home-service/home.service';
 import { DonationsService } from './services/donations-service/donations.service';
 import { NotificationService } from './services/notification/notification.service';
@@ -117,7 +118,9 @@ export type StoreType = {
         UserService,
         DataService,
         JobService,
+        LaborService,
         PostService,
+        RequestService,
         FeedbackService,
         NgbActiveModal,
         CommonService,
@@ -132,7 +135,6 @@ export type StoreType = {
         AuthGuardDriver,
         JwtHelper,
         NotificationService,
-        ChangePasswordService,
         SettingsService,
         SubscriptionService,
         provideAuth({

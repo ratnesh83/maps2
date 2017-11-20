@@ -7,17 +7,15 @@ const initialState: any = {
 
 export const feedback: ActionReducer<any> = (state = initialState, action: Action) => {
     switch (action.type) {
+
         case 'GET_FEEDBACKS':
-            return Object.assign({}, state, { error: null });
+            return Object.assign({}, state, { feedbacks: null });
+
         case 'GET_FEEDBACKS_SUCCESS':
-            return Object.assign({}, state, { feedbacks: action.payload, error: null });
-        case 'SEARCH_FEEDBACKS':
-            return Object.assign({}, state, { SearchSuccess: action.payload, error: null });
-        case 'SEARCH_FEEDBACKS_SUCCESS':
-            return Object.assign({}, state, action.payload, { error: null });
-        case 'FEEDBACK_ERROR':
-            return Object.assign({}, state, { error: action.payload });
+            return Object.assign({}, state, action.payload);
+    
         default:
             return state;
+            
     }
 };

@@ -1,4 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { GlobalState } from '../../../../../global.state';
 import { AuthService } from '../../../../../auth/service/auth-service/auth.service';
 
 import 'style-loader!./baMenuItem.scss';
@@ -15,7 +16,10 @@ export class BaMenuItem {
     @Output() itemHover = new EventEmitter<any>();
     @Output() toggleSubMenu = new EventEmitter<any>();
 
-    constructor(private authService: AuthService) {
+    public isMenuCollapsed: boolean = false;
+
+    constructor(private authService: AuthService,
+        private _state: GlobalState) {
     }
 
     public onHoverItem($event): void {
@@ -28,6 +32,11 @@ export class BaMenuItem {
         return false;
     }
 
+    public closeMenu() {
+        this.isMenuCollapsed = true;
+        this._state.notifyDataChanged('menu.isCollapsed', this.isMenuCollapsed);
+        return false;
+    }
 
     public authCheck(): boolean {
     

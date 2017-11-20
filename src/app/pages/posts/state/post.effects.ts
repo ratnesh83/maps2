@@ -56,6 +56,12 @@ export class PostEffects {
             this.PostService.getAllJobs(action.payload).subscribe((result) => {
                 this._spinner.hide();
                 if (result.message == 'Action complete.' || result.statusCode == 200) {
+                    /* let payload = {
+                        jobs: result.data,
+                        currentPage: action.payload.currentPage,
+                        limit: action.payload.limit,
+                        count: result.data.count
+                    }; */
                     let payload = result.data;
                     this.store.dispatch(new post.AppGetJobsSuccess(payload));
                 }

@@ -88,6 +88,12 @@ export class ChangePasswordDialog {
         this.repeatPasswordType = 'password';
     }
 
+    ngOnDestroy() {
+        if (this.storeData) {
+            // this.storeData.unsubscribe();
+        }
+    }
+
     showPassword() {
         this.passwordType = this.passwordType == 'password' ? 'text' : 'password';
         this.repeatPasswordType = 'password';

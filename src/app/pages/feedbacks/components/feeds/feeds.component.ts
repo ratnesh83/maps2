@@ -13,41 +13,34 @@ import 'style-loader!./feeds.scss';
     templateUrl: 'feeds.html'
 })
 export class Feeds {
+
     @ViewChild('feedbackPaginator') private _paginator: MdPaginator;
     public feedbacks;
     public rating;
     public count;
     public pageIndex;
-    public searchKey = '';
-    public searchString: string;
-    public searchFilter: boolean;
-    public value: 'all';
     public filter;
     public page = 1;
     public limit;
-    public role: string;
     public feedbackStore;
-    optionsModel: number[];
-    myOptions: IMultiSelectOption[];
-    myOptionsSelected;
-    length;
-    pageSize = 5;
-    pageSizeOptions = [5, 10, 25, 100, 500];
+    public length;
+    public pageSize = 5;
+    public pageSizeOptions = [5, 10, 25, 100, 500];
+
     constructor(private activeModal: NgbActiveModal, private store: Store<any>) {
-        this.count = 1;
         this.length = 1;
         this.pageIndex = 0;
-        this.rating = 4.6;
-        this.myOptions = [];
-        this.myOptionsSelected = [
-            { id: 'pending', value: 'all' },
-            { id: 'inprogress', value: 'all' },
-            { id: 'hiring', value: 'all' }
-        ];
+        this.feedbackStore = this.store
+            .select('feedback')
+            .subscribe((res: any) => {
+                if (res) {
+                    this.feedbacks = res.feedbacks;
+                }
+            });
     }
-    
+
     ngOnInit() {
-        this.onLoad();
+        this.getAllFeedbacks();
     }
 
     ngOnDestroy() {
@@ -56,20 +49,11 @@ export class Feeds {
         }
     }
 
-    onLoad() {
-        this.role = 'all';
-        this.filter = this.myOptionsSelected;
-        // this.getAllFeedbacks();
-    }
-
     getAllFeedbacks() {
         this.store.dispatch({
             type: feedback.actionTypes.GET_FEEDBACKS, payload: {
                 currentPage: this.page,
-                limit: this.pageSize,
-                role: this.role,
-                filter: this.filter,
-                value: this.value
+                limit: this.pageSize
             }
         });
     }
@@ -77,12 +61,8 @@ export class Feeds {
     pageChange(page) {
         /* this.store.dispatch({
             type: feedback.actionTypes.GET_FEEDBACKS, payload: {
-                feedback: (this.searchKey != '') ? this.searchKey : undefined,
                 currentPage: page.pageIndex + 1,
-                limit: page.pageSize,
-                role: this.role,
-                filter: this.filter,
-                value: this.value
+                limit: page.pageSize
             }
         }); */
         this.pageSize = page.pageSize;
@@ -110,25 +90,4 @@ export class Feeds {
         this._paginator._changePageSize(this.pageSize);
     }
 
-    SearchFeedback(name) {
-        this.searchKey = name;
-        if (name.length > 0) {
-            this.searchFilter = true;
-            this.page = 1;
-            /* this.store.dispatch({
-                type: feedback.actionTypes.SEARCH_FEEDBACKS,
-                payload: {
-                    feedback: name,
-                    currentPage: 1,
-                    limit: this.pageSize,
-                    skip: 0,
-                    role: this.role,
-                    filter: this.filter
-                }
-            }); */
-        } else if (name.length == 0) {
-            this.page = 1;
-            // this.getAllFeedbacks();
-        }
-    }
 }

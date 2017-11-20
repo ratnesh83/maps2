@@ -12,7 +12,7 @@ $angle-right: "\f101";
     height: auto;
     position: absolute;
     transition: width 0.5s ease;
-    box-shadow: 0 5px 5px -4px rgba(0, 0, 0, .25);
+    box-shadow: 4px 5px 5px -4px rgba(0, 0, 0, .25);
 }
 .slimScrollDiv {
     height: auto !important;
@@ -123,11 +123,13 @@ a.al-sidebar-list-link {
     left: $sidebar-width - $sidebar-scroll-width;
 }
 @mixin layout-collapsed() {
-    .al-main {
-        // margin-left: 50px !important;
-    }
-    .al-footer {
-        padding-left: 83px
+    @media (max-width: $resL) {
+        .al-main {
+            // margin-left: 50px !important;
+        }
+        .al-footer {
+            padding-left: 83px !important;
+        }
     }
 }
 @mixin default-sublist() {
@@ -259,7 +261,7 @@ a.al-sidebar-list-link {
 }
 .menu-collapsed {
     .slimScrollBar, .slimScrollRail {
-        display: none!important;
+        display: none !important;
     }
 }
 @media (min-width: 1200px) {
@@ -267,7 +269,7 @@ a.al-sidebar-list-link {
         @include layout-collapsed();
     }
 }
-@media (min-width: $resXS + 1) {
+@media (min-width: $resXS + 1) and (max-width: $resL) {
     .menu-collapsed {
         @include sidebar-collapsed();
     }
@@ -278,7 +280,7 @@ a.al-sidebar-list-link {
 @media (max-width: 1200px) {
     @include sidebar-overlap();
 }
-@media (max-width: $resXS) {
+@media (max-width: $resL) {
     .menu-collapsed {
         @include sidebar-hidden();
     }

@@ -142,7 +142,7 @@ export class PostJob implements OnInit {
 
     ngOnDestroy() {
         if (this.postStore) {
-            this.postStore.unsubscribe();
+            // this.postStore.unsubscribe();
         }
     }
 

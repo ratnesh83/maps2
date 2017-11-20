@@ -23,9 +23,6 @@ export class BaSidebar {
 
             });
 
-        this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
-            this.isMenuCollapsed = isCollapsed;
-        });
     }
 
     public ngOnInit(): void {
@@ -36,6 +33,11 @@ export class BaSidebar {
 
     public ngAfterViewInit(): void {
         setTimeout(() => this.updateSidebarHeight());
+        this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
+            setTimeout(() => {
+                this.isMenuCollapsed = isCollapsed;
+            });
+        });
     }
 
     @HostListener('window:resize')

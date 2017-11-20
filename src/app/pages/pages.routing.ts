@@ -20,13 +20,14 @@ export const routes: Routes = [
             { path: 'settings', loadChildren: 'app/pages/settings/settings.module#SettingsModule' },
             { path: 'subscriptions', loadChildren: 'app/pages/subscriptions/subscriptions.module#SubscriptionsModule' },
             { path: 'jobs', loadChildren: 'app/pages/jobs/jobs.module#JobsModule' },
+            { path: 'labors', loadChildren: 'app/pages/labors/labors.module#LaborsModule' },
             { path: 'posts', loadChildren: 'app/pages/posts/posts.module#PostsModule' },
+            { path: 'requests', loadChildren: 'app/pages/requests/requests.module#RequestsModule' },
             { path: 'notification', loadChildren: 'app/pages/notification/notifications.module#NotificationsModule' },
             { path: 'feedbacks', loadChildren: 'app/pages/feedbacks/feedbacks.module#FeedbacksModule' },
             { path: 'helpcenter', loadChildren: 'app/pages/help-center/help-center.module#HelpCenterModule' },
             { path: 'appversion', loadChildren: 'app/pages/app-version/app-version.module#AppVersionModule' },
-            { path: 'donations', loadChildren: 'app/pages/donations/donations.module#DonationsModule' },
-            { path: 'changepassword', loadChildren: 'app/pages/change-password/change-password.module#ChangePasswordModule' } 
+            { path: 'donations', loadChildren: 'app/pages/donations/donations.module#DonationsModule' }
         ]
     }
 ];

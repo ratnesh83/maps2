@@ -18,13 +18,8 @@ export class FeedbackService {
     getAllFeedbacks(payload) {
         let url;
         let skip = payload.hasOwnProperty('skip') ? payload.skip : ((payload.currentPage - 1) * payload.limit);
-        url = environment.APP.API_URL + environment.APP.GET_ALL_JOBS + '?limit=' + payload.limit + '&skip=' + skip;
-        for (let i = 0; i < payload.filter.length; i++) {
-        
-        }
-        if (payload.feedback && payload.feedback != null) {
-            url += '&searchFeedback=' + payload.job;
-        }
+        // url = environment.APP.API_URL + environment.APP.GET_ALL_JOBS + '?limit=' + payload.limit + '&skip=' + skip;
+        url = environment.APP.API_URL + environment.APP.GET_ALL_FEEDBACKS;
         this.authRequired = true;
         this.utcOffset = false;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);

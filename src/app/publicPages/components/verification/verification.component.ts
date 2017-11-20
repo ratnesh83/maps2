@@ -69,7 +69,7 @@ export class Verification {
 
     ngOnDestroy() {
         if (this.storeData) {
-            //this.storeData.unsubscribe();
+            // this.storeData.unsubscribe();
         }
     }
 

@@ -86,10 +86,36 @@ export class PagesMenuService {
                         },
                     },
                     {
+                        path: 'labors',
+                        data: {
+                            menu: {
+                                title: 'LABORS',
+                                icon: 'icon-wrap fa fa-tasks',
+                                selected: false,
+                                expanded: false,
+                                order: 100,
+                                auth: ['USER']
+                            }
+                        },
+                    },
+                    {
                         path: 'posts',
                         data: {
                             menu: {
                                 title: 'MY POSTS',
+                                icon: 'icon-wrap fa fa-tasks',
+                                selected: false,
+                                expanded: false,
+                                order: 100,
+                                auth: ['USER']
+                            }
+                        },
+                    },
+                    {
+                        path: 'requests',
+                        data: {
+                            menu: {
+                                title: 'MY REQUESTS',
                                 icon: 'icon-wrap fa fa-tasks',
                                 selected: false,
                                 expanded: false,

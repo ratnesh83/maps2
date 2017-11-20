@@ -15,6 +15,25 @@
         width: auto;
     }
 }
+.map-div {
+    position: relative;
+    .map-loading {
+        display: none;
+        position: absolute;
+        top: 0px;
+        height: 60vh;
+        width: 100%;
+        max-height: 480px;
+        transition: all ease 0.7s;
+        span {
+            margin: auto;
+            text-align: center;
+            font-weight: 500;
+            color: #1b1b1b;
+            font-size: large;
+        }
+    }
+}
 .jobs-card-heading {
     width: 100%;
 }
@@ -107,12 +126,14 @@
         .left-notification-title.mat-card-title {
             cursor: pointer;
             width: max-content;
+            max-width: 240px;
             margin-top: 5px;
             margin-bottom: 10px;
         }
         .left-notification-subtitle.mat-card-subtitle {
             cursor: pointer;
             width: max-content;
+            max-width: 240px;
         }
     }
     .left-notification-subhead.mat-card-header {
@@ -123,6 +144,7 @@
         }
         .left-notification-title.mat-card-title {
             width: max-content;
+            max-width: 240px;
             font-size: small;
             margin-top: 5px;
             margin-bottom: 10px;
@@ -130,11 +152,13 @@
         .left-notification-subtitle.mat-card-subtitle {
             width: max-content;
             font-size: smaller;
+            max-width: 240px;
         }
     }
     .jobs-header-contact { 
         width: -webkit-fill-available;
         margin-top: 5px;
+        margin-left: 5px;
         text-align: right;
         .fa {
             cursor: pointer;

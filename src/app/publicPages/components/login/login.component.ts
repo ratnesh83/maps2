@@ -102,10 +102,12 @@ export class Login {
         this.checkboxRemember = this.form.controls['checkboxRemember'];
         this.phone = this.form.controls['phone'];
         this.countryCode = this.form.controls['countryCode'];
+        this.countryCode.setValue('+1');
 
     }
 
     ngOnInit() {
+        localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
         this.store.dispatch({
             type: auth.actionTypes.GET_COUNTRIES
         });
@@ -128,6 +130,7 @@ export class Login {
         if (this.storeData) {
             // this.storeData.unsubscribe();
         }
+        localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
     }
 
     getFacebookData() {
@@ -278,6 +281,12 @@ export class Login {
                 this._phone.nativeElement.focus();
             }
             return;
+        } else if(this.phone.value && !this.countryCode.value) {
+            this.toastrService.clear();
+            this.toastrService.error('Country code is required', 'Error');
+            if (this._countryCode) {
+                this._countryCode.nativeElement.focus();
+            }
         } else if (this.email.value && !this.phone.value && this.email.hasError && this.email.errors) {
             if (this.email.errors.required) {
                 this.toastrService.clear();

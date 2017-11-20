@@ -15,10 +15,8 @@ import 'style-loader!./theme/initial.scss';
     selector: 'app',
     template: `
         <main [ngClass]="{'menu-collapsed': isMenuCollapsed}" baThemeRun>
-        <div class="additional-bg"></div>
-        <div dir={{direction}}>
-        <router-outlet></router-outlet>
-        </div>
+            <div class="additional-bg"></div>
+            <router-outlet></router-outlet>
         </main>
     `
 })
@@ -36,11 +34,7 @@ export class App {
 
         themeConfig.config();
 
-        //this._loadImages();
-
-        this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
-            this.isMenuCollapsed = isCollapsed;
-        });
+        //this._loadImages(); 
 
     }
 
@@ -49,6 +43,16 @@ export class App {
         BaThemePreloader.load().then((values) => {
             // this._spinner.hide();
         });
+
+        this._state.subscribe('menu.isCollapsed', (isCollapsed) => {
+            setTimeout(() => {
+                this.isMenuCollapsed = isCollapsed;
+            });
+        });
+    }
+
+    ngAfterViewChecked() {
+        
     }
 
     private _loadImages(): void {

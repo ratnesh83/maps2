@@ -1,4 +1,4 @@
-import { Component, ChangeDetectorRef, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as auth from '../../../auth/state/auth.actions';
 import { Observable } from 'rxjs/Observable';
@@ -31,6 +31,7 @@ export class Register {
     @ViewChild('inputConfirmPassword') public _confirmPassword: ElementRef;
     @ViewChild('inputCompanyName') public _companyName: ElementRef;
     public storeData;
+    public authStore;
     public form: FormGroup;
     public name: AbstractControl;
     public companyName: AbstractControl;
@@ -57,7 +58,6 @@ export class Register {
         private toastrService: ToastrService,
         private iconRegistry: MdIconRegistry,
         private sanitizer: DomSanitizer,
-        private cdRef: ChangeDetectorRef,
         private facebook: FacebookService,
         private afAuth: AngularFireAuth,
         private dataService: DataService) {
@@ -107,6 +107,7 @@ export class Register {
         this.socialId = this.form.controls['socialId'];
         this.password = this.passwords.controls['password'];
         this.repeatPassword = this.passwords.controls['repeatPassword'];
+        this.countryCode.setValue('+1');
 
     }
 
@@ -123,12 +124,14 @@ export class Register {
         }
         this.socialMode = null;
         this.country_code = null;
+        localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
     }
 
     ngOnDestroy() {
         if (this.storeData) {
-            //this.storeData.unsubscribe();
+            // this.storeData.unsubscribe();
         }
+        localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
     }
 
     countryCodeClick() {
@@ -157,7 +160,7 @@ export class Register {
 
     getCountryFlag(country, country_code) {
         for (let i = 0; i < this.countryCodes.length; i++) {
-            if(country == '+1' && this.country_code == this.countryCodes[i].country_code) {
+            if (country == '+1' && this.country_code == this.countryCodes[i].country_code) {
                 return this.countryCodes[i].country_code;
             } else if (country != '+1' && country == this.countryCodes[i].phone_code) {
                 this.country_code = null;
@@ -227,22 +230,17 @@ export class Register {
     }
 
     loginTwitter() {
-        this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider())
-            .then((response) => {
-                if (response.user && response.user.uid && response.user.providerData && response.user.providerData[0] && response.user.providerData[0].uid) {
-                    this.socialId.setValue(response.user.providerData[0].uid);
-                    if (response.user && response.user.displayName) {
-                        this.name.setValue(response.user.displayName);
-                    }
-                    if (response.user && response.user.email) {
-                        this.email.setValue(response.user.email);
-                    }
+            localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
+            this.authStore = this.afAuth.authState.subscribe((user: firebase.User) => {
+                if (user && user.providerData && user.providerData[0] && user.providerData[0].uid) {
+                    this.socialId.setValue(user.providerData[0].uid);
+                    this.name.setValue(user.providerData[0].displayName);
+                    this.email.setValue(user.providerData[0].email);
                     this.socialMode = 'TWITTER';
+                    localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
+                } else {
+                    this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider());
                 }
-                this.cdRef.detectChanges();
-            })
-            .catch((error: any) => {
-                // console.log(error);
             });
     }
 
