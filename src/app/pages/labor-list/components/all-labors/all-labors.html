@@ -1,0 +1,66 @@
+<div class="container-fluid animated bounce labor-container">
+    <md-tab-group class="my-labors-tabs-group" (selectChange)="selectTab($event)">
+        <md-tab label="ACTIVE">
+            <div class="labors-section page-input-block">
+                <md-card class="labors-card">
+                    <md-card-content *ngIf="labors">
+                        <md-card class="labors-card labors-card-inner" *ngFor="let labor of labors; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
+                            <md-card-header class="labors-card-header">
+                                <div md-card-avatar class="labors-header-image">
+                                    <img mat-card-avatar [src]="labor.categoryId ? labor.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
+                                </div>
+                                <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{labor.title}}</md-card-title>
+                                <md-card-subtitle style="font-weight: 500">{{labor.category ? labor.category + ': ' + labor.subCategory : labor.category}}</md-card-subtitle>
+                                <div class="labors-header-view">
+                                    <div class="view-link" (click)="showLaborListDetail(labor._id)">
+                                        <span class="hidden-xs-down">
+                                            View Details &gt;&gt;
+                                        </span>
+                                        <span class="hidden-sm-up">
+                                            <i class="fa fa-info"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </md-card-header>
+                            <md-card-content class="labors-card with-margin">
+                                <p class="md-card-content-labors-p-rate">
+                                    {{'$' + labor.rate + '/' + (labor.rateType == 'DAILY' ? 'day' : labor.rateType == 'WEEKLY' ? 'week' : labor.rateType == 'MONTHLY'
+                                    ? 'month' : 'hr')}}
+                                </p>
+                                <p class="md-card-content-labors-p-address">
+                                    {{ labor.employerAddress ? labor.employerAddress.addressLine1 : '' }}
+                                </p>
+                            </md-card-content>
+                        </md-card>
+                        <div *ngIf="labors && labors.length == 0">
+                            No jobs found.
+                        </div>
+                    </md-card-content>
+                </md-card>
+            </div>
+
+        </md-tab>
+    </md-tab-group>
+    <!-- <div class="panel-footer">
+        <div class="row">
+            <div *ngIf="count > 4" class="col-sm-12 rar-align page-select">
+                <span class="first-last-ctrl">
+                    <span [ngClass]="{'enabled': pageIndex > 0}" class="page-controls" (click)="pageIndex > 0 && goToFirstPage($event)">
+                        <span mdTooltip="{{(pageIndex > 0) ? 'First page' : ''}}">
+                            <i [ngClass]="{'enabled': pageIndex > 0}" class="fa fa-fast-backward"></i>
+                        </span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                    <span [ngClass]="{'enabled': pageIndex * pageSize + pageSize < length}" class="page-controls" (click)="pageIndex * pageSize + pageSize < length && goToLastPage($event)">
+                        <span mdTooltip="{{(pageIndex * pageSize + pageSize < length) ? 'Last page' : ''}}">
+                            <i [ngClass]="{'enabled': pageIndex * pageSize + pageSize < length}" class="fa fa-fast-forward"></i>
+                        </span>
+                    </span>
+                </span>
+                <md-paginator #laborListPaginator class="mat-paginator-pg" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                    (page)="pageChange($event)">
+                </md-paginator>
+            </div>
+        </div>
+    </div> -->
+</div>

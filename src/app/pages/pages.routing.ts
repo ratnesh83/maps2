@@ -15,7 +15,6 @@ export const routes: Routes = [
         canActivate: [AuthGuard],
         children: [
             { path: 'home', loadChildren: 'app/pages/home/home.module#HomeModule' },
-            { path: 'users', loadChildren: 'app/pages/users/users.module#UsersModule' },
             { path: 'payments', loadChildren: 'app/pages/payments/payments.module#PaymentsModule' },
             { path: 'settings', loadChildren: 'app/pages/settings/settings.module#SettingsModule' },
             { path: 'subscriptions', loadChildren: 'app/pages/subscriptions/subscriptions.module#SubscriptionsModule' },
@@ -23,6 +22,7 @@ export const routes: Routes = [
             { path: 'labors', loadChildren: 'app/pages/labors/labors.module#LaborsModule' },
             { path: 'posts', loadChildren: 'app/pages/posts/posts.module#PostsModule' },
             { path: 'requests', loadChildren: 'app/pages/requests/requests.module#RequestsModule' },
+            { path: 'users', loadChildren: 'app/pages/labor-list/labor-list.module#LaborListModule' },
             { path: 'notification', loadChildren: 'app/pages/notification/notifications.module#NotificationsModule' },
             { path: 'feedbacks', loadChildren: 'app/pages/feedbacks/feedbacks.module#FeedbacksModule' },
             { path: 'helpcenter', loadChildren: 'app/pages/help-center/help-center.module#HelpCenterModule' },

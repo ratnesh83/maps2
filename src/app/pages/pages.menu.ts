@@ -125,6 +125,19 @@ export class PagesMenuService {
                         },
                     },
                     {
+                        path: 'users',
+                        data: {
+                            menu: {
+                                title: 'LABOR LIST',
+                                icon: 'icon-wrap fa fa-tasks',
+                                selected: false,
+                                expanded: false,
+                                order: 100,
+                                auth: ['USER']
+                            }
+                        },
+                    },
+                    {
                         path: 'payments',
                         data: {
                             menu: {
