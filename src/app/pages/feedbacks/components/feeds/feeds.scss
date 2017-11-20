@@ -24,6 +24,9 @@
 }
 .feedback-card-header.feedback-card-heading {
     top: -5px;
+    .mat-card-header-text {
+        margin: 0px 0px;
+    }
 }
 .feeds-section {
     margin-top: 10px;
