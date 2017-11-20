@@ -19,6 +19,7 @@ import {
 import { routing } from './labors.routing';
 import { Labors } from './labors.component';
 import { AllLabors } from './components/all-labors/all-labors.component';
+import { UserDetailDialog } from './components/user-detail-dialog/user-detail-dialog.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { GooglePlaceModule } from 'ng2-google-place-autocomplete';
 import { NguiMapModule } from '@ngui/map';
@@ -47,9 +48,11 @@ import { NguiMapModule } from '@ngui/map';
     ],
     declarations: [
         Labors,
-        AllLabors
+        AllLabors,
+        UserDetailDialog
     ],
     entryComponents: [
+        UserDetailDialog
     ],
 })
 

@@ -181,6 +181,7 @@ export class Register {
     }
 
     changeSignUpType(type) {
+        this.companyName.reset();
         this.name.reset();
         this.email.reset();
         this.password.reset();

@@ -9,7 +9,7 @@ import { DataService } from '../../../../services/data-service/data.service';
 import * as job from '../../state/job.actions';
 import * as app from '../../../../state/app.actions';
 import { BaThemeSpinner } from '../../../../theme/services';
-import { JobDetailDialog } from '../job-detail-dialog/job-detail-dialog.component';
+import { EmployerDetailDialog } from '../user-detail-dialog/user-detail-dialog.component';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { NguiMapComponent } from '@ngui/map';
 
@@ -282,8 +282,11 @@ export class AllJobs implements OnInit {
     showJobDetail(job) {
         this.dataService.setData('jobId', job.id);
         this.router.navigate(['pages/posts/postdetails']);
-        // let dialogRef = this.dialog.open(JobDetailDialog);
-        // dialogRef.componentInstance.jobDetails = job;
+    }
+
+    showUserDetail(user) {
+        // let dialogRef = this.dialog.open(EmployerDetailDialog);
+        // dialogRef.componentInstance.userDetails = user;
     }
 
     changeMapCallback(lat, lng, self) {

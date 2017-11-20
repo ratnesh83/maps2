@@ -18,7 +18,7 @@ export class RequestEffects {
         .ofType('APP_GET_REQUESTS')
         .do((action) => {
             this._spinner.show();
-            this.RequestService.getAllJobs(action.payload).subscribe((result) => {
+            this.RequestService.getAllRequests(action.payload).subscribe((result) => {
                 this._spinner.hide();
                 if (result.message == 'Action complete.' || result.statusCode == 200) {
                     /* let payload = {
@@ -58,7 +58,7 @@ export class RequestEffects {
         .ofType('APP_GET_REQUEST')
         .do((action) => {
             this._spinner.show();
-            this.RequestService.getJob(action.payload).subscribe((result) => {
+            this.RequestService.getRequest(action.payload).subscribe((result) => {
                 this._spinner.hide();
                 if (result.message == 'Action complete.' || result.statusCode == 200) {
                     let payload = result.data[0];

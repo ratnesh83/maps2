@@ -1,18 +1,18 @@
 <div class="container-fluid animated bounce request-container">
     <md-tab-group class="my-requests-tabs-group" (selectChange)="selectTab($event)">
-        <md-tab label="ACTIVE">
+        <md-tab label="PENDING">
             <div class="requests-section page-input-block">
                 <md-card class="requests-card">
                     <md-card-content *ngIf="requests">
                         <md-card class="requests-card requests-card-inner" *ngFor="let request of requests; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
                             <md-card-header class="requests-card-header">
                                 <div md-card-avatar class="requests-header-image">
-                                    <img mat-card-avatar [src]="request.categoryId ? request.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
+                                    <img mat-card-avatar [src]="request?.jobId?.categoryId ? request?.jobId?.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
                                 </div>
-                                <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{request.title}}</md-card-title>
-                                <md-card-subtitle style="font-weight: 500">{{request.category ? request.category + ': ' + request.subCategory : request.category}}</md-card-subtitle>
+                                <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{request?.jobId?.title}}</md-card-title>
+                                <md-card-subtitle style="font-weight: 500">{{request?.jobId?.category ? request?.jobId?.category + ': ' + request?.jobId.subCategory : request?.jobId.category}}</md-card-subtitle>
                                 <div class="requests-header-view">
-                                    <div class="view-link" (click)="showRequestDetail(request._id)">
+                                    <div class="view-link" (click)="showRequestDetail(request?.jobId?._id)">
                                         <span class="hidden-xs-down">
                                             View Details &gt;&gt;
                                         </span>
@@ -24,35 +24,35 @@
                             </md-card-header>
                             <md-card-content class="requests-card with-margin">
                                 <p class="md-card-content-requests-p-rate">
-                                    {{'$' + request.rate + '/' + (request.rateType == 'DAILY' ? 'day' : request.rateType == 'WEEKLY' ? 'week' : request.rateType == 'MONTHLY'
+                                    {{'$' + request?.jobId?.rate + '/' + (request?.jobId?.rateType == 'DAILY' ? 'day' : request?.jobId?.rateType == 'WEEKLY' ? 'week' : request?.jobId?.rateType == 'MONTHLY'
                                     ? 'month' : 'hr')}}
                                 </p>
                                 <p class="md-card-content-requests-p-address">
-                                    {{ request.employerAddress ? request.employerAddress.addressLine1 : '' }}
+                                    {{ request?.employerId?.locationDetails ? request?.employerId?.locationDetails.addressLine1 : '' }}
                                 </p>
                             </md-card-content>
                         </md-card>
                         <div *ngIf="requests && requests.length == 0">
-                            No jobs found.
+                            No requests found.
                         </div>
                     </md-card-content>
                 </md-card>
             </div>
 
         </md-tab>
-        <md-tab label="IN PROGRESS">
+        <md-tab label="CONFIRMED">
             <div class="requests-section page-input-block">
                 <md-card class="requests-card">
                     <md-card-content *ngIf="requests">
                         <md-card class="requests-card requests-card-inner" *ngFor="let request of requests; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
                             <md-card-header class="requests-card-header">
                                 <div md-card-avatar class="requests-header-image">
-                                    <img mat-card-avatar [src]="request.categoryId ? request.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
+                                    <img mat-card-avatar [src]="request?.jobId?.categoryId ? request?.jobId?.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
                                 </div>
-                                <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{request.title}}</md-card-title>
-                                <md-card-subtitle style="font-weight: 500">{{request.category ? request.category + ': ' + request.subCategory : request.category}}</md-card-subtitle>
+                                <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{request?.jobId?.title}}</md-card-title>
+                                <md-card-subtitle style="font-weight: 500">{{request?.jobId?.category ? request?.jobId?.category + ': ' + request?.jobId.subCategory : request?.jobId.category}}</md-card-subtitle>
                                 <div class="requests-header-view">
-                                    <div class="view-link" (click)="showRequestDetail(request._id)">
+                                    <div class="view-link" (click)="showRequestDetail(request?.jobId?._id)">
                                         <span class="hidden-xs-down">
                                             View Details &gt;&gt;
                                         </span>
@@ -64,16 +64,16 @@
                             </md-card-header>
                             <md-card-content class="requests-card with-margin">
                                 <p class="md-card-content-requests-p-rate">
-                                    {{'$' + request.rate + '/' + (request.rateType == 'DAILY' ? 'day' : request.rateType == 'WEEKLY' ? 'week' : request.rateType == 'MONTHLY'
+                                    {{'$' + request?.jobId?.rate + '/' + (request?.jobId?.rateType == 'DAILY' ? 'day' : request?.jobId?.rateType == 'WEEKLY' ? 'week' : request?.jobId?.rateType == 'MONTHLY'
                                     ? 'month' : 'hr')}}
                                 </p>
                                 <p class="md-card-content-requests-p-address">
-                                    {{ request.employerAddress ? request.employerAddress.addressLine1 : '' }}
+                                    {{ request?.employerId?.locationDetails ? request?.employerId?.locationDetails.addressLine1 : '' }}
                                 </p>
                             </md-card-content>
                         </md-card>
                         <div *ngIf="requests && requests.length == 0">
-                            No jobs found.
+                            No requests found.
                         </div>
                     </md-card-content>
                 </md-card>
@@ -86,12 +86,12 @@
                         <md-card class="requests-card requests-card-inner" *ngFor="let request of requests; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
                             <md-card-header class="requests-card-header">
                                 <div md-card-avatar class="requests-header-image">
-                                    <img mat-card-avatar [src]="request.categoryId ? request.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
+                                    <img mat-card-avatar [src]="request?.jobId?.categoryId ? request?.jobId?.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
                                 </div>
-                                <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{request.title}}</md-card-title>
-                                <md-card-subtitle style="font-weight: 500">{{request.category ? request.category + ': ' + request.subCategory : request.category}}</md-card-subtitle>
+                                <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{request?.jobId?.title}}</md-card-title>
+                                <md-card-subtitle style="font-weight: 500">{{request?.jobId?.category ? request?.jobId?.category + ': ' + request?.jobId.subCategory : request?.jobId.category}}</md-card-subtitle>
                                 <div class="requests-header-view">
-                                    <div class="view-link" (click)="showRequestDetail(request._id)">
+                                    <div class="view-link" (click)="showRequestDetail(request?.jobId?._id)">
                                         <span class="hidden-xs-down">
                                             View Details &gt;&gt;
                                         </span>
@@ -103,16 +103,16 @@
                             </md-card-header>
                             <md-card-content class="requests-card with-margin">
                                 <p class="md-card-content-requests-p-rate">
-                                    {{'$' + request.rate + '/' + (request.rateType == 'DAILY' ? 'day' : request.rateType == 'WEEKLY' ? 'week' : request.rateType == 'MONTHLY'
+                                    {{'$' + request?.jobId?.rate + '/' + (request?.jobId?.rateType == 'DAILY' ? 'day' : request?.jobId?.rateType == 'WEEKLY' ? 'week' : request?.jobId?.rateType == 'MONTHLY'
                                     ? 'month' : 'hr')}}
                                 </p>
                                 <p class="md-card-content-requests-p-address">
-                                    {{ request.employerAddress ? request.employerAddress.addressLine1 : '' }}
+                                    {{ request?.employerId?.locationDetails ? request?.employerId?.locationDetails.addressLine1 : '' }}
                                 </p>
                             </md-card-content>
                         </md-card>
                         <div *ngIf="requests && requests.length == 0">
-                            No jobs found.
+                            No requests found.
                         </div>
                     </md-card-content>
                 </md-card>

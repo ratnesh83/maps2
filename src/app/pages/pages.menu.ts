@@ -29,37 +29,6 @@ export class PagesMenuService {
                         }
                     },
                     {
-                        path: 'users',
-                        data: {
-                            menu: {
-                                title: 'USERS',
-                                icon: 'icon-wrap fa fa-user-o',
-                                selected: false,
-                                expanded: false,
-                                order: 100,
-                                auth: ['admin']
-                            }
-                        },
-                        children: [
-                            {
-                                path: 'employers',
-                                data: {
-                                    menu: {
-                                        title: 'EMPLOYERS',
-                                    }
-                                }
-                            },
-                            {
-                                path: 'workers',
-                                data: {
-                                    menu: {
-                                        title: 'WORKERS',
-                                    }
-                                }
-                            },
-                        ]
-                    },
-                    {
                         path: 'subscriptions',
                         data: {
                             menu: {
@@ -133,7 +102,7 @@ export class PagesMenuService {
                                 selected: false,
                                 expanded: false,
                                 order: 100,
-                                auth: ['USER']
+                                auth: ['admin']
                             }
                         },
                     },

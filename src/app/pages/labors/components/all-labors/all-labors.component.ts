@@ -9,6 +9,7 @@ import { DataService } from '../../../../services/data-service/data.service';
 import * as labor from '../../state/labor.actions';
 import * as app from '../../../../state/app.actions';
 import { BaThemeSpinner } from '../../../../theme/services';
+import { UserDetailDialog } from '../user-detail-dialog/user-detail-dialog.component';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { NguiMapComponent } from '@ngui/map';
 
@@ -57,7 +58,8 @@ export class AllLabors implements OnInit {
         private modalService: NgbModal,
         private router: Router,
         private toastrService: ToastrService,
-        private dataService: DataService
+        private dataService: DataService,
+        private dialog: MdDialog
     ) {
         this.addressType = 'COUNTRY';
         this.bounds = new google.maps.LatLngBounds();
@@ -266,8 +268,8 @@ export class AllLabors implements OnInit {
     };
 
     showLaborDetail(labor) {
-        // let dialogRef = this.dialog.open(LaborDetailDialog);
-        // dialogRef.componentInstance.laborDetails = labor;
+        let dialogRef = this.dialog.open(UserDetailDialog);
+        dialogRef.componentInstance.userDetails = labor;
     }
 
     changeMapCallback(lat, lng, self) {

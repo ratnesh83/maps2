@@ -76,7 +76,7 @@ export class AllRequests implements OnInit {
     getAllRequests() {
         this.store.dispatch({
             type: request.actionTypes.APP_GET_REQUESTS, payload: {
-                type: 'ACTIVE',
+                type: 'ACCEPTED_BY_LABOUR',
                 currentPage: this.page,
                     limit: this.pageSize
             }
@@ -85,7 +85,7 @@ export class AllRequests implements OnInit {
     
 
     showRequestDetail(id) {
-        this.dataService.setData('jobId', id);
+        this.dataService.setData('requestId', id);
         this.router.navigate(['pages/requests/requestdetails']);
     }
 
@@ -94,7 +94,7 @@ export class AllRequests implements OnInit {
             this.tabIndex = 0;
             this.store.dispatch({
                 type: request.actionTypes.APP_GET_REQUESTS, payload: {
-                    type: 'ACTIVE',
+                    type: 'ACCEPTED_BY_LABOUR',
                     currentPage: this.page,
                     limit: this.pageSize
                 }
@@ -103,7 +103,7 @@ export class AllRequests implements OnInit {
             this.tabIndex = 1;
             this.store.dispatch({
                 type: request.actionTypes.APP_GET_REQUESTS, payload: {
-                    type: 'IN_PROGRESS',
+                    type: 'CONFIRMED_BY_EMPLOYER',
                     currentPage: this.page,
                     limit: this.pageSize
                 }
@@ -124,7 +124,7 @@ export class AllRequests implements OnInit {
         if (this.tabIndex == 0) {
             this.store.dispatch({
                 type: request.actionTypes.APP_GET_REQUESTS, payload: {
-                    type: 'ACTIVE',
+                    type: 'ACCEPTED_BY_LABOUR',
                     currentPage: page.pageIndex + 1,
                     limit: page.pageSize,
                 }
@@ -132,7 +132,7 @@ export class AllRequests implements OnInit {
         } else if (this.tabIndex == 1) {
             this.store.dispatch({
                 type: request.actionTypes.APP_GET_REQUESTS, payload: {
-                    type: 'IN_PROGRESS',
+                    type: 'CONFIRMED_BY_EMPLOYER',
                     currentPage: page.pageIndex + 1,
                     limit: page.pageSize,
                 }

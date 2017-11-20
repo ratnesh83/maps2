@@ -66,18 +66,18 @@ export class RequestDetails implements OnInit {
         if (this.requestStore) {
             // this.requestStore.unsubscribe();
         }
-        this.dataService.removeData('jobId');
+        this.dataService.removeData('requestId');
     }
 
     getRequestDetails() {
         this.store.dispatch({
             type: request.actionTypes.APP_GET_REQUEST, payload: {
-                jobId: this.dataService.getData('jobId')
+                requestId: this.dataService.getData('requestId')
             }
         });
         /* this.store.dispatch({
             type: request.actionTypes.APP_GET_LABORS, payload: {
-                jobId: this.dataService.getData('jobId')
+                requestId: this.dataService.getData('requestId')
             }
         }); */
     };
