@@ -143,13 +143,26 @@ export class AllJobs implements OnInit {
                 self.showPosition(response, self);
             });
         }
-    };
+    }
 
     ngOnInit() {
         this.store.dispatch({
             type: job.actionTypes.APP_GET_CATEGORIES_JOB,
             payload: {}
         });
+    }
+
+    createMapCluster(markers) {
+        for(let i = 0; i < markers.length; i++) {
+            for(let j = 0; j < markers.length; j++) {
+                if(markers[i] == markers[j]) {
+                
+                    //let newLatLng = new google.maps.LatLng(markers[i].coordinates[0] + i /10000, markers[i].coordinates[1]);
+                    markers[i].coordinates = [markers[i].coordinates[0] + i /100000, markers[i].coordinates[1]];
+                    console.log(markers[i].coordinates );
+                }
+            }
+        }
     }
 
     showPosition(position, self) {
