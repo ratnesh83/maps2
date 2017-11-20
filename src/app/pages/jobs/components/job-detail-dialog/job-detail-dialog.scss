@@ -200,11 +200,11 @@
     .mat-tab-labels {
         width: max-content;
         >:nth-child(1) {
-            border-radius: 50% 0px 0px 50%;
+            border-radius: 24px 0px 0px 24px;
             border-left: 1px solid #474747;
         }
         >:nth-child(3) {
-            border-radius: 0px 50% 50% 0px;
+            border-radius: 0px 24px 24px 0px;
         }
     }
     .mat-tab-label, .mat-tab-link {
