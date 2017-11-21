@@ -161,6 +161,43 @@ export class JobEffects {
 
         });
 
+    @Effect({ dispatch: false })
+    acceptJob$ = this.actions$
+        .ofType('APP_ACCEPT_JOB')
+        .do((action) => {
+            this._spinner.show();
+            this.JobService.acceptJob(action.payload).subscribe((result) => {
+                this._spinner.hide();
+                if (result.message == 'Action complete.' || result.statusCode == 200) {
+                    let payload = result.data;
+                    this.store.dispatch(new job.AppAcceptJobSuccess(payload));
+                    this.toastrService.clear();
+                    this.toastrService.success(result.message || 'Job applied successfully', 'Success');
+                }
+            }
+                , (error) => {
+                    this._spinner.hide();
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        } else {
+                            this.toastrService.clear();
+                            this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                        }
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    acceptJobSuccess: Observable<Action> = this.actions$
+        .ofType('APP_ACCEPT_JOB_SUCCESS')
+        .do((action) => {
+            this.router.navigate(['/pages/requests/allrequests']);
+        });
+
     constructor(
         private actions$: Actions,
         private store: Store<any>,

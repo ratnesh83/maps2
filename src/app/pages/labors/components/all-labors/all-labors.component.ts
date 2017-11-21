@@ -125,7 +125,10 @@ export class AllLabors implements OnInit {
                                 rate: res.labors[i].rate,
                                 rateType: res.labors[i].rateType,
                                 title: res.labors[i].title,
-                                address: res.labors[i].labourAddress ? res.labors[i].labourAddress.addressLine1 + ', ' + res.labors[i].labourAddress.city : ''
+                                address: res.labors[i].locationDetails ? res.labors[i].locationDetails.addressLine1 + ', ' + res.labors[i].locationDetails.city : '',
+                                actualAddress: res.labors[i].locationDetails,
+                                phoneNumber: res.labors[i].countryCode + ' ' + res.labors[i].phoneNumber,
+                                email: res.labors[i].email
                             };
                             this.labors.push(labor);
                         }
@@ -435,7 +438,10 @@ export class AllLabors implements OnInit {
                 address: data.address,
                 rate: data.rate,
                 rateType: data.rateType,
-                title: data.title
+                title: data.title,
+                email: data.email,
+                phoneNumber: data.phoneNumber,
+                actualAddress: data.actualAddress
             };
         }
         this.showPhone = false;

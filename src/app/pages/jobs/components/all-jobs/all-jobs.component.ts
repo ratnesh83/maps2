@@ -125,7 +125,10 @@ export class AllJobs implements OnInit {
                                 rate: res.jobs[i].rate,
                                 rateType: res.jobs[i].rateType,
                                 title: res.jobs[i].title,
-                                address: res.jobs[i].employerAddress ? res.jobs[i].employerAddress.addressLine1 + ', ' + res.jobs[i].employerAddress.city : ''
+                                address: res.jobs[i].employerAddress ? res.jobs[i].employerAddress.addressLine1 + ', ' + res.jobs[i].employerAddress.city : '',
+                                actualAddress: res.jobs[i].employerAddress,
+                                phoneNumber: res.jobs[i].employerId ? res.jobs[i].employerId.countryCode + ' ' + res.jobs[i].employerId.phoneNumber : '',
+                                email: res.jobs[i].employerId ? res.jobs[i].employerId.email : ''
                             };
                             this.jobs.push(job);
                         }
@@ -303,8 +306,8 @@ export class AllJobs implements OnInit {
     }
 
     showUserDetail(user) {
-        // let dialogRef = this.dialog.open(EmployerDetailDialog);
-        // dialogRef.componentInstance.userDetails = user;
+        let dialogRef = this.dialog.open(EmployerDetailDialog);
+        dialogRef.componentInstance.userDetails = user;
     }
 
     changeMap(lat, lng) {
@@ -450,7 +453,10 @@ export class AllJobs implements OnInit {
                 address: data.address,
                 rate: data.rate,
                 rateType: data.rateType,
-                title: data.title
+                title: data.title,
+                email: data.email,
+                phoneNumber: data.phoneNumber,
+                actualAddress: data.actualAddress
             };
         }
         this.showPhone = false;

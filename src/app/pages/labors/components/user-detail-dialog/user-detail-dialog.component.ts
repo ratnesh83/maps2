@@ -10,21 +10,15 @@ import 'style-loader!./user-detail-dialog.scss';
             <div *ngIf="userDetails" class="panel-heading">
                 <div class="row">
                     <div class="col-12 col-sm-12 user-feed-heading">
-                        <md-card class="posts-card-heading">
+                        <md-card class="user-card-heading">
                             <md-card-header class="posts-card-header posts-card-heading">
-                                <md-card-title style="font-weight: 600; color: #1b1b1b">
-                                    <h3>{{userDetails.title}}</h3>
-                                </md-card-title>
-                                <md-card-subtitle style="font-weight: 500; margin-bottom: 0px; font-size: small">{{userDetails.category ? userDetails.category + ': ' + userDetails.subCategory : userDetails.category}}</md-card-subtitle>
-                                <div class="posts-header-right">
-                                    <div style="margin-bottom: 0.5rem; color: #026eff; font-weight: 600">
-                                        <h4>{{'$' + userDetails.rate + '/' + (userDetails.rateType == 'DAILY' ? 'day' : userDetails.rateType == 'WEEKLY' ?
-                                            'week' : userDetails.rateType == 'MONTHLY' ? 'month' : 'hr')}}</h4>
-                                    </div>
-                                    <div style="color: #1c9f7f; font-weight: 500; font-size: small">
-                                        {{userDetails.userStatus == 'IN_PROGRESS' ? 'IN PROGRESS' : userDetails.userStatus}}
-                                    </div>
+                                <div md-card-avatar class="labors-header-image">
+                                    <img mat-card-avatar [src]="userDetails.profilePicture">
                                 </div>
+                                <md-card-title style="font-weight: 600; color: #1b1b1b; margin-bottom: 10px">
+                                    <h3>{{userDetails.employerName}}</h3>
+                                </md-card-title>
+                                <md-card-subtitle style="font-weight: 500; margin-bottom: 0px; font-size: small">{{userDetails.distance + ' mile away'}}</md-card-subtitle>
                             </md-card-header>
                             <md-card-content>
 
@@ -37,28 +31,23 @@ import 'style-loader!./user-detail-dialog.scss';
                 <md-card class="posts-card-dialog">
                     <md-card-content>
                         <p class="md-card-content-posts-label">
-                            User Location
+                            Email
                         </p>
                         <p class="md-card-content-posts-content">
-                            {{userDetails.employerAddress ? userDetails.employerAddress.addressLine1 : ''}}
+                            {{userDetails.email}}
                         </p>
                         <p class="md-card-content-posts-label">
-                            User Date
+                            Phone Number
                         </p>
                         <p class="md-card-content-posts-content">
-                            {{userDetails.startDate | date : 'dd/MM/yyyy'}} - {{userDetails.endDate | date : 'dd/MM/yyyy'}}
+                            {{userDetails.phoneNumber}}
                         </p>
                         <p class="md-card-content-posts-label">
-                            User Details
+                            Address
                         </p>
                         <p class="md-card-content-posts-content">
-                            {{userDetails.userDetails}}
-                        </p>
-                        <p class="md-card-content-posts-label">
-                            No. of Labors Required
-                        </p>
-                        <p class="md-card-content-posts-content">
-                            {{userDetails.requiredLabourers}}
+                            {{ showAddress(userDetails?.actualAddress?.addressLine1, userDetails?.actualAddress?.city, userDetails?.actualAddress?.zipCode, userDetails?.actualAddress?.state,
+                                userDetails?.actualAddress?.country)}}
                         </p>
                     </md-card-content>
                 </md-card>
@@ -69,10 +58,31 @@ import 'style-loader!./user-detail-dialog.scss';
 })
 
 export class UserDetailDialog {
-    
+
     public userDetails;
-    
+
     constructor(public dialog: MdDialog) { }
+
+    showAddress(address, city, zipCode, state, country): String {
+        let returnAddress;
+        if (address) {
+            returnAddress = address;
+            if (city && address.toString().toLowerCase().indexOf(city.toString().toLowerCase()) == -1) {
+                returnAddress = returnAddress + ', ' + city;
+            }
+            if (zipCode && address.indexOf(zipCode) != -1) {
+                returnAddress = returnAddress + ', ' + zipCode;
+            }
+            if (state && state.toString().toLowerCase() != city.toString().toLowerCase() && address.toString().toLowerCase().indexOf(state.toString().toLowerCase()) == -1) {
+                returnAddress = returnAddress + ', ' + state;
+            }
+            if (country && address.toString().toLowerCase().indexOf(country.toString().toLowerCase()) == -1) {
+                returnAddress = returnAddress + ', ' + country;
+            }
+        }
+        return returnAddress;
+    }
+
 }
 
 

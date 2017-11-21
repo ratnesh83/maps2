@@ -63,4 +63,11 @@ export class RequestService {
         return this.apiService.postApi(url, data, this.authRequired, this.utcOffset);
     }
 
+    cancelJob(payload) {
+        this.authRequired = true;
+        this.utcOffset = false;
+        let url = environment.APP.API_URL + environment.APP.ACCEPT_JOB_BY_LABOR;
+        return this.apiService.putApi(url, payload, this.authRequired, this.utcOffset);
+    }
+
 }

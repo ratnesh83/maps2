@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import * as request from '../../state/request.actions';
 import * as app from '../../../../state/app.actions';
+import * as auth from '../../../../auth/state/auth.actions';
+import { JwtHelper } from 'angular2-jwt';
 import { DataService } from '../../../../services/data-service/data.service';
 import { BaThemeSpinner } from '../../../../theme/services';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
@@ -26,6 +28,12 @@ export class RequestDetails implements OnInit {
     public showPhone: boolean = false;
     public showEmail: boolean = false;
     public requestStore;
+    public storeData;
+    public jwtHelper: JwtHelper = new JwtHelper();
+    public user;
+    public address;
+    public latitude;
+    public longitude;
 
     constructor(
         private store: Store<any>,
@@ -34,6 +42,18 @@ export class RequestDetails implements OnInit {
         private toastrService: ToastrService,
         private dataService: DataService
     ) {
+
+        this.storeData = this.store
+            .select('auth')
+            .subscribe((res: any) => {
+                if (res && res.userDetails) {
+                    this.address = res.userDetails.locationDetails;
+                    if (this.address && this.address.location) {
+                        this.latitude = this.address.location.coordinates[1];
+                        this.longitude = this.address.location.coordinates[0];
+                    }
+                }
+            });
 
         this.requestStore = this.store
             .select('request')
@@ -55,6 +75,16 @@ export class RequestDetails implements OnInit {
 
     ngOnInit() {
         this.getRequestDetails();
+        let token = localStorage.getItem('tokenSession');
+        if (token && !this.jwtHelper.isTokenExpired(token)) {
+            this.user = this.jwtHelper.decodeToken(token);
+            this.store.dispatch({
+                type: auth.actionTypes.AUTH_GET_USER_DETAILS_BY_ID,
+                payload: {
+                    userId: this.user._id
+                }
+            });
+        }
     }
 
     viewProfile(id) {
@@ -66,6 +96,9 @@ export class RequestDetails implements OnInit {
         if (this.requestStore) {
             // this.requestStore.unsubscribe();
         }
+        if (this.storeData) {
+            // this.storeData.unsubscribe();
+        }
         this.dataService.removeData('requestId');
     }
 
@@ -75,11 +108,6 @@ export class RequestDetails implements OnInit {
                 requestId: this.dataService.getData('requestId')
             }
         });
-        /* this.store.dispatch({
-            type: request.actionTypes.APP_GET_LABORS, payload: {
-                requestId: this.dataService.getData('requestId')
-            }
-        }); */
     }
 
     showAddress(address, city, zipCode, state, country): String {
@@ -112,6 +140,20 @@ export class RequestDetails implements OnInit {
         if (this.labours && this.labours[id]) {
             this.labours[id].showEmail = true;
         }
+    }
+
+    cancelJob() {
+        let address = this.address;
+        address.latitude = this.latitude;
+        address.longitude = this.longitude;
+        delete address.location;
+        this.store.dispatch({
+            type: request.actionTypes.APP_CANCEL_JOB, payload: {
+                jobId: this.dataService.getData('requestId'),
+                action: 'CANCELLED_BY_LABOUR',
+                labourAddress: address
+            }
+        });
     }
 
 }
