@@ -10,6 +10,7 @@ import { ApiService } from '../api-service/api.service';
 export class SettingsService {
     authRequired;
     utcOffset;
+    contentTypeRequired;
     constructor(public http: Http, private apiService: ApiService) {
     }
 
@@ -134,13 +135,19 @@ export class SettingsService {
     }
     getProfileInfo(payload) {
         // let skip = (payload.currentPage - 1) * payload.limit;
-        let url = environment.APP.API_URL + environment.APP.GET_PROFILE_INFO+"?userId=5a0c0843cae082269e86b39e";
+        let url = environment.APP.API_URL + environment.APP.GET_PROFILE_INFO+"?userId="+payload;
         this.authRequired = true;
         this.utcOffset = false;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
       }
 
-
+      updateProfileInfo(payload) {
+        // let skip = (payload.currentPage - 1) * payload.limit;
+        let url = environment.APP.API_URL + environment.APP.UPDATE_PROFILE_INFO;
+        this.authRequired = true;
+        this.utcOffset = false;        
+        return this.apiService.putFileApi(url,payload,this.authRequired, this.utcOffset);
+      }
 }
 
 

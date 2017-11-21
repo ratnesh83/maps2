@@ -35,6 +35,14 @@ export class UserProfileEdit {
     public isEditMode = false;
     public isEdited;
     public profile;
+
+    public profileName;
+    public profilePic;
+    public profileEmail;
+    public profileContactNo;
+    public profileAddress;
+    public profileDescription;
+
     constructor(
         private store: Store<any>,
         private modalService: NgbModal,
@@ -45,9 +53,29 @@ export class UserProfileEdit {
         this.settingStore = this.store
             .select('setting')
             .subscribe((res: any) => {
-                
+                console.log(res); 
+                this.profile = res; 
+                this.profileName = res.fullName;
+                this.profileContactNo = res.phoneNumber;  
+                if(res.locationDetails)
+                {        
+                this.profileAddress = res.locationDetails.addressLine1;
+                }
+                this.profileEmail = res.email;
+                this.profileDescription = res.description;     
             });
-    };
+            this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO});                        
+    }
+
+    onSubmit(){
+      
+          let fd = new FormData();
+          if(this.profileName){
+          fd.append('fullName',this.profileName);
+          }
+          this.store.dispatch({type: setting.actionTypes.UPDATE_PROFILE_INFO, payload: fd});
+        }
+      
     bringFileSelector(): boolean {
         this.renderer.invokeElementMethod(this._fileUpload.nativeElement, 'click');
         return false;

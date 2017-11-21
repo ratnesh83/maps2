@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { SettingsService } from '../../../services/settings/settings.service';
 import { Router } from '@angular/router';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
+import { JwtHelper } from 'angular2-jwt';
 import { cloneDeep, random } from 'lodash';
 import * as setting from './setting.actions';
 import * as app from '../../../state/app.actions';
@@ -15,6 +16,8 @@ const types = ['success', 'error', 'info', 'warning'];
 
 @Injectable()
 export class SettingEffects {
+    public jwtHelper: JwtHelper = new JwtHelper();
+    
 
     @Effect({ dispatch: false })
     getServiceRadii$ = this.actions$
@@ -521,7 +524,13 @@ export class SettingEffects {
   getProfileInfo$ = this.actions$
     .ofType('GET_PROFILE_INFO')
     .do((action) => {
-      this.SettingsService.getProfileInfo(action.payload).subscribe((result) => {
+        let token = localStorage.getItem('tokenSession');
+        let user;
+        if (token && !this.jwtHelper.isTokenExpired(token)) {
+             user = this.jwtHelper.decodeToken(token);
+        }
+    
+      this.SettingsService.getProfileInfo(user._id).subscribe((result) => {
           if (result.statusCode == 200) {
             let payload = result.data;
             console.log("hi");
@@ -537,6 +546,26 @@ export class SettingEffects {
         }
       );
     });
+    @Effect({dispatch: false})
+    updateProfileInfo$ = this.actions$
+        .ofType('UPDATE_PROFILE_INFO')
+        .do((action) => {
+            console.log(action.payload);
+          this.SettingsService.updateProfileInfo(action.payload).subscribe((result) => {
+              if (result.statusCode == 200) {
+                  console.log("success");
+              }
+            }
+            , (error) => {
+              if (error.statusCode === 401 || error.statusCode === 403) {
+                  console.log("error");
+                this.store.dispatch({
+                  type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                });
+              }  
+            }
+          );
+      });
 
     constructor(
         private actions$: Actions,

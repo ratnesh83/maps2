@@ -87,7 +87,8 @@ export const environment = {
         UPLOAD_FILE: '/user/uploadFile',
         UPLOAD_MULTIPLE_FILES: '/user/uploadMultipleFiles',
 
-        GET_PROFILE_INFO: '/api/v2/web/user/detailsById'
+        GET_PROFILE_INFO: '/api/v2/web/user/detailsById',
+        UPDATE_PROFILE_INFO: '/api/v1/user/editWebProfile'
 
     },
 

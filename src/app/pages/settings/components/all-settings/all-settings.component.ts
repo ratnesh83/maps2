@@ -33,6 +33,7 @@ export class AllSettings {
     public settingStore;
     public jobItems;
     public products;
+    public profile;
     constructor(
         private store: Store<any>,
         private modalService: NgbModal,
@@ -43,8 +44,10 @@ export class AllSettings {
         this.settingStore = this.store
             .select('setting')
             .subscribe((res: any) => {
-                
+                console.log(res);
+                this.profile = res;
             });
+            this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO});                        
     };
     bringFileSelector(): boolean {
         this.renderer.invokeElementMethod(this._fileUpload.nativeElement, 'click');
