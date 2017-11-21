@@ -48,23 +48,30 @@
 }
 .labors-card-header {
     position: relative;
-}
-.labors-header-view {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    text-align: right;
-    .view-link {
-        color: #026eff;
-        font-weight: 500;
-        cursor: pointer;
+    .mat-card-header-text {
+        width: -webkit-fill-available;
     }
 }
-.md-card-content-labors-p-rate {
+.labors-header-view {
+    width: -webkit-fill-available;
+    text-align: right;
+    .fa {
+        cursor: pointer;
+        padding-left: 10px; 
+        color: #68d426;
+        font-size: x-large;
+    }
+    div {
+        font-size: small;
+        color: #a3a3a3;
+        font-weight: 500;
+    }
+}
+.md-card-content-labors-p-category {
     margin-bottom: 8px;
     font-weight: 600;
     text-align: left;
-    color: #026eff;
+    color: #1b1b1b;
 }
 .md-card-content-labors-p-address {
     text-align: left;
@@ -161,7 +168,7 @@
         }
     }
     .labors-header-contact { 
-        width: -webkit-fill-available;
+        width: auto;
         margin-top: 5px;
         text-align: right;
         .fa {

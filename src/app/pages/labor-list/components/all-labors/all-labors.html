@@ -24,33 +24,35 @@
                 <md-card class="labors-card labors-card-inner" *ngFor="let labor of labors; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
                     <md-card-header class="labors-card-header">
                         <div md-card-avatar class="labors-header-image">
-                            <img mat-card-avatar [src]="labor.categoryId ? labor.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
+                            <img mat-card-avatar [src]="labor.labourId?.profilePicture?.image?.thumb ? labor.labourId.profilePicture?.image?.thumb : 'assets/img/user.png'">
                         </div>
-                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{labor.title}}</md-card-title>
-                        <md-card-subtitle style="font-weight: 500">{{labor.category ? labor.category + ': ' + labor.subCategory : labor.category}}</md-card-subtitle>
+                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{labor.labourId ? labor.labourId.fullName ? labor.labourId.fullName : labor.labourId.firstName ?
+                            (labor.labourId.firstName + ' ' + labor.labourId.lastName) : labor.labourId.firstName : ''}}</md-card-title>
+                        <md-card-subtitle style="font-weight: 500">{{ labor.distance.toFixed(1) + ' mile away' }}</md-card-subtitle>
                         <div class="labors-header-view">
-                            <div class="view-link" (click)="showLaborListDetail(labor._id)">
-                                <span class="hidden-xs-down">
-                                    View Details &gt;&gt;
-                                </span>
-                                <span class="hidden-sm-up">
-                                    <i class="fa fa-info"></i>
-                                </span>
+                            <div>
+                                <i *ngIf="!labor?.labourId?.isPhoneNumberHidden && !labor.showPhone" (click)="showPhoneInfo(i)" class="fa fa-phone-square"></i>
+                                <i *ngIf="!labor.showEmail" (click)="showEmailInfo(i)" class="fa fa-envelope"></i>
                             </div>
+                            <div *ngIf="labor.showPhone">{{labor.labourId?.countryCode + ' ' + labor.labourId?.phoneNumber}}</div>
+                            <div *ngIf="labor.showEmail">{{labor.labourId?.email}}</div>
                         </div>
                     </md-card-header>
-                    <md-card-content class="labors-card with-margin">
-                        <p class="md-card-content-labors-p-rate">
-                            {{'$' + labor.rate + '/' + (labor.rateType == 'DAILY' ? 'day' : labor.rateType == 'WEEKLY' ? 'week' : labor.rateType == 'MONTHLY'
-                            ? 'month' : 'hr')}}
-                        </p>
-                        <p class="md-card-content-labors-p-address">
-                            {{ labor.employerAddress ? labor.employerAddress.addressLine1 : '' }}
-                        </p>
-                    </md-card-content>
+                    <md-card-header style="margin-top: 5px" class="labors-card-header">
+                        <div md-card-avatar class="labors-header-image">
+                            <img mat-card-avatar [src]="labor.jobId?.categoryId?.image?.thumb ? labor.jobId?.categoryId?.image?.thumb : 'assets/img/image-placeholder.jpg'">
+                        </div>
+                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">
+                            {{ labor.jobId.category ? labor.jobId.category + ': ' + labor.jobId.subCategory : labor.jobId.category }}
+                        </md-card-title>
+                        <md-card-subtitle style="font-weight: 500">
+                            {{ showAddress(labor?.labourAddress?.addressLine1, labor?.labourAddress?.city, labor?.labourAddress?.zipCode, labor?.labourAddress?.state,
+                            labor?.labourAddress?.country) }}
+                        </md-card-subtitle>
+                    </md-card-header>
                 </md-card>
                 <div *ngIf="labors && labors.length == 0">
-                    No jobs found.
+                    No labors found.
                 </div>
             </md-card-content>
         </md-card>

@@ -56,6 +56,12 @@ export class AllLaborList implements OnInit {
             .subscribe((res: any) => {
                 if (res) {
                     this.labors = res.labors;
+                    if (this.labors) {
+                        for (let i = 0; i < this.labors.length; i++) {
+                            this.labors.showPhone = false;
+                            this.labors.showEmail = false;
+                        }
+                    }
                 }
                 /* if (res && res.labors && res.labors.jobs) {
                     this.labors = res.labors.jobs;
@@ -142,6 +148,26 @@ export class AllLaborList implements OnInit {
 
     }
 
+    showAddress(address, city, zipCode, state, country): String {
+        let returnAddress;
+        if (address) {
+            returnAddress = address;
+            if (city && address.toString().toLowerCase().indexOf(city.toString().toLowerCase()) == -1) {
+                returnAddress = returnAddress + ', ' + city;
+            }
+            if (zipCode && address.indexOf(zipCode) != -1) {
+                returnAddress = returnAddress + ', ' + zipCode;
+            }
+            if (state && state.toString().toLowerCase() != city.toString().toLowerCase() && address.toString().toLowerCase().indexOf(state.toString().toLowerCase()) == -1) {
+                returnAddress = returnAddress + ', ' + state;
+            }
+            if (country && address.toString().toLowerCase().indexOf(country.toString().toLowerCase()) == -1) {
+                returnAddress = returnAddress + ', ' + country;
+            }
+        }
+        return returnAddress;
+    }
+
     pageChange(page) {
         this.store.dispatch({
             type: labor.actionTypes.APP_GET_LABORS_LIST, payload: {
@@ -173,12 +199,16 @@ export class AllLaborList implements OnInit {
         this._paginator._changePageSize(this.pageSize);
     }
 
-    showPhoneInfo() {
-        this.showPhone = true;
+    showPhoneInfo(index) {
+        if (this.labors[index]) {
+            this.labors[index].showPhone = true;
+        }
     }
 
-    showEmailInfo() {
-        this.showEmail = true;
+    showEmailInfo(index) {
+        if (this.labors[index]) {
+            this.labors[index].showEmail = true;
+        }
     }
 
 }
