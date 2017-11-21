@@ -4,7 +4,6 @@ import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
-const types = ['success', 'error', 'info', 'warning'];
 import { cloneDeep, random } from 'lodash';
 import { JobService } from '../../../services/job-service/job.service';
 import * as job from './job.actions';

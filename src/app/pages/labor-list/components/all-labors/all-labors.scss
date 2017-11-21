@@ -4,6 +4,15 @@
         margin-bottom: 10px;
     }
 }
+.labors-card-header {
+    position: relative;
+}
+.labors-header-rating {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    text-align: right;
+}
 .filter-div {
     font-weight: 500;
     color: #b1b1b1;

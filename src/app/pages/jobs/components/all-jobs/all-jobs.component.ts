@@ -141,7 +141,13 @@ export class AllJobs implements OnInit {
             let self = this;
             navigator.geolocation.getCurrentPosition((response) => {
                 self.showPosition(response, self);
+            }, (error) => {
+                this.toastrService.clear();
+                this.toastrService.error(error.message || 'Error in fetching your current location', 'Error');
             });
+        } else {
+            this.toastrService.clear();
+            this.toastrService.warning('Geolocation is not supported by this browser', 'Error');
         }
     }
 
@@ -153,13 +159,13 @@ export class AllJobs implements OnInit {
     }
 
     createMapCluster(markers) {
-        for(let i = 0; i < markers.length; i++) {
-            for(let j = 0; j < markers.length; j++) {
-                if(markers[i] == markers[j]) {
-                
+        for (let i = 0; i < markers.length; i++) {
+            for (let j = 0; j < markers.length; j++) {
+                if (markers[i] == markers[j]) {
+
                     //let newLatLng = new google.maps.LatLng(markers[i].coordinates[0] + i /10000, markers[i].coordinates[1]);
-                    markers[i].coordinates = [markers[i].coordinates[0] + i /100000, markers[i].coordinates[1]];
-                    console.log(markers[i].coordinates );
+                    markers[i].coordinates = [markers[i].coordinates[0] + i / 100000, markers[i].coordinates[1]];
+                    console.log(markers[i].coordinates);
                 }
             }
         }
@@ -269,7 +275,7 @@ export class AllJobs implements OnInit {
                 data: data
             }
         });
-    };
+    }
 
     getAllJobs(data) {
         this.store.dispatch({
@@ -277,7 +283,7 @@ export class AllJobs implements OnInit {
                 data: data
             }
         });
-    };
+    }
 
     showJobDetail(job) {
         this.dataService.setData('jobId', job.id);

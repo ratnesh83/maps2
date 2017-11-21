@@ -141,7 +141,13 @@ export class AllLabors implements OnInit {
             let self = this;
             navigator.geolocation.getCurrentPosition((response) => {
                 self.showPosition(response, self);
+            }, (error) => {
+                this.toastrService.clear();
+                this.toastrService.error(error.message || 'Error in fetching your current location', 'Error');
             });
+        } else {
+            this.toastrService.clear();
+            this.toastrService.warning('Geolocation is not supported by this browser', 'Error');
         }
     };
 

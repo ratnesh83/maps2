@@ -1,46 +1,64 @@
 <div class="container-fluid animated bounce labor-container">
-    <md-tab-group class="my-labors-tabs-group" (selectChange)="selectTab($event)">
-        <md-tab label="ACTIVE">
-            <div class="labors-section page-input-block">
-                <md-card class="labors-card">
-                    <md-card-content *ngIf="labors">
-                        <md-card class="labors-card labors-card-inner" *ngFor="let labor of labors; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
-                            <md-card-header class="labors-card-header">
-                                <div md-card-avatar class="labors-header-image">
-                                    <img mat-card-avatar [src]="labor.categoryId ? labor.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
-                                </div>
-                                <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{labor.title}}</md-card-title>
-                                <md-card-subtitle style="font-weight: 500">{{labor.category ? labor.category + ': ' + labor.subCategory : labor.category}}</md-card-subtitle>
-                                <div class="labors-header-view">
-                                    <div class="view-link" (click)="showLaborListDetail(labor._id)">
-                                        <span class="hidden-xs-down">
-                                            View Details &gt;&gt;
-                                        </span>
-                                        <span class="hidden-sm-up">
-                                            <i class="fa fa-info"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </md-card-header>
-                            <md-card-content class="labors-card with-margin">
-                                <p class="md-card-content-labors-p-rate">
-                                    {{'$' + labor.rate + '/' + (labor.rateType == 'DAILY' ? 'day' : labor.rateType == 'WEEKLY' ? 'week' : labor.rateType == 'MONTHLY'
-                                    ? 'month' : 'hr')}}
-                                </p>
-                                <p class="md-card-content-labors-p-address">
-                                    {{ labor.employerAddress ? labor.employerAddress.addressLine1 : '' }}
-                                </p>
-                            </md-card-content>
-                        </md-card>
-                        <div *ngIf="labors && labors.length == 0">
-                            No jobs found.
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-12 col-sm-12 user-labors-heading">
+                <md-card class="labors-card-heading">
+                    <md-card-header class="labors-card-header labors-card-heading">
+                        <md-card-title style="font-weight: 600; color: #474747; margin-bottom: 0px">
+                            <h2>Labor List</h2>
+                        </md-card-title>
+                        <div class="labors-header-rating">
+                            <div class="filter-div">
+                                <i class="fa fa-filter"></i>
+                            </div>
                         </div>
-                    </md-card-content>
+                    </md-card-header>
                 </md-card>
             </div>
+        </div>
+    </div>
 
-        </md-tab>
-    </md-tab-group>
+    <div class="labors-section page-input-block">
+        <md-card *ngIf="!showLoading" class="labors-card">
+            <md-card-content *ngIf="labors">
+                <md-card class="labors-card labors-card-inner" *ngFor="let labor of labors; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
+                    <md-card-header class="labors-card-header">
+                        <div md-card-avatar class="labors-header-image">
+                            <img mat-card-avatar [src]="labor.categoryId ? labor.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
+                        </div>
+                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{labor.title}}</md-card-title>
+                        <md-card-subtitle style="font-weight: 500">{{labor.category ? labor.category + ': ' + labor.subCategory : labor.category}}</md-card-subtitle>
+                        <div class="labors-header-view">
+                            <div class="view-link" (click)="showLaborListDetail(labor._id)">
+                                <span class="hidden-xs-down">
+                                    View Details &gt;&gt;
+                                </span>
+                                <span class="hidden-sm-up">
+                                    <i class="fa fa-info"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </md-card-header>
+                    <md-card-content class="labors-card with-margin">
+                        <p class="md-card-content-labors-p-rate">
+                            {{'$' + labor.rate + '/' + (labor.rateType == 'DAILY' ? 'day' : labor.rateType == 'WEEKLY' ? 'week' : labor.rateType == 'MONTHLY'
+                            ? 'month' : 'hr')}}
+                        </p>
+                        <p class="md-card-content-labors-p-address">
+                            {{ labor.employerAddress ? labor.employerAddress.addressLine1 : '' }}
+                        </p>
+                    </md-card-content>
+                </md-card>
+                <div *ngIf="labors && labors.length == 0">
+                    No jobs found.
+                </div>
+            </md-card-content>
+        </md-card>
+        <md-card *ngIf="showLoading" class="labors-card">
+            {{ locationStatus }}
+        </md-card>
+    </div>
+
     <!-- <div class="panel-footer">
         <div class="row">
             <div *ngIf="count > 4" class="col-sm-12 rar-align page-select">

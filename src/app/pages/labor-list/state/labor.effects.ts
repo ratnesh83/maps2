@@ -18,7 +18,7 @@ export class LaborListEffects {
         .ofType('APP_GET_LABORS_LIST')
         .do((action) => {
             this._spinner.show();
-            this.LaborService.getAllLabors(action.payload).subscribe((result) => {
+            this.LaborService.getAllLaborList(action.payload).subscribe((result) => {
                 this._spinner.hide();
                 if (result.message == 'Action complete.' || result.statusCode == 200) {
                     /* let payload = {

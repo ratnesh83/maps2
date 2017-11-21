@@ -12,6 +12,7 @@ import { DataService } from '../../../../services/data-service/data.service';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { NguiMapComponent } from '@ngui/map';
 import 'style-loader!./all-labors.scss';
+import { error } from 'util';
 
 @Component({
     selector: 'all-labors',
@@ -33,8 +34,11 @@ export class AllLaborList implements OnInit {
     public filter;
     public showPhone: boolean = false;
     public showEmail: boolean = false;
+    public showLoading: boolean = false;
+    public locationStatus;
     public laborListStore;
     public length;
+    public data;
     public pageSize = 5;
     public pageSizeOptions = [5, 10, 25, 100, 500];
 
@@ -61,10 +65,62 @@ export class AllLaborList implements OnInit {
                     this.pageIndex = res.currentPage - 1;
                 } */
             });
-    };
+
+        if (navigator.geolocation) {
+            this.showLoading = true;
+            this.locationStatus = 'Fetching current location...';
+            let self = this;
+            navigator.geolocation.getCurrentPosition((response) => {
+                self.showPosition(response, self);
+                self.showLoading = false;
+            }, (error) => {
+                self.showLoading = true;
+                this.locationStatus = 'Error .';
+                switch (error.code) {
+                    case 1:
+                        this.locationStatus = 'Location permission denied.';
+                        break;
+                    case 2:
+                        this.locationStatus = 'Position unavailable.';
+                        break;
+                    case 3:
+                        this.locationStatus = 'Fetching current location timed out.';
+                        break;
+                    default:
+                        break;
+                }
+            });
+        } else {
+            this.locationStatus = 'Geolocation is not supported by this browser.';
+            this.showLoading = true;
+        }
+    }
+
+    showPosition(position, self) {
+        if (position && position.coords) {
+            let latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            let geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ 'location': latlng }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    if (results[0]) {
+                        let addressComponents = results[0].address_components;
+                        let latitude = results[0].geometry.location.lat();
+                        let longitude = results[0].geometry.location.lng();
+                        let data = {
+                            latitude: latitude,
+                            longitude: longitude,
+                            sortBy: 'DISTANCE'
+                        };
+                        self.data = data;
+                        self.getAllLaborListsCallback(data, self);
+                    }
+                }
+            });
+        }
+    }
 
     ngOnInit() {
-        this.getAllLaborLists();
+        // this.getAllLaborListsCallback();
     }
 
     ngOnDestroy() {
@@ -73,79 +129,25 @@ export class AllLaborList implements OnInit {
         }
     }
 
-    getAllLaborLists() {
-        this.store.dispatch({
+    getAllLaborListsCallback(data, self) {
+        self.showLoading = false;
+        self.store.dispatch({
             type: labor.actionTypes.APP_GET_LABORS_LIST, payload: {
-                type: 'ACTIVE',
-                currentPage: this.page,
-                    limit: this.pageSize
+                data: data
             }
         });
     }
-    
 
     showLaborListDetail(id) {
-        // this.dataService.setData('jobId', id);
-        // this.router.navigate(['pages/labors/laborListdetails']);
-    }
 
-    selectTab(event) {
-        if (event.index == 0) {
-            this.tabIndex = 0;
-            this.store.dispatch({
-                type: labor.actionTypes.APP_GET_LABORS_LIST, payload: {
-                    type: 'ACTIVE',
-                    currentPage: this.page,
-                    limit: this.pageSize
-                }
-            });
-        } else if (event.index == 1) {
-            this.tabIndex = 1;
-            this.store.dispatch({
-                type: labor.actionTypes.APP_GET_LABORS_LIST, payload: {
-                    type: 'IN_PROGRESS',
-                    currentPage: this.page,
-                    limit: this.pageSize
-                }
-            });
-        } else if (event.index == 2) {
-            this.tabIndex = 2;
-            this.store.dispatch({
-                type: labor.actionTypes.APP_GET_LABORS_LIST, payload: {
-                    type: 'COMPLETED',
-                    currentPage: this.page,
-                    limit: this.pageSize
-                }
-            });
-        }
     }
 
     pageChange(page) {
-        if (this.tabIndex == 0) {
-            this.store.dispatch({
-                type: labor.actionTypes.APP_GET_LABORS_LIST, payload: {
-                    type: 'ACTIVE',
-                    currentPage: page.pageIndex + 1,
-                    limit: page.pageSize,
-                }
-            });
-        } else if (this.tabIndex == 1) {
-            this.store.dispatch({
-                type: labor.actionTypes.APP_GET_LABORS_LIST, payload: {
-                    type: 'IN_PROGRESS',
-                    currentPage: page.pageIndex + 1,
-                    limit: page.pageSize,
-                }
-            });
-        } else if (this.tabIndex== 2) {
-            this.store.dispatch({
-                type: labor.actionTypes.APP_GET_LABORS_LIST, payload: {
-                    type: 'COMPLETED',
-                    currentPage: page.pageIndex + 1,
-                    limit: page.pageSize,
-                }
-            });
-        }
+        this.store.dispatch({
+            type: labor.actionTypes.APP_GET_LABORS_LIST, payload: {
+                data: this.data
+            }
+        });
         this.pageSize = page.pageSize;
     }
 
