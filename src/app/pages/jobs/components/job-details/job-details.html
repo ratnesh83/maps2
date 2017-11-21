@@ -1,0 +1,90 @@
+<div class="container-fluid messagePanel animated bounce">
+    <div *ngIf="job" class="panel-heading">
+        <div class="row">
+            <div class="col-12 col-sm-12 user-feed-heading">
+                <md-card class="posts-card-heading">
+                    <md-card-header class="posts-card-header posts-card-heading">
+                        <md-card-title style="font-weight: 600; color: #1b1b1b">
+                            <h3>{{job.title}}</h3>
+                        </md-card-title>
+                        <md-card-subtitle style="font-weight: 500; margin-bottom: 0px; font-size: small">{{job.category ? job.category + ': ' + job.subCategory : job.category}}</md-card-subtitle>
+                        <div class="posts-header-right">
+                            <div style="margin-bottom: 0.5rem; color: #026eff; font-weight: 600">
+                                <h4>{{'$' + job.rate + '/' + (job.rateType == 'DAILY' ? 'day' : job.rateType == 'WEEKLY' ?
+                                    'week' : job.rateType == 'MONTHLY' ? 'month' : 'hr')}}</h4>
+                            </div>
+                            <div style="color: #1c9f7f; font-weight: 500; font-size: small">
+                                {{job.jobStatus == 'IN_PROGRESS' ? 'IN PROGRESS' : job.jobStatus}}
+                            </div>
+                        </div>
+                    </md-card-header>
+                    <md-card-content>
+
+                    </md-card-content>
+                </md-card>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="job" class="posts-section">
+        <md-card class="posts-card">
+            <md-card-content>
+                <p class="md-card-content-posts-label">
+                    Job Location
+                </p>
+                <p class="md-card-content-posts-content">
+                    {{job.employerAddress ? showAddress(job.employerAddress.addressLine1, job.employerAddress.city, job.employerAddress.zipCode, job.employerAddress.state, job.employerAddress.country) : ''}}
+                </p>
+                <p class="md-card-content-posts-label">
+                    Job Date
+                </p>
+                <p class="md-card-content-posts-content">
+                    {{job.startDate | date : 'dd/MM/yyyy'}} - {{job.endDate | date : 'dd/MM/yyyy'}}
+                </p>
+                <p class="md-card-content-posts-label">
+                    Job Details
+                </p>
+                <p class="md-card-content-posts-content">
+                    {{job.jobDetails}}
+                </p>
+                <p class="md-card-content-posts-label">
+                    No. of Labors Required
+                </p>
+                <p class="md-card-content-posts-content">
+                    {{job.requiredLabourers}}
+                </p>
+            </md-card-content>
+        </md-card>
+
+    </div>
+    <div *ngIf="labours && labours.length > 0" class="posts-section">
+        <md-card class="posts-card">
+            <md-card-subtitle style="font-weight: 500">Labor List</md-card-subtitle>
+            <div style="margin-top: 10px" *ngFor="let labour of labours; let i = index">
+                <md-card-header class="posts-card-header">
+                    <div *ngIf="labour.labourId" md-card-avatar class="posts-header-image">
+                        <img *ngIf="labour.labourId.profilePicture" mat-card-avatar [src]="labour.labourId.profilePicture.thumb ? labour.labourId.profilePicture.thumb : 'assets/img/default-profile.jpg'">
+                    </div>
+                    <md-card-title *ngIf="labour.labourId" style="font-weight: 600; color: #1b1b1b">{{labour.labourId.fullName ? labour.labourId.fullName : labour.labourId.firstName + ' ' + labour.labourId.lastName}}</md-card-title>
+                    <md-card-subtitle style="font-weight: 500; color: #026eff; cursor: pointer; font-size: small" (click)="viewProfile('id')">View Profile</md-card-subtitle>
+                    <div *ngIf="labour.labourId" class="posts-header-contact">
+                        <div>
+                            <i (click)="showPhoneInfo(i)" *ngIf="!labour.labourId.isPhoneNumberHidden && !labour.showPhone" class="fa fa-phone-square"></i>
+                            <i (click)="showEmailInfo(i)" *ngIf="!labour.showEmail" class="fa fa-envelope"></i>
+                        </div>
+                        <div *ngIf="labour.showPhone">{{labour.labourId.countryCode + labour.labourId.phoneNumber}}</div>
+                        <div *ngIf="labour.showEmail">{{labour.labourId.email}}</div>
+                    </div>
+                </md-card-header>
+                <!-- <md-card-content>
+                    <md-card-actions style="margin-left: 0px; margin-right: 0px">
+                        <button md-raised-button>HIRE</button>
+                        <button md-raised-button>REJECT</button>
+                    </md-card-actions>
+                </md-card-content> -->
+            </div>
+
+        </md-card>
+
+    </div>
+
+</div>

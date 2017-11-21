@@ -287,7 +287,7 @@ export class AllJobs implements OnInit {
 
     showJobDetail(job) {
         this.dataService.setData('jobId', job.id);
-        this.router.navigate(['pages/posts/postdetails']);
+        this.router.navigate(['pages/jobs/jobdetails']);
     }
 
     showUserDetail(user) {

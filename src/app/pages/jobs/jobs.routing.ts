@@ -2,6 +2,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { Jobs } from './jobs.component';
 import { AllJobs } from './components/all-jobs/all-jobs.component';
+import { JobDetails } from './components/job-details/job-details.component';
 
 const routes: Routes = [
     {
@@ -10,7 +11,8 @@ const routes: Routes = [
         children: [
 
             { path: '', redirectTo: 'alljobs', pathMatch: 'full' },
-            { path: 'alljobs', component: AllJobs }
+            { path: 'alljobs', component: AllJobs },
+            { path: 'jobdetails', component: JobDetails }
 
         ]
     }

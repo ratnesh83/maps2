@@ -93,6 +93,74 @@ export class JobEffects {
             this.store.dispatch(new job.AppJobDetailSuccessConsumed(action.payload));
         });
 
+    @Effect({ dispatch: false })
+    getJob$ = this.actions$
+        .ofType('APP_GET_JOB')
+        .do((action) => {
+            this._spinner.show();
+            this.JobService.getJob(action.payload).subscribe((result) => {
+                this._spinner.hide();
+                if (result.message == 'Action complete.' || result.statusCode == 200) {
+                    let payload = result.data[0];
+                    this.store.dispatch(new job.AppGetJobSuccess(payload));
+                }
+            }
+                , (error) => {
+                    this._spinner.hide();
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        } else {
+
+                        }
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    getJobSuccess: Observable<Action> = this.actions$
+        .ofType('APP_GET_JOB_SUCCESS')
+        .do((action) => {
+
+        });
+
+    @Effect({ dispatch: false })
+    getLabors$ = this.actions$
+        .ofType('APP_GET_LABORS')
+        .do((action) => {
+            this._spinner.show();
+            this.JobService.getLabors(action.payload).subscribe((result) => {
+                this._spinner.hide();
+                if (result.message == 'Action complete.' || result.statusCode == 200) {
+                    let payload = result.data;
+                    this.store.dispatch(new job.AppGetLaborsSuccess(payload));
+                }
+            }
+                , (error) => {
+                    this._spinner.hide();
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        } else {
+
+                        }
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    getLaborsSuccess: Observable<Action> = this.actions$
+        .ofType('APP_GET_LABORS_SUCCESS')
+        .do((action) => {
+
+        });
+
     constructor(
         private actions$: Actions,
         private store: Store<any>,
