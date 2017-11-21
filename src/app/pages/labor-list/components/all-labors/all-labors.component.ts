@@ -75,12 +75,34 @@ export class AllLaborList implements OnInit {
         if (navigator.geolocation) {
             this.showLoading = true;
             this.locationStatus = 'Fetching current location...';
-            let self = this;
             navigator.geolocation.getCurrentPosition((response) => {
-                self.showPosition(response, self);
-                self.showLoading = false;
+                if (response && response.coords) {
+                    let latlng = new google.maps.LatLng(response.coords.latitude, response.coords.longitude);
+                    let geocoder = new google.maps.Geocoder();
+                    let self = this;
+                    this.geocoder(geocoder, latlng)
+                        .then((result) => {
+                            let results = result;
+                            if (results[0]) {
+                                let addressComponents = results[0].address_components;
+                                let latitude = results[0].geometry.location.lat();
+                                let longitude = results[0].geometry.location.lng();
+                                let data = {
+                                    latitude: latitude,
+                                    longitude: longitude,
+                                    sortBy: 'DISTANCE'
+                                };
+                                this.data = data;
+                                this.showLoading = false;
+                                this.getAllLaborListsCallback(data);
+                            }
+                        })
+                        .catch((error: any) => {
+                            // console.error(error);
+                        });
+                }
             }, (error) => {
-                self.showLoading = true;
+                this.showLoading = true;
                 this.locationStatus = 'Error .';
                 switch (error.code) {
                     case 1:
@@ -102,27 +124,22 @@ export class AllLaborList implements OnInit {
         }
     }
 
-    showPosition(position, self) {
-        if (position && position.coords) {
-            let latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            let geocoder = new google.maps.Geocoder();
-            geocoder.geocode({ 'location': latlng }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[0]) {
-                        let addressComponents = results[0].address_components;
-                        let latitude = results[0].geometry.location.lat();
-                        let longitude = results[0].geometry.location.lng();
-                        let data = {
-                            latitude: latitude,
-                            longitude: longitude,
-                            sortBy: 'DISTANCE'
-                        };
-                        self.data = data;
-                        self.getAllLaborListsCallback(data, self);
+    geocoder(geocoder, latlng): Promise<any> {
+        return new Promise<any>((resolve, reject) => {
+            try {
+                geocoder.geocode({ 'location': latlng }, (result: any) => {
+                    if (!result) {
+                        reject();
+                    } else if (result.error) {
+                        reject(result.error);
+                    } else {
+                        resolve(result);
                     }
-                }
-            });
-        }
+                });
+            } catch (e) {
+                reject(e);
+            }
+        });
     }
 
     ngOnInit() {
@@ -135,9 +152,9 @@ export class AllLaborList implements OnInit {
         }
     }
 
-    getAllLaborListsCallback(data, self) {
-        self.showLoading = false;
-        self.store.dispatch({
+    getAllLaborListsCallback(data) {
+        this.showLoading = false;
+        this.store.dispatch({
             type: labor.actionTypes.APP_GET_LABORS_LIST, payload: {
                 data: data
             }
