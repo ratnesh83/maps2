@@ -28,6 +28,18 @@ export class LaborService {
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
 
+    getAllLaborList(payload) {
+        let url;
+        let query;
+        if (payload && payload.data) {
+            query = '?latitude=' + payload.data.latitude + '&longitude=' + payload.data.longitude + '&sortBy=' + payload.data.sortBy;;
+        }
+        url = environment.APP.API_URL + environment.APP.GET_ALL_LABOR_LIST + query;
+        this.authRequired = true;
+        this.utcOffset = false;
+        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+    }
+
     getAllCategories(payload) {
         let url;
         this.authRequired = false;

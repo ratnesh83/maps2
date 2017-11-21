@@ -86,11 +86,11 @@ export class Home {
     }
 
     goToLaborList() {
-
+        this.router.navigate(['/pages/users/alllabors']);
     }
 
     goToDonations() {
-
+        this.router.navigate(['/pages/donations']);
     }
 
 }

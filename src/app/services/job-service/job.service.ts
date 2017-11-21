@@ -34,6 +34,22 @@ export class JobService {
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
 
+    getJob(payload) {
+        let url;
+        this.authRequired = true;
+        this.utcOffset = false;
+        url = environment.APP.API_URL + environment.APP.GET_POST + '?jobId=' + payload.jobId;
+        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+    }
+
+    getLabors(payload) {
+        let url;
+        this.authRequired = true;
+        this.utcOffset = false;
+        url = environment.APP.API_URL + environment.APP.GET_LABORS + '?jobId=' + payload.jobId;
+        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+    }
+
     getJobDetail(payload) {
         let url;
         url = environment.APP.API_URL + environment.APP.GET_USER;
@@ -41,6 +57,6 @@ export class JobService {
         this.authRequired = true;
         this.utcOffset = false;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
-    };
+    }
 
 }

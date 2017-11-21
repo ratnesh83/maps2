@@ -36,6 +36,9 @@
 }
 .labors-card-heading {
     width: 100%;
+    .mat-card-header-text {
+        margin: 0px 0px;
+    }
 }
 .labors-section {
     margin-top: 10px;

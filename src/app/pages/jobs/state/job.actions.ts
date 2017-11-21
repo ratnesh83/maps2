@@ -6,7 +6,11 @@ export const actionTypes = {
     APP_JOB_DETAIL_SUCCESS: 'APP_JOB_DETAIL_SUCCESS',
     APP_GET_CATEGORIES_JOB: 'APP_GET_CATEGORIES_JOB',
     APP_GET_CATEGORIES_JOB_SUCCESS: 'APP_GET_CATEGORIES_JOB_SUCCESS',
-    APP_JOB_DETAIL_SUCCESS_CONSUMED: 'APP_JOB_DETAIL_SUCCESS_CONSUMED'
+    APP_JOB_DETAIL_SUCCESS_CONSUMED: 'APP_JOB_DETAIL_SUCCESS_CONSUMED',
+    APP_GET_JOB: 'APP_GET_JOB',
+    APP_GET_JOB_SUCCESS: 'APP_GET_JOB_SUCCESS',
+    APP_GET_LABORS: 'APP_GET_LABORS',
+    APP_GET_LABORS_SUCCESS: 'APP_GET_LABORS_SUCCESS'
 
 };
 
@@ -34,6 +38,26 @@ export class AppJobDetailSuccess implements Action {
 
 export class AppJobDetailSuccessConsumed implements Action {
     type = actionTypes.APP_JOB_DETAIL_SUCCESS_CONSUMED;
+    constructor(public payload: credentials) { }
+}
+
+export class AppGetJob implements Action {
+    type = actionTypes.APP_GET_JOB;
+    constructor(public payload: credentials) { }
+}
+
+export class AppGetJobSuccess implements Action {
+    type = actionTypes.APP_GET_JOB_SUCCESS;
+    constructor(public payload: credentials) { }
+}
+
+export class AppGetLabors implements Action {
+    type = actionTypes.APP_GET_LABORS;
+    constructor(public payload: credentials) { }
+}
+
+export class AppGetLaborsSuccess implements Action {
+    type = actionTypes.APP_GET_LABORS_SUCCESS;
     constructor(public payload: credentials) { }
 }
 

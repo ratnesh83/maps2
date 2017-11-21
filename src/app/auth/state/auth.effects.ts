@@ -558,6 +558,8 @@ export class AuthEffects {
                     this.store.dispatch(new auth.AuthLogoutSuccessAction(result));
                     localStorage.removeItem('token');
                     localStorage.removeItem('tokenSession');
+                    localStorage.removeItem('jobId');
+                    localStorage.removeItem('requestId');
                     this.dataService.removeUserRegisterationId();
                     this.dataService.removeUserRegisterationAccessToken();
                     this.dataService.removeCategoryId();
@@ -569,6 +571,8 @@ export class AuthEffects {
                     this.store.dispatch(new auth.AuthLogoutSuccessAction(error));
                     localStorage.removeItem('token');
                     localStorage.removeItem('tokenSession');
+                    localStorage.removeItem('jobId');
+                    localStorage.removeItem('requestId');
                     this.dataService.removeUserRegisterationId();
                     this.dataService.removeUserRegisterationAccessToken();
                     this.dataService.removeCategoryId();

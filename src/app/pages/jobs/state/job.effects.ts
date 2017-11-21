@@ -4,7 +4,6 @@ import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
-const types = ['success', 'error', 'info', 'warning'];
 import { cloneDeep, random } from 'lodash';
 import { JobService } from '../../../services/job-service/job.service';
 import * as job from './job.actions';
@@ -92,6 +91,74 @@ export class JobEffects {
         .ofType('APP_JOB_DETAIL_SUCCESS_CONSUMED')
         .do((action) => {
             this.store.dispatch(new job.AppJobDetailSuccessConsumed(action.payload));
+        });
+
+    @Effect({ dispatch: false })
+    getJob$ = this.actions$
+        .ofType('APP_GET_JOB')
+        .do((action) => {
+            this._spinner.show();
+            this.JobService.getJob(action.payload).subscribe((result) => {
+                this._spinner.hide();
+                if (result.message == 'Action complete.' || result.statusCode == 200) {
+                    let payload = result.data[0];
+                    this.store.dispatch(new job.AppGetJobSuccess(payload));
+                }
+            }
+                , (error) => {
+                    this._spinner.hide();
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        } else {
+
+                        }
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    getJobSuccess: Observable<Action> = this.actions$
+        .ofType('APP_GET_JOB_SUCCESS')
+        .do((action) => {
+
+        });
+
+    @Effect({ dispatch: false })
+    getLabors$ = this.actions$
+        .ofType('APP_GET_LABORS')
+        .do((action) => {
+            this._spinner.show();
+            this.JobService.getLabors(action.payload).subscribe((result) => {
+                this._spinner.hide();
+                if (result.message == 'Action complete.' || result.statusCode == 200) {
+                    let payload = result.data;
+                    this.store.dispatch(new job.AppGetLaborsSuccess(payload));
+                }
+            }
+                , (error) => {
+                    this._spinner.hide();
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        } else {
+
+                        }
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    getLaborsSuccess: Observable<Action> = this.actions$
+        .ofType('APP_GET_LABORS_SUCCESS')
+        .do((action) => {
+
         });
 
     constructor(

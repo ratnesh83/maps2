@@ -26,7 +26,8 @@
             <md-card-header class="feedback-card-header">
                 <div md-card-avatar class="feedback-header-image">
                     <img mat-card-avatar *ngIf="feedback.givenBy == 'LABOUR' && feedback.labourId && feedback.labourId.profilePicture" [src]="feedback.labourId.profilePicture.thumb ? feedback.labourId.profilePicture.thumb : 'assets/img/default-profile.jpg'">
-                    <img mat-card-avatar *ngIf="feedback.givenBy == 'EMPLOYER' && feedback.employerId && feedback.employerId.profilePicture" [src]="feedback.employerId.profilePicture.thumb ? feedback.employerId.profilePicture.thumb : 'assets/img/default-profile.jpg'">
+                    <img mat-card-avatar *ngIf="feedback.givenBy == 'EMPLOYER' && feedback.employerId && feedback.employerId.profilePicture"
+                        [src]="feedback.employerId.profilePicture.thumb ? feedback.employerId.profilePicture.thumb : 'assets/img/default-profile.jpg'">
                 </div>
                 <md-card-title *ngIf="feedback.givenBy == 'LABOUR' && feedback.labourId" style="font-weight: 600; color: #1b1b1b">
                     {{ feedback.labourId.fullName ? feedback.labourId.fullName : feedback.labourId.firstName ? feedback.labourId.firstName +
@@ -50,6 +51,13 @@
                 <p class="md-card-content-feedback-p-date">
                     {{ feedback.createdAt | date: 'dd/MM/yyyy' }}
                 </p>
+            </md-card-content>
+        </md-card>
+    </div>
+    <div *ngIf="feedbacks && feedbacks.ratings && feedbacks.ratings.length == 0" class="feeds-section">
+        <md-card class="feedback-card">
+            <md-card-content>
+                No ratings found.
             </md-card-content>
         </md-card>
     </div>

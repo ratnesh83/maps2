@@ -76,7 +76,7 @@ export class AllRequests implements OnInit {
     getAllRequests() {
         this.store.dispatch({
             type: request.actionTypes.APP_GET_REQUESTS, payload: {
-                type: 'ACTIVE',
+                type: 'ACCEPTED_BY_LABOUR',
                 currentPage: this.page,
                     limit: this.pageSize
             }
@@ -85,7 +85,7 @@ export class AllRequests implements OnInit {
     
 
     showRequestDetail(id) {
-        this.dataService.setData('jobId', id);
+        this.dataService.setData('requestId', id);
         this.router.navigate(['pages/requests/requestdetails']);
     }
 
@@ -94,7 +94,7 @@ export class AllRequests implements OnInit {
             this.tabIndex = 0;
             this.store.dispatch({
                 type: request.actionTypes.APP_GET_REQUESTS, payload: {
-                    type: 'ACTIVE',
+                    type: 'ACCEPTED_BY_LABOUR',
                     currentPage: this.page,
                     limit: this.pageSize
                 }
@@ -103,7 +103,7 @@ export class AllRequests implements OnInit {
             this.tabIndex = 1;
             this.store.dispatch({
                 type: request.actionTypes.APP_GET_REQUESTS, payload: {
-                    type: 'IN_PROGRESS',
+                    type: 'CONFIRMED_BY_EMPLOYER',
                     currentPage: this.page,
                     limit: this.pageSize
                 }
@@ -120,11 +120,31 @@ export class AllRequests implements OnInit {
         }
     }
 
+    showAddress(address, city, zipCode, state, country): String {
+        let returnAddress;
+        if (address) {
+            returnAddress = address;
+            if (city && address.toString().toLowerCase().indexOf(city.toString().toLowerCase()) == -1) {
+                returnAddress = returnAddress + ', ' + city;
+            }
+            if (zipCode && address.indexOf(zipCode) != -1) {
+                returnAddress = returnAddress + ', ' + zipCode;
+            }
+            if (state && state.toString().toLowerCase() != city.toString().toLowerCase() && address.toString().toLowerCase().indexOf(state.toString().toLowerCase()) == -1) {
+                returnAddress = returnAddress + ', ' + state;
+            }
+            if (country && address.toString().toLowerCase().indexOf(country.toString().toLowerCase()) == -1) {
+                returnAddress = returnAddress + ', ' + country;
+            }
+        }
+        return returnAddress;
+    }
+
     pageChange(page) {
         if (this.tabIndex == 0) {
             this.store.dispatch({
                 type: request.actionTypes.APP_GET_REQUESTS, payload: {
-                    type: 'ACTIVE',
+                    type: 'ACCEPTED_BY_LABOUR',
                     currentPage: page.pageIndex + 1,
                     limit: page.pageSize,
                 }
@@ -132,7 +152,7 @@ export class AllRequests implements OnInit {
         } else if (this.tabIndex == 1) {
             this.store.dispatch({
                 type: request.actionTypes.APP_GET_REQUESTS, payload: {
-                    type: 'IN_PROGRESS',
+                    type: 'CONFIRMED_BY_EMPLOYER',
                     currentPage: page.pageIndex + 1,
                     limit: page.pageSize,
                 }

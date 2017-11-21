@@ -1,28 +1,28 @@
 import { Component } from '@angular/core';
 import { MdDialog } from '@angular/material';
 
-import 'style-loader!./job-detail-dialog.scss';
+import 'style-loader!./user-detail-dialog.scss';
 
 @Component({
-    selector: 'job-detail-dialog',
+    selector: 'user-detail-dialog',
     template: `
         <md-dialog-content style="padding: 24px 24px; min-width: 40vw">
-            <div *ngIf="jobDetails" class="panel-heading">
+            <div *ngIf="userDetails" class="panel-heading">
                 <div class="row">
                     <div class="col-12 col-sm-12 user-feed-heading">
                         <md-card class="posts-card-heading">
                             <md-card-header class="posts-card-header posts-card-heading">
                                 <md-card-title style="font-weight: 600; color: #1b1b1b">
-                                    <h3>{{jobDetails.title}}</h3>
+                                    <h3>{{userDetails.title}}</h3>
                                 </md-card-title>
-                                <md-card-subtitle style="font-weight: 500; margin-bottom: 0px; font-size: small">{{jobDetails.category ? jobDetails.category + ': ' + jobDetails.subCategory : jobDetails.category}}</md-card-subtitle>
+                                <md-card-subtitle style="font-weight: 500; margin-bottom: 0px; font-size: small">{{userDetails.category ? userDetails.category + ': ' + userDetails.subCategory : userDetails.category}}</md-card-subtitle>
                                 <div class="posts-header-right">
                                     <div style="margin-bottom: 0.5rem; color: #026eff; font-weight: 600">
-                                        <h4>{{'$' + jobDetails.rate + '/' + (jobDetails.rateType == 'DAILY' ? 'day' : jobDetails.rateType == 'WEEKLY' ?
-                                            'week' : jobDetails.rateType == 'MONTHLY' ? 'month' : 'hr')}}</h4>
+                                        <h4>{{'$' + userDetails.rate + '/' + (userDetails.rateType == 'DAILY' ? 'day' : userDetails.rateType == 'WEEKLY' ?
+                                            'week' : userDetails.rateType == 'MONTHLY' ? 'month' : 'hr')}}</h4>
                                     </div>
                                     <div style="color: #1c9f7f; font-weight: 500; font-size: small">
-                                        {{jobDetails.jobStatus == 'IN_PROGRESS' ? 'IN PROGRESS' : jobDetails.jobStatus}}
+                                        {{userDetails.userStatus == 'IN_PROGRESS' ? 'IN PROGRESS' : userDetails.userStatus}}
                                     </div>
                                 </div>
                             </md-card-header>
@@ -33,32 +33,32 @@ import 'style-loader!./job-detail-dialog.scss';
                     </div>
                 </div>
             </div>
-            <div *ngIf="jobDetails" class="posts-section">
+            <div *ngIf="userDetails" class="posts-section">
                 <md-card class="posts-card-dialog">
                     <md-card-content>
                         <p class="md-card-content-posts-label">
-                            Job Location
+                            User Location
                         </p>
                         <p class="md-card-content-posts-content">
-                            {{jobDetails.employerAddress ? jobDetails.employerAddress.addressLine1 : ''}}
+                            {{userDetails.employerAddress ? userDetails.employerAddress.addressLine1 : ''}}
                         </p>
                         <p class="md-card-content-posts-label">
-                            Job Date
+                            User Date
                         </p>
                         <p class="md-card-content-posts-content">
-                            {{jobDetails.startDate | date : 'dd/MM/yyyy'}} - {{jobDetails.endDate | date : 'dd/MM/yyyy'}}
+                            {{userDetails.startDate | date : 'dd/MM/yyyy'}} - {{userDetails.endDate | date : 'dd/MM/yyyy'}}
                         </p>
                         <p class="md-card-content-posts-label">
-                            Job Details
+                            User Details
                         </p>
                         <p class="md-card-content-posts-content">
-                            {{jobDetails.jobDetails}}
+                            {{userDetails.userDetails}}
                         </p>
                         <p class="md-card-content-posts-label">
                             No. of Labors Required
                         </p>
                         <p class="md-card-content-posts-content">
-                            {{jobDetails.requiredLabourers}}
+                            {{userDetails.requiredLabourers}}
                         </p>
                     </md-card-content>
                 </md-card>
@@ -68,9 +68,9 @@ import 'style-loader!./job-detail-dialog.scss';
     `
 })
 
-export class JobDetailDialog {
+export class UserDetailDialog {
     
-    public jobDetails;
+    public userDetails;
     
     constructor(public dialog: MdDialog) { }
 }

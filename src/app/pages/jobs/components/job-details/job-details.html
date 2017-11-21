@@ -1,20 +1,20 @@
 <div class="container-fluid messagePanel animated bounce">
-    <div *ngIf="post" class="panel-heading">
+    <div *ngIf="job" class="panel-heading">
         <div class="row">
             <div class="col-12 col-sm-12 user-feed-heading">
                 <md-card class="posts-card-heading">
                     <md-card-header class="posts-card-header posts-card-heading">
                         <md-card-title style="font-weight: 600; color: #1b1b1b">
-                            <h3>{{post.title}}</h3>
+                            <h3>{{job.title}}</h3>
                         </md-card-title>
-                        <md-card-subtitle style="font-weight: 500; margin-bottom: 0px; font-size: small">{{post.category ? post.category + ': ' + post.subCategory : post.category}}</md-card-subtitle>
+                        <md-card-subtitle style="font-weight: 500; margin-bottom: 0px; font-size: small">{{job.category ? job.category + ': ' + job.subCategory : job.category}}</md-card-subtitle>
                         <div class="posts-header-right">
                             <div style="margin-bottom: 0.5rem; color: #026eff; font-weight: 600">
-                                <h4>{{'$' + post.rate + '/' + (post.rateType == 'DAILY' ? 'day' : post.rateType == 'WEEKLY' ?
-                                    'week' : post.rateType == 'MONTHLY' ? 'month' : 'hr')}}</h4>
+                                <h4>{{'$' + job.rate + '/' + (job.rateType == 'DAILY' ? 'day' : job.rateType == 'WEEKLY' ?
+                                    'week' : job.rateType == 'MONTHLY' ? 'month' : 'hr')}}</h4>
                             </div>
                             <div style="color: #1c9f7f; font-weight: 500; font-size: small">
-                                {{post.jobStatus == 'IN_PROGRESS' ? 'IN PROGRESS' : post.jobStatus}}
+                                {{job.jobStatus == 'IN_PROGRESS' ? 'IN PROGRESS' : job.jobStatus}}
                             </div>
                         </div>
                     </md-card-header>
@@ -25,32 +25,32 @@
             </div>
         </div>
     </div>
-    <div *ngIf="post" class="posts-section">
+    <div *ngIf="job" class="posts-section">
         <md-card class="posts-card">
             <md-card-content>
                 <p class="md-card-content-posts-label">
                     Job Location
                 </p>
                 <p class="md-card-content-posts-content">
-                    {{post.employerAddress ? showAddress(post.employerAddress.addressLine1, post.employerAddress.city, post.employerAddress.zipCode, post.employerAddress.state, post.employerAddress.country) : ''}}
+                    {{job.employerAddress ? showAddress(job.employerAddress.addressLine1, job.employerAddress.city, job.employerAddress.zipCode, job.employerAddress.state, job.employerAddress.country) : ''}}
                 </p>
                 <p class="md-card-content-posts-label">
                     Job Date
                 </p>
                 <p class="md-card-content-posts-content">
-                    {{post.startDate | date : 'dd/MM/yyyy'}} - {{post.endDate | date : 'dd/MM/yyyy'}}
+                    {{job.startDate | date : 'dd/MM/yyyy'}} - {{job.endDate | date : 'dd/MM/yyyy'}}
                 </p>
                 <p class="md-card-content-posts-label">
                     Job Details
                 </p>
                 <p class="md-card-content-posts-content">
-                    {{post.jobDetails}}
+                    {{job.jobDetails}}
                 </p>
                 <p class="md-card-content-posts-label">
                     No. of Labors Required
                 </p>
                 <p class="md-card-content-posts-content">
-                    {{post.requiredLabourers}}
+                    {{job.requiredLabourers}}
                 </p>
             </md-card-content>
         </md-card>

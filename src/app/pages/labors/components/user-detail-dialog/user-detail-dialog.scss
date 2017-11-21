@@ -1,4 +1,3 @@
-@import "../../../../theme/sass/conf/conf";
 .panel-default {
     .panel-heading {
         margin-bottom: 10px;
@@ -17,15 +16,9 @@
 }
 .posts-card-heading {
     width: 100%;
-    .mat-card-header-text {
-        margin: 0px 0px;
-    }
 }
 .posts-section {
     margin-top: 10px;
-}
-.posts-card {
-    margin-bottom: 10px;
 }
 .posts-card-header {
     position: relative;

@@ -14,21 +14,6 @@ export class RequestService {
 
     }
 
-    getAllRequests(payload) {
-        let url;
-        let skip = payload.hasOwnProperty('skip') ? payload.skip : ((payload.currentPage - 1) * payload.limit);
-
-        url = environment.APP.API_URL + environment.APP.GET_ALL_JOBS + '?limit=' + payload.limit + '&skip=' + skip;
-
-        if (payload.request && payload.request != null) {
-            url += '&searchUser=' + payload.request;
-        }
-
-        this.authRequired = true;
-        this.utcOffset = false;
-        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
-    }
-
     getAllCategories(payload) {
         let url;
         this.authRequired = false;
@@ -37,21 +22,21 @@ export class RequestService {
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
 
-    getAllJobs(payload) {
+    getAllRequests(payload) {
         let url;
         // let skip = payload.hasOwnProperty('skip') ? payload.skip : ((payload.currentPage - 1) * payload.limit);
         this.authRequired = true;
         this.utcOffset = false;
         // url = environment.APP.API_URL + environment.APP.GET_ALL_POSTS + '?type=' + payload.type + '&limit=' + payload.limit + '&skip=' + skip;;
-        url = environment.APP.API_URL + environment.APP.GET_ALL_POSTS + '?type=' + payload.type;
+        url = environment.APP.API_URL + environment.APP.GET_ALL_REQUESTS + '?type=' + payload.type;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
 
-    getJob(payload) {
+    getRequest(payload) {
         let url;
         this.authRequired = true;
         this.utcOffset = false;
-        url = environment.APP.API_URL + environment.APP.GET_POST + '?jobId=' + payload.jobId;
+        url = environment.APP.API_URL + environment.APP.GET_POST + '?jobId=' + payload.requestId;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
 

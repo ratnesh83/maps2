@@ -9,6 +9,7 @@ import { DataService } from '../../../../services/data-service/data.service';
 import * as labor from '../../state/labor.actions';
 import * as app from '../../../../state/app.actions';
 import { BaThemeSpinner } from '../../../../theme/services';
+import { UserDetailDialog } from '../user-detail-dialog/user-detail-dialog.component';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { NguiMapComponent } from '@ngui/map';
 
@@ -57,7 +58,8 @@ export class AllLabors implements OnInit {
         private modalService: NgbModal,
         private router: Router,
         private toastrService: ToastrService,
-        private dataService: DataService
+        private dataService: DataService,
+        private dialog: MdDialog
     ) {
         this.addressType = 'COUNTRY';
         this.bounds = new google.maps.LatLngBounds();
@@ -136,10 +138,15 @@ export class AllLabors implements OnInit {
         }
 
         if (navigator.geolocation) {
-            let self = this;
             navigator.geolocation.getCurrentPosition((response) => {
-                self.showPosition(response, self);
+                this.showPosition(response);
+            }, (error) => {
+                this.toastrService.clear();
+                this.toastrService.error(error.message || 'Error in fetching your current location', 'Error');
             });
+        } else {
+            this.toastrService.clear();
+            this.toastrService.warning('Geolocation is not supported by this browser', 'Error');
         }
     };
 
@@ -150,14 +157,33 @@ export class AllLabors implements OnInit {
         });
     }
 
-    showPosition(position, self) {
+    geocoder(geocoder, latlng): Promise<any> {
+        return new Promise<any>((resolve, reject) => {
+            try {
+                geocoder.geocode({ 'location': latlng }, (result: any) => {
+                    if (!result) {
+                        reject();
+                    } else if (result.error) {
+                        reject(result.error);
+                    } else {
+                        resolve(result);
+                    }
+                });
+            } catch (e) {
+                reject(e);
+            }
+        });
+    }
+
+    showPosition(position) {
         if (position && position.coords) {
             let latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             let geocoder = new google.maps.Geocoder();
-            geocoder.geocode({ 'location': latlng }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
+            this.geocoder(geocoder, latlng)
+                .then((result) => {
+                    let results = result;
                     if (results[0]) {
-                        self.searchLocation = results[0].formatted_address;
+                        this.searchLocation = results[0].formatted_address;
                         let addressComponents = results[0].address_components;
                         let latitude = results[0].geometry.location.lat();
                         let longitude = results[0].geometry.location.lng();
@@ -186,24 +212,24 @@ export class AllLabors implements OnInit {
                                 }
                             }
                         }
-                        self.latitude = latitude;
-                        self.longitude = longitude;
-                        self.city = city;
-                        self.state = state;
-                        self.country = country;
-                        self.zipCode = postal;
+                        this.latitude = latitude;
+                        this.longitude = longitude;
+                        this.city = city;
+                        this.state = state;
+                        this.country = country;
+                        this.zipCode = postal;
                         if (postal) {
-                            self.addressType = 'ZIPCODE';
-                            self.zoom = 13;
+                            this.addressType = 'ZIPCODE';
+                            this.zoom = 13;
                         } else if (city) {
-                            self.addressType = 'CITY';
-                            self.zoom = 12;
+                            this.addressType = 'CITY';
+                            this.zoom = 12;
                         } else if (state) {
-                            self.addressType = 'STATE';
-                            self.zoom = 11;
+                            this.addressType = 'STATE';
+                            this.zoom = 11;
                         } else if (country) {
-                            self.addressType = 'COUNTRY';
-                            self.zoom = 6;
+                            this.addressType = 'COUNTRY';
+                            this.zoom = 6;
                         }
                         let address = {
                             city: city,
@@ -231,15 +257,17 @@ export class AllLabors implements OnInit {
                             latitude: latitude,
                             longitude: longitude,
                             sortBy: 'DISTANCE',
-                            categoryId: self.categoryId,
-                            addressType: self.addressType,
+                            categoryId: this.categoryId,
+                            addressType: this.addressType,
                             address: address
                         };
-                        self.getAllLaborsCallback(data, self);
-                        self.changeMapCallback(latitude, longitude, self);
+                        this.getAllLabors(data);
+                        this.changeMap(latitude, longitude);
                     }
-                }
-            });
+                })
+                .catch((error: any) => {
+                    // console.error(error);
+                });
         }
     }
 
@@ -249,35 +277,17 @@ export class AllLabors implements OnInit {
         }
     }
 
-    getAllLaborsCallback(data, self) {
-        self.store.dispatch({
-            type: labor.actionTypes.APP_GETALL_LABOR, payload: {
-                data: data
-            }
-        });
-    };
-
     getAllLabors(data) {
         this.store.dispatch({
             type: labor.actionTypes.APP_GETALL_LABOR, payload: {
                 data: data
             }
         });
-    };
-
-    showLaborDetail(labor) {
-        // let dialogRef = this.dialog.open(LaborDetailDialog);
-        // dialogRef.componentInstance.laborDetails = labor;
     }
 
-    changeMapCallback(lat, lng, self) {
-        self.bounds = new google.maps.LatLngBounds();
-        self.bounds.extend(new google.maps.LatLng(lat, lng));
-        if (self.map) {
-            self.map.fitBounds(this.bounds);
-            self.map.setZoom(self.zoom);
-        }
-        self.center = lat + ', ' + lng;
+    showLaborDetail(labor) {
+        let dialogRef = this.dialog.open(UserDetailDialog);
+        dialogRef.componentInstance.userDetails = labor;
     }
 
     changeMap(lat, lng) {

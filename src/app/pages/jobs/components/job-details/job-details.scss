@@ -218,20 +218,20 @@
         color: #333333;
     }
 }
-.post-container {
+.job-container {
     position: relative;
 }
-.add-post-div {
+.add-job-div {
     display: flex;
     position: absolute;
     z-index: 2;
     top: 0px;
     right: 15px;
     height: 75px;
-    .add-post-span {
+    .add-job-span {
         margin: auto 0px;
         margin-right: 20px;
-        .add-post-btn {
+        .add-job-btn {
             background-color: #026eff;
             .fa {
                 font-size: medium;

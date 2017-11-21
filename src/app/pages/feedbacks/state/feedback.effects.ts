@@ -20,6 +20,7 @@ export class FeedbackEffects {
             this.FeedbackService
                 .getAllFeedbacks(action.payload)
                 .subscribe((result) => {
+                    this._spinner.hide();
                     if (result.message == 'Success' || result.statusCode == 200) {
                         this.store.dispatch({
                             type: feedback.actionTypes.GET_FEEDBACKS_SUCCESS,

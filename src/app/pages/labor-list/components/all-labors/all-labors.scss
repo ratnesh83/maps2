@@ -4,73 +4,87 @@
         margin-bottom: 10px;
     }
 }
+.labors-card-header {
+    position: relative;
+}
+.labors-header-rating {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    text-align: right;
+}
 .filter-div {
     font-weight: 500;
     color: #b1b1b1;
 }
-.user-posts-heading {
+.user-labors-heading {
     display: inline-flex;
     h2 {
         margin: auto 0px;
         width: auto;
     }
 }
-.posts-card-heading {
+.labors-card-heading {
     width: 100%;
-    .mat-card-header-text {
-        margin: 0px 0px;
-    }
 }
-.posts-section {
+.labors-section {
     margin-top: 10px;
 }
-.posts-card {
+.labors-card {
     margin-bottom: 10px;
-}
-.posts-card-header {
-    position: relative;
-}
-.posts-header-right {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    text-align: right;
-}
-.md-card-content-posts-content {
-    text-align: left;
-    font-weight: 500;
-    color: #1b1b1b;
-    margin-bottom: 1.5rem;
-}
-.md-card-content-posts-label {
-    text-align: left;
-    font-weight: 500;
-    color: rgba(0, 0, 0, 0.54);
-}
-.posts-stars .star-icon {
-    font-size: unset !important;
-}
-.posts-input-box {
-    input {
-        font-family: Roboto, "Helvetica Neue", sans-serif;
-        font-weight: 400 !important;
+    .with-margin {
+        margin-top: 8px;
+        margin-left: 48px;
     }
 }
-.posts-header-contact {
-    position: absolute;
-    top: 0px;
-    right: 0px;
+.labors-card-inner {
+    border-left: 8px solid #f4ba48;
+}
+.color-second {
+    border-left: 8px solid #d2292d;
+}
+.color-third {
+    border-left: 8px solid #61cef5;
+}
+.labors-card-header {
+    position: relative;
+    .mat-card-header-text {
+        width: -webkit-fill-available;
+    }
+}
+.labors-header-view {
+    width: -webkit-fill-available;
     text-align: right;
     .fa {
         cursor: pointer;
         padding-left: 10px; 
         color: #68d426;
-        font-size: large;
+        font-size: x-large;
     }
     div {
-        font-size: smaller;
+        font-size: small;
         color: #a3a3a3;
         font-weight: 500;
+    }
+}
+.md-card-content-labors-p-category {
+    margin-bottom: 8px;
+    font-weight: 600;
+    text-align: left;
+    color: #1b1b1b;
+}
+.md-card-content-labors-p-address {
+    text-align: left;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.54);
+}
+.labors-stars .star-icon {
+    font-size: unset !important;
+}
+.labors-input-box {
+    input {
+        font-family: Roboto, "Helvetica Neue", sans-serif;
+        font-weight: 400 !important;
     }
 }
 .category-select {
@@ -92,7 +106,7 @@
         display: none;
     }
 }
-.posts-input-box {
+.labors-input-box {
     margin-bottom: 15px;
     label {
         color: #7d7d7d;
@@ -153,8 +167,8 @@
             font-size: smaller;
         }
     }
-    .posts-header-contact { 
-        width: -webkit-fill-available;
+    .labors-header-contact { 
+        width: auto;
         margin-top: 5px;
         text-align: right;
         .fa {
@@ -169,7 +183,7 @@
             font-weight: 500;
         }
     }
-    .posts-header-contact-rate {
+    .labors-header-contact-rate {
         width: -webkit-fill-available;
         font-weight: 600;
         font-size: small;
@@ -179,7 +193,7 @@
         }
     }
 }
-.my-posts-tabs-group {
+.my-labors-tabs-group {
     .mat-tab-label-container {
         height: 75px;
         .mat-tab-list {
@@ -218,24 +232,27 @@
         color: #333333;
     }
 }
-.post-container {
+.labor-container {
     position: relative;
 }
-.add-post-div {
+.add-labor-div {
     display: flex;
     position: absolute;
     z-index: 2;
     top: 0px;
     right: 15px;
     height: 75px;
-    .add-post-span {
+    .add-labor-span {
         margin: auto 0px;
         margin-right: 20px;
-        .add-post-btn {
+        .add-labor-btn {
             background-color: #026eff;
             .fa {
                 font-size: medium;
             }
         }
     }
+}
+.mat-paginator-pg {
+    background: none;
 }

@@ -10,16 +10,21 @@ import {
     ReactiveFormsModule
 } from '@angular/forms';
 import {
+    MdTabsModule,
+    MdInputModule,
     MdButtonModule,
     MdAutocompleteModule,
     MdCardModule,
     MdSelectModule,
-    MdDialogModule
+    MdDialogModule,
+    MdTooltipModule,
+    MdDatepickerModule,
+    MdNativeDateModule,
+    MdPaginatorModule
 } from '@angular/material';
-import { routing } from './labors.routing';
-import { Labors } from './labors.component';
-import { AllLabors } from './components/all-labors/all-labors.component';
-import { UserDetailDialog } from './components/user-detail-dialog/user-detail-dialog.component';
+import { routing } from './labor-list.routing';
+import { LaborList } from './labor-list.component';
+import { AllLaborList } from './components/all-labors/all-labors.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { GooglePlaceModule } from 'ng2-google-place-autocomplete';
 import { NguiMapModule } from '@ngui/map';
@@ -35,11 +40,17 @@ import { NguiMapModule } from '@ngui/map';
         NgbModalModule,
         NgPipesModule,
         MultiselectDropdownModule,
+        MdTabsModule,
         MdButtonModule,
+        MdInputModule,
         MdAutocompleteModule,
         MdCardModule,
         MdSelectModule,
         MdDialogModule,
+        MdTooltipModule,
+        MdDatepickerModule,
+        MdNativeDateModule,
+        MdPaginatorModule,
         SelectModule,
         GooglePlaceModule,
         NguiMapModule.forRoot({ 
@@ -47,13 +58,11 @@ import { NguiMapModule } from '@ngui/map';
         }),
     ],
     declarations: [
-        Labors,
-        AllLabors,
-        UserDetailDialog
+        LaborList,
+        AllLaborList
     ],
     entryComponents: [
-        UserDetailDialog
     ],
 })
 
-export class LaborsModule { }
+export class LaborListModule { }

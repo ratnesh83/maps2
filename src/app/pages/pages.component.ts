@@ -61,25 +61,19 @@ export class Pages {
     navigationInterceptor(event: RouterEvent): void {
         if (event instanceof NavigationStart) {
             this.navigationLoading = true;
-            this._spinner.show();
+            //this._spinner.show();
         }
         if (event instanceof NavigationEnd) {
             this.navigationLoading = false;
-            BaThemePreloader.load().then((values) => {
-                this._spinner.hide();
-            });
+            //this._spinner.hide();
         }
         if (event instanceof NavigationCancel) {
             this.navigationLoading = false;
-            BaThemePreloader.load().then((values) => {
-                this._spinner.hide();
-            });
+            //this._spinner.hide();
         }
         if (event instanceof NavigationError) {
             this.navigationLoading = false;
-            BaThemePreloader.load().then((values) => {
-                this._spinner.hide();
-            });
+            //this._spinner.hide();
         }
     }
 
