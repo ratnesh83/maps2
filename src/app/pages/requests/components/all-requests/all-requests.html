@@ -28,7 +28,7 @@
                                     ? 'month' : 'hr')}}
                                 </p>
                                 <p class="md-card-content-requests-p-address">
-                                    {{ request?.employerId?.locationDetails ? request?.employerId?.locationDetails.addressLine1 : '' }}
+                                    {{ request?.employerId?.locationDetails ? showAddress(request?.employerId?.locationDetails?.addressLine1, request?.employerId?.locationDetails?.city, request?.employerId?.locationDetails?.zipCode, request?.employerId?.locationDetails?.state, request?.employerId?.locationDetails?.country) : '' }}
                                 </p>
                             </md-card-content>
                         </md-card>
@@ -68,7 +68,7 @@
                                     ? 'month' : 'hr')}}
                                 </p>
                                 <p class="md-card-content-requests-p-address">
-                                    {{ request?.employerId?.locationDetails ? request?.employerId?.locationDetails.addressLine1 : '' }}
+                                    {{ request?.employerId?.locationDetails ? showAddress(request?.employerId?.locationDetails?.addressLine1, request?.employerId?.locationDetails?.city, request?.employerId?.locationDetails?.zipCode, request?.employerId?.locationDetails?.state, request?.employerId?.locationDetails?.country) : '' }}
                                 </p>
                             </md-card-content>
                         </md-card>
@@ -107,7 +107,7 @@
                                     ? 'month' : 'hr')}}
                                 </p>
                                 <p class="md-card-content-requests-p-address">
-                                    {{ request?.employerId?.locationDetails ? request?.employerId?.locationDetails.addressLine1 : '' }}
+                                    {{ request?.employerId?.locationDetails ? showAddress(request?.employerId?.locationDetails?.addressLine1, request?.employerId?.locationDetails?.city, request?.employerId?.locationDetails?.zipCode, request?.employerId?.locationDetails?.state, request?.employerId?.locationDetails?.country) : '' }}
                                 </p>
                             </md-card-content>
                         </md-card>

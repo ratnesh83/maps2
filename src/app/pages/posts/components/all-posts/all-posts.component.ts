@@ -84,11 +84,30 @@ export class AllPosts implements OnInit {
             type: post.actionTypes.APP_GET_JOBS, payload: {
                 type: 'ACTIVE',
                 currentPage: this.page,
-                    limit: this.pageSize
+                limit: this.pageSize
             }
         });
     }
-    
+
+    showAddress(address, city, zipCode, state, country): String {
+        let returnAddress;
+        if (address) {
+            returnAddress = address;
+            if (city && address.toString().toLowerCase().indexOf(city.toString().toLowerCase()) == -1) {
+                returnAddress = returnAddress + ', ' + city;
+            }
+            if (zipCode && address.indexOf(zipCode) != -1) {
+                returnAddress = returnAddress + ', ' + zipCode;
+            }
+            if (state && state.toString().toLowerCase() != city.toString().toLowerCase() && address.toString().toLowerCase().indexOf(state.toString().toLowerCase()) == -1) {
+                returnAddress = returnAddress + ', ' + state;
+            }
+            if (country && address.toString().toLowerCase().indexOf(country.toString().toLowerCase()) == -1) {
+                returnAddress = returnAddress + ', ' + country;
+            }
+        }
+        return returnAddress;
+    }
 
     showPostDetail(id) {
         this.dataService.setData('jobId', id);
@@ -143,7 +162,7 @@ export class AllPosts implements OnInit {
                     limit: page.pageSize,
                 }
             });
-        } else if (this.tabIndex== 2) {
+        } else if (this.tabIndex == 2) {
             this.store.dispatch({
                 type: post.actionTypes.APP_GET_JOBS, payload: {
                     type: 'COMPLETED',

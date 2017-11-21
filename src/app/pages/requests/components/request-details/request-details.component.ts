@@ -80,7 +80,27 @@ export class RequestDetails implements OnInit {
                 requestId: this.dataService.getData('requestId')
             }
         }); */
-    };
+    }
+
+    showAddress(address, city, zipCode, state, country): String {
+        let returnAddress;
+        if (address) {
+            returnAddress = address;
+            if (city && address.toString().toLowerCase().indexOf(city.toString().toLowerCase()) == -1) {
+                returnAddress = returnAddress + ', ' + city;
+            }
+            if (zipCode && address.indexOf(zipCode) != -1) {
+                returnAddress = returnAddress + ', ' + zipCode;
+            }
+            if (state && state.toString().toLowerCase() != city.toString().toLowerCase() && address.toString().toLowerCase().indexOf(state.toString().toLowerCase()) == -1) {
+                returnAddress = returnAddress + ', ' + state;
+            }
+            if (country && address.toString().toLowerCase().indexOf(country.toString().toLowerCase()) == -1) {
+                returnAddress = returnAddress + ', ' + country;
+            }
+        }
+        return returnAddress;
+    }
 
     showPhoneInfo(id) {
         if (this.labours && this.labours[id]) {

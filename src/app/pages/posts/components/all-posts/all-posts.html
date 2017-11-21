@@ -35,7 +35,7 @@
                                     ? 'month' : 'hr')}}
                                 </p>
                                 <p class="md-card-content-posts-p-address">
-                                    {{ post.employerAddress ? post.employerAddress.addressLine1 : '' }}
+                                    {{ post.employerAddress ? showAddress(post.employerAddress.addressLine1, post.employerAddress.city, post.employerAddress.zipCode, post.employerAddress.state, post.employerAddress.country) : '' }}
                                 </p>
                             </md-card-content>
                         </md-card>
@@ -75,7 +75,7 @@
                                     ? 'month' : 'hr')}}
                                 </p>
                                 <p class="md-card-content-posts-p-address">
-                                    {{ post.employerAddress ? post.employerAddress.addressLine1 : '' }}
+                                    {{ post.employerAddress ? showAddress(post.employerAddress.addressLine1, post.employerAddress.city, post.employerAddress.zipCode, post.employerAddress.state, post.employerAddress.country) : '' }}
                                 </p>
                             </md-card-content>
                         </md-card>
@@ -114,7 +114,7 @@
                                     ? 'month' : 'hr')}}
                                 </p>
                                 <p class="md-card-content-posts-p-address">
-                                    {{ post.employerAddress ? post.employerAddress.addressLine1 : '' }}
+                                    {{ post.employerAddress ? showAddress(post.employerAddress.addressLine1, post.employerAddress.city, post.employerAddress.zipCode, post.employerAddress.state, post.employerAddress.country) : '' }}
                                 </p>
                             </md-card-content>
                         </md-card>

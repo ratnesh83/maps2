@@ -32,7 +32,7 @@
                     Job Location
                 </p>
                 <p class="md-card-content-requests-content">
-                    {{request.employerAddress ? request.employerAddress.addressLine1 : ''}}
+                    {{request.employerAddress ? showAddress(request.employerAddress.addressLine1, request.employerAddress.city, request.employerAddress.zipCode, request.employerAddress.state, request.employerAddress.country) : ''}}
                 </p>
                 <p class="md-card-content-requests-label">
                     Job Date
