@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import * as auth from '../../../auth/state/auth.actions';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import { EmailValidator, EqualPasswordsValidator, NameValidator } from '../../../theme/validators';
+import { EmailValidator, EqualPasswordsValidator, NameValidator, CountryCodeValidator } from '../../../theme/validators';
 import { FacebookService, LoginResponse, InitParams } from 'ngx-facebook';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -81,7 +81,7 @@ export class Register {
             'name': ['', Validators.compose([Validators.required])],
             'companyName': ['', Validators.compose([Validators.required])],
             'email': ['', Validators.compose([Validators.required, EmailValidator.email])],
-            'countryCode': ['', Validators.compose([Validators.required])],
+            'countryCode': ['', Validators.compose([Validators.required, CountryCodeValidator.countryCode])],
             'phone': ['', Validators.compose([Validators.required])],
             'signUpType': ['USER'],
             'agreement': [false],
@@ -279,6 +279,14 @@ export class Register {
         if (!this.countryCode.value) {
             this.toastrService.clear();
             this.toastrService.error('Country code is required', 'Error');
+            if (this._countryCode) {
+                this._countryCode.nativeElement.focus();
+            }
+            return;
+        }
+        if (this.countryCode.errors && this.countryCode.errors.invalidCountryCode) {
+            this.toastrService.clear();
+            this.toastrService.error('Please enter a valid country code', 'Error');
             if (this._countryCode) {
                 this._countryCode.nativeElement.focus();
             }
