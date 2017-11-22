@@ -231,6 +231,43 @@ export class RequestEffects {
             this.router.navigate(['/pages/requests/allrequests']);
         });
 
+    @Effect({ dispatch: false })
+    postFeedback$ = this.actions$
+        .ofType('APP_POST_FEEDBACK')
+        .do((action) => {
+            this._spinner.show();
+            this.RequestService.postFeedback(action.payload).subscribe((result) => {
+                this._spinner.hide();
+                if (result.message == 'Action complete.' || result.statusCode == 200 || result.statusCode == 201) {
+                    let payload = result.data;
+                    this.store.dispatch(new request.AppPostFeedbackSuccess(payload));
+                    this.toastrService.clear();
+                    this.toastrService.success(result.message || 'Feedback posted successfully', 'Success');
+                }
+            }
+                , (error) => {
+                    this._spinner.hide();
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        } else {
+                            this.toastrService.clear();
+                            this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                        }
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    postFeedbackSuccess: Observable<Action> = this.actions$
+        .ofType('APP_POST_FEEDBACK_SUCCESS')
+        .do((action) => {
+
+        });
+
     constructor(
         private actions$: Actions,
         private store: Store<any>,

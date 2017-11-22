@@ -26,7 +26,9 @@ import { routing } from './requests.routing';
 import { Requests } from './requests.component';
 import { AllRequests } from './components/all-requests/all-requests.component';
 import { RequestDetails } from './components/request-details/request-details.component';
+import { FeedbackDialog } from './components/feedback-dialog/feedback-dialog.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { RatingModule } from 'ngx-rating';
 import { GooglePlaceModule } from 'ng2-google-place-autocomplete';
 import { NguiMapModule } from '@ngui/map';
 
@@ -54,6 +56,7 @@ import { NguiMapModule } from '@ngui/map';
         MdPaginatorModule,
         SelectModule,
         GooglePlaceModule,
+        RatingModule,
         NguiMapModule.forRoot({ 
             apiUrl: 'https://maps.google.com/maps/api/js?key=AIzaSyDvIVQbdP34EXfGi0pDfHWetfGqIchpbSQ' 
         }),
@@ -61,9 +64,11 @@ import { NguiMapModule } from '@ngui/map';
     declarations: [
         Requests,
         AllRequests,
-        RequestDetails
+        RequestDetails,
+        FeedbackDialog
     ],
     entryComponents: [
+        FeedbackDialog
     ],
 })
 

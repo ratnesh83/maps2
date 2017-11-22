@@ -70,4 +70,22 @@ export class RequestService {
         return this.apiService.putApi(url, payload, this.authRequired, this.utcOffset);
     }
 
+    postFeedback(payload) {
+        this.authRequired = true;
+        this.utcOffset = false;
+        let data = {
+            userId: payload.userId,
+            to: payload.to,
+            rating: payload.rating,
+            feedback: payload.feedback
+        };
+        let formData = new FormData();
+        formData.append('userId', payload.userId);
+        formData.append('to', payload.to);
+        formData.append('rating', payload.rating);
+        formData.append('feedback', payload.feedback);
+        let url = environment.APP.API_URL + environment.APP.POST_FEEDBACK + payload.jobId;
+        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+    }
+
 }

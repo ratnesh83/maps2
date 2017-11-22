@@ -29,6 +29,7 @@ export const environment = {
         GET_ALL_FEEDBACKS: '/api/v1/user/myRatings',
         ACCEPT_JOB_BY_LABOR: '/api/v2/jobs/acceptRejectJobWeb',
         GET_TOP_LIST: '/api/v2/user/getAppLatestData',
+        POST_FEEDBACK: '/api/v1/jobs/ratings/',
 
         GET_ALL_BOOKING: '/admin/getAllAvailabeBooking',
         GET_ALL_OUTGOING_BOOKING: '/admin/getOngoingBooking',

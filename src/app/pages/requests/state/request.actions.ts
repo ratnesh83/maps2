@@ -13,7 +13,9 @@ export const actionTypes = {
     APP_POST_REQUEST: 'APP_POST_REQUEST',
     APP_POST_REQUEST_SUCCESS: 'APP_POST_REQUEST_SUCCESS',
     APP_CANCEL_JOB: 'APP_CANCEL_JOB',
-    APP_CANCEL_JOB_SUCCESS: 'APP_CANCEL_JOB_SUCCESS'
+    APP_CANCEL_JOB_SUCCESS: 'APP_CANCEL_JOB_SUCCESS',
+    APP_POST_FEEDBACK: 'APP_POST_FEEDBACK',
+    APP_POST_FEEDBACK_SUCCESS: 'APP_POST_FEEDBACK_SUCCESS'
 
 };
 
@@ -76,6 +78,16 @@ export class AppCancelJob implements Action {
 
 export class AppCancelJobSuccess implements Action {
     type = actionTypes.APP_CANCEL_JOB_SUCCESS;
+    constructor(public payload: credentials) { }
+}
+
+export class AppPostFeedback implements Action {
+    type = actionTypes.APP_POST_FEEDBACK;
+    constructor(public payload: credentials) { }
+}
+
+export class AppPostFeedbackSuccess implements Action {
+    type = actionTypes.APP_POST_FEEDBACK_SUCCESS;
     constructor(public payload: credentials) { }
 }
 
