@@ -55,40 +55,9 @@
                 
             </md-card-content>
         </md-card>
-        <!-- <md-card-actions style="margin-left: 0px; margin-right: 0px; text-align: center">
-            <button md-raised-button color="primary" style="background-color: #026eff">ACCEPT</button>
-            <button md-raised-button color="primary" style="background-color: #026eff">REJECT</button>
-        </md-card-actions> -->
-
-    </div>
-    <div *ngIf="labours && labours.length > 0" class="requests-section">
-        <md-card class="requests-card">
-            <md-card-subtitle style="font-weight: 500">Labor List</md-card-subtitle>
-            <div style="margin-top: 10px" *ngFor="let labour of labours; let i = index">
-                <md-card-header class="requests-card-header">
-                    <div *ngIf="labour.labourId" md-card-avatar class="requests-header-image">
-                        <img *ngIf="labour.labourId.profilePicture" mat-card-avatar [src]="labour.labourId.profilePicture.thumb ? labour.labourId.profilePicture.thumb : 'assets/img/default-profile.jpg'">
-                    </div>
-                    <md-card-title *ngIf="labour.labourId" style="font-weight: 600; color: #1b1b1b">{{labour.labourId.fullName ? labour.labourId.fullName : labour.labourId.firstName + ' ' + labour.labourId.lastName}}</md-card-title>
-                    <md-card-subtitle style="font-weight: 500; color: #026eff; cursor: pointer; font-size: small" (click)="viewProfile('id')">View Profile</md-card-subtitle>
-                    <div *ngIf="labour.labourId" class="requests-header-contact">
-                        <div>
-                            <i (click)="showPhoneInfo(i)" *ngIf="!labour.labourId.isPhoneNumberHidden && !labour.showPhone" class="fa fa-phone-square"></i>
-                            <i (click)="showEmailInfo(i)" *ngIf="!labour.showEmail" class="fa fa-envelope"></i>
-                        </div>
-                        <div *ngIf="labour.showPhone">{{labour.labourId.countryCode + labour.labourId.phoneNumber}}</div>
-                        <div *ngIf="labour.showEmail">{{labour.labourId.email}}</div>
-                    </div>
-                </md-card-header>
-                <!-- <md-card-content>
-                    <md-card-actions style="margin-left: 0px; margin-right: 0px">
-                        <button md-raised-button>HIRE</button>
-                        <button md-raised-button>REJECT</button>
-                    </md-card-actions>
-                </md-card-content> -->
-            </div>
-
-        </md-card>
+        <md-card-actions *ngIf="request.jobStatus == 'IN_PROGRESS'" style="margin-left: 0px; margin-right: 0px; text-align: center">
+            <button class="col-12 col-sm-6 btn-submit" md-raised-button (click)="cancelJob()" color="primary" style="background-color: #026eff">CANCEL</button>
+        </md-card-actions>
 
     </div>
 

@@ -6,6 +6,8 @@ import { Router } from '@angular/router';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import * as job from '../../state/job.actions';
 import * as app from '../../../../state/app.actions';
+import * as auth from '../../../../auth/state/auth.actions';
+import { JwtHelper } from 'angular2-jwt';
 import { DataService } from '../../../../services/data-service/data.service';
 import { BaThemeSpinner } from '../../../../theme/services';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
@@ -26,6 +28,12 @@ export class JobDetails implements OnInit {
     public showPhone: boolean = false;
     public showEmail: boolean = false;
     public postStore;
+    public storeData;
+    public jwtHelper: JwtHelper = new JwtHelper();
+    public user;
+    public address;
+    public latitude;
+    public longitude;
 
     constructor(
         private store: Store<any>,
@@ -35,6 +43,18 @@ export class JobDetails implements OnInit {
         private cdRef: ChangeDetectorRef,
         private dataService: DataService
     ) {
+
+        this.storeData = this.store
+            .select('auth')
+            .subscribe((res: any) => {
+                if (res && res.userDetails) {
+                    this.address = res.userDetails.locationDetails;
+                    if (this.address && this.address.location) {
+                        this.latitude = this.address.location.coordinates[1];
+                        this.longitude = this.address.location.coordinates[0];
+                    }
+                }
+            });
 
         this.postStore = this.store
             .select('job')
@@ -56,6 +76,16 @@ export class JobDetails implements OnInit {
 
     ngOnInit() {
         this.getPostDetails();
+        let token = localStorage.getItem('tokenSession');
+        if (token && !this.jwtHelper.isTokenExpired(token)) {
+            this.user = this.jwtHelper.decodeToken(token);
+            this.store.dispatch({
+                type: auth.actionTypes.AUTH_GET_USER_DETAILS_BY_ID,
+                payload: {
+                    userId: this.user._id
+                }
+            });
+        }
     }
 
     viewProfile(id) {
@@ -67,17 +97,15 @@ export class JobDetails implements OnInit {
         if (this.postStore) {
             // this.postStore.unsubscribe();
         }
+        if (this.storeData) {
+            // this.storeData.unsubscribe();
+        }
         this.dataService.removeData('jobId');
     }
 
     getPostDetails() {
         this.store.dispatch({
             type: job.actionTypes.APP_GET_JOB, payload: {
-                jobId: this.dataService.getData('jobId')
-            }
-        });
-        this.store.dispatch({
-            type: job.actionTypes.APP_GET_LABORS, payload: {
                 jobId: this.dataService.getData('jobId')
             }
         });
@@ -113,6 +141,20 @@ export class JobDetails implements OnInit {
         if (this.labours && this.labours[id]) {
             this.labours[id].showEmail = true;
         }
+    }
+
+    applyJob() {
+        let address = this.address;
+        address.latitude = this.latitude;
+        address.longitude = this.longitude;
+        delete address.location;
+        this.store.dispatch({
+            type: job.actionTypes.APP_ACCEPT_JOB, payload: {
+                jobId: this.dataService.getData('jobId'),
+                action: 'ACCEPTED_BY_LABOUR',
+                labourAddress: address
+            }
+        });
     }
 
 }

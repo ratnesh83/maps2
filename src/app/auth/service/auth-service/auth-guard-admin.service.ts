@@ -12,8 +12,7 @@ export class AuthGuardAdmin implements CanActivate {
     }
 
     checkAdmin(url): boolean {
-        if (this.authService.user.role === 'admin') {
-            //console.log('Sucessfully checked admin ..... ');
+        if (this.authService.user.role === 'EMPLOYER') {
             return true;
         }
 
