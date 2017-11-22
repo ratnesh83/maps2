@@ -8,7 +8,7 @@ import { ToastrService , ToastrConfig } from 'ngx-toastr';
 const types = ['success', 'error', 'info', 'warning'];
 import { EmailValidator} from '../../../../theme/validators';
 
-import * as createJob from '../../state/create-job.actions';
+//import * as createJob from '../../state/create-job.actions';
 import * as app from '../../../../state/app.actions';
 
 
@@ -44,7 +44,7 @@ export class AllPayments {
     options: ToastrConfig;
     title = '';
     message = '';
-  
+    public cards=[];
   
     constructor(private fb: FormBuilder,
                 private store: Store<any>,
@@ -66,12 +66,11 @@ export class AllPayments {
         this.store
             .select('payment')
             .subscribe((res: any) => {
-
-                this.payments = res.payments;
-                this.count = res.count;
-                this.pageIndex = (res.currentPage - 1) * res.limit;
+               console.log(res);
+               this.cards = res.cardDetails;
             });
-    }
+            this.store.dispatch({ type: payment.actionTypes.GET_CARDS});                        
+        }
 
     form = new FormGroup({
         'card_holder_name': new FormControl('',[Validators.required, EmailValidator.onlyAlpha]),

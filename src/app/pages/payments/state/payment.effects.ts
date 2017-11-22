@@ -13,6 +13,7 @@ import { cloneDeep, random } from 'lodash';
 const types = ['success', 'error', 'info', 'warning'];
 import * as payment from './payment.actions';
 import * as app from '../../../state/app.actions';
+import { setting } from '../../settings/state/setting.reducers';
 
 @Injectable()
 export class PaymentEffects {
@@ -33,6 +34,7 @@ export class PaymentEffects {
           console.log(action.payload);
         this.SettingsService.addCard(action.payload.data).subscribe((result) => {
             if (result.statusCode == 200) {
+              this.store.dispatch({ type: payment.actionTypes.GET_CARDS});                        
             }
           }
           , (error) => {
@@ -42,6 +44,25 @@ export class PaymentEffects {
           }
         );
       });
+
+      @Effect({dispatch: false})
+      getProfileInfo$ = this.actions$
+        .ofType('GET_CARDS')
+        .do((action) => {    
+          console.log("pp");
+          this.SettingsService.getCards(action.payload).subscribe((result) => {
+              if (result.statusCode == 200) {
+                let payload = result.data;
+                console.log(payload);
+                this.store.dispatch(new payment.GetCardsSuccessAction(payload));            
+              }
+            }
+            , (error) => {
+              if (error.statusCode === 401 || error.statusCode === 403) {
+              }
+            }
+          );
+        });
 
 }
 

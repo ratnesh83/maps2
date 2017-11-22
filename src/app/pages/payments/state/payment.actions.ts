@@ -3,9 +3,12 @@ import { Action } from '@ngrx/store';
 export const actionTypes = {
 
 ADD_CARD: 'ADD_CARD',
+GET_CARDS: 'GET_CARDS',
+GET_CARDS_SUCCESS: 'GET_CARDS_SUCCESS'
 
 };
 
+type credentials = {};
 
 
 export class AddCardAction implements Action {
@@ -13,7 +16,17 @@ export class AddCardAction implements Action {
     constructor(public payload: any) {
     }
  }
-
+ export class GetCardsAction implements Action {
+    type = actionTypes.GET_CARDS;
+    constructor(public payload: credentials) {
+    }
+ }
+ export class GetCardsSuccessAction implements Action {
+    type = actionTypes.GET_CARDS_SUCCESS;
+    constructor(public payload: any) { }
+  }
 
 export type Actions
-= AddCardAction;
+= AddCardAction
+| GetCardsAction
+| GetCardsSuccessAction;

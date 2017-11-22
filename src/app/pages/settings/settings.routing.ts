@@ -1,4 +1,6 @@
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuardAdmin } from '../auth/service/auth-service/auth-guard-admin.service';
+import { AuthGuardCustomer } from '../auth/service/auth-service/auth-guard-customer.service';
 import { AllSettings } from './components/all-settings/all-settings.component';
 import { Settings } from './settings.component';
 import { UserProfile } from './components/user-profile/user-profile.component';

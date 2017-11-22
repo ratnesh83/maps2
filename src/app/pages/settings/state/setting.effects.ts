@@ -10,6 +10,7 @@ import { JwtHelper } from 'angular2-jwt';
 import { cloneDeep, random } from 'lodash';
 import * as setting from './setting.actions';
 import * as app from '../../../state/app.actions';
+import * as auth from '../../../auth/state/auth.actions';
 import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from '../../../theme/services';
 
 const types = ['success', 'error', 'info', 'warning'];
@@ -552,7 +553,17 @@ export class SettingEffects {
           this.SettingsService.updateProfileInfo(action.payload).subscribe((result) => {
               if (result.statusCode == 200) {
                   console.log("success");
-                  this.router.navigate
+                  let token = localStorage.getItem('tokenSession');
+                  if (token && !this.jwtHelper.isTokenExpired(token)) {
+                      let user = this.jwtHelper.decodeToken(token);
+                      this.store.dispatch({
+                          type: auth.actionTypes.AUTH_GET_USER_DETAILS_BY_ID,
+                          payload: {
+                              userId: user._id
+                          }
+                      });
+                  }
+                  this.router.navigate(['/pages/settings']);
               }
             }
             , (error) => {

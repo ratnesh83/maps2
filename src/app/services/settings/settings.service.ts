@@ -154,6 +154,12 @@ export class SettingsService {
         this.utcOffset = false;        
         return this.apiService.postFileApi(url,payload,this.authRequired, this.utcOffset);
       }
+      getCards(payload){
+        let url = environment.APP.API_URL + environment.APP.GET_CARDS;
+        this.authRequired = true;
+        this.utcOffset = false;        
+        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+      }
 }
 
 

@@ -17,24 +17,13 @@
             <md-card-content>
                 <div class="container">
                     <div class="row">
-                        <div class="card-outer col-sm-12 col-md-6">
+                        <div class="card-outer col-sm-12 col-md-6" *ngFor="let item of cards">
                             <div class="added-card col-sm-12">
-                                hello
-                            </div>
-                        </div>
-                        <div class="card-outer col-sm-12 col-md-6">
-                            <div class="added-card col-sm-12">
-                                hello
-                            </div>
-                        </div>
-                        <div class="card-outer col-sm-12 col-md-6">
-                            <div class="added-card col-sm-12">
-                                hello
-                            </div>
-                        </div>
-                        <div class="card-outer col-sm-12 col-md-6">
-                            <div class="added-card col-sm-12">
-                                hello
+                           <span *ngIf="item.cardType == 'Visa'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/visa_credit-card-logos/new_visa.gif" border="0" /></span>
+                           <span *ngIf="item.cardType == 'American Express'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/american_express_credit-card-logos/american_express_logo_1.gif" border="0" /></span>
+                           <span *ngIf="item.cardType == 'MasterCard'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/mastercard_credit-card-logos/mastercard_logo_1.gif" border="0" /></span>
+                           <span *ngIf="item.cardType == 'Discover'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/discover_credit-card-logos/discover_network1.jpg" border="0" /></span>&nbsp;                           
+                             <span id="card-no">XXXX-XXXX-XXXX-{{item.last4Digits}}</span>
                             </div>
                         </div>
                     </div>

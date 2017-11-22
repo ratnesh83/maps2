@@ -92,7 +92,8 @@ export const environment = {
 
         GET_PROFILE_INFO: '/api/v2/web/user/detailsById',
         UPDATE_PROFILE_INFO: '/api/v1/user/editWebProfile',
-        ADD_CARD: '/api/v1/card/addCard'
+        ADD_CARD: '/api/v1/card/addCard',
+        GET_CARDS: '/api/v1/card/getCards'
 
     },
 
