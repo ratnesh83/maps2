@@ -2,9 +2,18 @@ import { Action } from '@ngrx/store';
 
 export const actionTypes = {
 
+ADD_CARD: 'ADD_CARD',
+
 };
 
-type credentials = {};
 
-/* export type Actions
-    = AppGetAllPaymentsDetail; */
+
+export class AddCardAction implements Action {
+    type = actionTypes.ADD_CARD;
+    constructor(public payload: any) {
+    }
+ }
+
+
+export type Actions
+= AddCardAction;

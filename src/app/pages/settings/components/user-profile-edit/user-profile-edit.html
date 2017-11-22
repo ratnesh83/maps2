@@ -12,7 +12,7 @@
                 <!-- employee profile start-->
                 <md-card-header class="main-card-header d-flex justify-content-center">
                     <div md-card-avatar class="main-header-image">
-                        <img md-card-avatar class="main-header-image" src='assets/img/default-profile.jpg'>
+                        <img md-card-avatar class="main-header-image" [src]='profile.profilePicture && profile.profilePicture.original ? profile.profilePicture.original : "assets/img/default-profile.jpg"'>
                     </div>
                 </md-card-header>
                 <md-card-title class="main-card-title text-uppercase ">{{profile.contactPerson}}</md-card-title>
@@ -70,7 +70,7 @@
             <div class="conatainer section-container" *ngIf="isEditMode">
                <div class="main-card-header d-flex justify-content-center">
                     <div md-card-avatar class="main-header-image">
-                        <img md-card-avatar class="main-header-image" src='assets/img/default-profile.jpg'>
+                        <img md-card-avatar class="main-header-image" [src]='assets/img/default-profile.jpg'>
                     </div>
                     
                 </div>
@@ -81,7 +81,7 @@
                     </div>
                     <div class="col-6 form-group">
                         <label class="editLable" for="contactNumber">Contact Number</label>
-                        <input class="form-control" type="text" name="profileContactNo" id="contactNumber" [(ngModel)]="profileContactNo">
+                        <input class="form-control" type="text" name="profileNumber" id="contactNumber" [(ngModel)]="profileNumber">
                     </div>
                     <div class="col-6 form-group">
                         <label class="editLable" for="comapanyName">Job Category</label>

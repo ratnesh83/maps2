@@ -39,13 +39,13 @@ export class UserProfile {
         private modalService: NgbModal,
         private fb: FormBuilder,
         private toastrService: ToastrService,
-        private renderer: Renderer
-    ) {
+        private renderer: Renderer,
+        private baThemeSpinner: BaThemeSpinner
+    ) { this.baThemeSpinner.show();
         this.settingStore = this.store
             .select('setting')
             .subscribe((res: any) => {
                 this.profile = res;
-
                 console.log(this.profile);                
             });
             this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO});            

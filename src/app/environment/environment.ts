@@ -90,7 +90,8 @@ export const environment = {
         UPLOAD_MULTIPLE_FILES: '/user/uploadMultipleFiles',
 
         GET_PROFILE_INFO: '/api/v2/web/user/detailsById',
-        UPDATE_PROFILE_INFO: '/api/v1/user/editWebProfile'
+        UPDATE_PROFILE_INFO: '/api/v1/user/editWebProfile',
+        ADD_CARD: '/api/v1/card/addCard'
 
     },
 

@@ -9,9 +9,13 @@ const initialState: any = {
     type: 'all',
     selectedValue: 'all'
 };
+  
 
 export const payment: ActionReducer<any> = (state = initialState, action: Action) => {
     switch (action.type) {
+
+        case 'ADD_CARD':
+        return Object.assign({},'');    
 
         default:
             return state;

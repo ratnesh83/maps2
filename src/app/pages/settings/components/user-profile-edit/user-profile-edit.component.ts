@@ -39,7 +39,7 @@ export class UserProfileEdit {
     public profileName;
     public profilePic;
     public profileEmail;
-    public profileContactNo;
+    public profileNumber;
     public profileAddress;
     public profileDescription;
 
@@ -55,8 +55,9 @@ export class UserProfileEdit {
             .subscribe((res: any) => {
                 console.log(res); 
                 this.profile = res; 
+                this.profilePic = res.profilePicture;                
                 this.profileName = res.fullName;
-                this.profileContactNo = res.phoneNumber;  
+                this.profileNumber = res.phoneNumber;  
                 if(res.locationDetails)
                 {        
                 this.profileAddress = res.locationDetails.addressLine1;
@@ -71,7 +72,8 @@ export class UserProfileEdit {
       
           let fd = new FormData();
           if(this.profileName){
-          fd.append('fullName',this.profileName);
+          fd.append('fullName',this.profileName);   
+          fd.append('description',this.profileDescription); 
           }
           this.store.dispatch({type: setting.actionTypes.UPDATE_PROFILE_INFO, payload: fd});
         }

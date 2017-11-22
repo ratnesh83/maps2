@@ -533,14 +533,12 @@ export class SettingEffects {
       this.SettingsService.getProfileInfo(user._id).subscribe((result) => {
           if (result.statusCode == 200) {
             let payload = result.data;
-            console.log("hi");
-            console.log(payload);
-            //token store in localstorage
-            // localStorage.setItem('token', result.data.token);
+            this._spinner.hide();
             this.store.dispatch(new setting.GetProfileInfoSuccessAction(payload));            
           }
         }
         , (error) => {
+          this._spinner.hide();            
           if (error.statusCode === 401 || error.statusCode === 403) {
           }
         }
@@ -554,6 +552,7 @@ export class SettingEffects {
           this.SettingsService.updateProfileInfo(action.payload).subscribe((result) => {
               if (result.statusCode == 200) {
                   console.log("success");
+                  this.router.navigate
               }
             }
             , (error) => {

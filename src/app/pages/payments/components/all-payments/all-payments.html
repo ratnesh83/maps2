@@ -40,28 +40,46 @@
                     </div>
 
                     <hr class="hr-text" data-content="or">
-                    <md-card-title  style="font-weight: 600; color: #474747; margin-bottom: 30px; margin-top:30px;">
-                        <h2>Add new card</h2>
+                    <md-card-title style="font-weight: 600; color: #474747; margin-bottom: 30px; margin-top:30px;">
+                        <h2>Add new card{{message}}</h2>
                     </md-card-title>
-                    <div class="row">
-                        <div class="card-outer col-sm-12 col-md-6">
-                            <input class="card-input col-sm-12" placeholder="Card Holder Name">
+                    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+                        <div class="row">
+                            <div class="card-outer col-sm-12 col-md-6">
+                                <input class="card-input col-sm-12" placeholder="Card Holder Name" formControlName="card_holder_name">
+                                <div class="alert alert-danger" *ngIf="form.get('card_holder_name').touched && form.get('card_holder_name').invalid">
+                                    <div *ngIf="form.get('card_holder_name').errors.required">Please enter card holder's name</div>
+                                    <div *ngIf="!form.get('card_holder_name').errors.required">Please enter only alphabets</div>
+                                </div>
+                            </div>
+                            <div class="card-outer col-sm-12 col-md-6">
+                                <input class="card-input col-sm-12" placeholder="Card Number" formControlName="card_number">
+                                <div class="alert alert-danger" *ngIf="form.get('card_number').touched && form.get('card_number').invalid">
+                                    <div *ngIf="form.get('card_number').errors.required">Please enter card number</div>
+                                    <div *ngIf="!form.get('card_number').errors.required">Please enter correct card number</div>
+                                </div>
+                            </div>
+                            <div class="card-outer col-sm-12 col-md-6">
+                                <input class="card-input col-sm-12" placeholder="Exp. Date" formControlName="card_expire_date" pattern="(1[0-2]|0[1-9])\/(1[5-9]|2\d)">                                
+                                <div class="alert alert-danger" *ngIf="form.get('card_expire_date').touched && form.get('card_expire_date').invalid">
+                                    <div *ngIf="form.get('card_expire_date').errors.required">Please enter expiry date</div>
+                                    <div *ngIf="!form.get('card_expire_date').errors.required">Please enter correct expiry date</div>
+                                </div>
+                            </div>
+                            <div class="card-outer col-sm-12 col-md-6">
+                                <input class="card-input col-sm-12" placeholder="CVV/CVC" formControlName="card_cvv">
+                                <div class="alert alert-danger" *ngIf="form.get('card_cvv').touched && form.get('card_cvv').invalid">
+                                    <div *ngIf="form.get('card_cvv').errors.required">Please enter cvv/cvc</div>
+                                    <div *ngIf="!form.get('card_cvv').errors.required">Please enter correct cvv/cvc</div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-outer col-sm-12 col-md-6" >
-                            <input class="card-input col-sm-12" placeholder="Card Number">
+                        <div class="text-center">
+                            <button class="save-card-btn col-sm-6">
+                                SAVE CARD
+                            </button>
                         </div>
-                        <div class="card-outer col-sm-12 col-md-6" >
-                            <input class="card-input col-sm-12" placeholder="Exp. Date">
-                        </div>
-                        <div class="card-outer col-sm-12 col-md-6" >
-                            <input class="card-input col-sm-12" placeholder="CVV/CVC">
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <button class="save-card-btn col-sm-6">
-                            SAVE CARD
-                        </button>
-                    </div>
+                    </form>
                 </div>
             </md-card-content>
         </md-card>
