@@ -265,7 +265,11 @@ export class RequestEffects {
     postFeedbackSuccess: Observable<Action> = this.actions$
         .ofType('APP_POST_FEEDBACK_SUCCESS')
         .do((action) => {
-
+            this.store.dispatch({
+                type: request.actionTypes.APP_GET_REQUESTS, payload: {
+                    type: 'ACCEPTED_BY_LABOUR'
+                }
+            });
         });
 
     constructor(

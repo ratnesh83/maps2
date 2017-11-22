@@ -83,7 +83,7 @@ export class AllRequests implements OnInit {
 
     ngOnDestroy() {
         if (this.requestStore) {
-            // this.requestStore.unsubscribe();
+            this.requestStore.unsubscribe();
         }
     }
 
@@ -217,6 +217,7 @@ export class AllRequests implements OnInit {
         let payload = {
             jobId: data._id,
             userId: this.user._id,
+            title: data.jobId ? data.jobId.title : '',
             name: data.employerId ? data.employerId.fullName ? data.employerId.fullName : data.employerId.firstName + ' ' + data.employerId.lastName : '',
             picture: data.employerId ? data.employerId.profilePicture.thumb ? data.employerId.profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png',
             category: data.jobId ? data.jobId.category : '',

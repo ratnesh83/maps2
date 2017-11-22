@@ -10,7 +10,7 @@ import 'style-loader!./feedback-dialog.scss';
         <md-dialog-content style="padding: 24px 24px; min-width: 40vw">
             <div *ngIf="userDetails" class="posts-section" style="margin-bottom: 8px">
                 <h3 style="color: #1b1b1b">
-                    {{ userDetails.category + ': ' + userDetails.subCategory }}
+                    {{ userDetails.title }}
                 </h3>
                 <div md-card-avatar class="requests-header-image text-center" style="width: 100%; height: 60px; margin-bottom: 8px">
                     <img mat-card-avatar style="height: 60px; width: 60px" [src]="userDetails.picture">
@@ -21,7 +21,7 @@ import 'style-loader!./feedback-dialog.scss';
                     </h4>
                 </div>
                 <div class="feed-input-box text-center">
-                    <rating class="feedback-stars" [(ngModel)]="rating" [max]="5" fullIcon="★" emptyIcon="☆" [readonly]="false"
+                    <rating class="feed-stars" [(ngModel)]="rating" [max]="5" fullIcon="★" emptyIcon="☆" [readonly]="false"
                         [disabled]="false" [required]="false" [float]="true" [titles]="['1', '2', '3', '4', '5']">
                     </rating>
                 </div>
