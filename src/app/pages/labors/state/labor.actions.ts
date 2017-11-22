@@ -6,7 +6,9 @@ export const actionTypes = {
     APP_LABOR_DETAIL_SUCCESS: 'APP_LABOR_DETAIL_SUCCESS',
     APP_GET_CATEGORIES_LABOR: 'APP_GET_CATEGORIES_LABOR',
     APP_GET_CATEGORIES_LABOR_SUCCESS: 'APP_GET_CATEGORIES_LABOR_SUCCESS',
-    APP_LABOR_DETAIL_SUCCESS_CONSUMED: 'APP_LABOR_DETAIL_SUCCESS_CONSUMED'
+    APP_LABOR_DETAIL_SUCCESS_CONSUMED: 'APP_LABOR_DETAIL_SUCCESS_CONSUMED',
+    APP_GET_TOP_LIST_COPY: 'APP_GET_TOP_LIST_COPY',
+    APP_GET_TOP_LIST_COPY_SUCCESS: 'APP_GET_TOP_LIST_COPY_SUCCESS'
 
 };
 
@@ -34,6 +36,16 @@ export class AppLaborDetailSuccess implements Action {
 
 export class AppLaborDetailSuccessConsumed implements Action {
     type = actionTypes.APP_LABOR_DETAIL_SUCCESS_CONSUMED;
+    constructor(public payload: credentials) { }
+}
+
+export class AppGetTopList implements Action {
+    type = actionTypes.APP_GET_TOP_LIST_COPY;
+    constructor(public payload: credentials) { }
+}
+
+export class AppGetTopListSuccess implements Action {
+    type = actionTypes.APP_GET_TOP_LIST_COPY_SUCCESS;
     constructor(public payload: credentials) { }
 }
 

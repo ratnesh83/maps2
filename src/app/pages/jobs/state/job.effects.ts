@@ -198,6 +198,41 @@ export class JobEffects {
             this.router.navigate(['/pages/requests/allrequests']);
         });
 
+
+    @Effect({ dispatch: false })
+    getTopList$ = this.actions$
+        .ofType('APP_GET_TOP_LIST')
+        .do((action) => {
+            this._spinner.show();
+            this.JobService.getTopList(action.payload).subscribe((result) => {
+                this._spinner.hide();
+                if (result.message == 'Action complete.' || result.statusCode == 200) {
+                    let payload = result.data;
+                    this.store.dispatch(new job.AppGetTopListSuccess(payload));
+                }
+            }
+                , (error) => {
+                    this._spinner.hide();
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        } else {
+
+                        }
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    getTopListSuccess: Observable<Action> = this.actions$
+        .ofType('APP_GET_TOP_LIST_SUCCESS')
+        .do((action) => {
+
+        });
+
     constructor(
         private actions$: Actions,
         private store: Store<any>,

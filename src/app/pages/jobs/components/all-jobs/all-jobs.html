@@ -40,12 +40,13 @@
                     </div>
                     <div class="col-12 col-sm-6 jobs-input-box">
                         <label for="address">Address</label>
-                        <input #inputLocationAddress [(ngModel)]="searchLocation" ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)" class="form-control"
-                            placeholder="">
+                        <input #inputLocationAddress [(ngModel)]="searchLocation" ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)"
+                            class="form-control" placeholder="">
                     </div>
                 </div>
                 <div class="map-div">
-                    <ngui-map style="height: 60vh; max-height: 480px;" (mapReady$)="onMapReady($event)" (idle)="onIdle($event)" [geoFallbackCenter]="[42.99, -77.79]" [zoomControlOptions]="{ position: 'TOP_RIGHT' }" [fullscreenControl]="false" [scrollwheel]="false">
+                    <ngui-map style="height: 60vh; max-height: 480px;" (mapReady$)="onMapReady($event)" (idle)="onIdle($event)" [geoFallbackCenter]="[42.99, -77.79]"
+                        [zoomControlOptions]="{ position: 'TOP_RIGHT' }" [fullscreenControl]="false" [scrollwheel]="false">
                         <marker *ngFor="let job of jobs" [position]="job.coordinates" (click)="showMarkerInfo($event, job)" draggable="false" [icon]="{
                             url: 'assets/img/labor-search.png',
                             anchor: [16,24],
@@ -92,6 +93,62 @@
                     </div>
                 </div>
             </md-card-content>
+        </md-card>
+    </div>
+</div>
+
+<i style="display: none" class="fa fa-spinner fa-spin"></i>
+
+<div class="hidden-md-down left-notification-bar">
+    <div *ngIf="companiesNotifications" class="notification">
+        <div class="notification-banner">
+            Companies just joined
+        </div>
+        <md-card class="left-notification-card">
+            <md-card-header *ngFor="let company of companiesNotifications" class="left-notification-head animated bounceInRight">
+                <div md-card-avatar class="notification-header-image">
+                    <img mat-card-avatar [src]="company?.picture ? company?.picture : 'assets/img/user.png'">
+                </div>
+                <md-card-title class="left-notification-title">{{ company.name }}</md-card-title>
+                <md-card-subtitle class="left-notification-subtitle">joined {{ getDuration(company.createdAt) }} ago</md-card-subtitle>
+            </md-card-header>
+            <div class="text-center" *ngIf="!topList">
+                <i class="fa fa-spinner fa-spin"></i>
+            </div>
+        </md-card>
+    </div>
+    <div class="notification">
+        <div class="notification-banner">
+            Employer just joined
+        </div>
+        <md-card class="left-notification-card">
+            <md-card-header *ngFor="let user of usersNotifications" class="left-notification-head animated bounceInRight">
+                <div md-card-avatar class="notification-header-image">
+                    <img mat-card-avatar [src]="user?.picture ? user?.picture : 'assets/img/user.png'">
+                </div>
+                <md-card-title class="left-notification-title">{{ user.name }}</md-card-title>
+                <md-card-subtitle class="left-notification-subtitle">joined {{ getDuration(user.createdAt) }} ago</md-card-subtitle>
+            </md-card-header>
+            <div class="text-center" *ngIf="!topList">
+                <i class="fa fa-spinner fa-spin"></i>
+            </div>
+        </md-card>
+    </div>
+    <div class="notification">
+        <div class="notification-banner">
+            New jobs
+        </div>
+        <md-card class="left-notification-card">
+            <md-card-header *ngFor="let job of jobsNotifications" class="left-notification-head animated bounceInRight">
+                <div md-card-avatar class="notification-header-image">
+                    <img mat-card-avatar [src]="job?.picture ? job?.picture : 'assets/img/image-placeholder.jpg'">
+                </div>
+                <md-card-title class="left-notification-title">{{ job.name }}</md-card-title>
+                <md-card-subtitle class="left-notification-subtitle">created {{ getDuration(job.createdAt) }} ago</md-card-subtitle>
+            </md-card-header>
+            <div class="text-center" *ngIf="!topList">
+                <i class="fa fa-spinner fa-spin"></i>
+            </div>
         </md-card>
     </div>
 </div>

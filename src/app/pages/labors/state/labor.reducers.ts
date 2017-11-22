@@ -12,6 +12,15 @@ const initialState: any = {
     error: null
 };
 
+const initialTopState: any = {
+    errorFound: null,
+    topList: null,
+    count: 0,
+    currentPage: 0,
+    limit: 5,
+    error: null
+};
+
 export const labor: ActionReducer<any> = (state = initialState, action: Action) => {
     switch (action.type) {
 
@@ -34,6 +43,20 @@ export const labor: ActionReducer<any> = (state = initialState, action: Action) 
         case 'APP_LABOR_DETAIL_SUCCESS_CONSUMED':
             delete state.getLaborHit;
             return Object.assign({}, state);
+
+        default:
+            return state;
+    }
+};
+
+export const topList: ActionReducer<any> = (state = initialTopState, action: Action) => {
+    switch (action.type) {
+
+        case 'APP_GET_TOP_LIST_COPY':
+            return Object.assign({}, state, { topList: null });
+
+        case 'APP_GET_TOP_LIST_COPY_SUCCESS':
+            return Object.assign({}, state, { topList: action.payload });
 
         default:
             return state;

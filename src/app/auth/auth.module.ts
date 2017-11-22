@@ -8,8 +8,6 @@ import { AuthGuard } from './service/auth-service/auth-guard.service';
 import { AuthService } from './service/auth-service/auth.service';
 // import { AuthPublicPagesService } from './service/auth-guard-public-pages/auth-public.service';
 
-
-
 @NgModule({
     imports: [
         CommonModule,

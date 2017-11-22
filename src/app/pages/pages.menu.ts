@@ -24,7 +24,7 @@ export class PagesMenuService {
                                 selected: false,
                                 expanded: false,
                                 order: 0,
-                                auth: ['USER']
+                                auth: ['admin']
                             }
                         }
                     },

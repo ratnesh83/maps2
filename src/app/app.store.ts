@@ -11,8 +11,8 @@ import { home, HomeEffects } from './pages/home/state';
 import { customer, worker, employer, UserEffects } from './pages/users/state';
 import { setting, SettingEffects } from './pages/settings/state';
 import { donation, DonationsEffects } from './pages/donations/state';
-import { job, JobEffects } from './pages/jobs/state';
-import { labor, LaborEffects } from './pages/labors/state';
+import { job, top, JobEffects } from './pages/jobs/state';
+import { labor, topList, LaborEffects } from './pages/labors/state';
 import { laborList, LaborListEffects } from './pages/labor-list/state';
 import { post, PostEffects } from './pages/posts/state';
 import { request, RequestEffects } from './pages/requests/state';
@@ -31,7 +31,9 @@ import { feedback, FeedbackEffects } from './pages/feedbacks/state';
             worker,
             employer,
             job,
+            top,
             labor,
+            topList,
             laborList,
             post,
             request,

@@ -79,22 +79,29 @@ export class AllLaborList implements OnInit {
                 if (response && response.coords) {
                     let latlng = new google.maps.LatLng(response.coords.latitude, response.coords.longitude);
                     let geocoder = new google.maps.Geocoder();
-                    let self = this;
+                    let data = {
+                        latitude: response.coords.latitude,
+                        longitude: response.coords.longitude,
+                        sortBy: 'DISTANCE'
+                    };
+                    this.data = data;
+                    this.showLoading = false;
+                    this.getAllLaborLists(data);
                     this.geocoder(geocoder, latlng)
                         .then((result) => {
                             let results = result;
                             if (results[0]) {
-                                let addressComponents = results[0].address_components;
-                                let latitude = results[0].geometry.location.lat();
-                                let longitude = results[0].geometry.location.lng();
-                                let data = {
-                                    latitude: latitude,
-                                    longitude: longitude,
-                                    sortBy: 'DISTANCE'
-                                };
-                                this.data = data;
-                                this.showLoading = false;
-                                this.getAllLaborListsCallback(data);
+                                // let addressComponents = results[0].address_components;
+                                // let latitude = results[0].geometry.location.lat();
+                                // let longitude = results[0].geometry.location.lng();
+                                // let data = {
+                                //     latitude: latitude,
+                                //     longitude: longitude,
+                                //     sortBy: 'DISTANCE'
+                                // };
+                                // this.data = data;
+                                // this.showLoading = false;
+                                // this.getAllLaborListsCallback(data);
                             }
                         })
                         .catch((error: any) => {
@@ -152,7 +159,7 @@ export class AllLaborList implements OnInit {
         }
     }
 
-    getAllLaborListsCallback(data) {
+    getAllLaborLists(data) {
         this.showLoading = false;
         this.store.dispatch({
             type: labor.actionTypes.APP_GET_LABORS_LIST, payload: {
