@@ -144,18 +144,6 @@ export class PagesMenuService {
                         },
                     },
                     {
-                        path: 'helpcenter',
-                        data: {
-                            menu: {
-                                title: 'CONTACT US',
-                                icon: 'icon-wrap fa fa-question',
-                                selected: false,
-                                expanded: false,
-                                order: 100,
-                            }
-                        }
-                    },
-                    {
                         path: 'settings',
                         data: {
                             menu: {
@@ -181,6 +169,18 @@ export class PagesMenuService {
                             }
                         },
                     },
+                    {
+                        path: 'helpcenter',
+                        data: {
+                            menu: {
+                                title: 'CONTACT US',
+                                icon: 'icon-wrap fa fa-question',
+                                selected: false,
+                                expanded: false,
+                                order: 100,
+                            }
+                        }
+                    }
                 ]
             }
         ];
