@@ -175,7 +175,7 @@ export class AllLabors implements OnInit {
                                 profilePicture: res.labors[i] ? res.labors[i].profilePicture ? res.labors[i].profilePicture.thumb ? res.labors[i].profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png' : 'assets/img/user.png',
                                 categoryImage: res.labors[i].categoryId ? res.labors[i].categoryId.image ? res.labors[i].categoryId.image.thumb ? res.labors[i].categoryId.image.thumb : 'assets/img/image-placeholder.jpg' : 'assets/img/image-placeholder.jpg' : 'assets/img/image-placeholder.jpg',
                                 coordinates: coordinates,
-                                distance: res.labors[i].distance / 621.371,
+                                distance: res.labors[i].distance / 1609.34,
                                 rate: res.labors[i].rate,
                                 rateType: res.labors[i].rateType,
                                 title: res.labors[i].title,

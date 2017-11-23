@@ -175,7 +175,7 @@ export class AllJobs implements OnInit {
                                 profilePicture: res.jobs[i].employerId ? res.jobs[i].employerId.profilePicture ? res.jobs[i].employerId.profilePicture.thumb ? res.jobs[i].employerId.profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png' : 'assets/img/user.png',
                                 categoryImage: res.jobs[i].categoryId ? res.jobs[i].categoryId.image ? res.jobs[i].categoryId.image.thumb ? res.jobs[i].categoryId.image.thumb : 'assets/img/image-placeholder.jpg' : 'assets/img/image-placeholder.jpg' : 'assets/img/image-placeholder.jpg',
                                 coordinates: coordinates,
-                                distance: res.jobs[i].distance / 621.371,
+                                distance: res.jobs[i].distance / 1609.34,
                                 rate: res.jobs[i].rate,
                                 rateType: res.jobs[i].rateType,
                                 title: res.jobs[i].title,
