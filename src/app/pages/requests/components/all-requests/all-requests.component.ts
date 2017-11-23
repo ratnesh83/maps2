@@ -40,6 +40,7 @@ export class AllRequests implements OnInit {
     public showPhone: boolean = false;
     public showEmail: boolean = false;
     public requestStore;
+    public rating;
     public length;
     public pageSize = 5;
     public pageSizeOptions = [5, 10, 25, 100, 500];
@@ -215,14 +216,14 @@ export class AllRequests implements OnInit {
 
     openFeedbackDialog(data) {
         let payload = {
-            jobId: data._id,
-            userId: this.user._id,
+            jobId: data.jobId ? data.jobId._id : '',
+            userId: data.employerId ? data.employerId._id : '',
             title: data.jobId ? data.jobId.title : '',
             name: data.employerId ? data.employerId.fullName ? data.employerId.fullName : data.employerId.firstName + ' ' + data.employerId.lastName : '',
             picture: data.employerId ? data.employerId.profilePicture.thumb ? data.employerId.profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png',
             category: data.jobId ? data.jobId.category : '',
             subCategory: data.jobId ? data.jobId.subCategory : '',
-            to: data.employerId ? data.employerId.userType == 'USER' ? 'LABOUR' : 'EMPLOYER' : ''
+            to: data.employerId ? data.employerId.userType == 'USER' ? 'EMPLOYER' : 'LABOUR' : ''
         };
         let dialogRef = this.dialog.open(FeedbackDialog);
         dialogRef.componentInstance.userDetails = payload;

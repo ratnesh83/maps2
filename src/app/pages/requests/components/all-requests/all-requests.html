@@ -118,8 +118,14 @@
                                     request?.employerId?.locationDetails?.zipCode, request?.employerId?.locationDetails?.state,
                                     request?.employerId?.locationDetails?.country) : '' }}
                                 </p>
-                                <p *ngIf="request.labourRating && !request.labourRating.isRated" (click)="openFeedbackDialog(request)" style="cursor: pointer" class="md-card-content-requests-p-rate text-center">
+                                <p *ngIf="request.employerRating && !request.employerRating.isRated" (click)="openFeedbackDialog(request)" style="cursor: pointer"
+                                    class="md-card-content-requests-p-rate text-center">
                                     Do you want to rate?
+                                </p>
+                                <p *ngIf="request.employerRating && request.employerRating.isRated" class="md-card-content-requests-p-rate text-center">
+                                    <rating class="feed-show-stars" [(ngModel)]="request.employerRating.rating" [max]="5" fullIcon="★" emptyIcon="☆" [readonly]="true" [disabled]="false"
+                                        [required]="false" [float]="true" [titles]="['1', '2', '3', '4', '5']">
+                                    </rating>
                                 </p>
                             </md-card-content>
                         </md-card>

@@ -267,7 +267,7 @@ export class RequestEffects {
         .do((action) => {
             this.store.dispatch({
                 type: request.actionTypes.APP_GET_REQUESTS, payload: {
-                    type: 'ACCEPTED_BY_LABOUR'
+                    type: 'COMPLETED'
                 }
             });
         });

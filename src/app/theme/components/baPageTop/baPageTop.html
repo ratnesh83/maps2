@@ -2,8 +2,20 @@
     <div class="container container-page-top">
         <div class="container">
             <a href (click)="toggleMenu()" class="hidden-lg-up collapse-menu-link ion-navicon"></a>
-            <a routerLink="/pages/home" class="al-logo clearfix">
-                <img style="margin: auto 0px; max-height: 30px" src="assets/img/logo-2.png">
+            <a class="al-logo clearfix">
+                <img style="outline: none; cursor: pointer" routerLink="/pages/home" src="assets/img/logo-2.png">
+
+                <span routerLink="/pages/posts/allposts" class="hidden-xs-down top-nav-links" style="margin-left: 41px">
+                    MY POSTS
+                </span>
+                <span routerLink="/pages/requests/allrequests" class="hidden-xs-down top-nav-links">
+                    MY REQUESTS
+                </span>
+                <span class="hidden-xs-down top-nav-links" style="margin-left: 10px">
+                    MY NETWORKS
+                    <i data-toggle="dropdown" style="margin-left: 5px" aria-expanded="false" class="fa fa-caret-down hidden-xs-down"></i>
+                </span>
+                
             </a>
 
             <div class="user-profile clearfix">

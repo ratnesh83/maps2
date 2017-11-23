@@ -51,6 +51,19 @@ a.al-logo:hover {
     right: 0px;
 }
 
+.top-nav-links {
+    font-size: 13px;
+    cursor: pointer; 
+    color: #474747;
+    outline: none;
+    text-shadow: none;
+    font-weight: 500; 
+    margin-left: 10px;
+}
+.top-nav-links:hover {
+    color: #026eff;
+}
+
 .al-user-profile {
     display: flex;
     float: right;

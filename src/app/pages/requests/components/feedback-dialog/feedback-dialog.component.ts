@@ -48,14 +48,18 @@ export class FeedbackDialog {
         private store: Store<any>) { }
 
     postFeedback() {
+        let data = {
+            jobId: this.userDetails.jobId,
+            userId: this.userDetails.userId,
+            to: this.userDetails.to,
+            rating: this.rating,
+            feedback: this.feedback
+        };
+        if(!data.feedback || data.feedback == '' || data.feedback == null || data.feedback === undefined) {
+            delete data.feedback;
+        }
         this.store.dispatch({
-            type: request.actionTypes.APP_POST_FEEDBACK, payload: {
-                jobId: this.userDetails.jobId,
-                userId: this.userDetails.userId,
-                to: this.userDetails.to,
-                rating: this.rating,
-                feedback: this.feedback
-            }
+            type: request.actionTypes.APP_POST_FEEDBACK, payload: data
         });
     }
 
