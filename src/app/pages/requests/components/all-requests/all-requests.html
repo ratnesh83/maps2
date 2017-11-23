@@ -10,7 +10,8 @@
                                     <img mat-card-avatar [src]="request?.jobId?.categoryId ? request?.jobId?.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
                                 </div>
                                 <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{request?.jobId?.title}}</md-card-title>
-                                <md-card-subtitle style="font-weight: 500">{{request?.jobId?.category ? request?.jobId?.category + ': ' + request?.jobId.subCategory : request?.jobId.category}}</md-card-subtitle>
+                                <md-card-subtitle style="font-weight: 500">{{request?.jobId?.category ? request?.jobId?.category + ': ' + request?.jobId.subCategory
+                                    : request?.jobId.category}}</md-card-subtitle>
                                 <div class="requests-header-view">
                                     <div class="view-link" (click)="showRequestDetail(request?.jobId?._id)">
                                         <span class="hidden-xs-down">
@@ -24,11 +25,13 @@
                             </md-card-header>
                             <md-card-content class="requests-card with-margin">
                                 <p class="md-card-content-requests-p-rate">
-                                    {{'$' + request?.jobId?.rate + '/' + (request?.jobId?.rateType == 'DAILY' ? 'day' : request?.jobId?.rateType == 'WEEKLY' ? 'week' : request?.jobId?.rateType == 'MONTHLY'
-                                    ? 'month' : 'hr')}}
+                                    {{'$' + request?.jobId?.rate + '/' + (request?.jobId?.rateType == 'DAILY' ? 'day' : request?.jobId?.rateType == 'WEEKLY'
+                                    ? 'week' : request?.jobId?.rateType == 'MONTHLY' ? 'month' : 'hr')}}
                                 </p>
                                 <p class="md-card-content-requests-p-address">
-                                    {{ request?.employerId?.locationDetails ? showAddress(request?.employerId?.locationDetails?.addressLine1, request?.employerId?.locationDetails?.city, request?.employerId?.locationDetails?.zipCode, request?.employerId?.locationDetails?.state, request?.employerId?.locationDetails?.country) : '' }}
+                                    {{ request?.employerId?.locationDetails ? showAddress(request?.employerId?.locationDetails?.addressLine1, request?.employerId?.locationDetails?.city,
+                                    request?.employerId?.locationDetails?.zipCode, request?.employerId?.locationDetails?.state,
+                                    request?.employerId?.locationDetails?.country) : '' }}
                                 </p>
                             </md-card-content>
                         </md-card>
@@ -50,7 +53,8 @@
                                     <img mat-card-avatar [src]="request?.jobId?.categoryId ? request?.jobId?.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
                                 </div>
                                 <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{request?.jobId?.title}}</md-card-title>
-                                <md-card-subtitle style="font-weight: 500">{{request?.jobId?.category ? request?.jobId?.category + ': ' + request?.jobId.subCategory : request?.jobId.category}}</md-card-subtitle>
+                                <md-card-subtitle style="font-weight: 500">{{request?.jobId?.category ? request?.jobId?.category + ': ' + request?.jobId.subCategory
+                                    : request?.jobId.category}}</md-card-subtitle>
                                 <div class="requests-header-view">
                                     <div class="view-link" (click)="showRequestDetail(request?.jobId?._id)">
                                         <span class="hidden-xs-down">
@@ -64,11 +68,13 @@
                             </md-card-header>
                             <md-card-content class="requests-card with-margin">
                                 <p class="md-card-content-requests-p-rate">
-                                    {{'$' + request?.jobId?.rate + '/' + (request?.jobId?.rateType == 'DAILY' ? 'day' : request?.jobId?.rateType == 'WEEKLY' ? 'week' : request?.jobId?.rateType == 'MONTHLY'
-                                    ? 'month' : 'hr')}}
+                                    {{'$' + request?.jobId?.rate + '/' + (request?.jobId?.rateType == 'DAILY' ? 'day' : request?.jobId?.rateType == 'WEEKLY'
+                                    ? 'week' : request?.jobId?.rateType == 'MONTHLY' ? 'month' : 'hr')}}
                                 </p>
                                 <p class="md-card-content-requests-p-address">
-                                    {{ request?.employerId?.locationDetails ? showAddress(request?.employerId?.locationDetails?.addressLine1, request?.employerId?.locationDetails?.city, request?.employerId?.locationDetails?.zipCode, request?.employerId?.locationDetails?.state, request?.employerId?.locationDetails?.country) : '' }}
+                                    {{ request?.employerId?.locationDetails ? showAddress(request?.employerId?.locationDetails?.addressLine1, request?.employerId?.locationDetails?.city,
+                                    request?.employerId?.locationDetails?.zipCode, request?.employerId?.locationDetails?.state,
+                                    request?.employerId?.locationDetails?.country) : '' }}
                                 </p>
                             </md-card-content>
                         </md-card>
@@ -89,7 +95,8 @@
                                     <img mat-card-avatar [src]="request?.jobId?.categoryId ? request?.jobId?.categoryId.image.thumb : 'assets/img/image-placeholder.jpg'">
                                 </div>
                                 <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{request?.jobId?.title}}</md-card-title>
-                                <md-card-subtitle style="font-weight: 500">{{request?.jobId?.category ? request?.jobId?.category + ': ' + request?.jobId.subCategory : request?.jobId.category}}</md-card-subtitle>
+                                <md-card-subtitle style="font-weight: 500">{{request?.jobId?.category ? request?.jobId?.category + ': ' + request?.jobId.subCategory
+                                    : request?.jobId.category}}</md-card-subtitle>
                                 <div class="requests-header-view">
                                     <div class="view-link" (click)="showRequestDetail(request?.jobId?._id)">
                                         <span class="hidden-xs-down">
@@ -103,11 +110,22 @@
                             </md-card-header>
                             <md-card-content class="requests-card with-margin">
                                 <p class="md-card-content-requests-p-rate">
-                                    {{'$' + request?.jobId?.rate + '/' + (request?.jobId?.rateType == 'DAILY' ? 'day' : request?.jobId?.rateType == 'WEEKLY' ? 'week' : request?.jobId?.rateType == 'MONTHLY'
-                                    ? 'month' : 'hr')}}
+                                    {{'$' + request?.jobId?.rate + '/' + (request?.jobId?.rateType == 'DAILY' ? 'day' : request?.jobId?.rateType == 'WEEKLY'
+                                    ? 'week' : request?.jobId?.rateType == 'MONTHLY' ? 'month' : 'hr')}}
                                 </p>
                                 <p class="md-card-content-requests-p-address">
-                                    {{ request?.employerId?.locationDetails ? showAddress(request?.employerId?.locationDetails?.addressLine1, request?.employerId?.locationDetails?.city, request?.employerId?.locationDetails?.zipCode, request?.employerId?.locationDetails?.state, request?.employerId?.locationDetails?.country) : '' }}
+                                    {{ request?.employerId?.locationDetails ? showAddress(request?.employerId?.locationDetails?.addressLine1, request?.employerId?.locationDetails?.city,
+                                    request?.employerId?.locationDetails?.zipCode, request?.employerId?.locationDetails?.state,
+                                    request?.employerId?.locationDetails?.country) : '' }}
+                                </p>
+                                <p *ngIf="request.employerRating && !request.employerRating.isRated" (click)="openFeedbackDialog(request)" style="cursor: pointer"
+                                    class="md-card-content-requests-p-rate text-center">
+                                    Do you want to rate?
+                                </p>
+                                <p *ngIf="request.employerRating && request.employerRating.isRated" class="md-card-content-requests-p-rate text-center">
+                                    <rating class="feed-show-stars" [(ngModel)]="request.employerRating.rating" [max]="5" fullIcon="★" emptyIcon="☆" [readonly]="true" [disabled]="false"
+                                        [required]="false" [float]="true" [titles]="['1', '2', '3', '4', '5']">
+                                    </rating>
                                 </p>
                             </md-card-content>
                         </md-card>

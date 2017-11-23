@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 @Injectable()
 export class PagesMenuService {
     PAGES_MENU = [];
-    
+
     constructor(private store: Store<any>) {
 
     }
@@ -24,28 +24,15 @@ export class PagesMenuService {
                                 selected: false,
                                 expanded: false,
                                 order: 0,
-                                auth: ['USER']
-                            }
-                        }
-                    },
-                    {
-                        path: 'subscriptions',
-                        data: {
-                            menu: {
-                                title: 'SUBSCRIPTIONS',
-                                icon: 'icon-wrap fa fa-newspaper-o',
-                                selected: false,
-                                expanded: false,
-                                order: 100,
                                 auth: ['admin']
                             }
-                        },
+                        }
                     },
                     {
                         path: 'jobs',
                         data: {
                             menu: {
-                                title: 'JOBS',
+                                title: 'JOB SEARCH',
                                 icon: 'icon-wrap fa fa-tasks',
                                 selected: false,
                                 expanded: false,
@@ -58,7 +45,7 @@ export class PagesMenuService {
                         path: 'labors',
                         data: {
                             menu: {
-                                title: 'LABORS',
+                                title: 'LABOR SEARCH',
                                 icon: 'icon-wrap fa fa-tasks',
                                 selected: false,
                                 expanded: false,
@@ -79,6 +66,18 @@ export class PagesMenuService {
                                 auth: ['USER']
                             }
                         },
+                    },
+                    {
+                        path: 'feedbacks',
+                        data: {
+                            menu: {
+                                title: 'MY RATINGS',
+                                icon: 'icon-wrap fa fa-comments-o',
+                                selected: false,
+                                expanded: false,
+                                order: 100,
+                            }
+                        }
                     },
                     {
                         path: 'requests',
@@ -107,24 +106,24 @@ export class PagesMenuService {
                         },
                     },
                     {
-                        path: 'payments',
+                        path: 'subscriptions',
                         data: {
                             menu: {
-                                title: 'PAYMENTS',
-                                icon: 'icon-wrap fa fa-money',
+                                title: 'MEMBERSHIP PLANS',
+                                icon: 'icon-wrap fa fa-newspaper-o',
                                 selected: false,
                                 expanded: false,
                                 order: 100,
-                                auth: ['USER']
+                                auth: ['admin']
                             }
                         },
                     },
                     {
-                        path: 'feedbacks',
+                        path: 'appversion',
                         data: {
                             menu: {
-                                title: 'MY RATINGS',
-                                icon: 'icon-wrap fa fa-comments-o',
+                                title: 'SUPPORT',
+                                icon: 'icon-wrap fa fa-code-fork',
                                 selected: false,
                                 expanded: false,
                                 order: 100,
@@ -145,30 +144,6 @@ export class PagesMenuService {
                         },
                     },
                     {
-                        path: 'helpcenter',
-                        data: {
-                            menu: {
-                                title: 'CONTACT US',
-                                icon: 'icon-wrap fa fa-question',
-                                selected: false,
-                                expanded: false,
-                                order: 100,
-                            }
-                        }
-                    },
-                    {
-                        path: 'appversion',
-                        data: {
-                            menu: {
-                                title: 'SUPPORT',
-                                icon: 'icon-wrap fa fa-code-fork',
-                                selected: false,
-                                expanded: false,
-                                order: 100,
-                            }
-                        }
-                    },
-                    {
                         path: 'settings',
                         data: {
                             menu: {
@@ -181,6 +156,31 @@ export class PagesMenuService {
                             }
                         },
                     },
+                    {
+                        path: 'payments',
+                        data: {
+                            menu: {
+                                title: 'PAYMENTS INFO',
+                                icon: 'icon-wrap fa fa-money',
+                                selected: false,
+                                expanded: false,
+                                order: 100,
+                                auth: ['USER']
+                            }
+                        },
+                    },
+                    {
+                        path: 'helpcenter',
+                        data: {
+                            menu: {
+                                title: 'CONTACT US',
+                                icon: 'icon-wrap fa fa-question',
+                                selected: false,
+                                expanded: false,
+                                order: 100,
+                            }
+                        }
+                    }
                 ]
             }
         ];

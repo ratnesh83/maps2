@@ -12,6 +12,15 @@ const initialState: any = {
     error: null
 };
 
+const initialTopState: any = {
+    errorFound: null,
+    topList: null,
+    count: 0,
+    currentPage: 0,
+    limit: 5,
+    error: null
+};
+
 export const job: ActionReducer<any> = (state = initialState, action: Action) => {
     switch (action.type) {
 
@@ -50,6 +59,20 @@ export const job: ActionReducer<any> = (state = initialState, action: Action) =>
 
         case 'APP_GET_LABORS_SUCCESS':
             return Object.assign({}, state, { labours: action.payload });
+
+        default:
+            return state;
+    }
+};
+
+export const top: ActionReducer<any> = (state = initialTopState, action: Action) => {
+    switch (action.type) {
+
+        case 'APP_GET_TOP_LIST':
+            return Object.assign({}, state, { topList: null });
+
+        case 'APP_GET_TOP_LIST_SUCCESS':
+            return Object.assign({}, state, { topList: action.payload });
 
         default:
             return state;

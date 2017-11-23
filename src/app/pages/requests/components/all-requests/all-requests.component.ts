@@ -3,12 +3,16 @@ import { Store } from '@ngrx/store';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
+import { MdDialog } from '@angular/material';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { JwtHelper } from 'angular2-jwt';
 import * as request from '../../state/request.actions';
 import * as app from '../../../../state/app.actions';
+import * as auth from '../../../../auth/state/auth.actions';
 import { MdPaginator } from '@angular/material';
 import { BaThemeSpinner } from '../../../../theme/services';
 import { DataService } from '../../../../services/data-service/data.service';
+import { FeedbackDialog } from '../feedback-dialog/feedback-dialog.component';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { NguiMapComponent } from '@ngui/map';
 import 'style-loader!./all-requests.scss';
@@ -30,10 +34,13 @@ export class AllRequests implements OnInit {
     public name: string;
     public role: string;
     public value: 'all';
+    public jwtHelper: JwtHelper = new JwtHelper();
+    public user;
     public filter;
     public showPhone: boolean = false;
     public showEmail: boolean = false;
     public requestStore;
+    public rating;
     public length;
     public pageSize = 5;
     public pageSizeOptions = [5, 10, 25, 100, 500];
@@ -43,7 +50,8 @@ export class AllRequests implements OnInit {
         private modalService: NgbModal,
         private router: Router,
         private toastrService: ToastrService,
-        private dataService: DataService
+        private dataService: DataService,
+        private dialog: MdDialog
     ) {
         this.length = 1;
         this.pageIndex = 0;
@@ -52,6 +60,9 @@ export class AllRequests implements OnInit {
             .subscribe((res: any) => {
                 if (res) {
                     this.requests = res.requests;
+                    if (res.postFeedback) {
+                        this.dialog.closeAll();
+                    }
                 }
                 /* if (res && res.requests && res.requests.jobs) {
                     this.requests = res.requests.jobs;
@@ -65,11 +76,15 @@ export class AllRequests implements OnInit {
 
     ngOnInit() {
         this.getAllRequests();
+        let token = localStorage.getItem('tokenSession');
+        if (token && !this.jwtHelper.isTokenExpired(token)) {
+            this.user = this.jwtHelper.decodeToken(token);
+        }
     }
 
     ngOnDestroy() {
         if (this.requestStore) {
-            // this.requestStore.unsubscribe();
+            this.requestStore.unsubscribe();
         }
     }
 
@@ -78,11 +93,11 @@ export class AllRequests implements OnInit {
             type: request.actionTypes.APP_GET_REQUESTS, payload: {
                 type: 'ACCEPTED_BY_LABOUR',
                 currentPage: this.page,
-                    limit: this.pageSize
+                limit: this.pageSize
             }
         });
     }
-    
+
 
     showRequestDetail(id) {
         this.dataService.setData('requestId', id);
@@ -157,7 +172,7 @@ export class AllRequests implements OnInit {
                     limit: page.pageSize,
                 }
             });
-        } else if (this.tabIndex== 2) {
+        } else if (this.tabIndex == 2) {
             this.store.dispatch({
                 type: request.actionTypes.APP_GET_REQUESTS, payload: {
                     type: 'COMPLETED',
@@ -197,6 +212,21 @@ export class AllRequests implements OnInit {
 
     showEmailInfo() {
         this.showEmail = true;
+    }
+
+    openFeedbackDialog(data) {
+        let payload = {
+            jobId: data.jobId ? data.jobId._id : '',
+            userId: data.employerId ? data.employerId._id : '',
+            title: data.jobId ? data.jobId.title : '',
+            name: data.employerId ? data.employerId.fullName ? data.employerId.fullName : data.employerId.firstName + ' ' + data.employerId.lastName : '',
+            picture: data.employerId ? data.employerId.profilePicture.thumb ? data.employerId.profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png',
+            category: data.jobId ? data.jobId.category : '',
+            subCategory: data.jobId ? data.jobId.subCategory : '',
+            to: data.employerId ? data.employerId.userType == 'USER' ? 'EMPLOYER' : 'LABOUR' : ''
+        };
+        let dialogRef = this.dialog.open(FeedbackDialog);
+        dialogRef.componentInstance.userDetails = payload;
     }
 
 }

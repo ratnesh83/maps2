@@ -8,70 +8,54 @@
     font-weight: 500;
     color: #b1b1b1;
 }
-.user-jobs-heading {
+.user-posts-heading {
     display: inline-flex;
     h2 {
         margin: auto 0px;
         width: auto;
     }
 }
-.map-div {
-    position: relative;
-    .map-loading {
-        display: none;
-        position: absolute;
-        top: 0px;
-        height: 60vh;
-        width: 100%;
-        max-height: 480px;
-        transition: all ease 0.7s;
-        span {
-            margin: auto;
-            text-align: center;
-            font-weight: 500;
-            color: #1b1b1b;
-            font-size: large;
-        }
-    }
-}
-.jobs-card-heading {
+.posts-card-heading {
     width: 100%;
     .mat-card-header-text {
         margin: 0px 0px;
     }
 }
-.jobs-section {
+.posts-section {
     margin-top: 10px;
 }
-.jobs-card {
+.posts-card {
     margin-bottom: 10px;
 }
-.jobs-card-header {
+.posts-card-header {
     position: relative;
 }
-.jobs-header-rating {
+.posts-header-rating {
     position: absolute;
     top: 0px;
     right: 0px;
     text-align: right;
 }
-.md-card-content-jobs-p {
+.md-card-content-posts-p {
     text-align: left;
     font-weight: 500;
     color: #1b1b1b;
 }
-.md-card-content-jobs-p-date {
+.md-card-content-posts-p-date {
     text-align: left;
     font-weight: 500;
     color: rgba(0, 0, 0, 0.54);
 }
-.jobs-stars .star-icon {
+.posts-stars .star-icon {
     font-size: unset !important;
 }
-.jobs-input-box {
-    input {
+.posts-input-box {
+    input, textarea {
         font-family: Roboto, "Helvetica Neue", sans-serif;
         font-weight: 400 !important;
+    }
+    .input-box-button {
+        margin: auto;
     }
 }
 .category-select {
@@ -92,9 +76,27 @@
     .mat-select-underline {
         display: none;
     }
+    .mat-select-placeholder.mat-floating-placeholder {
+        opacity: 0 !important;
+    }
+    .mat-select-placeholder {
+        top: unset !important;
+        left: unset !important;
+        transform: unset !important;
+    }
+    .mat-select-placeholder.ng-trigger.ng-trigger-transformPlaceholder.ng-animating {
+        opacity: 0 !important;
+        top: unset !important;
+        left: unset !important;
+        transform: unset !important;
+    }
 }
-.jobs-input-box {
+.posts-input-box {
     margin-bottom: 15px;
+    .mat-select {
+        width: 100%;
+        width: -webkit-fill-available;
+    }
     label {
         color: #7d7d7d;
         font-size: medium;
@@ -129,14 +131,12 @@
         .left-notification-title.mat-card-title {
             cursor: pointer;
             width: max-content;
-            max-width: 240px;
             margin-top: 5px;
             margin-bottom: 10px;
         }
         .left-notification-subtitle.mat-card-subtitle {
             cursor: pointer;
             width: max-content;
-            max-width: 240px;
         }
     }
     .left-notification-subhead.mat-card-header {
@@ -147,7 +147,6 @@
         }
         .left-notification-title.mat-card-title {
             width: max-content;
-            max-width: 240px;
             font-size: small;
             margin-top: 5px;
             margin-bottom: 10px;
@@ -155,13 +154,11 @@
         .left-notification-subtitle.mat-card-subtitle {
             width: max-content;
             font-size: smaller;
-            max-width: 240px;
         }
     }
-    .jobs-header-contact { 
+    .posts-header-contact { 
         width: -webkit-fill-available;
         margin-top: 5px;
-        margin-left: 5px;
         text-align: right;
         .fa {
             cursor: pointer;
@@ -175,7 +172,7 @@
             font-weight: 500;
         }
     }
-    .jobs-header-contact-rate {
+    .posts-header-contact-rate {
         width: -webkit-fill-available;
         font-weight: 600;
         font-size: small;
@@ -185,35 +182,14 @@
         }
     }
 }
-.left-notification-bar {
-    position: absolute;
-    top: 15px;
-    right: 0px;
-    width: 180px;
-    .notification {
-        width: 100%;
-        background-color: #ffffff;
-        margin-bottom: 15px;
-        .notification-banner {
-            width: 100%;
-            padding: 15px;
-            background-color: #026eff;
-            box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
-            color: white;
-        }
-        .left-notification-card.mat-card {
-            padding: 15px;
-            max-height: 200px;
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
-        .left-notification-subtitle.mat-card-subtitle {
-            font-size: smaller;
-        }
-    }
-    .left-notification-head.mat-card-header {
-        .mat-card-header-text {
-            margin-right: 0px !important;
-        }
-    }
+.btn-submit {
+    background-color: #026eff !important;
+    border-color: #026eff !important;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    height: 50px;
+}
+.posts-card-post {
+    margin-bottom: 30px;
 }

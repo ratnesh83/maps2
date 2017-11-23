@@ -187,6 +187,7 @@ export class Register {
         this.password.reset();
         this.repeatPassword.reset();
         this.countryCode.reset();
+        this.countryCode.setValue('+1');
         this.phone.reset();
         this.agreement.reset();
         this.agreement.setValue(false);

@@ -351,6 +351,10 @@ fieldset[disabled] .form-control {
     border-color: $disabled-bg;
     @include placeholderStyle($default-text, 0.5);
 }
+.form-control[disabled] {
+    color: rgba(0, 0, 0, 0.48) !important;
+    cursor: default;
+}
 .form-control-rounded {
     border-radius: 16px;
 }

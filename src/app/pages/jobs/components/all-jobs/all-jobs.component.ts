@@ -38,6 +38,7 @@ export class AllJobs implements OnInit {
     public markers = [];
     public info;
     public jobStore;
+    public topListStore;
     public selectedCategory;
     public categories = [];
     public categoryId;
@@ -52,6 +53,11 @@ export class AllJobs implements OnInit {
     public bounds;
     public map: google.maps.Map;
     public zoom = 13;
+    public topList;
+
+    public companiesNotifications = [];
+    public jobsNotifications = [];
+    public usersNotifications = [];
 
     constructor(
         private store: Store<any>,
@@ -75,6 +81,54 @@ export class AllJobs implements OnInit {
             rate: 0,
             requiredLabourers: 0,
         };
+
+        this.topListStore = this.store
+            .select('top')
+            .subscribe((res: any) => {
+                this.topList = res.topList;
+                this.companiesNotifications = [];
+                this.jobsNotifications = [];
+                this.usersNotifications = [];
+                if (res.topList) {
+                    this.topList = res.topList;
+
+                    if (this.topList.companyName) {
+                        let company;
+                        for (let i = 0; i < this.topList.companyName.length; i++) {
+                            company = {
+                                name: this.topList.companyName[i].companyName,
+                                createdAt: this.topList.companyName[i].createdAt,
+                                picture: this.topList.companyName[i].profilePicture ? this.topList.companyName[i].profilePicture.thumb : 'assets/img/user.png'
+                            };
+                            this.companiesNotifications.push(company);
+                        }
+                    }
+
+                    if (this.topList.employers) {
+                        let employer;
+                        for (let i = 0; i < this.topList.employers.length; i++) {
+                            employer = {
+                                name: this.topList.employers[i].fullName ? this.topList.employers[i].fullName : this.topList.employers[i].firstName + ' ' + this.topList.employers[i].lastName,
+                                createdAt: this.topList.employers[i].createdAt,
+                                picture: this.topList.employers[i].profilePicture ? this.topList.employers[i].profilePicture.thumb : 'assets/img/user.png'
+                            };
+                            this.usersNotifications.push(employer);
+                        }
+                    }
+
+                    if (this.topList.newJobs) {
+                        let job;
+                        for (let i = 0; i < this.topList.newJobs.length; i++) {
+                            job = {
+                                name: this.topList.newJobs[i].title,
+                                createdAt: this.topList.newJobs[i].createdAt,
+                                picture: this.topList.newJobs[i].categoryId ? this.topList.newJobs[i].categoryId.image.thumb : 'assets/img/image-placeholder.jpg'
+                            };
+                            this.jobsNotifications.push(job);
+                        }
+                    }
+                }
+            });
 
         this.jobStore = this.store
             .select('job')
@@ -158,16 +212,45 @@ export class AllJobs implements OnInit {
             type: job.actionTypes.APP_GET_CATEGORIES_JOB,
             payload: {}
         });
+        this.store.dispatch({
+            type: job.actionTypes.APP_GET_TOP_LIST,
+            payload: {}
+        });
+    }
+
+    getDuration(time) {
+        let timeOfEvent = (new Date()).getTime() - (new Date(time)).getTime();
+        let timeDiffMinutes = timeOfEvent / 60000;
+        let timeDiffhours = timeDiffMinutes / 60;
+        let timeDiffDays = timeDiffhours / 24;
+        let timeDiffString = timeDiffMinutes.toString();
+        if(timeDiffhours < 1) {
+            if(timeDiffMinutes < 2) {
+                return '1 min';
+            } else {
+                return Math.floor(timeDiffMinutes).toString() + ' min';
+            }
+        } else if(timeDiffDays < 1) {
+            if(timeDiffhours < 2) {
+                return '1 hr';
+            } else {
+                return Math.floor(timeDiffhours).toString() + ' hrs';
+            }
+        } else {
+            if(timeDiffDays < 2) {
+                return '1 day';
+            } else {
+                return Math.floor(timeDiffDays).toString() + ' days';
+            }
+        }
     }
 
     createMapCluster(markers) {
         for (let i = 0; i < markers.length; i++) {
             for (let j = 0; j < markers.length; j++) {
                 if (markers[i] == markers[j]) {
-
                     //let newLatLng = new google.maps.LatLng(markers[i].coordinates[0] + i /10000, markers[i].coordinates[1]);
                     markers[i].coordinates = [markers[i].coordinates[0] + i / 100000, markers[i].coordinates[1]];
-                    console.log(markers[i].coordinates);
                 }
             }
         }
@@ -288,7 +371,10 @@ export class AllJobs implements OnInit {
 
     ngOnDestroy() {
         if (this.jobStore) {
-            // this.jobStore.unsubscribe();
+            this.jobStore.unsubscribe();
+        }
+        if (this.topListStore) {
+            this.topListStore.unsubscribe();
         }
     }
 

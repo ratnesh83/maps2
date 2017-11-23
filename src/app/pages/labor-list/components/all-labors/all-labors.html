@@ -57,7 +57,7 @@
             </md-card-content>
         </md-card>
         <md-card *ngIf="showLoading" class="labors-card">
-            {{ locationStatus }}
+            {{ locationStatus + ' ' }} <i *ngIf="locationStatus == 'Fetching current location...'" class="fa fa-spinner fa-spin"></i>
         </md-card>
     </div>
 

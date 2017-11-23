@@ -114,6 +114,11 @@ export class AllPosts implements OnInit {
         this.router.navigate(['pages/posts/postdetails']);
     }
 
+    editPost(id) {
+        this.dataService.setData('jobId', id);
+        this.router.navigate(['pages/posts/editpost']);
+    }
+
     selectTab(event) {
         if (event.index == 0) {
             this.tabIndex = 0;

@@ -55,6 +55,14 @@ export class LaborService {
         this.authRequired = true;
         this.utcOffset = false;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
-    };
+    }
+
+    getTopList(payload) {
+        let url;
+        this.authRequired = true;
+        this.utcOffset = false;
+        url = environment.APP.API_URL + environment.APP.GET_TOP_LIST;
+        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+    }
 
 }

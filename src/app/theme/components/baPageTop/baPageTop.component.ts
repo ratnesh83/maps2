@@ -21,6 +21,7 @@ export class BaPageTop {
     public storeData;
     public name;
     public profilePicture;
+    public homeUrl;
 
     constructor(private _state: GlobalState,
         private store: Store<any>,
@@ -50,6 +51,7 @@ export class BaPageTop {
         let token = localStorage.getItem('tokenSession');
         if (token && !this.jwtHelper.isTokenExpired(token)) {
             this.user = this.jwtHelper.decodeToken(token);
+            this.homeUrl = this.user ? this.user.userType == 'USER' ? '/pages/jobs/alljobs' : '/pages/labors/alllabors' : '/pages';
             this.store.dispatch({
                 type: auth.actionTypes.AUTH_GET_USER_DETAILS_BY_ID,
                 payload: {
