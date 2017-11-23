@@ -132,6 +132,13 @@ export class DonationsService {
         let url = environment.APP.API_URL + environment.APP.UPLOAD_FILE;
         return this.apiService.postFileApi(url, payload, this.authRequired, this.utcOffset);
     }
+    donate(payload){
+        console.log("service");
+        let url = environment.APP.API_URL + environment.APP.DONATE;
+        this.authRequired = true;
+        this.utcOffset = false;        
+        return this.apiService.postFileApi(url,payload,this.authRequired, this.utcOffset);
+    }
 
 }
 

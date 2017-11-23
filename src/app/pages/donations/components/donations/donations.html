@@ -29,19 +29,19 @@
                     </div>
                     <div class="row price-btns side-margin">
                         <div class="col-sm-12 col-md-4 price-btn">
-                            <button class="price col-sm-12">$10</button>
+                            <button class="price col-sm-12" (click)="donate(10)">$10</button>
                         </div>
                         <div class="col-sm-12 col-md-4 price-btn">
-                            <button class="price col-sm-12">$20</button>
+                            <button class="price col-sm-12" (click)="donate(20)">$20</button>
                         </div>
                         <div class="col-sm-12 col-md-4 price-btn">
-                            <button class="price col-sm-12">$30</button>
+                            <button class="price col-sm-12" (click)="donate(30)">$30</button>
                         </div>
                         <div class="col-sm-12 col-md-6 price-btn">
-                            <button class="price col-sm-12">$40</button>
+                            <button class="price col-sm-12" (click)="donate(40)">$40</button>
                         </div>
                         <div class="col-sm-12 col-md-6 price-btn">
-                            <button class="price col-sm-12" style="background:#026eff;color:white;">$50</button>
+                            <button class="price col-sm-12" style="background:#026eff;color:white;" (click)="donate(50)">$50</button>
                         </div>
                     </div>
                     <div class="row text-center or-text">
@@ -50,10 +50,10 @@
                         </div>
                     </div>
                     <div class="input-div col-sm-12 ">
-                        <input class="donation-input col-sm-12" type="text" pattern="^[0-9]*$">
+                        <input class="donation-input col-sm-12" type="text" pattern="^[0-9]*$" #amount>
                     </div>
                     <div class="text-center">
-                        <button class="save-card-btn col-sm-6">
+                        <button class="save-card-btn col-sm-6" (click)="donate(amount.value)">
                             SUBMIT
                         </button>
                     </div>

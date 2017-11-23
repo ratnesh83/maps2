@@ -1,5 +1,4 @@
 import { Component, NgZone } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as payment from '../../state/payment.actions';
 import { BaThemeSpinner } from '../../../../theme/services';
 import { Store } from '@ngrx/store';
@@ -7,6 +6,8 @@ import { FormGroup, AbstractControl, FormBuilder, Validators ,FormControl} from 
 import { ToastrService , ToastrConfig } from 'ngx-toastr';
 const types = ['success', 'error', 'info', 'warning'];
 import { EmailValidator} from '../../../../theme/validators';
+import { NgbModal, NgbActiveModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+
 
 //import * as createJob from '../../state/create-job.actions';
 import * as app from '../../../../state/app.actions';
@@ -14,12 +15,14 @@ import * as app from '../../../../state/app.actions';
 
 import 'style-loader!./all-payments.scss';
 import { PaymentValidator } from '../../../../theme/validators/payment.validator';
+import { deleteCardModal } from '../delete-card/delete-card.modal';
 
 @Component({
     selector: 'all-payments',
     templateUrl: 'all-payments.html'
 })
 export class AllPayments {
+    public deleteCardActionModel;
 
     public payments;
     public page = 1;
@@ -45,10 +48,12 @@ export class AllPayments {
     title = '';
     message = '';
     public cards=[];
+    public defaultCard;
   
     constructor(private fb: FormBuilder,
                 private store: Store<any>,
                 private _zone: NgZone,
+                private modalService: NgbModal,                
                 private toastrService: ToastrService) {
 
         // this.form = this.fb.group({
@@ -68,8 +73,9 @@ export class AllPayments {
             .subscribe((res: any) => {
                console.log(res);
                this.cards = res.cardDetails;
+               this.defaultCard = res.defaultCard;
             });
-            this.store.dispatch({ type: payment.actionTypes.GET_CARDS});                        
+            this.store.dispatch({ type: payment.actionTypes.GET_CARDS});  
         }
 
     form = new FormGroup({
@@ -113,6 +119,20 @@ export class AllPayments {
                   }
                 });
             });
+          }
+          openModalNew(value){
+              console.log(value);
+            this.deleteCardActionModel = this.modalService.open(deleteCardModal, { size: 'sm' });
+          }
+          pay(){
+                let amount = parseFloat(localStorage.getItem('payamount')); 
+                let formValue = {
+                    'data':{
+                      'amount':amount,
+                      'cardId':this.defaultCard,
+                    }
+                };    
+              this.store.dispatch({ type: payment.actionTypes.PAYMENT,payload:formValue}); 
           }
         }
       

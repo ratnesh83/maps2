@@ -19,6 +19,7 @@ import {
     MdSelectModule,
     MdDialogModule
 } from '@angular/material';
+import { deleteCardModal } from './components/delete-card/delete-card.modal';
 
 @NgModule({
     imports: [
@@ -35,13 +36,16 @@ import {
         MdAutocompleteModule,
         MdCardModule,
         MdSelectModule,
-        MdDialogModule
+        MdDialogModule,
+ 
     ],
     declarations: [
         Payments,
         AllPayments,
+        deleteCardModal
     ],
     entryComponents: [
+        deleteCardModal
     ],
 
 })

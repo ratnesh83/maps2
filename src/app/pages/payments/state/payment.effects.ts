@@ -14,6 +14,7 @@ const types = ['success', 'error', 'info', 'warning'];
 import * as payment from './payment.actions';
 import * as app from '../../../state/app.actions';
 import { setting } from '../../settings/state/setting.reducers';
+import { DonationsService } from '../../../services/donations-service/donations.service';
 
 @Injectable()
 export class PaymentEffects {
@@ -21,7 +22,8 @@ export class PaymentEffects {
     constructor(
         private actions$: Actions,
         private store: Store<any>,
-        private SettingsService: SettingsService,        
+        private SettingsService: SettingsService, 
+        private DonationsService:DonationsService,       
         private router: Router,
         /* private paymentService: paymentService, */
         private toastrService: ToastrService
@@ -46,7 +48,7 @@ export class PaymentEffects {
       });
 
       @Effect({dispatch: false})
-      getProfileInfo$ = this.actions$
+      getCards$ = this.actions$
         .ofType('GET_CARDS')
         .do((action) => {    
           console.log("pp");
@@ -63,6 +65,25 @@ export class PaymentEffects {
             }
           );
         });
+        @Effect({dispatch: false})
+        payment$ = this.actions$
+          .ofType('PAYMENT')
+          .do((action) => {
+              console.log(action.payload);
+            this.DonationsService.donate(action.payload.data).subscribe((result) => {
+                if (result.statusCode == 201) {
+                  console.log("donated");
+                  localStorage.removeItem('payamount');
+                  this.store.dispatch({ type: payment.actionTypes.GET_CARDS});                    
+                }
+              }
+              , (error) => {
+                if (error.statusCode === 401 || error.statusCode === 403) {
+                  console.log("error")
+                }
+              }
+            );
+          });
 
 }
 

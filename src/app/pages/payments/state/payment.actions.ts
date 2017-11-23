@@ -4,7 +4,8 @@ export const actionTypes = {
 
 ADD_CARD: 'ADD_CARD',
 GET_CARDS: 'GET_CARDS',
-GET_CARDS_SUCCESS: 'GET_CARDS_SUCCESS'
+GET_CARDS_SUCCESS: 'GET_CARDS_SUCCESS',
+PAYMENT: 'PAYMENT'
 
 };
 
@@ -16,6 +17,12 @@ export class AddCardAction implements Action {
     constructor(public payload: any) {
     }
  }
+ export class PaymentAction implements Action {
+  type = actionTypes.PAYMENT;
+  constructor(public payload: any) {
+  }
+}
+ 
  export class GetCardsAction implements Action {
     type = actionTypes.GET_CARDS;
     constructor(public payload: credentials) {
@@ -29,4 +36,5 @@ export class AddCardAction implements Action {
 export type Actions
 = AddCardAction
 | GetCardsAction
-| GetCardsSuccessAction;
+| GetCardsSuccessAction
+| PaymentAction;

@@ -22,6 +22,9 @@ export const payment: ActionReducer<any> = (state = initialState, action: Action
 
         case 'GET_CARDS_SUCCESS':
         return Object.assign({},action.payload);
+
+        case 'PAYMENT':
+        return Object.assign({},''); 
         
         default:
         return state;

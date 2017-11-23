@@ -17,13 +17,13 @@
             <md-card-content>
                 <div class="container">
                     <div class="row">
-                        <div class="card-outer col-sm-12 col-md-6" *ngFor="let item of cards">
+                        <div class="card-outer col-sm-12 col-md-6" *ngFor="let item of cards" (click)="openModalNew(item)">
                             <div class="added-card col-sm-12">
                            <span *ngIf="item.cardType == 'Visa'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/visa_credit-card-logos/new_visa.gif" border="0" /></span>
                            <span *ngIf="item.cardType == 'American Express'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/american_express_credit-card-logos/american_express_logo_1.gif" border="0" /></span>
                            <span *ngIf="item.cardType == 'MasterCard'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/mastercard_credit-card-logos/mastercard_logo_1.gif" border="0" /></span>
                            <span *ngIf="item.cardType == 'Discover'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/discover_credit-card-logos/discover_network1.jpg" border="0" /></span>&nbsp;                           
-                             <span id="card-no">XXXX-XXXX-XXXX-{{item.last4Digits}}</span>
+                             <span id="card-no">XXXX-XXXX-XXXX-{{item.last4Digits}}&nbsp;<span class="defaultcheck" *ngIf="item.isDefault == true">&#10004;</span></span>
                             </div>
                         </div>
                     </div>
@@ -69,6 +69,11 @@
                             </button>
                         </div>
                     </form>
+                    <div class="text-center">
+                        <button class="save-card-btn col-sm-6" (click)="pay()">
+                            PROCEED
+                        </button>
+                    </div>                    
                 </div>
             </md-card-content>
         </md-card>
