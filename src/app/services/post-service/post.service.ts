@@ -78,4 +78,24 @@ export class PostService {
         return this.apiService.postApi(url, data, this.authRequired, this.utcOffset);
     }
 
+    editPost(payload) {
+        this.authRequired = true;
+        this.utcOffset = false;
+        let formData = new FormData();
+        formData.append('title', payload.title);
+        formData.append('employerAddress', JSON.stringify(payload.employerAddress));
+        formData.append('categoryId', payload.categoryId);
+        formData.append('subCategoryId', payload.subCategoryId);
+        if (payload && payload.jobDetails) {
+            formData.append('jobDetails', payload.jobDetails);
+        }
+        formData.append('startDate', payload.startDate);
+        formData.append('endDate', payload.endDate);
+        formData.append('rateType', payload.rateType);
+        formData.append('rate', payload.rate);
+        formData.append('requiredLabourers', payload.requiredLabourers);
+        let url = environment.APP.API_URL + environment.APP.EDIT_POST_JOB + payload.jobId;
+        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+    }
+
 }

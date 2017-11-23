@@ -17,6 +17,9 @@ const initialState: any = {
 export const post: ActionReducer<any> = (state = initialState, action: Action) => {
     switch (action.type) {
 
+        case 'APP_GET_CATEGORIES':
+            return Object.assign({}, state, { subCategories: [] });
+
         case 'APP_GET_CATEGORIES_SUCCESS':
             return Object.assign({}, state, { categories: action.payload });
 

@@ -27,6 +27,11 @@
                                             <i class="fa fa-info"></i>
                                         </span>
                                     </div>
+                                    <div style="margin-top: 10px" class="view-link" (click)="editPost(post._id)">
+                                        <span mdTooltip="Edit Post">
+                                            <i class="fa fa-pencil"></i>
+                                        </span>
+                                    </div>
                                 </div>
                             </md-card-header>
                             <md-card-content class="posts-card with-margin">
@@ -35,7 +40,8 @@
                                     ? 'month' : 'hr')}}
                                 </p>
                                 <p class="md-card-content-posts-p-address">
-                                    {{ post.employerAddress ? showAddress(post.employerAddress.addressLine1, post.employerAddress.city, post.employerAddress.zipCode, post.employerAddress.state, post.employerAddress.country) : '' }}
+                                    {{ post.employerAddress ? showAddress(post.employerAddress.addressLine1, post.employerAddress.city, post.employerAddress.zipCode,
+                                    post.employerAddress.state, post.employerAddress.country) : '' }}
                                 </p>
                             </md-card-content>
                         </md-card>
@@ -67,6 +73,11 @@
                                             <i class="fa fa-info"></i>
                                         </span>
                                     </div>
+                                    <div style="margin-top: 10px" class="view-link" (click)="editPost(post._id)">
+                                        <span mdTooltip="Edit Post">
+                                            <i class="fa fa-pencil"></i>
+                                        </span>
+                                    </div>
                                 </div>
                             </md-card-header>
                             <md-card-content class="posts-card with-margin">
@@ -75,7 +86,8 @@
                                     ? 'month' : 'hr')}}
                                 </p>
                                 <p class="md-card-content-posts-p-address">
-                                    {{ post.employerAddress ? showAddress(post.employerAddress.addressLine1, post.employerAddress.city, post.employerAddress.zipCode, post.employerAddress.state, post.employerAddress.country) : '' }}
+                                    {{ post.employerAddress ? showAddress(post.employerAddress.addressLine1, post.employerAddress.city, post.employerAddress.zipCode,
+                                    post.employerAddress.state, post.employerAddress.country) : '' }}
                                 </p>
                             </md-card-content>
                         </md-card>
@@ -105,6 +117,7 @@
                                         <span class="hidden-sm-up">
                                             <i class="fa fa-info"></i>
                                         </span>
+
                                     </div>
                                 </div>
                             </md-card-header>
@@ -114,7 +127,8 @@
                                     ? 'month' : 'hr')}}
                                 </p>
                                 <p class="md-card-content-posts-p-address">
-                                    {{ post.employerAddress ? showAddress(post.employerAddress.addressLine1, post.employerAddress.city, post.employerAddress.zipCode, post.employerAddress.state, post.employerAddress.country) : '' }}
+                                    {{ post.employerAddress ? showAddress(post.employerAddress.addressLine1, post.employerAddress.city, post.employerAddress.zipCode,
+                                    post.employerAddress.state, post.employerAddress.country) : '' }}
                                 </p>
                             </md-card-content>
                         </md-card>

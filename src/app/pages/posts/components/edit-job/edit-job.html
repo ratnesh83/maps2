@@ -1,0 +1,128 @@
+<div class="container-fluid animated bounce">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-12 col-sm-12 user-posts-heading">
+                <md-card class="posts-card-heading">
+                    <md-card-header class="posts-card-header posts-card-heading">
+                        <md-card-title style="font-weight: 600; color: #474747; margin-bottom: 0px">
+                            <h2>Edit Job</h2>
+                        </md-card-title>
+                    </md-card-header>
+                </md-card>
+            </div>
+        </div>
+    </div>
+
+    <div class="posts-section page-input-block">
+        <md-card class="posts-card posts-card-post">
+            <md-card-content>
+                <form [formGroup]="form">
+                    <div class="form-group row">
+                        <div class="col-12 col-sm-12 posts-input-box">
+                            <input #inputJobTitle [formControl]="jobDetail" class="form-control" [ngClass]="{'has-input-error': (!jobDetail.valid && (jobDetail.touched || submitted))}"
+                                placeholder="Job Title*">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12 col-sm-6 posts-input-box">
+                            <input #inputCategory [formControl]="category" class="form-control" [ngClass]="{'has-input-error': (!category.valid && (category.touched || submitted))}"
+                                placeholder="Select Category*">
+                            <!-- <md-select #inputCategory [formControl]="category" [ngClass]="{'has-input-error': (!category.valid && (category.touched || submitted))}"
+                                class="category-select" placeholder="Select Category*">
+                                <md-option (onSelectionChange)="changeCategory($event, cat)" *ngFor="let cat of categories" [value]="cat.name">
+                                    {{ cat.name }}
+                                </md-option>
+                            </md-select> -->
+                        </div>
+                        <div class="col-12 col-sm-6 posts-input-box">
+                            <input #inputSubCategory [formControl]="subCategory" class="form-control" [ngClass]="{'has-input-error': (!subCategory.valid && (subCategory.touched || submitted))}"
+                                placeholder="Select Sub Category*">
+                            <!-- <md-select #inputSubCategory [formControl]="subCategory" [ngClass]="{'has-input-error': (!subCategory.valid && (subCategory.touched || submitted))}"
+                                class="category-select" placeholder="Select Sub Category*">
+                                <md-option (onSelectionChange)="changeSubCategory($event, category)" *ngFor="let category of subCategories" [value]="category.name">
+                                    {{ category.name }}
+                                </md-option>
+                            </md-select> -->
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12 col-sm-12 posts-input-box">
+                            <input #inputLocationAddress ng2-google-place-autocomplete [formControl]="locationAddress" [options]="{ types: [] }" (setAddress)="getAddress($event)"
+                                class="form-control" [ngClass]="{'has-input-error': ((!locationAddress.valid || !latitude.valid || !longitude.valid) && (locationAddress.touched || submitted))}"
+                                placeholder="Service Location*">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12 col-sm-4 posts-input-box">
+                            <input #inputCity [formControl]="city" class="form-control" [ngClass]="{'has-input-error': (!city.valid && (city.touched || submitted))}"
+                                placeholder="City*">
+                        </div>
+                        <div class="col-12 col-sm-4 posts-input-box">
+                            <input #inputState [formControl]="state" class="form-control" [ngClass]="{'has-input-error': (!state.valid && (state.touched || submitted))}"
+                                placeholder="State*">
+                        </div>
+                        <div class="col-12 col-sm-4 posts-input-box">
+                            <input #inputZipCode [formControl]="zipCode" class="form-control" [ngClass]="{'has-input-error': (!zipCode.valid && (zipCode.touched || submitted))}"
+                                placeholder="Zip Code*">
+                        </div>
+                    </div>
+                    <div class="form-group row date-picker">
+                        <div class="col-12 col-sm-6 posts-input-box">
+                            <input #inputStartDate [formControl]="startDate" [min]="minDate" [max]="endDate.value" readonly [mdDatepicker]="pickerStart"
+                                [ngClass]="{'has-input-error': (!startDate.valid && (startDate.touched || submitted))}" class="form-control"
+                                placeholder="Job Start Date*">
+                            <button mdSuffix [mdDatepickerToggle]="pickerStart"></button>
+                        </div>
+                        <md-datepicker #pickerStart></md-datepicker>
+                        <div class="col-12 col-sm-6 posts-input-box">
+                            <input #inputEndDate [formControl]="endDate" [min]="startDate.value ? startDate.value : minDate" readonly [mdDatepicker]="pickerEnd"
+                                [ngClass]="{'has-input-error': (!endDate.valid && (endDate.touched || submitted))}" class="form-control"
+                                placeholder="Job End Date*">
+                            <button mdSuffix [mdDatepickerToggle]="pickerEnd"></button>
+                        </div>
+                        <md-datepicker #pickerEnd></md-datepicker>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12 col-sm-12 posts-input-box">
+                            <textarea #inputJobDetails [formControl]="jobDetails" class="form-control" placeholder="Job Details"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12 col-sm-6 posts-input-box">
+                            <md-select #inputRateType [formControl]="rateType" class="category-select" [ngClass]="{'has-input-error': (!rateType.valid && (rateType.touched || submitted))}"
+                                placeholder="Select Rate Type*">
+                                <md-option (onSelectionChange)="changeRateType($event, type)" *ngFor="let type of rateTypes" [value]="type">
+                                    {{ type }}
+                                </md-option>
+                            </md-select>
+                        </div>
+                        <div class="col-12 col-sm-6 posts-input-box">
+                            <input #inputJobRate [formControl]="jobRate" class="form-control" [ngClass]="{'has-input-error': (!jobRate.valid && (jobRate.touched || submitted))}"
+                                (keypress)="_keyPressNumber($event)" placeholder="Enter Rate">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-12 col-sm-6 posts-input-box">
+                            <input #inputJobLabours [formControl]="labourCount" class="form-control" [ngClass]="{'has-input-error': (!labourCount.valid && (labourCount.touched || submitted))}"
+                                (keypress)="_keyPressNumber($event)" placeholder="No. of Labors Required*">
+                        </div>
+                    </div>
+                </form>
+            </md-card-content>
+        </md-card>
+        <div class="form-group row">
+            <div class="hidden-xs-down col-sm-12 posts-input-box text-center">
+                <div class="col-12 col-sm-6 posts-input-box input-box-button text-center">
+                    <button md-raised-button color="primary" type="button" class="btn btn-block btn-submit" (click)="updateJob()">
+                        UPDATE
+                    </button>
+                </div>
+            </div>
+            <div class="col-12 hidden-sm-up text-center">
+                <button md-raised-button color="primary" type="button" class="btn btn-block btn-submit" (click)="updateJob()">
+                    UPDATE
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

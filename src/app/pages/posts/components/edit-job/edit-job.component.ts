@@ -10,14 +10,14 @@ import * as post from '../../state/post.actions';
 import * as app from '../../../../state/app.actions';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 
-import 'style-loader!./post-job.scss';
+import 'style-loader!./edit-job.scss';
 
 @Component({
-    selector: 'post-job',
-    templateUrl: 'post-job.html',
+    selector: 'edit-job',
+    templateUrl: 'edit-job.html',
 })
 
-export class PostJob implements OnInit {
+export class EditPost implements OnInit {
 
     @ViewChild('inputJobTitle') public _inputJobDetail: ElementRef;
     @ViewChild('inputCategory') public _inputCategory: ElementRef;
@@ -52,6 +52,7 @@ export class PostJob implements OnInit {
     public latitude: AbstractControl;
     public longitude: AbstractControl;
     public postStore;
+    public post;
     public categories = [];
     public subCategories = [];
     public rateTypes = [];
@@ -117,6 +118,7 @@ export class PostJob implements OnInit {
             .select('post')
             .subscribe((res: any) => {
                 if (res) {
+                    this.post = res.post;
                     if (res.categories) {
                         this.categories = [];
                         for (let i = 0; i < res.categories.length; i++) {
@@ -129,8 +131,37 @@ export class PostJob implements OnInit {
                             this.subCategories.push(res.subCategories[i]);
                         }
                     }
+                    if (this.post) {
+                        this.jobDetail.setValue(this.post.title);
+                        this.category.setValue(this.post.category);
+                        if(this.subCategories && this.subCategories.length == 0) {
+                            this.subCategories.push(this.post.subCategory);
+                        }
+                        this.subCategory.setValue(this.post.subCategory);
+                        this.categoryId.setValue(this.post.categoryId);
+                        this.subCategoryId.setValue(this.post.subCategoryId);
+                        this.locationAddress.setValue(this.post.employerAddress ? this.post.employerAddress.addressLine1 : '');
+                        this.latitude.setValue(this.post.employerAddress ? this.post.employerAddress.location.coordinates[1] : '');
+                        this.longitude.setValue(this.post.employerAddress ? this.post.employerAddress.location.coordinates[0] : '');
+                        this.city.setValue(this.post.employerAddress ? this.post.employerAddress.city : '');
+                        this.state.setValue(this.post.employerAddress ? this.post.employerAddress.city : '');
+                        this.zipCode.setValue(this.post.employerAddress ? this.post.employerAddress.zipCode : '');
+                        this.country.setValue(this.post.employerAddress ? this.post.employerAddress.country : '');
+                        this.startDate.setValue(this.post.startDate ? new Date(this.post.startDate) : '');
+                        this.endDate.setValue(this.post.endDate ? new Date(this.post.endDate) : '');
+                        this.jobDetails.setValue(this.post.jobDetails);
+                        this.rateType.setValue(this.post.rateType);
+                        this.jobRate.setValue(this.post.rate);
+                        this.labourCount.setValue(this.post.requiredLabourers);
+                    }
                 }
             });
+            this.category.disable();
+            this.subCategory.disable();
+            this.locationAddress.disable();
+            this.city.disable();
+            this.state.disable();
+            this.zipCode.disable();
     };
 
     ngOnInit() {
@@ -138,12 +169,18 @@ export class PostJob implements OnInit {
             type: post.actionTypes.APP_GET_CATEGORIES,
             payload: {}
         });
+        this.store.dispatch({
+            type: post.actionTypes.APP_GET_JOB, payload: {
+                jobId: this.dataService.getData('jobId')
+            }
+        });
     }
 
     ngOnDestroy() {
         if (this.postStore) {
             this.postStore.unsubscribe();
         }
+        this.dataService.removeData('jobId');
     }
 
     getAddress(event) {
@@ -208,7 +245,7 @@ export class PostJob implements OnInit {
         }
     }
 
-    postJob() {
+    updateJob() {
         this.submitted = true;
 
         if (!this.jobDetail.value) {
@@ -321,6 +358,7 @@ export class PostJob implements OnInit {
         };
 
         let data = {
+            jobId: this.dataService.getData('jobId'),
             title: this.jobDetail.value,
             employerAddress: locationDetails,
             categoryId: this.categoryId.value,
@@ -338,7 +376,7 @@ export class PostJob implements OnInit {
         }
 
         this.store.dispatch({
-            type: post.actionTypes.APP_POST_JOB,
+            type: post.actionTypes.APP_EDIT_POST,
             payload: data
         });
     }
@@ -351,10 +389,10 @@ export class PostJob implements OnInit {
         let year = localDate.getFullYear().toString();
         let month = (localDate.getMonth() + 1).toString();
         let day = localDate.getDate().toString();
-        if(month.length == 1) {
+        if (month.length == 1) {
             month = '0' + month;
         }
-        if(day.length == 1) {
+        if (day.length == 1) {
             day = '0' + day;
         }
         return (year + '-' + month + '-' + day);
