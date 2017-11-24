@@ -1,0 +1,86 @@
+<div class="container-fluid animated bounce employer-container">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-12 col-sm-12 user-employers-heading">
+                <md-card class="employers-card-heading">
+                    <md-card-header class="employers-card-header employers-card-heading">
+                        <md-card-title style="font-weight: 600; color: #474747; margin-bottom: 0px">
+                            <h2>Employer List</h2>
+                        </md-card-title>
+                        <div class="employers-header-rating">
+                            <div class="filter-div">
+                                <i class="fa fa-filter"></i>
+                            </div>
+                        </div>
+                    </md-card-header>
+                </md-card>
+            </div>
+        </div>
+    </div>
+
+    <div class="employers-section page-input-block">
+        <md-card *ngIf="!showLoading" class="employers-card">
+            <md-card-content *ngIf="employers">
+                <md-card class="employers-card employers-card-inner" *ngFor="let employer of employers; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
+                    <md-card-header class="employers-card-header">
+                        <div md-card-avatar class="employers-header-image">
+                            <img mat-card-avatar [src]="employer.labourId?.profilePicture?.image?.thumb ? employer.labourId.profilePicture?.image?.thumb : 'assets/img/user.png'">
+                        </div>
+                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{employer.labourId ? employer.labourId.fullName ? employer.labourId.fullName : employer.labourId.firstName ?
+                            (employer.labourId.firstName + ' ' + employer.labourId.lastName) : employer.labourId.firstName : ''}}</md-card-title>
+                        <md-card-subtitle style="font-weight: 500">{{ (employer.distance / 1609.34).toFixed(1) + ' mile away' }}</md-card-subtitle>
+                        <div class="employers-header-view">
+                            <div>
+                                <i *ngIf="!employer?.labourId?.isPhoneNumberHidden && !employer.showPhone" (click)="showPhoneInfo(i)" class="fa fa-phone-square"></i>
+                                <i *ngIf="!employer.showEmail" (click)="showEmailInfo(i)" class="fa fa-envelope"></i>
+                            </div>
+                            <div *ngIf="employer.showPhone">{{employer.labourId?.countryCode + ' ' + employer.labourId?.phoneNumber}}</div>
+                            <div *ngIf="employer.showEmail">{{employer.labourId?.email}}</div>
+                        </div>
+                    </md-card-header>
+                    <md-card-header style="margin-top: 5px" class="employers-card-header">
+                        <div md-card-avatar class="employers-header-image">
+                            <img mat-card-avatar [src]="employer.jobId?.categoryId?.image?.thumb ? employer.jobId?.categoryId?.image?.thumb : 'assets/img/image-placeholder.jpg'">
+                        </div>
+                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">
+                            {{ employer.jobId.category ? employer.jobId.category + ': ' + employer.jobId.subCategory : employer.jobId.category }}
+                        </md-card-title>
+                        <md-card-subtitle style="font-weight: 500">
+                            {{ showAddress(employer?.labourAddress?.addressLine1, employer?.labourAddress?.city, employer?.labourAddress?.zipCode, employer?.labourAddress?.state,
+                            employer?.labourAddress?.country) }}
+                        </md-card-subtitle>
+                    </md-card-header>
+                </md-card>
+                <div *ngIf="employers && employers.length == 0">
+                    No employers found.
+                </div>
+            </md-card-content>
+        </md-card>
+        <md-card *ngIf="showLoading" class="employers-card">
+            {{ locationStatus + ' ' }} <i *ngIf="locationStatus == 'Fetching current location...'" class="fa fa-spinner fa-spin"></i>
+        </md-card>
+    </div>
+
+    <!-- <div class="panel-footer">
+        <div class="row">
+            <div *ngIf="count > 4" class="col-sm-12 rar-align page-select">
+                <span class="first-last-ctrl">
+                    <span [ngClass]="{'enabled': pageIndex > 0}" class="page-controls" (click)="pageIndex > 0 && goToFirstPage($event)">
+                        <span mdTooltip="{{(pageIndex > 0) ? 'First page' : ''}}">
+                            <i [ngClass]="{'enabled': pageIndex > 0}" class="fa fa-fast-backward"></i>
+                        </span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                    <span [ngClass]="{'enabled': pageIndex * pageSize + pageSize < length}" class="page-controls" (click)="pageIndex * pageSize + pageSize < length && goToLastPage($event)">
+                        <span mdTooltip="{{(pageIndex * pageSize + pageSize < length) ? 'Last page' : ''}}">
+                            <i [ngClass]="{'enabled': pageIndex * pageSize + pageSize < length}" class="fa fa-fast-forward"></i>
+                        </span>
+                    </span>
+                </span>
+                <md-paginator #employerListPaginator class="mat-paginator-pg" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                    (page)="pageChange($event)">
+                </md-paginator>
+            </div>
+        </div>
+    </div> -->
+</div>

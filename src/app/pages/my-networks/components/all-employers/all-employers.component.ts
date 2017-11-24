@@ -4,25 +4,25 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import * as labor from '../../state/my-network.actions';
+import * as employer from '../../state/my-network.actions';
 import * as app from '../../../../state/app.actions';
 import { MdPaginator } from '@angular/material';
 import { BaThemeSpinner } from '../../../../theme/services';
 import { DataService } from '../../../../services/data-service/data.service';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { NguiMapComponent } from '@ngui/map';
-import 'style-loader!./all-labors.scss';
+import 'style-loader!./all-employers.scss';
 import { error } from 'util';
 
 @Component({
-    selector: 'all-labors',
-    templateUrl: 'all-labors.html',
+    selector: 'all-employers',
+    templateUrl: 'all-employers.html',
 })
 
-export class AllLaborList implements OnInit {
+export class AllEmployerList implements OnInit {
 
-    @ViewChild('laborListPaginator') private _paginator: MdPaginator;
-    public labors;
+    @ViewChild('employerListPaginator') private _paginator: MdPaginator;
+    public employers;
     public page = 1;
     public tabIndex = 0;
     public limit;
@@ -36,7 +36,7 @@ export class AllLaborList implements OnInit {
     public showEmail: boolean = false;
     public showLoading: boolean = false;
     public locationStatus;
-    public laborListStore;
+    public employerListStore;
     public length;
     public data;
     public pageSize = 5;
@@ -51,21 +51,21 @@ export class AllLaborList implements OnInit {
     ) {
         this.length = 1;
         this.pageIndex = 0;
-        this.laborListStore = this.store
+        this.employerListStore = this.store
             .select('network')
             .subscribe((res: any) => {
                 if (res) {
-                    this.labors = res.labors;
-                    if (this.labors) {
-                        for (let i = 0; i < this.labors.length; i++) {
-                            this.labors[i].showPhone = false;
-                            this.labors[i].showEmail = false;
+                    this.employers = res.employers;
+                    if (this.employers) {
+                        for (let i = 0; i < this.employers.length; i++) {
+                            this.employers[i].showPhone = false;
+                            this.employers[i].showEmail = false;
                         }
                     }
                 }
-                /* if (res && res.labors && res.labors.jobs) {
-                    this.labors = res.labors.jobs;
-                    this.count = this.labors.length;
+                /* if (res && res.employers && res.employers.jobs) {
+                    this.employers = res.employers.jobs;
+                    this.count = this.employers.length;
                     this.length = this.count;
                     this.limit = this.pageSize;
                     this.pageIndex = res.currentPage - 1;
@@ -86,7 +86,7 @@ export class AllLaborList implements OnInit {
                     };
                     this.data = data;
                     this.showLoading = false;
-                    this.getAllLaborLists(data);
+                    this.getAllEmployerLists(data);
                     this.geocoder(geocoder, latlng)
                         .then((result) => {
                             let results = result;
@@ -101,7 +101,7 @@ export class AllLaborList implements OnInit {
                                 // };
                                 // this.data = data;
                                 // this.showLoading = false;
-                                // this.getAllLaborListsCallback(data);
+                                // this.getAllEmployerListsCallback(data);
                             }
                         })
                         .catch((error: any) => {
@@ -150,25 +150,25 @@ export class AllLaborList implements OnInit {
     }
 
     ngOnInit() {
-        // this.getAllLaborListsCallback();
+        // this.getAllEmployerListsCallback();
     }
 
     ngOnDestroy() {
-        if (this.laborListStore) {
-            this.laborListStore.unsubscribe();
+        if (this.employerListStore) {
+            this.employerListStore.unsubscribe();
         }
     }
 
-    getAllLaborLists(data) {
+    getAllEmployerLists(data) {
         this.showLoading = false;
         this.store.dispatch({
-            type: labor.actionTypes.APP_GET_LABORS_LIST, payload: {
+            type: employer.actionTypes.APP_GET_LABORS_LIST, payload: {
                 data: data
             }
         });
     }
 
-    showLaborListDetail(id) {
+    showEmployerListDetail(id) {
 
     }
 
@@ -194,7 +194,7 @@ export class AllLaborList implements OnInit {
 
     pageChange(page) {
         this.store.dispatch({
-            type: labor.actionTypes.APP_GET_LABORS_LIST, payload: {
+            type: employer.actionTypes.APP_GET_LABORS_LIST, payload: {
                 data: this.data
             }
         });
@@ -224,14 +224,14 @@ export class AllLaborList implements OnInit {
     }
 
     showPhoneInfo(index) {
-        if (this.labors[index]) {
-            this.labors[index].showPhone = true;
+        if (this.employers[index]) {
+            this.employers[index].showPhone = true;
         }
     }
 
     showEmailInfo(index) {
-        if (this.labors[index]) {
-            this.labors[index].showEmail = true;
+        if (this.employers[index]) {
+            this.employers[index].showEmail = true;
         }
     }
 
