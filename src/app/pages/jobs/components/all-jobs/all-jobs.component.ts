@@ -168,6 +168,7 @@ export class AllJobs implements OnInit {
                             }
                             let job = {
                                 id: res.jobs[i]._id,
+                                userId: res.jobs[i].employerId ? res.jobs[i].employerId._id : '',
                                 employerName: res.jobs[i].employerId ? res.jobs[i].employerId.fullName ? res.jobs[i].employerId.fullName : (res.jobs[i].employerId.lastName ? (res.jobs[i].employerId.firstName + ' ' + res.jobs[i].employerId.lastName) : res.jobs[i].employerId.firstName) : null,
                                 employerEmail: res.jobs[i].employerId ? res.jobs[i].employerId.email : null,
                                 employerPhoneNumber: res.jobs[i].employerId ? res.jobs[i].employerId.countryCode + res.jobs[i].employerId.phoneNumber : null,
@@ -175,7 +176,7 @@ export class AllJobs implements OnInit {
                                 profilePicture: res.jobs[i].employerId ? res.jobs[i].employerId.profilePicture ? res.jobs[i].employerId.profilePicture.thumb ? res.jobs[i].employerId.profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png' : 'assets/img/user.png',
                                 categoryImage: res.jobs[i].categoryId ? res.jobs[i].categoryId.image ? res.jobs[i].categoryId.image.thumb ? res.jobs[i].categoryId.image.thumb : 'assets/img/image-placeholder.jpg' : 'assets/img/image-placeholder.jpg' : 'assets/img/image-placeholder.jpg',
                                 coordinates: coordinates,
-                                distance: res.jobs[i].distance,
+                                distance: res.jobs[i].distance / 1609.34,
                                 rate: res.jobs[i].rate,
                                 rateType: res.jobs[i].rateType,
                                 title: res.jobs[i].title,
@@ -184,7 +185,9 @@ export class AllJobs implements OnInit {
                                 phoneNumber: res.jobs[i].employerId ? res.jobs[i].employerId.countryCode + ' ' + res.jobs[i].employerId.phoneNumber : '',
                                 email: res.jobs[i].employerId ? res.jobs[i].employerId.email : ''
                             };
+                            
                             this.jobs.push(job);
+                            this.createMapCluster(this.jobs);
                         }
                     }
                 }
@@ -224,20 +227,20 @@ export class AllJobs implements OnInit {
         let timeDiffhours = timeDiffMinutes / 60;
         let timeDiffDays = timeDiffhours / 24;
         let timeDiffString = timeDiffMinutes.toString();
-        if(timeDiffhours < 1) {
-            if(timeDiffMinutes < 2) {
+        if (timeDiffhours < 1) {
+            if (timeDiffMinutes < 2) {
                 return '1 min';
             } else {
                 return Math.floor(timeDiffMinutes).toString() + ' min';
             }
-        } else if(timeDiffDays < 1) {
-            if(timeDiffhours < 2) {
+        } else if (timeDiffDays < 1) {
+            if (timeDiffhours < 2) {
                 return '1 hr';
             } else {
                 return Math.floor(timeDiffhours).toString() + ' hrs';
             }
         } else {
-            if(timeDiffDays < 2) {
+            if (timeDiffDays < 2) {
                 return '1 day';
             } else {
                 return Math.floor(timeDiffDays).toString() + ' days';
@@ -246,11 +249,19 @@ export class AllJobs implements OnInit {
     }
 
     createMapCluster(markers) {
+        let min = 0.999999;
+        let max = 1.000001;
         for (let i = 0; i < markers.length; i++) {
             for (let j = 0; j < markers.length; j++) {
                 if (markers[i] == markers[j]) {
-                    //let newLatLng = new google.maps.LatLng(markers[i].coordinates[0] + i /10000, markers[i].coordinates[1]);
-                    markers[i].coordinates = [markers[i].coordinates[0] + i / 100000, markers[i].coordinates[1]];
+                    let offsetLat = markers[i].coordinates[0] * (Math.random() * (max - min) + min);
+                    let offsetLng = markers[i].coordinates[1] * (Math.random() * (max - min) + min);
+                    let point = new google.maps.LatLng(offsetLat, offsetLng);
+                    markers[i].coordinates = [point.lat(), point.lng()];
+                    this.bounds.extend(new google.maps.LatLng(markers[i].coordinates[0], markers[i].coordinates[1]));
+                    if (this.map) {
+                        this.map.fitBounds(this.bounds);
+                    }
                 }
             }
         }
@@ -392,8 +403,10 @@ export class AllJobs implements OnInit {
     }
 
     showUserDetail(user) {
-        let dialogRef = this.dialog.open(EmployerDetailDialog);
-        dialogRef.componentInstance.userDetails = user;
+        this.dataService.setData('userId', user.userId);
+        this.router.navigate(['pages/settings/employerprofile']);
+        /* let dialogRef = this.dialog.open(EmployerDetailDialog);
+        dialogRef.componentInstance.userDetails = user; */
     }
 
     changeMap(lat, lng) {
@@ -529,6 +542,7 @@ export class AllJobs implements OnInit {
         if (data) {
             this.info = {
                 id: data.id,
+                userId: data.userId,
                 employerName: data.employerName,
                 employerEmail: data.employerEmail,
                 employerPhoneNumber: data.employerPhoneNumber,

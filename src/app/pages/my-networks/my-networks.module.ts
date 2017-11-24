@@ -22,8 +22,8 @@ import {
     MdNativeDateModule,
     MdPaginatorModule
 } from '@angular/material';
-import { routing } from './labor-list.routing';
-import { LaborList } from './labor-list.component';
+import { routing } from './my-networks.routing';
+import { MyNetworks } from './my-networks.component';
 import { AllLaborList } from './components/all-labors/all-labors.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { GooglePlaceModule } from 'ng2-google-place-autocomplete';
@@ -58,11 +58,11 @@ import { NguiMapModule } from '@ngui/map';
         }),
     ],
     declarations: [
-        LaborList,
+        MyNetworks,
         AllLaborList
     ],
     entryComponents: [
     ],
 })
 
-export class LaborListModule { }
+export class MyNetworksModule { }

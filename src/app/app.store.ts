@@ -13,7 +13,7 @@ import { setting, SettingEffects } from './pages/settings/state';
 import { donation, DonationsEffects } from './pages/donations/state';
 import { job, top, JobEffects } from './pages/jobs/state';
 import { labor, topList, LaborEffects } from './pages/labors/state';
-import { laborList, LaborListEffects } from './pages/labor-list/state';
+import { network, MyNetworkEffects } from './pages/my-networks/state';
 import { post, PostEffects } from './pages/posts/state';
 import { request, RequestEffects } from './pages/requests/state';
 import { subscription, SubscriptionEffects } from './pages/subscriptions/state';
@@ -34,7 +34,7 @@ import { feedback, FeedbackEffects } from './pages/feedbacks/state';
             top,
             labor,
             topList,
-            laborList,
+            network,
             post,
             request,
             donation,
@@ -62,7 +62,7 @@ import { feedback, FeedbackEffects } from './pages/feedbacks/state';
         EffectsModule.run(FeedbackEffects),
         EffectsModule.run(JobEffects),
         EffectsModule.run(LaborEffects),
-        EffectsModule.run(LaborListEffects),
+        EffectsModule.run(MyNetworkEffects),
         EffectsModule.run(DonationsEffects),
         EffectsModule.run(PostEffects),
         EffectsModule.run(RequestEffects)

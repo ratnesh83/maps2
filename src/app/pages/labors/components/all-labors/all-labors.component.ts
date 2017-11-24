@@ -175,7 +175,7 @@ export class AllLabors implements OnInit {
                                 profilePicture: res.labors[i] ? res.labors[i].profilePicture ? res.labors[i].profilePicture.thumb ? res.labors[i].profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png' : 'assets/img/user.png',
                                 categoryImage: res.labors[i].categoryId ? res.labors[i].categoryId.image ? res.labors[i].categoryId.image.thumb ? res.labors[i].categoryId.image.thumb : 'assets/img/image-placeholder.jpg' : 'assets/img/image-placeholder.jpg' : 'assets/img/image-placeholder.jpg',
                                 coordinates: coordinates,
-                                distance: res.labors[i].distance,
+                                distance: res.labors[i].distance / 1609.34,
                                 rate: res.labors[i].rate,
                                 rateType: res.labors[i].rateType,
                                 title: res.labors[i].title,
@@ -185,6 +185,7 @@ export class AllLabors implements OnInit {
                                 email: res.labors[i].email
                             };
                             this.labors.push(labor);
+                            this.createMapCluster(this.labors);
                         }
                     }
                 }
@@ -261,6 +262,25 @@ export class AllLabors implements OnInit {
                 reject(e);
             }
         });
+    }
+
+    createMapCluster(markers) {
+        let min = 0.999999;
+        let max = 1.000001;
+        for (let i = 0; i < markers.length; i++) {
+            for (let j = 0; j < markers.length; j++) {
+                if (markers[i] == markers[j]) {
+                    let offsetLat = markers[i].coordinates[0] * (Math.random() * (max - min) + min);
+                    let offsetLng = markers[i].coordinates[1] * (Math.random() * (max - min) + min);
+                    let point = new google.maps.LatLng(offsetLat, offsetLng);
+                    markers[i].coordinates = [point.lat(), point.lng()];
+                    this.bounds.extend(new google.maps.LatLng(markers[i].coordinates[0], markers[i].coordinates[1]));
+                    if (this.map) {
+                        this.map.fitBounds(this.bounds);
+                    }
+                }
+            }
+        }
     }
 
     showPosition(position) {
@@ -377,8 +397,10 @@ export class AllLabors implements OnInit {
     }
 
     showLaborDetail(labor) {
-        let dialogRef = this.dialog.open(UserDetailDialog);
-        dialogRef.componentInstance.userDetails = labor;
+        this.dataService.setData('userId', labor.id);
+        this.router.navigate(['pages/settings/userprofile']);
+        /* let dialogRef = this.dialog.open(UserDetailDialog);
+        dialogRef.componentInstance.userDetails = labor; */
     }
 
     changeMap(lat, lng) {

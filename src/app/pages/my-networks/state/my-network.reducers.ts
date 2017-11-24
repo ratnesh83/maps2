@@ -14,7 +14,7 @@ const initialState: any = {
     error: null
 };
 
-export const laborList: ActionReducer<any> = (state = initialState, action: Action) => {
+export const network: ActionReducer<any> = (state = initialState, action: Action) => {
     switch (action.type) {
 
         case 'APP_GET_LABORS_LIST':

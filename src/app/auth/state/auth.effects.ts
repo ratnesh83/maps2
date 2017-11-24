@@ -559,6 +559,7 @@ export class AuthEffects {
                     localStorage.removeItem('token');
                     localStorage.removeItem('tokenSession');
                     localStorage.removeItem('jobId');
+                    localStorage.removeItem('userId');
                     localStorage.removeItem('requestId');
                     this.dataService.removeUserRegisterationId();
                     this.dataService.removeUserRegisterationAccessToken();
@@ -572,6 +573,7 @@ export class AuthEffects {
                     localStorage.removeItem('token');
                     localStorage.removeItem('tokenSession');
                     localStorage.removeItem('jobId');
+                    localStorage.removeItem('userId');
                     localStorage.removeItem('requestId');
                     this.dataService.removeUserRegisterationId();
                     this.dataService.removeUserRegisterationAccessToken();

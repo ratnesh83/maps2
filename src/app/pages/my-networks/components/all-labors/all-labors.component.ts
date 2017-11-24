@@ -4,7 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
-import * as labor from '../../state/labor.actions';
+import * as labor from '../../state/my-network.actions';
 import * as app from '../../../../state/app.actions';
 import { MdPaginator } from '@angular/material';
 import { BaThemeSpinner } from '../../../../theme/services';
@@ -52,7 +52,7 @@ export class AllLaborList implements OnInit {
         this.length = 1;
         this.pageIndex = 0;
         this.laborListStore = this.store
-            .select('laborList')
+            .select('network')
             .subscribe((res: any) => {
                 if (res) {
                     this.labors = res.labors;
