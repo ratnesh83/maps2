@@ -31,6 +31,7 @@ export class JobDetails implements OnInit {
     public storeData;
     public jwtHelper: JwtHelper = new JwtHelper();
     public user;
+    public canApply;
     public address;
     public latitude;
     public longitude;
@@ -61,6 +62,7 @@ export class JobDetails implements OnInit {
             .subscribe((res: any) => {
                 if (res) {
                     this.job = res.job;
+                    this.canApply = res.canApply;
                 }
                 if (res) {
                     this.labours = res.labours;
@@ -83,6 +85,13 @@ export class JobDetails implements OnInit {
                 type: auth.actionTypes.AUTH_GET_USER_DETAILS_BY_ID,
                 payload: {
                     userId: this.user._id
+                }
+            });
+            this.store.dispatch({
+                type: job.actionTypes.APP_CHECK_APPLY,
+                payload: {
+                    jobId: this.dataService.getData('jobId'),
+                    laborId: this.user._id
                 }
             });
         }
@@ -141,6 +150,20 @@ export class JobDetails implements OnInit {
         if (this.labours && this.labours[id]) {
             this.labours[id].showEmail = true;
         }
+    }
+
+    cancelJob() {
+        let address = this.address;
+        address.latitude = this.latitude;
+        address.longitude = this.longitude;
+        delete address.location;
+        this.store.dispatch({
+            type: job.actionTypes.APP_ACCEPT_JOB, payload: {
+                jobId: this.dataService.getData('jobId'),
+                action: 'CANCELLED_BY_LABOUR',
+                labourAddress: address
+            }
+        });
     }
 
     applyJob() {

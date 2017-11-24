@@ -186,7 +186,7 @@ export class AllLabors implements OnInit {
                             };
                             this.labors.push(labor);
                             this.createMapCluster(this.labors);
-                        }
+                        } 
                     }
                 }
             });

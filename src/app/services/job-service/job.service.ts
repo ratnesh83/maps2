@@ -50,6 +50,14 @@ export class JobService {
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
 
+    checkApply(payload) {
+        let url;
+        this.authRequired = true;
+        this.utcOffset = false;
+        url = environment.APP.API_URL + environment.APP.CHECK_APPLY + '?jobId=' + payload.jobId + '&labourId=' + payload.laborId;
+        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+    }
+
     acceptJob(payload) {
         this.authRequired = true;
         this.utcOffset = false;

@@ -172,7 +172,8 @@ export class PagesMenuService {
                                 icon: 'icon-wrap fa fa-question',
                                 selected: false,
                                 expanded: false,
-                                order: 100
+                                order: 100,
+                                auth: ['admin']
                             }
                         }
                     }

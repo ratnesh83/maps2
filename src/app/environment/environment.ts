@@ -31,6 +31,7 @@ export const environment = {
         GET_TOP_LIST: '/api/v2/user/getAppLatestData',
         POST_FEEDBACK: '/api/v1/jobs/ratings/',
         EDIT_POST_JOB: '/api/v1/jobs/editJob/',
+        CHECK_APPLY: '/api/v1/jobs/checkIfEligibleToApply',
 
         GET_ALL_BOOKING: '/admin/getAllAvailabeBooking',
         GET_ALL_OUTGOING_BOOKING: '/admin/getOngoingBooking',
