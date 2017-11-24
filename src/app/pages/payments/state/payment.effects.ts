@@ -74,16 +74,53 @@ export class PaymentEffects {
                 if (result.statusCode == 201) {
                   console.log("donated");
                   localStorage.removeItem('payamount');
-                  this.store.dispatch({ type: payment.actionTypes.GET_CARDS});                    
+                  this.store.dispatch({ type: payment.actionTypes.GET_CARDS});   
+                  this.router.navigate(['/pages/donations']);                 
                 }
               }
               , (error) => {
                 if (error.statusCode === 401 || error.statusCode === 403) {
-                  console.log("error")
+                  console.log("error");
                 }
               }
             );
           });
-
-}
+          @Effect({dispatch: false})
+          deleteCard$ = this.actions$
+            .ofType('DELETE_CARD')
+            .do((action) => {
+                console.log(action.payload);
+              this.DonationsService.deleteCard(action.payload).subscribe((result) => {
+                  if (result.statusCode == 200) {
+                    console.log("deleleted");
+                    this.store.dispatch({ type: payment.actionTypes.GET_CARDS});                    
+                  }
+                }
+                , (error) => {
+                  if (error.statusCode === 401 || error.statusCode === 403) {
+                    console.log("error");
+                  }
+                }
+              );
+            });
+            @Effect({dispatch: false})
+            setAsDefault$ = this.actions$
+              .ofType('SET_AS_DEFAULT')
+              .do((action) => {
+                this.DonationsService.setAsDefault(action.payload).subscribe((result) => {
+                    if (result.statusCode == 200) {
+                      console.log("set as default");
+                      this.store.dispatch({ type: payment.actionTypes.GET_CARDS});                    
+                    }
+                  }
+                  , (error) => {
+                    if (error.statusCode === 401 || error.statusCode === 403) {
+                      console.log("error");
+                    }
+                  }
+                );
+              });
+          }
+  
+        
 

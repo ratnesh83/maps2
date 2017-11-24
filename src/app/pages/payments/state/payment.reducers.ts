@@ -25,7 +25,16 @@ export const payment: ActionReducer<any> = (state = initialState, action: Action
 
         case 'PAYMENT':
         return Object.assign({},''); 
-        
+
+        case 'CONFIRM_DELETE':
+        return Object.assign({}, state,action.payload); 
+
+        case 'DELETE_CARD':
+        return Object.assign({},state); 
+
+        case 'SET_AS_DEFAULT':
+        return Object.assign({},state); 
+
         default:
         return state;
     }

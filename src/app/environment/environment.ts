@@ -97,7 +97,9 @@ export const environment = {
         UPDATE_PROFILE_INFO: '/api/v1/user/editWebProfile',
         ADD_CARD: '/api/v1/card/addCard',
         GET_CARDS: '/api/v1/card/getCards',
-        DONATE: '/api/v1/donations'
+        DONATE: '/api/v1/donations',
+        SET_AS_DEFAULT: '/api/v1/card/setDefaultCard',
+        DELETE_CARD: '/api/v1/card/deleteCard',
 
     },
 

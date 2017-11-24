@@ -49,6 +49,7 @@ export class AllPayments {
     message = '';
     public cards=[];
     public defaultCard;
+    public paymode;
   
     constructor(private fb: FormBuilder,
                 private store: Store<any>,
@@ -76,6 +77,9 @@ export class AllPayments {
                this.defaultCard = res.defaultCard;
             });
             this.store.dispatch({ type: payment.actionTypes.GET_CARDS});  
+            if(localStorage.getItem("payamount")){
+                this.paymode = true;
+            }
         }
 
     form = new FormGroup({
@@ -121,7 +125,8 @@ export class AllPayments {
             });
           }
           openModalNew(value){
-              console.log(value);
+            console.log(value,"abc");
+            this.store.dispatch({ type: payment.actionTypes.CONFIRM_DELETE,payload:{card:value.cardId}});              
             this.deleteCardActionModel = this.modalService.open(deleteCardModal, { size: 'sm' });
           }
           pay(){

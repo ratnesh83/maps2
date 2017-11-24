@@ -64,16 +64,15 @@
                             </div>
                         </div>
                         <div class="text-center">
-                            <button class="save-card-btn col-sm-6">
+                            <button type="submit" class="save-card-btn col-sm-5">
                                 SAVE CARD
                             </button>
-                        </div>
+                                <button type="button" class="save-card-btn col-sm-5" (click)="pay()" *ngIf="paymode">
+                                    PROCEED
+                                </button>
+                            </div>  
                     </form>
-                    <div class="text-center">
-                        <button class="save-card-btn col-sm-6" (click)="pay()">
-                            PROCEED
-                        </button>
-                    </div>                    
+                                      
                 </div>
             </md-card-content>
         </md-card>
