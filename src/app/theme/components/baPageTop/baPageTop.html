@@ -3,7 +3,7 @@
         <div class="container">
             <a href (click)="toggleMenu()" class="hidden-lg-up collapse-menu-link ion-navicon"></a>
             <a class="al-logo clearfix">
-                <img style="outline: none; cursor: pointer" routerLink="/pages/home" src="assets/img/logo-2.png">
+                <img style="outline: none; cursor: pointer" routerLink="{{ homeUrl }}" src="assets/img/logo-2.png">
 
                 <span routerLink="/pages/posts/allposts" class="hidden-md-down top-nav-links" style="margin-left: 41px">
                     MY POSTS
@@ -11,11 +11,34 @@
                 <span routerLink="/pages/requests/allrequests" class="hidden-md-down top-nav-links">
                     MY REQUESTS
                 </span>
-                <span class="hidden-md-down top-nav-links" style="margin-left: 10px">
+                <span id="my-networks" data-toggle="dropdown" aria-expanded="false" class="hidden-md-down top-nav-links" style="margin-left: 10px">
                     MY NETWORKS
-                    <i data-toggle="dropdown" style="margin-left: 5px" aria-expanded="false" class="fa fa-caret-down hidden-xs-down"></i>
+                    <i aria-expanded="false" style="margin-left: 5px" class="fa fa-caret-down hidden-xs-down"></i>
                 </span>
-                
+
+                <ul class="dropdown-menu top-dropdown-menu my-networks-div" aria-labelledby="my-networks">
+                    <li (click)="goToLaborList()" class="dropdown-item my-net-li">
+                        <a class="signout my-net-link">
+                            LABOR LIST
+                        </a>
+                    </li>
+                    <li (click)="goToEmployerList()" class="dropdown-item my-net-li">
+                        <a class="signout my-net-link">
+                            EMPLOYER LIST
+                        </a>
+                    </li>
+                    <!-- <li (click)="goToCompaniesList()" class="dropdown-item my-net-li">
+                        <a class="signout my-net-link">
+                            COMPANIES LIST
+                        </a>
+                    </li>
+                    <li (click)="goToFollowList()" class="dropdown-item my-net-li">
+                        <a class="signout my-net-link">
+                            CONTACTS LIST
+                        </a>
+                    </li> -->
+                </ul>
+
             </a>
 
             <div class="user-profile clearfix">
@@ -26,10 +49,9 @@
                         {{ name }}
                     </span>
                     <i data-toggle="dropdown" aria-expanded="false" class="fa fa-caret-down hidden-xs-down"></i>
-
                     <ul class="dropdown-menu top-dropdown-menu profile-dropdown" aria-labelledby="user-profile-dd">
                         <li class="dropdown-item">
-                            <a href routerLink="/pages/settings" class="signout">
+                            <a href routerLink="{{ profileUrl }}" class="signout">
                                 <i class="fa fa-user"></i>
                                 Profile
                             </a>
@@ -42,8 +64,6 @@
                         </li>
                     </ul>
                 </div>
-
-
             </div>
         </div>
     </div>
