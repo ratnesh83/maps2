@@ -21,6 +21,7 @@ import { CommonService } from './services/common.service';
 import { UserService } from './services/user-service/user.service';
 import { DataService } from './services/data-service/data.service';
 import { JobService } from './services/job-service/job.service';
+import { MyNetworkService } from './services/network-service/network.service';
 import { LaborService } from './services/labor-service/labor.service';
 import { PostService } from './services/post-service/post.service';
 import { RequestService } from './services/request-service/request.service';
@@ -118,6 +119,7 @@ export type StoreType = {
         UserService,
         DataService,
         JobService,
+        MyNetworkService,
         LaborService,
         PostService,
         RequestService,

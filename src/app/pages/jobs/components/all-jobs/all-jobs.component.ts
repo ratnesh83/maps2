@@ -168,6 +168,7 @@ export class AllJobs implements OnInit {
                             }
                             let job = {
                                 id: res.jobs[i]._id,
+                                userId: res.jobs[i].employerId ? res.jobs[i].employerId._id : '',
                                 employerName: res.jobs[i].employerId ? res.jobs[i].employerId.fullName ? res.jobs[i].employerId.fullName : (res.jobs[i].employerId.lastName ? (res.jobs[i].employerId.firstName + ' ' + res.jobs[i].employerId.lastName) : res.jobs[i].employerId.firstName) : null,
                                 employerEmail: res.jobs[i].employerId ? res.jobs[i].employerId.email : null,
                                 employerPhoneNumber: res.jobs[i].employerId ? res.jobs[i].employerId.countryCode + res.jobs[i].employerId.phoneNumber : null,
@@ -402,8 +403,10 @@ export class AllJobs implements OnInit {
     }
 
     showUserDetail(user) {
-        let dialogRef = this.dialog.open(EmployerDetailDialog);
-        dialogRef.componentInstance.userDetails = user;
+        this.dataService.setData('userId', user.userId);
+        this.router.navigate(['pages/settings/userprofile']);
+        /* let dialogRef = this.dialog.open(EmployerDetailDialog);
+        dialogRef.componentInstance.userDetails = user; */
     }
 
     changeMap(lat, lng) {
@@ -539,6 +542,7 @@ export class AllJobs implements OnInit {
         if (data) {
             this.info = {
                 id: data.id,
+                userId: data.userId,
                 employerName: data.employerName,
                 employerEmail: data.employerEmail,
                 employerPhoneNumber: data.employerPhoneNumber,

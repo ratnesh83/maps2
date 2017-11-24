@@ -22,7 +22,7 @@ export const routes: Routes = [
             { path: 'labors', loadChildren: 'app/pages/labors/labors.module#LaborsModule' },
             { path: 'posts', loadChildren: 'app/pages/posts/posts.module#PostsModule' },
             { path: 'requests', loadChildren: 'app/pages/requests/requests.module#RequestsModule' },
-            { path: 'users', loadChildren: 'app/pages/labor-list/labor-list.module#LaborListModule' },
+            { path: 'mynetworks', loadChildren: 'app/pages/my-networks/my-networks.module#MyNetworksModule' },
             { path: 'notification', loadChildren: 'app/pages/notification/notifications.module#NotificationsModule' },
             { path: 'feedbacks', loadChildren: 'app/pages/feedbacks/feedbacks.module#FeedbacksModule' },
             { path: 'helpcenter', loadChildren: 'app/pages/help-center/help-center.module#HelpCenterModule' },

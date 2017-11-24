@@ -5,20 +5,20 @@ import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { cloneDeep, random } from 'lodash';
-import { LaborService } from '../../../services/labor-service/labor.service';
-import * as labor from './labor.actions';
+import { MyNetworkService } from '../../../services/network-service/network.service';
+import * as network from './my-network.actions';
 import * as app from '../../../state/app.actions';
 import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from '../../../theme/services';
 
 @Injectable()
-export class LaborListEffects {
+export class MyNetworkEffects {
 
     @Effect({ dispatch: false })
     getLaborList$ = this.actions$
         .ofType('APP_GET_LABORS_LIST')
         .do((action) => {
             this._spinner.show();
-            this.LaborService.getAllLaborList(action.payload).subscribe((result) => {
+            this.MyNetworkService.getAllLaborList(action.payload).subscribe((result) => {
                 this._spinner.hide();
                 if (result.message == 'Action complete.' || result.statusCode == 200) {
                     /* let payload = {
@@ -28,7 +28,7 @@ export class LaborListEffects {
                         count: result.data.count
                     }; */
                     let payload = result.data;
-                    this.store.dispatch(new labor.AppGetLaborListSuccess(payload));
+                    this.store.dispatch(new network.AppGetLaborListSuccess(payload));
                 }
             }
                 , (error) => {
@@ -57,7 +57,7 @@ export class LaborListEffects {
         private actions$: Actions,
         private store: Store<any>,
         private router: Router,
-        private LaborService: LaborService,
+        private MyNetworkService: MyNetworkService,
         private toastrService: ToastrService,
         private _spinner: BaThemeSpinner
     ) { }

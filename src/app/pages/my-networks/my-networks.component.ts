@@ -5,7 +5,7 @@ import { Effect, Actions } from '@ngrx/effects';
 import * as labor from './state/labor.actions';
 
 @Component({
-    selector: 'LaborList',
+    selector: 'my-networks',
     template: `
         <div>
             <ba-content-top></ba-content-top>
@@ -13,7 +13,7 @@ import * as labor from './state/labor.actions';
         </div>
     `
 })
-export class LaborList {
+export class MyNetworks {
 
     constructor(private store: Store<any>, private router: Router) {
     }

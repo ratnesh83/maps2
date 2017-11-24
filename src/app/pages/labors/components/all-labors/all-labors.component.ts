@@ -397,8 +397,10 @@ export class AllLabors implements OnInit {
     }
 
     showLaborDetail(labor) {
-        let dialogRef = this.dialog.open(UserDetailDialog);
-        dialogRef.componentInstance.userDetails = labor;
+        this.dataService.setData('userId', labor.id);
+        this.router.navigate(['pages/settings/userprofile']);
+        /* let dialogRef = this.dialog.open(UserDetailDialog);
+        dialogRef.componentInstance.userDetails = labor; */
     }
 
     changeMap(lat, lng) {

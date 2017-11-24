@@ -1,12 +1,12 @@
 import { Routes, RouterModule } from '@angular/router';
 
-import { LaborList } from './labor-list.component';
+import { MyNetworks } from './my-networks.component';
 import { AllLaborList } from './components/all-labors/all-labors.component';
 
 const routes: Routes = [
     {
         path: '',
-        component: LaborList,
+        component: MyNetworks,
         children: [
 
             { path: '', redirectTo: 'alllabors', pathMatch: 'full' },

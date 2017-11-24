@@ -49,8 +49,7 @@ export class PagesMenuService {
                                 icon: 'icon-wrap fa fa-tasks',
                                 selected: false,
                                 expanded: false,
-                                order: 100,
-                                auth: ['USER']
+                                order: 100
                             }
                         },
                     },
@@ -62,8 +61,7 @@ export class PagesMenuService {
                                 icon: 'icon-wrap fa fa-tasks',
                                 selected: false,
                                 expanded: false,
-                                order: 100,
-                                auth: ['USER']
+                                order: 100
                             }
                         },
                     },
@@ -87,21 +85,19 @@ export class PagesMenuService {
                                 icon: 'icon-wrap fa fa-tasks',
                                 selected: false,
                                 expanded: false,
-                                order: 100,
-                                auth: ['USER']
+                                order: 100
                             }
                         },
                     },
                     {
-                        path: 'users',
+                        path: 'mynetworks',
                         data: {
                             menu: {
                                 title: 'LABOR LIST',
                                 icon: 'icon-wrap fa fa-tasks',
                                 selected: false,
                                 expanded: false,
-                                order: 100,
-                                auth: ['USER']
+                                order: 100
                             }
                         },
                     },
@@ -113,8 +109,7 @@ export class PagesMenuService {
                                 icon: 'icon-wrap fa fa-newspaper-o',
                                 selected: false,
                                 expanded: false,
-                                order: 100,
-                                auth: ['admin']
+                                order: 100
                             }
                         },
                     },
@@ -164,8 +159,7 @@ export class PagesMenuService {
                                 icon: 'icon-wrap fa fa-money',
                                 selected: false,
                                 expanded: false,
-                                order: 100,
-                                auth: ['USER']
+                                order: 100
                             }
                         },
                     },
@@ -177,7 +171,7 @@ export class PagesMenuService {
                                 icon: 'icon-wrap fa fa-question',
                                 selected: false,
                                 expanded: false,
-                                order: 100,
+                                order: 100
                             }
                         }
                     }
