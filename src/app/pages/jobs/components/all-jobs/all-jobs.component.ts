@@ -404,7 +404,7 @@ export class AllJobs implements OnInit {
 
     showUserDetail(user) {
         this.dataService.setData('userId', user.userId);
-        this.router.navigate(['pages/settings/userprofile']);
+        this.router.navigate(['pages/settings/employerprofile']);
         /* let dialogRef = this.dialog.open(EmployerDetailDialog);
         dialogRef.componentInstance.userDetails = user; */
     }
