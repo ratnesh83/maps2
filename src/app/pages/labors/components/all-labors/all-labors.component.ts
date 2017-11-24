@@ -157,6 +157,7 @@ export class AllLabors implements OnInit {
                     if (res.labors && res.getLaborHit) {
                         this.count = res.count;
                         this.labors = [];
+                        let labors = [];
                         for (let i = 0; i < res.labors.length; i++) {
                             let coordinates = [0, 0];
                             if (res.labors[i].locationDetails && res.labors[i].locationDetails.location) {
@@ -184,9 +185,10 @@ export class AllLabors implements OnInit {
                                 phoneNumber: res.labors[i].countryCode + ' ' + res.labors[i].phoneNumber,
                                 email: res.labors[i].email
                             };
-                            this.labors.push(labor);
-                            this.createMapCluster(this.labors);
-                        } 
+                            // this.labors.push(labor);
+                            labors.push(labor);
+                        }
+                        this.createMapCluster(labors);
                     }
                 }
             });
@@ -225,20 +227,20 @@ export class AllLabors implements OnInit {
         let timeDiffhours = timeDiffMinutes / 60;
         let timeDiffDays = timeDiffhours / 24;
         let timeDiffString = timeDiffMinutes.toString();
-        if(timeDiffhours < 1) {
-            if(timeDiffMinutes < 2) {
+        if (timeDiffhours < 1) {
+            if (timeDiffMinutes < 2) {
                 return '1 min';
             } else {
                 return Math.floor(timeDiffMinutes).toString() + ' min';
             }
-        } else if(timeDiffDays < 1) {
-            if(timeDiffhours < 2) {
+        } else if (timeDiffDays < 1) {
+            if (timeDiffhours < 2) {
                 return '1 hr';
             } else {
                 return Math.floor(timeDiffhours).toString() + ' hrs';
             }
         } else {
-            if(timeDiffDays < 2) {
+            if (timeDiffDays < 2) {
                 return '1 day';
             } else {
                 return Math.floor(timeDiffDays).toString() + ' days';
@@ -280,6 +282,7 @@ export class AllLabors implements OnInit {
                     }
                 }
             }
+            this.labors.push(markers[i]);
         }
     }
 

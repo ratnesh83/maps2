@@ -157,6 +157,7 @@ export class AllJobs implements OnInit {
                     if (res.jobs && res.getJobHit) {
                         this.count = res.count;
                         this.jobs = [];
+                        let jobs = [];
                         for (let i = 0; i < res.jobs.length; i++) {
                             let coordinates = [0, 0];
                             if (res.jobs[i].employerAddress && res.jobs[i].employerAddress.location) {
@@ -186,9 +187,10 @@ export class AllJobs implements OnInit {
                                 email: res.jobs[i].employerId ? res.jobs[i].employerId.email : ''
                             };
                             
-                            this.jobs.push(job);
-                            this.createMapCluster(this.jobs);
+                            // this.jobs.push(job);
+                            jobs.push(job);
                         }
+                        this.createMapCluster(jobs);
                     }
                 }
             });
@@ -264,6 +266,7 @@ export class AllJobs implements OnInit {
                     }
                 }
             }
+            this.jobs.push(markers[i]);
         }
     }
 
