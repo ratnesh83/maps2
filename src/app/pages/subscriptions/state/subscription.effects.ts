@@ -224,6 +224,28 @@ export class SubscriptionEffects {
             this.toastrService.error(message, title);
         });
 
+        @Effect({dispatch: false})
+        getPlan$ = this.actions$
+          .ofType('GET_PLAN')
+          .do((action) => { 
+              console.log("1")         
+            this.SubscriptionService.getPlans().subscribe((result) => {
+                console.log(result);
+                if (result.statusCode == 200) {
+                    console.log("2");
+                  let payload = result;
+                  this._spinner.hide();
+                  this.store.dispatch(new subscription.GetPlanSuccessAction(payload));            
+                }
+              }
+              , (error) => {
+                this._spinner.hide();            
+                if (error.statusCode === 401 || error.statusCode === 403) {
+                }
+              }
+            );
+          });
+
     constructor(
         private actions$: Actions,
         private store: Store<any>,

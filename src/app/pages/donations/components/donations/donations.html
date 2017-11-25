@@ -29,19 +29,19 @@
                     </div>
                     <div class="row price-btns side-margin">
                         <div class="col-sm-12 col-md-4 price-btn">
-                            <button class="price col-sm-12" (click)="donate(10)">$10</button>
+                            <button class="price col-sm-12" (click)="changeAmount(10,1)" id="1" [class.active]="selected == '1'">$10</button>
                         </div>
                         <div class="col-sm-12 col-md-4 price-btn">
-                            <button class="price col-sm-12" (click)="donate(20)">$20</button>
+                            <button class="price col-sm-12" (click)="changeAmount(20,2)" id="2" [class.active]="selected == '2'">$20</button>
                         </div>
                         <div class="col-sm-12 col-md-4 price-btn">
-                            <button class="price col-sm-12" (click)="donate(30)">$30</button>
+                            <button class="price col-sm-12" (click)="changeAmount(30,3)" id="3" [class.active]="selected == '3'">$30</button>
                         </div>
                         <div class="col-sm-12 col-md-6 price-btn">
-                            <button class="price col-sm-12" (click)="donate(40)">$40</button>
+                            <button class="price col-sm-12" (click)="changeAmount(40,4)" id="4" [class.active]="selected == '4'">$40</button>
                         </div>
                         <div class="col-sm-12 col-md-6 price-btn">
-                            <button class="price col-sm-12" style="background:#026eff;color:white;" (click)="donate(50)">$50</button>
+                            <button class="price col-sm-12" (click)="changeAmount(50,5)" id="5" [class.active]="selected == '5'">$50</button>
                         </div>
                     </div>
                     <div class="row text-center or-text">
@@ -50,7 +50,7 @@
                         </div>
                     </div>
                     <div class="input-div col-sm-12 ">
-                        <input class="donation-input col-sm-12" type="text" pattern="^[0-9]*$" #amount>
+                        <input class="donation-input col-sm-12" type="text" #amount [value]="donateAmount" name="donateAmount" placeholder="Enter amount you want to donate($)">
                     </div>
                     <div class="text-center">
                         <button class="save-card-btn col-sm-6" (click)="donate(amount.value)">
@@ -59,6 +59,21 @@
                     </div>
                 </div>
             </md-card-content>
+        </md-card>
+    </div>
+</div>
+<i style="display: none" class="fa fa-spinner fa-spin"></i>
+
+<div class="hidden-md-down left-notification-bar">
+    <div class="notification">
+        <div class="notification-banner">
+            Donation History
+        </div>
+        <md-card class="left-notification-card">
+            <md-card-header *ngFor="let item of donationHistory" class="left-notification-head animated bounceInRight">
+                <md-card-title class="left-notification-title"><span class="donateAmount">$&nbsp;{{ item.amount | number }}</span><span class="donateDate">{{item.createdAt | date}}</span></md-card-title>
+                <md-card-subtitle class="left-notification-subtitle">XXXX-XXXX-XXXX-{{item.last4Digits}}</md-card-subtitle>
+            </md-card-header>
         </md-card>
     </div>
 </div>

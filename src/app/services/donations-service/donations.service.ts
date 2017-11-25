@@ -152,6 +152,13 @@ export class DonationsService {
         this.utcOffset = false;
         return this.apiService.putApiWithPath(url,{}, this.authRequired, this.utcOffset);
     }
+    getDonations(payload){
+        let url = environment.APP.API_URL + environment.APP.GET_DONATIONS+"?limit=10&skip=0";
+        this.authRequired = true;
+        this.utcOffset = false;
+        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+    }
+
 
 }
 

@@ -59,14 +59,7 @@ h3{
     color: #999999;
     height: 22px;
 }}
-.lower-input-box{
-    input{
-    height: 60px;
-    border-radius: 3px;
-    background-color: #ffffff;
-    border: solid 1px #f0f0;
-    box-shadow: none;
-}}
+
 .donation-input{
     text-decoration: none;
     box-shadow: none !important;
@@ -74,9 +67,15 @@ h3{
     padding:22px;
     border-radius: 3px;
     font-size: 16px;
+    outline: none;
 }
 .input-div{
+    
     padding:0 calc(10% + 15px) 0 calc(10% + 15px);
+    input::placeholder {
+        color:lightgrey;
+        font-weight: 600;
+      }
 }
 .save-card-btn{
     background:#026eff;
@@ -88,4 +87,50 @@ h3{
     font-weight: 900;
     margin-top: 47px;
   }
-  
+  .active{
+      color:white;
+      background: #026eff;
+  }
+  .left-notification-bar {
+    position: absolute;
+    top: 15px;
+    right: 0px;
+    width: 180px;
+    .notification {
+        width: 100%;
+        background-color: #ffffff;
+        margin-bottom: 15px;
+        .notification-banner {
+            width: 100%;
+            padding: 15px;
+            background-color: #026eff;
+            box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+            color: white;
+        }
+        .left-notification-card.mat-card {
+            padding: 15px;
+            max-height: 200px;
+            overflow-x: hidden;
+            overflow-y: auto;
+            
+        }
+        .left-notification-subtitle.mat-card-subtitle {
+            font-size: smaller;
+        }
+    }
+    .left-notification-head.mat-card-header {
+        .mat-card-header-text {
+            margin-right: 0px !important;
+        }
+    }
+}
+.donateAmount{
+    color: #026eff;
+    font-weight: 900;
+}
+.donateDate{
+    float: right;
+    font-size: 11px;
+    color: #999999;
+
+}

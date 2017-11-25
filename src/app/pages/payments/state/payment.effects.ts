@@ -14,17 +14,24 @@ const types = ['success', 'error', 'info', 'warning'];
 import * as payment from './payment.actions';
 import * as app from '../../../state/app.actions';
 import { setting } from '../../settings/state/setting.reducers';
+import { BaThemeSpinner } from '../../../theme/services';
 import { DonationsService } from '../../../services/donations-service/donations.service';
+import { SubscriptionService } from '../../../services/subscription/subscription.service';
 
 @Injectable()
 export class PaymentEffects {
+  options: ToastrConfig;
+  private lastInserted: number[] = [];
+  
 
     constructor(
         private actions$: Actions,
         private store: Store<any>,
-        private SettingsService: SettingsService, 
+        private SettingsService: SettingsService,
+        private SubscriptionService: SubscriptionService,         
         private DonationsService:DonationsService,       
         private router: Router,
+        private _spinner:BaThemeSpinner,
         /* private paymentService: paymentService, */
         private toastrService: ToastrService
     ) { }
@@ -40,9 +47,9 @@ export class PaymentEffects {
             }
           }
           , (error) => {
-            if (error.statusCode === 401 || error.statusCode === 403) {
-       
+            if (error.statusCode === 401 || error.statusCode === 403) {    
             }
+            this._spinner.hide();   
           }
         );
       });
@@ -56,12 +63,14 @@ export class PaymentEffects {
               if (result.statusCode == 200) {
                 let payload = result.data;
                 console.log(payload);
-                this.store.dispatch(new payment.GetCardsSuccessAction(payload));            
+                this.store.dispatch(new payment.GetCardsSuccessAction(payload));
+                this._spinner.hide();            
               }
             }
             , (error) => {
               if (error.statusCode === 401 || error.statusCode === 403) {
               }
+              this._spinner.hide();                                        
             }
           );
         });
@@ -70,20 +79,63 @@ export class PaymentEffects {
           .ofType('PAYMENT')
           .do((action) => {
               console.log(action.payload);
+        if(action.payload.payFor == 'donation'){
             this.DonationsService.donate(action.payload.data).subscribe((result) => {
                 if (result.statusCode == 201) {
+                  this.router.navigate(['/pages/donations']);                                   
                   console.log("donated");
                   localStorage.removeItem('payamount');
-                  this.store.dispatch({ type: payment.actionTypes.GET_CARDS});   
-                  this.router.navigate(['/pages/donations']);                 
+                  let m = 'donated $'+result.data.amount+' successfully';
+                  let t = 'Success';
+                  const opt = cloneDeep(this.options);
+                  const inserted = this.toastrService[types[0]](m, t, opt);
+                  if (inserted) {
+                    this.lastInserted.push(inserted.toastId);
+                  }
+                  return inserted;
                 }
               }
               , (error) => {
                 if (error.statusCode === 401 || error.statusCode === 403) {
                   console.log("error");
                 }
+                this._spinner.hide();   
               }
             );
+          }
+          if(action.payload.payFor == 'plan'){
+            this.SubscriptionService.buyPlan(action.payload.data).subscribe((result) => {
+              if (result.statusCode == 200) {
+                this.router.navigate(['/pages/subscriptions']);                                   
+                console.log("paln success");
+                localStorage.removeItem('pay');
+                let m = 'paln $'+result.data.amount+' successfully';
+                let t = 'Success';
+                const opt = cloneDeep(this.options);
+                const inserted = this.toastrService[types[0]](m, t, opt);
+                if (inserted) {
+                  this.lastInserted.push(inserted.toastId);
+                }
+                return inserted;
+              }
+            }
+            , (error) => {
+              if (error.statusCode === 401 || error.statusCode === 403) {
+              }
+              this.router.navigate(['/pages/subscriptions']);                                   
+              localStorage.removeItem('pay');
+              this._spinner.hide();                 
+              let m = error.message;
+              let t = 'error';
+              const opt = cloneDeep(this.options);
+              const inserted = this.toastrService[types[0]](m, t, opt);
+                if (inserted) {
+                  this.lastInserted.push(inserted.toastId);
+                }
+                return inserted;
+            }
+          );
+          }
           });
           @Effect({dispatch: false})
           deleteCard$ = this.actions$
@@ -100,6 +152,7 @@ export class PaymentEffects {
                   if (error.statusCode === 401 || error.statusCode === 403) {
                     console.log("error");
                   }
+                  this._spinner.hide();   
                 }
               );
             });
@@ -117,6 +170,7 @@ export class PaymentEffects {
                     if (error.statusCode === 401 || error.statusCode === 403) {
                       console.log("error");
                     }
+                    this._spinner.hide();   
                   }
                 );
               });

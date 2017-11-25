@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, OnDestroy } from '@angular/core';
 import * as payment from '../../state/payment.actions';
 import { BaThemeSpinner } from '../../../../theme/services';
 import { Store } from '@ngrx/store';
@@ -21,7 +21,8 @@ import { deleteCardModal } from '../delete-card/delete-card.modal';
     selector: 'all-payments',
     templateUrl: 'all-payments.html'
 })
-export class AllPayments {
+export class AllPayments implements OnDestroy {
+    
     public deleteCardActionModel;
 
     public payments;
@@ -47,15 +48,19 @@ export class AllPayments {
     options: ToastrConfig;
     title = '';
     message = '';
+
     public cards=[];
     public defaultCard;
-    public paymode;
+    public planmode;
+    public donatemode;
+    public amount;
   
     constructor(private fb: FormBuilder,
                 private store: Store<any>,
                 private _zone: NgZone,
                 private modalService: NgbModal,                
-                private toastrService: ToastrService) {
+                private toastrService: ToastrService,
+                private _spinner:BaThemeSpinner) {
 
         // this.form = this.fb.group({
         //     'cardNumber1': ['', Validators.compose([Validators.required, PaymentValidator.cardNumber])],
@@ -78,8 +83,15 @@ export class AllPayments {
             });
             this.store.dispatch({ type: payment.actionTypes.GET_CARDS});  
             if(localStorage.getItem("payamount")){
-                this.paymode = true;
+                this.donatemode = true;
+                this.amount = localStorage.getItem("payamount");
             }
+            else{
+            if(localStorage.getItem("pay")){
+                this.planmode = true;
+                this.amount = localStorage.getItem("amount");
+            }
+        }
         }
 
     form = new FormGroup({
@@ -90,6 +102,7 @@ export class AllPayments {
     });
 
     onSubmit(value){
+        this._spinner.show();
         let expiryMonth = value.card_expire_date.split('-');
         let expiryYear = expiryMonth[1];
         expiryMonth = expiryMonth[0];
@@ -104,10 +117,6 @@ export class AllPayments {
             // Wrapping inside the Angular zone
             this._zone.run(() => {
                 if (status === 200) {
-                    console.log(response.card.id);
-                    console.log(response.id);
-                    console.log(response);
-                    console.log(response.card.funding);
                     let formValue = {
                       'data':{
                         'stripeToken': response.id,
@@ -118,8 +127,9 @@ export class AllPayments {
                     console.log(formValue)
                       this.store.dispatch({type: payment.actionTypes.ADD_CARD, payload: formValue});
                   }
-                  else {
-                    
+                  else { 
+                      this._spinner.hide();    
+                                      
                   }
                 });
             });
@@ -130,15 +140,37 @@ export class AllPayments {
             this.deleteCardActionModel = this.modalService.open(deleteCardModal, { size: 'sm' });
           }
           pay(){
+              let formValue;
+               if(localStorage.getItem('payamount')){
                 let amount = parseFloat(localStorage.getItem('payamount')); 
-                let formValue = {
+                formValue = {
+                    'payFor':'donation',                    
                     'data':{
                       'amount':amount,
                       'cardId':this.defaultCard,
                     }
                 };    
+            }
+            if(localStorage.getItem('pay')){
+                let planId = localStorage.getItem('pay');
+                formValue = {
+                    'payFor':'plan',
+                    'data':{
+                      'planId':planId,
+                      'cardId':this.defaultCard,
+                    }
+                };    
+            }
+              this._spinner.show();  
               this.store.dispatch({ type: payment.actionTypes.PAYMENT,payload:formValue}); 
+            
           }
+          ngOnDestroy(){   
+              localStorage.removeItem('payamount');
+              localStorage.removeItem('amount');
+              localStorage.removeItem('pay');
+          }
+          
         }
       
 

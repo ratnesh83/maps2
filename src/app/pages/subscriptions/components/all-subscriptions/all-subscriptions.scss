@@ -121,6 +121,9 @@
 //     margin-bottom: 50px;
 // }
 @import "../../../../theme/sass/conf/conf";
+*{
+    outline: none;
+}
 .contact-section {
     margin-top: 10px;
 }
@@ -131,6 +134,11 @@
 }
 .support-image{
     padding: 0 10px 0 10px;
+    img{
+    height: 140px;
+    width: 140px;
+    border-radius: 50%;
+    }
 }
 .text-content{
     margin-top:15px;
@@ -162,9 +170,29 @@
     background-color: #025acc;
     margin-top:8px;
 }
-.line{
+.line-dash{
       border:2px dashed lightgrey;
       width:1px;
       height:100%;
       margin-left:95px;
+}
+@media only screen and (max-width: 768px) { 
+    .inner-content{
+        text-align: center;
+    }
+    .support-image{
+        margin: 0 auto;        
+    }
+    .text-content{
+        .head{
+            text-align: center;
+        }
+        .content{
+            text-align: center;
+        }
+    }
+    .buy-btn{
+        margin: 0 auto;        
+    }
+
 }

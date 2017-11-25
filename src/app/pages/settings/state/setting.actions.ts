@@ -162,7 +162,7 @@ export class AppSettingsError implements Action {
 
 export class GetProfileInfo implements Action {
     type = actionTypes.GET_PROFILE_INFO;
-    constructor(public payload:credentials) { }
+    constructor(public payload:any) { }
 }
 export class GetProfileInfoSuccessAction implements Action {
     type = actionTypes.GET_PROFILE_INFO_SUCCESS;

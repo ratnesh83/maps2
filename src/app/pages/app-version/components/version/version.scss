@@ -34,10 +34,30 @@
 div .support-image{
     padding:0 10px 0 10px;
 }
-.line{
+.line-dash{
     border:2px dashed lightgrey;
     width:1px;
     height:100%;
     margin-left:95px;
+}
+@media only screen and (max-width: 768px) { 
+    .inner-content{
+        text-align: center;
+    }
+    .support-image{
+        margin: 0 auto;        
+    }
+    .text-content{
+        .head{
+            text-align: center;
+        }
+        .content{
+            text-align: center;
+        }
+    }
+    .buy-btn{
+        margin: 0 auto;        
+    }
+
 }
 

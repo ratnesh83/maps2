@@ -13,9 +13,7 @@
 }
 .inner-content{
 }
-.support-image{
-    width:140px !important;
-}
+
 .text-content{
     margin-top:15px;
     .head{
@@ -35,17 +33,7 @@
     text-align: left;
     color: #b1b1b1;
 }
-.buy-btn{
-    font-family: "Roboto", sans-serif;;
-    font-size: 18.8px;
-    font-weight: bold;
-    text-align: center;
-    color: #ffffff;
-    border-radius: 4.4px;
-    background-color: #025acc;
-    position: absolute;
-    bottom:0;
-}
+
 .added-card{
     color:black;
     font-weight: 600;
@@ -131,3 +119,6 @@
 .defaultcheck{
     color:green;
 }  
+.amount{
+    float: right;
+}

@@ -100,7 +100,9 @@ export const environment = {
         DONATE: '/api/v1/donations',
         SET_AS_DEFAULT: '/api/v1/card/setDefaultCard',
         DELETE_CARD: '/api/v1/card/deleteCard',
-
+        GET_PLAN: '/api/v1/membershipPlan/getUsersPlan',
+        BUY_PLAN: '/api/v1/membershipPlan/buyPlan',
+        GET_DONATIONS: '/api/v1/donations'
     },
 
     ERROR: {

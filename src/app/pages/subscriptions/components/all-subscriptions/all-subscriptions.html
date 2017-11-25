@@ -348,55 +348,25 @@
     <div class="contact-section">
         <md-card class="contact-card">
             <md-card-content>
-                <div class="row inner-content col-sm-12">
-                    <div class="support-image">
-                        <img src="assets/img/free.png">
+                <div *ngFor="let item of plans; let i = index">
+                    <div class="row" style="height:60px" *ngIf="i !== 0">
+                        <div class="line-dash hidden-md-down"></div>
                     </div>
-                    <div class="text-content col-sm-12 col-md-12 col-lg-7">
-                        <div class="head">
-                            REGULAR MEMBERSHIP
+                    <div class="row inner-content col-sm-12">
+                        <div class="support-image">
+                            <img [src]="item.image.original || '../../../../../assets/img/blue-bg.jpg'">
                         </div>
-                        <div class="content">
-                            Donec facilisis tortor ut augue
-                            <br>licinia, at viverra est semp
+                        <div class="text-content col-sm-12 col-md-7">
+                            <div class="head">
+                                {{item.title}}
+                            </div>
+                            <div class="content">
+                                {{item.description}}
+                            </div>
+                            <button class="btn buy-btn" *ngIf="item.isBought === false" (click)="pay(item)">Buy Membership</button>
                         </div>
-                    </div>
-                </div>
-                <div class="row" style="height:60px">
-                    <div class="line"></div>
-                </div>
-                <div class="row inner-content col-sm-12">
-                    <div class="support-image">
-                        <img src="assets/img/premium.png">
-                    </div>
-                    <div class="text-content col-sm-12 col-md-12 col-lg-7">
-                        <div class="head">
-                            PREMIUM MEMBERSHIP
-                        </div>
-                        <div class="content">
-                            Employer can see the ratings<br> and comments on the user<br>
-                        </div>
-                        <button class="buy-btn btn">Buy Membership</button>
                     </div>
                 </div>
-                <div class="row" style="height:60px">
-                    <div class="line"></div>
-                </div>
-                <div class="row inner-content col-sm-12">
-                    <div class="support-image">
-                        <img src="assets/img/gold.png">
-                    </div>
-                    <div class="text-content col-sm-12 col-md-12 col-lg-7">
-                        <div class="head">
-                            GOLD MEMBERSHIP
-                        </div>
-                        <div class="content">
-                            Employer can see the ratings<br> and comments on the user
-                        </div>
-                        <button class="buy-btn btn">Buy Membership</button>                        
-                    </div>
-                </div>
-
             </md-card-content>
         </md-card>
     </div>

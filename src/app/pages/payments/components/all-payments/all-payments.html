@@ -5,7 +5,9 @@
                 <md-card class="jobs-card-heading">
                     <md-card-header class="jobs-card-header jobs-card-heading">
                         <md-card-title style="font-weight: 600; color: #474747; margin-bottom: 0px">
-                            <h2>Payments</h2>
+                           <h2>Payments</h2>
+                            <h2 class="amount" *ngIf="donatemode">Donate&nbsp;&nbsp;$&nbsp;{{amount}}</h2>
+                            <h2 class="amount"  *ngIf="planmode">Pay&nbsp;&nbsp;$&nbsp;{{amount}}</h2>
                         </md-card-title>
                     </md-card-header>
                 </md-card>
@@ -30,7 +32,7 @@
 
                     <hr class="hr-text" data-content="or">
                     <md-card-title style="font-weight: 600; color: #474747; margin-bottom: 30px; margin-top:30px;">
-                        <h2>Add new card{{message}}</h2>
+                        <h2>Add new card</h2>
                     </md-card-title>
                     <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
                         <div class="row">
@@ -67,12 +69,11 @@
                             <button type="submit" class="save-card-btn col-sm-5">
                                 SAVE CARD
                             </button>
-                                <button type="button" class="save-card-btn col-sm-5" (click)="pay()" *ngIf="paymode">
-                                    PROCEED
-                                </button>
+                            <button type="button" class="save-card-btn col-sm-5" (click)="pay()" *ngIf="planmode || donatemode">
+                                PROCEED
+                            </button>
                             </div>  
-                    </form>
-                                      
+                    </form>            
                 </div>
             </md-card-content>
         </md-card>

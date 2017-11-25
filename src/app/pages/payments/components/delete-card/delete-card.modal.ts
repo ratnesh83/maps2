@@ -3,6 +3,8 @@ import { Store } from '@ngrx/store';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import 'style-loader!./delete-card.scss';
 import * as payment from '../../state/payment.actions';
+import { BaThemeSpinner } from '../../../../theme/services';
+
 
 
 @Component({
@@ -15,6 +17,7 @@ export class deleteCardModal {
     constructor(
         public activeModal: NgbActiveModal,
         private store: Store<any>,
+        private _spinner:BaThemeSpinner
     ) {
 
         this.store
@@ -29,12 +32,12 @@ export class deleteCardModal {
     }
     setAsDefault(){
         this.activeModal.close();        
+        this._spinner.show();
         this.store.dispatch({ type: payment.actionTypes.SET_AS_DEFAULT,payload:{card:this.card}});  
-        
-        
     }
     deleteCard(){
-        this.activeModal.close();                
+        this.activeModal.close();  
+        this._spinner.show();        
         this.store.dispatch({ type: payment.actionTypes.DELETE_CARD,payload:{card:this.card}});                  
     }
 }
