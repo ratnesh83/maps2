@@ -57,7 +57,7 @@ export const environment = {
         CHANGE_PASSWORD: '/user/changePassword',
         GET_DASHBOARD_COUNT: '/admin/getDashboardCount',
 
-        GET_ALL_NOTIFICATION: '/notification/admin/getAllNotification',
+        GET_ALL_NOTIFICATION: '/api/v2/user/getNotifications',
         CLEAR_ALL_NOTIFICATION: '/notification/admin/clearNotification',
         READ_NOTIFICATION: '/notification/admin/readNotification',
         SETTINGS_KEY_MESSAGE: '/multilingual/addResourceBundle',

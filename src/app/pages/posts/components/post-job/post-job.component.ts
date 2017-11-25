@@ -49,6 +49,9 @@ export class PostJob implements OnInit {
     public zipCode: AbstractControl;
     public state: AbstractControl;
     public country: AbstractControl;
+    public cityShort: AbstractControl;
+    public stateShort: AbstractControl;
+    public countryShort: AbstractControl;
     public latitude: AbstractControl;
     public longitude: AbstractControl;
     public postStore;
@@ -76,9 +79,12 @@ export class PostJob implements OnInit {
             'latitude': ['', Validators.compose([Validators.required])],
             'longitude': ['', Validators.compose([Validators.required])],
             'city': ['', Validators.compose([Validators.required])],
+            'cityShort': [''],
             'state': ['', Validators.compose([Validators.required])],
+            'stateShort': [''],
             'zipCode': ['', Validators.compose([Validators.required])],
             'country': ['', Validators.compose([Validators.required])],
+            'countryShort': [''],
             'startDate': ['', Validators.compose([Validators.required])],
             'endDate': ['', Validators.compose([Validators.required])],
             'jobDetails': [''],
@@ -99,6 +105,9 @@ export class PostJob implements OnInit {
         this.state = this.form.controls['state'];
         this.zipCode = this.form.controls['zipCode'];
         this.country = this.form.controls['country'];
+        this.cityShort = this.form.controls['cityShort'];
+        this.stateShort = this.form.controls['stateShort'];
+        this.countryShort = this.form.controls['countryShort'];
         this.startDate = this.form.controls['startDate'];
         this.endDate = this.form.controls['endDate'];
         this.jobDetails = this.form.controls['jobDetails'];
@@ -155,20 +164,26 @@ export class PostJob implements OnInit {
         let route = '';
         let locality = '';
         let city = '';
+        let cityShort = '';
         let state = '';
+        let stateShort = '';
         let country = '';
+        let countryShort = ''
         let postal = '';
         for (let i = 0; i < addressComponents.length; i++) {
             let types = addressComponents[i].types;
             for (let j = 0; j < types.length; j++) {
                 if (types[j] == 'administrative_area_level_1') {
                     state = addressComponents[i].long_name;
+                    stateShort = addressComponents[i].short_name;
                 } else if (types[j] == 'administrative_area_level_2') {
                     city = addressComponents[i].long_name;
+                    cityShort = addressComponents[i].short_name;
                 } else if (types[j] == 'locality') {
                     locality = addressComponents[i].long_name;
                 } else if (types[j] == 'country') {
                     country = addressComponents[i].long_name;
+                    countryShort = addressComponents[i].short_name;
                 } else if (types[j] == 'postal_code') {
                     postal = addressComponents[i].long_name;
                 } else if (types[j] == 'route') {
@@ -180,9 +195,12 @@ export class PostJob implements OnInit {
         this.latitude.setValue(latitude);
         this.longitude.setValue(longitude);
         this.city.setValue(city);
+        this.cityShort.setValue(cityShort ? cityShort : city);
         this.state.setValue(state);
+        this.stateShort.setValue(stateShort ? stateShort : state);
         this.zipCode.setValue(postal);
         this.country.setValue(country);
+        this.countryShort.setValue(countryShort ? countryShort : country);
     }
 
     changeCategory(event, data) {
@@ -313,9 +331,9 @@ export class PostJob implements OnInit {
             addressLine1: this.locationAddress.value,
             addressLine2: this.locationAddress.value,
             city: this.city.value,
-            cityShort: this.city.value,
+            cityShort: this.cityShort.value,
             state: this.state.value,
-            stateShort: this.state.value,
+            stateShort: this.stateShort.value,
             country: this.country.value,
             zipCode: this.zipCode.value
         };

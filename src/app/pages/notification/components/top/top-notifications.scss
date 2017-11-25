@@ -17,8 +17,9 @@
 .top-notification {
     float: right;
     padding: 0;
+    padding-top: 5px;
     list-style: none;
-    margin: 13px 47px 0 0;
+    margin: auto 15px;
     li {
         list-style: none;
         float: left;
@@ -106,7 +107,7 @@
     width: 316px;
     left: auto;
     right: -45px;
-    top: 35px;
+    top: 41px;
     background: darken(#ffffff, 5%);
     box-shadow: 0 5px 10px 2px rgba(0, 0, 0, .25);
     @include scrollbars(.4em, #026eff, hsla(0, 0%, 100%, .2));

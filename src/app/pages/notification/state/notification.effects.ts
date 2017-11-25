@@ -27,27 +27,28 @@ export class NotificationEffects {
         .ofType('GET_ALL_NOTIFICATION')
         .do((action) => {
             this.notificationService.getAllNotifications(action.payload).subscribe((result) => {
-                if (result.message == 'Success') {
+                if (result.message == 'Action complete.' || result.statusCode == 200) {
                     //console.log("result of notification.....................",result)
                     let notificationType = (action.payload.type) ? action.payload.currentPage.type : 'all';
                     // creating state payload for next action
-                    if (result && result.data && result.data.notifications && result.data.notifications.length > 0) {
-                        result.data.notifications = result.data.notifications.map(function (record, index) {
-                            let currentTime = new Date(record.createdAt);
+                    if (result && result.data && result.data.length > 0) {
+                        result.data = result.data.map(function (record, index) {
+                            /* let currentTime = new Date(record.createdAt);
                             let currentOffset = currentTime.getTimezoneOffset();
                             let ISTOffset = currentOffset;
                             let createdAt = new Date(currentTime.getTime() + (ISTOffset + currentOffset) * 60000);
                             let minutes = (createdAt.getMinutes() > 9) ? createdAt.getMinutes() : '0' + createdAt.getMinutes();
-                            record.createdAt = createdAt.getDate() + '-' + (createdAt.getMonth() + 1) + '-' + createdAt.getFullYear() + ' ' + createdAt.getHours() + ':' + minutes;
+                            record.createdAt = createdAt.getDate() + '-' + (createdAt.getMonth() + 1) + '-' + createdAt.getFullYear() + ' ' + createdAt.getHours() + ':' + minutes; */
+                            record.createdAt = new Date(record.createdAt);
                             return record;
                         });
                     }
                     let payload = {
-                        notifications: result.data.notifications,
-                        count: result.data.notificationCount,
+                        notifications: result.data,
+                        count: result.data.length,
                         currentPage: action.payload.currentPage,
                         limit: action.payload.limit,
-                        unreadNotificationCount: result.data.unreadNotificationCount,
+                        unreadNotificationCount: result.data.length,
                         type: notificationType
                     };
                     this.notificationData = payload;
@@ -143,13 +144,6 @@ export class NotificationEffects {
                 }
             );
 
-        });
-
-    @Effect({ dispatch: false })
-    showNotificationsSuccess: Observable<Action> = this.actions$
-        .ofType('PUSH_NOTIFICATION')
-        .do((action) => {
-            // console.log('Success fully executed socket push  ');
         });
 
 }

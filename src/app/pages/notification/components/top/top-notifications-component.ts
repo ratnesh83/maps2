@@ -31,12 +31,12 @@ import * as notification from '../../state/notification.actions';
             <div class="msg-list">
                 <a *ngFor="let msg of notifications" class="clearfix" (click)="read(msg)" [ngClass]="{'text-muted': msg.isRead,'text-primary': !msg.isRead}">
                 <div class="msg-area">
-                    <div>{{ msg.message }}</div>
-                    <span>{{ msg.createdAt }}</span>
+                    <div>{{ msg.text }}</div>
+                    <span style="max-width: 100%">{{ getDuration(msg.createdAt) ? getDuration(msg.createdAt) + ' ago' : msg.createdAt | date: 'MMM dd' }}</span>
                 </div>
                 </a>
             </div>
-            <a routerLink="notification/all-notifications">See all notifications</a>
+            <a routerLink="notification/all-notifications">See all</a>
             </div>
         </li>
 
@@ -95,11 +95,7 @@ export class TopNotifications {
             });
         }
 
-
-
-
-
-        //this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
+        this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
 
     }
 
@@ -122,6 +118,29 @@ export class TopNotifications {
             //this.store.dispatch({ type: notification.actionTypes.SHOW_NOTIFICATION, payload: data });
         }
 
+    }
+
+    getDuration(time) {
+        let timeOfEvent = (new Date()).getTime() - (new Date(time)).getTime();
+        let timeDiffMinutes = timeOfEvent / 60000;
+        let timeDiffhours = timeDiffMinutes / 60;
+        let timeDiffDays = timeDiffhours / 24;
+        let timeDiffString = timeDiffMinutes.toString();
+        if (timeDiffhours < 1) {
+            if (timeDiffMinutes < 2) {
+                return '1 min';
+            } else {
+                return Math.floor(timeDiffMinutes).toString() + ' min';
+            }
+        } else if (timeDiffDays < 1) {
+            if (timeDiffhours < 2) {
+                return '1 hr';
+            } else {
+                return Math.floor(timeDiffhours).toString() + ' hrs';
+            }
+        } else {
+            return false;
+        }
     }
 
 }
