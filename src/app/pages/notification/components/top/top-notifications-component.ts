@@ -13,33 +13,31 @@ import * as notification from '../../state/notification.actions';
     styleUrls: ['top-notifications.scss'],
     template: `
         <ul class="top-notification  clearfix">
-        <li class="dropdown">
-            <a href class="dropdown-toggle" id="msg-dd1" data-toggle="dropdown" aria-expanded="false">
-            <i class="fa fa-bell-o"></i><span>{{ unreadNotificationCount }}</span>
-
-            <div class="notification-ring"></div>
-            </a>
-
-            <div class="top-dropdown-menu dropdown-menu" aria-labelledby="msg-dd1">
-            <i class="dropdown-arr"></i>
-
-            <div class="header clearfix">
-                <strong>Notifications</strong>
-                <!-- <a  (click)="readAllNotification({markAllRead:true})">Mark All as Read</a> -->
-                <!-- <a href>Settings</a> -->
-            </div>
-            <div class="msg-list">
-                <a *ngFor="let msg of notifications" class="clearfix" (click)="read(msg)" [ngClass]="{'text-muted': msg.isRead,'text-primary': !msg.isRead}">
-                <div class="msg-area">
-                    <div>{{ msg.text }}</div>
-                    <span style="max-width: 100%">{{ getDuration(msg.createdAt) ? getDuration(msg.createdAt) + ' ago' : msg.createdAt | date: 'MMM dd' }}</span>
-                </div>
+            <li class="dropdown">
+                <a href class="dropdown-toggle" id="msg-dd1" data-toggle="dropdown" aria-expanded="false">
+                    <i class="fa fa-bell-o"></i><span>{{ unreadNotificationCount }}</span>
+                    <div class="notification-ring"></div>
                 </a>
-            </div>
-            <a routerLink="notification/all-notifications">See all</a>
-            </div>
-        </li>
 
+                <div class="top-dropdown-menu dropdown-menu" aria-labelledby="msg-dd1">
+                <i class="dropdown-arr"></i>
+
+                <div class="header clearfix">
+                    <strong>Notifications</strong>
+                    <!-- <a  (click)="readAllNotification({markAllRead:true})">Mark All as Read</a> -->
+                    <!-- <a href>Settings</a> -->
+                </div>
+                <div style="cursor: pointer" class="msg-list">
+                    <a *ngFor="let msg of notifications" class="clearfix" (click)="read(msg)" [ngClass]="{'text-muted': msg.isRead}">
+                        <div class="msg-area">
+                            <div>{{ msg.text }}</div>
+                            <span style="max-width: 100%">{{ getDuration(msg.createdAt) ? getDuration(msg.createdAt) + ' ago' : (msg.createdAt | date: 'MMM dd') + ' at ' + (msg.createdAt | date: 'h:mm a') }}</span>
+                        </div>
+                    </a>
+                </div>
+                <a style="font-weight: 500" routerLink="notification/all-notifications">See all</a>
+                </div>
+            </li>
         </ul>
     `
 })

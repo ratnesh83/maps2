@@ -220,11 +220,10 @@ a.collapse-menu-link {
 .top-dropdown-menu[_ngcontent-c1] > a[_ngcontent-c1]
 {
     &:hover{
-        background: darken(#ffffff, 15%);
-        color:#fff !important;
+        background: darken(#f2f2f2, 10%);
     }
-    background:darken(#ffffff, 5%);
-    color:#474747;
+    background: #f2f2f2;
+    color:#474747 !important;
 }
 .icon-palette {
     display: inline-block;

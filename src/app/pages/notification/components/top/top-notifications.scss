@@ -111,10 +111,13 @@
     background: darken(#ffffff, 5%);
     box-shadow: 0 5px 10px 2px rgba(0, 0, 0, .25);
     @include scrollbars(.4em, #026eff, hsla(0, 0%, 100%, .2));
-    a.text-muted .msg-area div {
+    a.text-muted {
+        background-color: #ffffff;
+    }
+    a .msg-area div {
         color: #474747;
     }
-    a.text-muted .msg-area span {
+    a .msg-area span {
         color: #474747;
     }
     a.text-primary .msg-area div {
@@ -204,7 +207,10 @@
                 }
             }
             &:hover {
-                background: darken(#ffffff, 15%);
+                background: darken(#ffffff, 10%);
+            }
+            &.text-muted:hover {
+                background: darken(#ffffff, 5%);
             }
         }
     }

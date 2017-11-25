@@ -58,4 +58,27 @@ export class AllNotifications {
 
     }
 
+    getDuration(time) {
+        let timeOfEvent = (new Date()).getTime() - (new Date(time)).getTime();
+        let timeDiffMinutes = timeOfEvent / 60000;
+        let timeDiffhours = timeDiffMinutes / 60;
+        let timeDiffDays = timeDiffhours / 24;
+        let timeDiffString = timeDiffMinutes.toString();
+        if (timeDiffhours < 1) {
+            if (timeDiffMinutes < 2) {
+                return '1 min';
+            } else {
+                return Math.floor(timeDiffMinutes).toString() + ' min';
+            }
+        } else if (timeDiffDays < 1) {
+            if (timeDiffhours < 2) {
+                return '1 hr';
+            } else {
+                return Math.floor(timeDiffhours).toString() + ' hrs';
+            }
+        } else {
+            return false;
+        }
+    }
+
 }
