@@ -55,7 +55,7 @@ export class AllFriendList implements OnInit {
             .select('network')
             .subscribe((res: any) => {
                 if (res) {
-                    this.friends = res.friends;
+                    this.friends = res.labors;
                     if (this.friends) {
                         for (let i = 0; i < this.friends.length; i++) {
                             this.friends[i].showPhone = false;

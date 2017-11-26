@@ -26,8 +26,9 @@
                         <div md-card-avatar class="employers-header-image">
                             <img mat-card-avatar [src]="employer.labourId?.profilePicture?.image?.thumb ? employer.labourId.profilePicture?.image?.thumb : 'assets/img/user.png'">
                         </div>
-                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{employer.labourId ? employer.labourId.fullName ? employer.labourId.fullName : employer.labourId.firstName ?
-                            (employer.labourId.firstName + ' ' + employer.labourId.lastName) : employer.labourId.firstName : ''}}</md-card-title>
+                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{employer.labourId ? employer.labourId.fullName ? employer.labourId.fullName : employer.labourId.firstName
+                            ? (employer.labourId.firstName + ' ' + employer.labourId.lastName) : employer.labourId.firstName
+                            : ''}}</md-card-title>
                         <md-card-subtitle style="font-weight: 500">{{ (employer.distance / 1609.34).toFixed(1) + ' mile away' }}</md-card-subtitle>
                         <div class="employers-header-view">
                             <div>
@@ -55,9 +56,14 @@
                     No employers found.
                 </div>
             </md-card-content>
+            <md-card-content *ngIf="!employers">
+                Loading...
+                <i class="fa fa-spinner fa-spin"></i>
+            </md-card-content>
         </md-card>
         <md-card *ngIf="showLoading" class="employers-card">
-            {{ locationStatus + ' ' }} <i *ngIf="locationStatus == 'Fetching current location...'" class="fa fa-spinner fa-spin"></i>
+            {{ locationStatus + ' ' }}
+            <i *ngIf="locationStatus == 'Fetching current location...'" class="fa fa-spinner fa-spin"></i>
         </md-card>
     </div>
 

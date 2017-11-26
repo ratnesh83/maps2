@@ -55,7 +55,7 @@ export class AllEmployerList implements OnInit {
             .select('network')
             .subscribe((res: any) => {
                 if (res) {
-                    this.employers = res.employers;
+                    this.employers = res.labors;
                     if (this.employers) {
                         for (let i = 0; i < this.employers.length; i++) {
                             this.employers[i].showPhone = false;

@@ -26,8 +26,9 @@
                         <div md-card-avatar class="companies-header-image">
                             <img mat-card-avatar [src]="company.labourId?.profilePicture?.image?.thumb ? company.labourId.profilePicture?.image?.thumb : 'assets/img/user.png'">
                         </div>
-                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{company.labourId ? company.labourId.fullName ? company.labourId.fullName : company.labourId.firstName ?
-                            (company.labourId.firstName + ' ' + company.labourId.lastName) : company.labourId.firstName : ''}}</md-card-title>
+                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{company.labourId ? company.labourId.fullName ? company.labourId.fullName : company.labourId.firstName
+                            ? (company.labourId.firstName + ' ' + company.labourId.lastName) : company.labourId.firstName
+                            : ''}}</md-card-title>
                         <md-card-subtitle style="font-weight: 500">{{ (company.distance / 1609.34).toFixed(1) + ' mile away' }}</md-card-subtitle>
                         <div class="companies-header-view">
                             <div>
@@ -55,9 +56,14 @@
                     No companies found.
                 </div>
             </md-card-content>
+            <md-card-content *ngIf="!companies">
+                Loading...
+                <i class="fa fa-spinner fa-spin"></i>
+            </md-card-content>
         </md-card>
         <md-card *ngIf="showLoading" class="companies-card">
-            {{ locationStatus + ' ' }} <i *ngIf="locationStatus == 'Fetching current location...'" class="fa fa-spinner fa-spin"></i>
+            {{ locationStatus + ' ' }}
+            <i *ngIf="locationStatus == 'Fetching current location...'" class="fa fa-spinner fa-spin"></i>
         </md-card>
     </div>
 

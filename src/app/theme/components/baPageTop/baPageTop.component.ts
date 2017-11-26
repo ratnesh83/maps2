@@ -104,11 +104,11 @@ export class BaPageTop {
     }
 
     goToCompaniesList() {
-        
+        this.router.navigate(['/pages/mynetworks/allcompanies']);
     }
 
     goToFollowList() {
-
+        this.router.navigate(['/pages/mynetworks/allfriends']);
     }
 
     titleCase(input) {
