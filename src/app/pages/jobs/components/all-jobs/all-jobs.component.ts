@@ -33,6 +33,7 @@ export class AllJobs implements OnInit {
     public filter;
     public showPhone: boolean = false;
     public showEmail: boolean = false;
+    public showLoading: boolean = false;
     public searchLocation;
     public positions = [];
     public markers = [];
@@ -200,13 +201,17 @@ export class AllJobs implements OnInit {
         }
 
         if (navigator.geolocation) {
+            this.showLoading = true;
             navigator.geolocation.getCurrentPosition((response) => {
+                this.showLoading = false;
                 this.showPosition(response);
             }, (error) => {
+                this.showLoading = false;
                 this.toastrService.clear();
                 this.toastrService.error(error.message || 'Error in fetching your current location', 'Error');
             });
         } else {
+            this.showLoading = false;
             this.toastrService.clear();
             this.toastrService.warning('Geolocation is not supported by this browser', 'Error');
         }
@@ -272,10 +277,12 @@ export class AllJobs implements OnInit {
 
     showPosition(position) {
         if (position && position.coords) {
+            this.showLoading = true;
             let latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             let geocoder = new google.maps.Geocoder();
             this.geocoder(geocoder, latlng)
                 .then((result) => {
+                    this.showLoading = false;
                     let results = result;
                     if (results[0]) {
                         this.searchLocation = results[0].formatted_address;
@@ -360,6 +367,7 @@ export class AllJobs implements OnInit {
                     }
                 })
                 .catch((error: any) => {
+                    this.showLoading = false;
                     // console.error(error);
                 });
         }

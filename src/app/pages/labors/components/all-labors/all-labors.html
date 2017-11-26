@@ -45,8 +45,9 @@
                     </div>
                 </div>
                 <div class="map-div">
-                    <ngui-map style="height: 60vh; max-height: 480px;" center="30.7188978, 76.81029809" (mapReady$)="onMapReady($event)" (idle)="onIdle($event)" [geoFallbackCenter]="[42.99, -77.79]"
-                        [zoomControlOptions]="{ position: 'TOP_RIGHT' }" [fullscreenControl]="false" [scrollwheel]="false">
+                    <ngui-map style="height: 60vh; max-height: 480px;" center="30.7188978, 76.81029809" (mapReady$)="onMapReady($event)" (idle)="onIdle($event)"
+                        [geoFallbackCenter]="[42.99, -77.79]" [zoomControlOptions]="{ position: 'TOP_RIGHT' }" [fullscreenControl]="false"
+                        [scrollwheel]="false">
                         <marker *ngFor="let labor of labors" [position]="labor.coordinates" (click)="showMarkerInfo($event, labor)" draggable="false"
                             [icon]="{
                             url: 'assets/img/labor-search.png',
@@ -77,9 +78,12 @@
                             </info-window>
                         </marker>
                     </ngui-map>
-                    <div class="map-loading" [ngStyle]="{'display' : !map ? 'flex' : 'none'}">
-                        <span>
+                    <div class="map-loading" [ngStyle]="{'display' : !map || (map && showLoading) ? 'flex' : 'none'}">
+                        <span *ngIf="!map">
                             Loading...
+                        </span>
+                        <span *ngIf="map && showLoading">
+                            Fetching current location. Please wait...
                         </span>
                     </div>
                 </div>

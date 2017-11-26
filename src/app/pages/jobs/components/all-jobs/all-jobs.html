@@ -86,9 +86,12 @@
                             </info-window>
                         </marker>
                     </ngui-map>
-                    <div class="map-loading" [ngStyle]="{'display' : !map ? 'flex' : 'none'}">
-                        <span>
+                    <div class="map-loading" [ngStyle]="{'display' : !map || (map && showLoading) ? 'flex' : 'none'}">
+                        <span *ngIf="!map">
                             Loading...
+                        </span>
+                        <span *ngIf="map && showLoading">
+                            Fetching current location. Please wait...
                         </span>
                     </div>
                 </div>
