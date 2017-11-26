@@ -2,7 +2,6 @@
     <div class="container animated bounce">
         <div class="row">
             <div class="col-md-12 col-xs-12 col-sm-12">
-                <i style="display: none" class="fa fa-spinner fa-spin"></i>
                 <h3>Your Notifications</h3>
                 <div *ngIf="notifications && notifications.length > 0" class="notification-section">
                     <md-card class="notification-card notification-card-element" *ngFor="let notification of notifications; let i = index" [ngClass]="{'muted' : !notification.isRead}">

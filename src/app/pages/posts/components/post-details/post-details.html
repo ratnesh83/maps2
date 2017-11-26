@@ -25,14 +25,15 @@
             </div>
         </div>
     </div>
-    <div *ngIf="post" class="posts-section">
+    <div class="posts-section">
         <md-card class="posts-card">
-            <md-card-content>
+            <md-card-content *ngIf="post">
                 <p class="md-card-content-posts-label">
                     Job Location
                 </p>
                 <p class="md-card-content-posts-content">
-                    {{post.employerAddress ? showAddress(post.employerAddress.addressLine1, post.employerAddress.city, post.employerAddress.zipCode, post.employerAddress.state, post.employerAddress.country) : ''}}
+                    {{post.employerAddress ? showAddress(post.employerAddress.addressLine1, post.employerAddress.city, post.employerAddress.zipCode,
+                    post.employerAddress.state, post.employerAddress.country) : ''}}
                 </p>
                 <p class="md-card-content-posts-label">
                     Job Date
@@ -52,6 +53,10 @@
                 <p class="md-card-content-posts-content">
                     {{post.requiredLabourers}}
                 </p>
+            </md-card-content>
+            <md-card-content *ngIf="!post">
+                Loading...
+                <i class="fa fa-spinner fa-spin"></i>
             </md-card-content>
         </md-card>
 
@@ -82,9 +87,6 @@
                     </md-card-actions>
                 </md-card-content> -->
             </div>
-
         </md-card>
-
     </div>
-
 </div>

@@ -49,6 +49,9 @@
                             No posts found.
                         </div>
                     </md-card-content>
+                    <md-card-content *ngIf="!posts">
+                        Loading... <i class="fa fa-spinner fa-spin"></i>
+                    </md-card-content>
                 </md-card>
             </div>
 
@@ -95,6 +98,9 @@
                             No posts found.
                         </div>
                     </md-card-content>
+                    <md-card-content *ngIf="!posts">
+                        Loading... <i class="fa fa-spinner fa-spin"></i>
+                    </md-card-content>
                 </md-card>
             </div>
         </md-tab>
@@ -135,6 +141,9 @@
                         <div *ngIf="posts && posts.length == 0">
                             No posts found.
                         </div>
+                    </md-card-content>
+                    <md-card-content *ngIf="!posts">
+                        Loading... <i class="fa fa-spinner fa-spin"></i>
                     </md-card-content>
                 </md-card>
             </div>
