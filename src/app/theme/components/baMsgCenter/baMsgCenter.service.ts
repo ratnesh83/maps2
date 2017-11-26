@@ -4,7 +4,6 @@ import { Observable } from 'rxjs/Observable';
 import * as io from 'socket.io-client';
 import { environment } from '../../../environment/environment';
 
-
 @Injectable()
 export class BaMsgCenterService {
 
@@ -88,15 +87,12 @@ export class BaMsgCenterService {
         return this._messages;
     }
 
-    public getNotifications(): Array<Object> {
+    public getNotificationsArray(): Array<Object> {
         return this._notifications;
     }
 
-
-    //private url = 'http://localhost:5000';
     private url = environment.APP.API_URL;
     private socket;
-
 
     constructor() {
         let token = localStorage.getItem('token');
@@ -108,17 +104,14 @@ export class BaMsgCenterService {
         });
     }
 
-
-
-    sendMessage(message) {
-        this.socket.emit('add-message', message);
+    sendMessage(key, message) {
+        this.socket.emit(key, message);
     }
 
-    getMsg() {
+    getNotifications() {
         let observable = new Observable(observer => {
-
-            //console.log("Got hit  ");
             this.socket.on('message', (data) => {
+                console.log(data, 'hit');
                 observer.next(data);
             });
         });

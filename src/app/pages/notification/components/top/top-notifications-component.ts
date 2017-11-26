@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AuthService } from '../../../../auth/service/auth-service/auth.service';
 import { NotificationService } from '../../../../services/notification-service';
+import { BaMsgCenterService } from '../../../../theme/components/baMsgCenter/baMsgCenter.service';
+import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import * as notification from '../../state/notification.actions';
 
 @Component({
@@ -20,7 +22,7 @@ import * as notification from '../../state/notification.actions';
 
                 <div class="header clearfix">
                     <strong>Notifications</strong>
-                    <!-- <a  (click)="readAllNotification({markAllRead:true})">Mark All as Read</a> -->
+                    <!-- <a (click)="readAllNotification({markAllRead:true})">Mark All as Read</a> -->
                     <!-- <a href>Settings</a> -->
                 </div>
                 <div style="cursor: pointer" class="msg-list">
@@ -52,6 +54,7 @@ export class TopNotifications {
 
 
     public notifications;
+    public toastId;
     public page = 1;
     public limit = 40;
     public count: number;
@@ -59,7 +62,13 @@ export class TopNotifications {
     public unreadNotificationCount;
 
     constructor(private authService: AuthService,
-        private store: Store<any>) {
+        private store: Store<any>,
+        private toastrService: ToastrService,
+        private msgCenter: BaMsgCenterService) {
+
+        this.msgCenter.getNotifications().subscribe((message) => {
+            console.log(message);
+        });
 
         this.store
             .select('notification')
@@ -106,9 +115,8 @@ export class TopNotifications {
 
     readAllNotification(data) {
         if (!data.isRead) {
-            //this.store.dispatch({ type: notification.actionTypes.READ_NOTIFICATION, payload: data });
+            // this.store.dispatch({ type: notification.actionTypes.READ_NOTIFICATION, payload: data });
         }
-        this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
     }
 
     read(data) {
@@ -118,11 +126,46 @@ export class TopNotifications {
         if (!data.isRead) {
             //console.log('READ_NOTIFICATION is FIRING .....');
             //this.store.dispatch({ type: notification.actionTypes.READ_NOTIFICATION, payload: data });
-        }
-        else {
+        } else {
             //this.store.dispatch({ type: notification.actionTypes.SHOW_NOTIFICATION, payload: data });
         }
 
+    }
+
+    getTemplate(message, image) {
+        return `
+            <div class="col-12 col-sm-12">
+                <div class="row">
+                    <div class="col-1 col-sm-1 image-class">
+                        <img src="` + image + `">
+                    </div>
+                    <div class="col-11 col-sm-11 message-class">
+                        <div>
+                            ` + message + `
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    showNotificationToast(data, notification) {
+        if (this.toastId) {
+            this.toastrService.remove(this.toastId);
+        }
+        let toasterConfig: ToastrConfig = new ToastrConfig();
+        toasterConfig.positionClass = 'toast-bottom-right';
+        toasterConfig.closeButton = true;
+        toasterConfig.enableHtml = true;
+        toasterConfig.toastClass = 'toast toast-custom';
+        toasterConfig.timeOut = 10000;
+        let toast = this.toastrService.info(data, null, toasterConfig);
+        if (toast) {
+            this.toastId = toast.toastId;
+            toast.onTap.toPromise().then(() => {
+                console.log('clicked', data);
+            });
+        }
     }
 
     getDuration(time) {
