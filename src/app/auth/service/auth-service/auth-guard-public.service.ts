@@ -12,9 +12,10 @@ export class AuthGuardPublic implements CanActivate {
     }
 
     checkLogin(url): boolean {
-        //console.log(this.authService.login())
-        if (this.authService.login()) { return false; }
-        // Not authorized
+        if (this.authService.login()) {
+            this.router.navigate(['/pages/jobs/alljobs']);
+            return false;
+        }
         return true;
     }
 }

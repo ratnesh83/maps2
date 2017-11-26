@@ -109,7 +109,7 @@ export class AllJobs implements OnInit {
                         let employer;
                         for (let i = 0; i < this.topList.employers.length; i++) {
                             employer = {
-                                name: this.topList.employers[i].fullName ? this.topList.employers[i].fullName : this.topList.employers[i].firstName + ' ' + this.topList.employers[i].lastName,
+                                name: this.topList.employers[i].fullName ? this.topList.employers[i].fullName : this.topList.employers[i].lastName ? this.topList.employers[i].firstName + ' ' + this.topList.employers[i].lastName : this.topList.employers[i].firstName,
                                 createdAt: this.topList.employers[i].createdAt,
                                 picture: this.topList.employers[i].profilePicture ? this.topList.employers[i].profilePicture.thumb : 'assets/img/user.png'
                             };

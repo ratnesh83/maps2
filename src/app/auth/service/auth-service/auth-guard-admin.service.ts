@@ -12,10 +12,9 @@ export class AuthGuardAdmin implements CanActivate {
     }
 
     checkAdmin(url): boolean {
-        if (this.authService.user.role === 'EMPLOYER') {
+        if (this.authService.user && this.authService.user.userType === 'EMPLOYER') {
             return true;
         }
-
         return false;
     }
 }

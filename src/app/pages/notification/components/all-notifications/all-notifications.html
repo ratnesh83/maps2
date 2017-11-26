@@ -6,11 +6,15 @@
                 <div *ngIf="notifications && notifications.length > 0" class="notification-section">
                     <md-card class="notification-card notification-card-element" *ngFor="let notification of notifications; let i = index" [ngClass]="{'muted' : !notification.isRead}">
                         <md-card-header class="notification-card-header">
-                            <md-card-title style="font-weight: 500; color: #1b1b1b">
+                            <div md-card-avatar class="notification-header-image">
+                                <img mat-card-avatar [src]="notification.payload ? notification.payload.profilePicture ? notification.payload.profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png'">
+                            </div>
+                            <md-card-title style="font-weight: 500; color: #1b1b1b; text-align: justify">
                                 {{ notification.text }}
                             </md-card-title>
                             <md-card-subtitle style="margin-bottom: 0px; font-size: 13px">
-                                {{ getDuration(notification.createdAt) ? getDuration(notification.createdAt) + ' ago' : (notification.createdAt | date: 'MMMM dd') + ' at ' + (notification.createdAt | date: 'h:mm a') }}
+                                {{ getDuration(notification.createdAt) ? getDuration(notification.createdAt) + ' ago' : (notification.createdAt | date: 'MMMM
+                                dd') + ' at ' + (notification.createdAt | date: 'h:mm a') }}
                             </md-card-subtitle>
                         </md-card-header>
                     </md-card>

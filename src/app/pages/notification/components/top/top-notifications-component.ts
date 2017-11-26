@@ -2,10 +2,6 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AuthService } from '../../../../auth/service/auth-service/auth.service';
 import { NotificationService } from '../../../../services/notification-service';
-//import { Observable } from 'rxjs/Rx';
-
-//import {Notification} from './baMsgCenter.service';
-
 import * as notification from '../../state/notification.actions';
 
 @Component({
@@ -30,7 +26,18 @@ import * as notification from '../../state/notification.actions';
                 <div style="cursor: pointer" class="msg-list">
                     <a *ngFor="let msg of notifications" class="clearfix" (click)="read(msg)" [ngClass]="{'text-muted': msg.isRead}">
                         <div class="msg-area">
-                            <div>{{ msg.text }}</div>
+                            <div class="col-12 col-sm-12">
+                                <div class="row">
+                                    <div style="display: flex; padding: 0px" class="col-1 col-sm-1">
+                                        <img mat-card-avatar style="width: 100%; height: auto; margin: auto 0px" [src]="msg.payload ? msg.payload.profilePicture ? msg.payload.profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png'">
+                                    </div>
+                                    <div style="display: flex; padding: 0px 10px" class="col-11 col-sm-11">
+                                        <div style="margin: auto 0px; text-align: justify">
+                                            {{ msg.text }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <span style="max-width: 100%">{{ getDuration(msg.createdAt) ? getDuration(msg.createdAt) + ' ago' : (msg.createdAt | date: 'MMM dd') + ' at ' + (msg.createdAt | date: 'h:mm a') }}</span>
                         </div>
                     </a>

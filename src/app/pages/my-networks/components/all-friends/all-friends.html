@@ -26,7 +26,7 @@
                         <div md-card-avatar class="friends-header-image">
                             <img mat-card-avatar [src]="friend.labourId?.profilePicture?.image?.thumb ? friend.labourId.profilePicture?.image?.thumb : 'assets/img/user.png'">
                         </div>
-                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{friend.labourId ? friend.labourId.fullName ? friend.labourId.fullName : friend.labourId.firstName
+                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{friend.labourId ? friend.labourId.fullName ? friend.labourId.fullName : friend.labourId.lastName
                             ? (friend.labourId.firstName + ' ' + friend.labourId.lastName) : friend.labourId.firstName :
                             ''}}</md-card-title>
                         <md-card-subtitle style="font-weight: 500">{{ (friend.distance / 1609.34).toFixed(1) + ' mile away' }}</md-card-subtitle>

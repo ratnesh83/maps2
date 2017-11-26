@@ -26,7 +26,7 @@
                         <div md-card-avatar class="employers-header-image">
                             <img mat-card-avatar [src]="employer.labourId?.profilePicture?.image?.thumb ? employer.labourId.profilePicture?.image?.thumb : 'assets/img/user.png'">
                         </div>
-                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{employer.labourId ? employer.labourId.fullName ? employer.labourId.fullName : employer.labourId.firstName
+                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{employer.labourId ? employer.labourId.fullName ? employer.labourId.fullName : employer.labourId.lastName
                             ? (employer.labourId.firstName + ' ' + employer.labourId.lastName) : employer.labourId.firstName
                             : ''}}</md-card-title>
                         <md-card-subtitle style="font-weight: 500">{{ (employer.distance / 1609.34).toFixed(1) + ' mile away' }}</md-card-subtitle>

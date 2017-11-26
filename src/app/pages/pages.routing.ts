@@ -8,7 +8,6 @@ import { AuthGuardServiceProvider } from '../auth/service/auth-service/auth-guar
 import { AuthGuardDriver } from '../auth/service/auth-service/auth-guard-driver.service';
 
 export const routes: Routes = [
-
     {
         path: 'pages',
         component: Pages,
@@ -18,7 +17,7 @@ export const routes: Routes = [
             { path: 'payments', loadChildren: 'app/pages/payments/payments.module#PaymentsModule' },
             { path: 'settings', loadChildren: 'app/pages/settings/settings.module#SettingsModule' },
             { path: 'subscriptions', loadChildren: 'app/pages/subscriptions/subscriptions.module#SubscriptionsModule' },
-            { path: 'jobs', loadChildren: 'app/pages/jobs/jobs.module#JobsModule' },
+            { path: 'jobs', loadChildren: 'app/pages/jobs/jobs.module#JobsModule', canActivate: [AuthGuardCustomer] },
             { path: 'labors', loadChildren: 'app/pages/labors/labors.module#LaborsModule' },
             { path: 'posts', loadChildren: 'app/pages/posts/posts.module#PostsModule' },
             { path: 'requests', loadChildren: 'app/pages/requests/requests.module#RequestsModule' },
