@@ -26,6 +26,8 @@ import { routing } from './my-networks.routing';
 import { MyNetworks } from './my-networks.component';
 import { AllLaborList } from './components/all-labors/all-labors.component';
 import { AllEmployerList } from './components/all-employers/all-employers.component';
+import { AllCompanyList } from './components/all-companies/all-companies.component';
+import { AllFriendList } from './components/all-friends/all-friends.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { GooglePlaceModule } from 'ng2-google-place-autocomplete';
 import { NguiMapModule } from '@ngui/map';
@@ -61,7 +63,9 @@ import { NguiMapModule } from '@ngui/map';
     declarations: [
         MyNetworks,
         AllLaborList,
-        AllEmployerList
+        AllEmployerList,
+        AllCompanyList,
+        AllFriendList
     ],
     entryComponents: [
     ],

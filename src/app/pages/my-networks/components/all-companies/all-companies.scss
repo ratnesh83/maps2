@@ -4,10 +4,10 @@
         margin-bottom: 10px;
     }
 }
-.labors-card-header {
+.companies-card-header {
     position: relative;
 }
-.labors-header-rating {
+.companies-header-rating {
     position: absolute;
     top: 0px;
     right: 0px;
@@ -17,27 +17,27 @@
     font-weight: 500;
     color: #b1b1b1;
 }
-.user-labors-heading {
+.user-companies-heading {
     display: inline-flex;
     h2 {
         margin: auto 0px;
         width: auto;
     }
 }
-.labors-card-heading {
+.companies-card-heading {
     width: 100%;
 }
-.labors-section {
+.companies-section {
     margin-top: 10px;
 }
-.labors-card {
+.companies-card {
     margin-bottom: 10px;
     .with-margin {
         margin-top: 8px;
         margin-left: 48px;
     }
 }
-.labors-card-inner {
+.companies-card-inner {
     border-left: 8px solid #f4ba48;
 }
 .color-second {
@@ -46,14 +46,14 @@
 .color-third {
     border-left: 8px solid #61cef5;
 }
-.labors-card-header {
+.companies-card-header {
     position: relative;
     .mat-card-header-text {
         width: -webkit-fill-available;
         margin: 0px 0px;
     }
 }
-.labors-header-view {
+.companies-header-view {
     width: -webkit-fill-available;
     text-align: right;
     .fa {
@@ -68,21 +68,21 @@
         font-weight: 500;
     }
 }
-.md-card-content-labors-p-category {
+.md-card-content-companies-p-category {
     margin-bottom: 8px;
     font-weight: 600;
     text-align: left;
     color: #1b1b1b;
 }
-.md-card-content-labors-p-address {
+.md-card-content-companies-p-address {
     text-align: left;
     font-weight: 500;
     color: rgba(0, 0, 0, 0.54);
 }
-.labors-stars .star-icon {
+.companies-stars .star-icon {
     font-size: unset !important;
 }
-.labors-input-box {
+.companies-input-box {
     input {
         font-family: Roboto, "Helvetica Neue", sans-serif;
         font-weight: 400 !important;
@@ -107,7 +107,7 @@
         display: none;
     }
 }
-.labors-input-box {
+.companies-input-box {
     margin-bottom: 15px;
     label {
         color: #7d7d7d;
@@ -168,7 +168,7 @@
             font-size: smaller;
         }
     }
-    .labors-header-contact { 
+    .companies-header-contact { 
         width: auto;
         margin-top: 5px;
         text-align: right;
@@ -184,7 +184,7 @@
             font-weight: 500;
         }
     }
-    .labors-header-contact-rate {
+    .companies-header-contact-rate {
         width: -webkit-fill-available;
         font-weight: 600;
         font-size: small;
@@ -194,7 +194,7 @@
         }
     }
 }
-.my-labors-tabs-group {
+.my-companies-tabs-group {
     .mat-tab-label-container {
         height: 75px;
         .mat-tab-list {
@@ -233,20 +233,20 @@
         color: #333333;
     }
 }
-.labor-container {
+.company-container {
     position: relative;
 }
-.add-labor-div {
+.add-company-div {
     display: flex;
     position: absolute;
     z-index: 2;
     top: 0px;
     right: 15px;
     height: 75px;
-    .add-labor-span {
+    .add-company-span {
         margin: auto 0px;
         margin-right: 20px;
-        .add-labor-btn {
+        .add-company-btn {
             background-color: #026eff;
             .fa {
                 font-size: medium;

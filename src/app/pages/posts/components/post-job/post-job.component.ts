@@ -168,7 +168,7 @@ export class PostJob implements OnInit {
         let state = '';
         let stateShort = '';
         let country = '';
-        let countryShort = ''
+        let countryShort = '';
         let postal = '';
         for (let i = 0; i < addressComponents.length; i++) {
             let types = addressComponents[i].types;
