@@ -358,6 +358,47 @@ export class PostEffects {
             });
         });
 
+    @Effect({ dispatch: false })
+    cancelJob$ = this.actions$
+        .ofType('APP_CANCEL_POST')
+        .do((action) => {
+            this._spinner.show();
+            this.PostService.cancelJob(action.payload).subscribe((result) => {
+                this._spinner.hide();
+                if (result.message == 'Action complete.' || result.statusCode == 200 || result.statusCode == 201) {
+                    let payload = result.data;
+                    this.store.dispatch(new post.AppCancelJobSuccess(payload));
+                    this.toastrService.clear();
+                    this.toastrService.success(result.message || 'Job cancelled successfully', 'Success');
+                }
+            }
+                , (error) => {
+                    this._spinner.hide();
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        } else {
+                            this.toastrService.clear();
+                            this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                        }
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    cancelJobSuccess: Observable<Action> = this.actions$
+        .ofType('APP_CANCEL_POST_SUCCESS')
+        .do((action) => {
+            this.store.dispatch({
+                type: post.actionTypes.APP_GET_JOBS, payload: {
+                    type: 'ACTIVE'
+                }
+            });
+        });
+
     constructor(
         private actions$: Actions,
         private store: Store<any>,

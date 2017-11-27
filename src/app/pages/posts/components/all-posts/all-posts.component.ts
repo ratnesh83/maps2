@@ -4,11 +4,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { MdDialog } from '@angular/material';
 import * as post from '../../state/post.actions';
 import * as app from '../../../../state/app.actions';
 import { MdPaginator } from '@angular/material';
 import { BaThemeSpinner } from '../../../../theme/services';
 import { DataService } from '../../../../services/data-service/data.service';
+import { CancelJobDialog } from '../cancel-job-dialog/cancel-job-dialog.component';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { NguiMapComponent } from '@ngui/map';
@@ -45,7 +47,8 @@ export class AllPosts implements OnInit {
         private router: Router,
         private toastrService: ToastrService,
         private cdRef: ChangeDetectorRef,
-        private dataService: DataService
+        private dataService: DataService,
+        private dialog: MdDialog
     ) {
         this.length = 1;
         this.pageIndex = 0;
@@ -120,6 +123,11 @@ export class AllPosts implements OnInit {
     editPost(id) {
         this.dataService.setData('jobId', id);
         this.router.navigate(['pages/posts/editpost']);
+    }
+
+    cancelPost(id) {
+        let dialogRef = this.dialog.open(CancelJobDialog);
+        dialogRef.componentInstance.jobId = id;
     }
 
     selectTab(event) {

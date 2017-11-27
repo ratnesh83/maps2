@@ -27,11 +27,11 @@
                                             <i class="fa fa-info"></i>
                                         </span>
                                     </div>
-                                    <div style="margin-top: 10px" class="view-link" (click)="editPost(post._id)">
+                                    <!-- <div style="margin-top: 10px" class="view-link" (click)="editPost(post._id)">
                                         <span mdTooltip="Edit Post">
                                             <i class="fa fa-pencil"></i>
                                         </span>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </md-card-header>
                             <md-card-content class="posts-card with-margin">
@@ -44,13 +44,18 @@
                                     post.employerAddress.state, post.employerAddress.country) : '' }}
                                 </p>
                             </md-card-content>
+                            <md-card-actions style="margin-left: 0px; margin-right: 0px; text-align: center; margin-bottom: 0px">
+                                <button style="background-color: #026eff" color="primary" (click)="editPost(post._id)" md-raised-button>EDIT</button>
+                                <button style="background-color: #026eff" color="primary" (click)="cancelPost(post._id)" md-raised-button>CANCEL</button>
+                            </md-card-actions>
                         </md-card>
                         <div *ngIf="posts && posts.length == 0">
                             No posts found.
                         </div>
                     </md-card-content>
                     <md-card-content *ngIf="!posts">
-                        Loading... <i class="fa fa-spinner fa-spin"></i>
+                        Loading...
+                        <i class="fa fa-spinner fa-spin"></i>
                     </md-card-content>
                 </md-card>
             </div>
@@ -76,11 +81,11 @@
                                             <i class="fa fa-info"></i>
                                         </span>
                                     </div>
-                                    <div style="margin-top: 10px" class="view-link" (click)="editPost(post._id)">
+                                    <!-- <div style="margin-top: 10px" class="view-link" (click)="editPost(post._id)">
                                         <span mdTooltip="Edit Post">
                                             <i class="fa fa-pencil"></i>
                                         </span>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </md-card-header>
                             <md-card-content class="posts-card with-margin">
@@ -93,13 +98,17 @@
                                     post.employerAddress.state, post.employerAddress.country) : '' }}
                                 </p>
                             </md-card-content>
+                            <md-card-actions style="margin-left: 0px; margin-right: 0px; text-align: center; margin-bottom: 0px">
+                                <button style="background-color: #026eff" color="primary" (click)="editPost(post._id)" md-raised-button>EDIT</button>
+                            </md-card-actions>
                         </md-card>
                         <div *ngIf="posts && posts.length == 0">
                             No posts found.
                         </div>
                     </md-card-content>
                     <md-card-content *ngIf="!posts">
-                        Loading... <i class="fa fa-spinner fa-spin"></i>
+                        Loading...
+                        <i class="fa fa-spinner fa-spin"></i>
                     </md-card-content>
                 </md-card>
             </div>
@@ -143,7 +152,8 @@
                         </div>
                     </md-card-content>
                     <md-card-content *ngIf="!posts">
-                        Loading... <i class="fa fa-spinner fa-spin"></i>
+                        Loading...
+                        <i class="fa fa-spinner fa-spin"></i>
                     </md-card-content>
                 </md-card>
             </div>
