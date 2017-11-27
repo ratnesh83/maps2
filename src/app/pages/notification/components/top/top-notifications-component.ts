@@ -3,6 +3,8 @@ import { Store } from '@ngrx/store';
 import { AuthService } from '../../../../auth/service/auth-service/auth.service';
 import { NotificationService } from '../../../../services/notification-service';
 import { BaMsgCenterService } from '../../../../theme/components/baMsgCenter/baMsgCenter.service';
+import { DataService } from '../../../../services/data-service/data.service';
+import { Router } from '@angular/router';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import * as notification from '../../state/notification.actions';
 
@@ -31,7 +33,7 @@ import * as notification from '../../state/notification.actions';
                             <div class="col-12 col-sm-12">
                                 <div class="row">
                                     <div style="display: flex; padding: 0px" class="col-1 col-sm-1">
-                                        <img mat-card-avatar style="width: 100%; height: auto; margin: auto 0px" [src]="msg.payload ? msg.payload.profilePicture ? msg.payload.profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png'">
+                                        <img mat-card-avatar style="width: 100%; height: auto; margin: auto 0px" [src]="msg.payload ? msg.payload.profilePicture ? msg.payload.profilePicture.thumb ? msg.payload.profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png' : 'assets/img/user.png'">
                                     </div>
                                     <div style="display: flex; padding: 0px 10px" class="col-11 col-sm-11">
                                         <div style="margin: auto 0px; text-align: justify">
@@ -61,15 +63,49 @@ export class TopNotifications {
     public activeNotification;
     public unreadNotificationCount;
     public notificationStore;
-    public socketStore;
+    public socketStoreAcceptRejectJob;
+    public socketStoreConfirmLabour;
+    public socketStoreCancelLabour;
+    public socketStoreNewJob;
+    public socketStoreActiveToInProgress;
+    public socketStoreInProgressToComplete;
 
     constructor(private authService: AuthService,
         private store: Store<any>,
         private toastrService: ToastrService,
+        private router: Router,
+        private dataService: DataService,
         private msgCenter: BaMsgCenterService) {
 
-        this.socketStore = this.msgCenter.getNotifications().subscribe((message) => {
+        this.socketStoreAcceptRejectJob = this.msgCenter.getNotifications('Accept Reject Job').subscribe((message: any) => {
             console.log(message);
+            this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
+            this.showNotificationToast(this.getTemplate(message.message, message.image), message);
+        });
+
+        this.socketStoreConfirmLabour = this.msgCenter.getNotifications('confirmLabour').subscribe((message: any) => {
+            console.log(message);
+            this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
+        });
+
+        this.socketStoreCancelLabour = this.msgCenter.getNotifications('cancelLabour').subscribe((message: any) => {
+            console.log(message);
+            this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
+        });
+
+        this.socketStoreNewJob = this.msgCenter.getNotifications('new Job').subscribe((message: any) => {
+            console.log(message);
+            this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
+        });
+
+        this.socketStoreActiveToInProgress = this.msgCenter.getNotifications('activeToInProgress').subscribe((message: any) => {
+            console.log(message);
+            this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
+        });
+
+        this.socketStoreInProgressToComplete = this.msgCenter.getNotifications('inProgressToComplete').subscribe((message: any) => {
+            console.log(message);
+            this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
         });
 
         this.notificationStore = this.store
@@ -124,7 +160,9 @@ export class TopNotifications {
     read(data) {
         //console.log("notification2...........................",this.notifications)
         //this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: {currentPage: this.page, limit: this.limit} });
-
+        console.log(data);
+        let eventType = data.flag;
+        let jobId = data.payload ? data.payload.jobId : null;
         if (!data.isRead) {
             //console.log('READ_NOTIFICATION is FIRING .....');
             //this.store.dispatch({ type: notification.actionTypes.READ_NOTIFICATION, payload: data });
@@ -135,11 +173,12 @@ export class TopNotifications {
     }
 
     getTemplate(message, image) {
+        let img = image ? image : 'assets/img/user.png';
         return `
             <div class="col-12 col-sm-12">
                 <div class="row">
                     <div class="col-1 col-sm-1 image-class">
-                        <img src="` + image + `">
+                        <img src="` + img + `">
                     </div>
                     <div class="col-11 col-sm-11 message-class">
                         <div>
@@ -165,14 +204,39 @@ export class TopNotifications {
         if (toast) {
             this.toastId = toast.toastId;
             toast.onTap.toPromise().then(() => {
-                console.log('clicked', data);
+                console.log('clicked', notification);
+                let eventType = notification ? notification.eventType : null;
+                let id = notification ? notification.id : null;
+                switch (eventType) {
+                    case 'ACCEPT_JOB':
+                        this.dataService.setData('jobId', id);
+                        this.router.navigate(['pages/posts/postdetails']);
+                        break;
+                    default:
+                        break;
+                }
             });
         }
     }
 
     ngOnDestroy() {
-        if (this.socketStore) {
-            this.socketStore.unsubscribe();
+        if (this.socketStoreAcceptRejectJob) {
+            this.socketStoreAcceptRejectJob.unsubscribe();
+        }
+        if (this.socketStoreConfirmLabour) {
+            this.socketStoreConfirmLabour.unsubscribe();
+        }
+        if (this.socketStoreCancelLabour) {
+            this.socketStoreCancelLabour.unsubscribe();
+        }
+        if (this.socketStoreNewJob) {
+            this.socketStoreNewJob.unsubscribe();
+        }
+        if (this.socketStoreActiveToInProgress) {
+            this.socketStoreActiveToInProgress.unsubscribe();
+        }
+        if (this.socketStoreInProgressToComplete) {
+            this.socketStoreInProgressToComplete.unsubscribe();
         }
         if (this.notificationStore) {
             this.notificationStore.unsubscribe();

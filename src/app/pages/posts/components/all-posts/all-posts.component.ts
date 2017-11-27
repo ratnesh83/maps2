@@ -46,7 +46,6 @@ export class AllPosts implements OnInit {
         private modalService: NgbModal,
         private router: Router,
         private toastrService: ToastrService,
-        private cdRef: ChangeDetectorRef,
         private dataService: DataService,
         private dialog: MdDialog
     ) {

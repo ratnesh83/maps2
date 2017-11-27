@@ -7,7 +7,7 @@
                     <md-card class="notification-card notification-card-element" *ngFor="let notification of notifications; let i = index" [ngClass]="{'muted' : !notification.isRead}">
                         <md-card-header class="notification-card-header">
                             <div md-card-avatar class="notification-header-image">
-                                <img mat-card-avatar [src]="notification.payload ? notification.payload.profilePicture ? notification.payload.profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png'">
+                                <img mat-card-avatar [src]="notification.payload ? notification.payload.profilePicture ? notification.payload.profilePicture.thumb ? notification.payload.profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png' : 'assets/img/user.png'">
                             </div>
                             <md-card-title style="font-weight: 500; color: #1b1b1b; text-align: justify">
                                 {{ notification.text }}
