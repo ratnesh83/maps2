@@ -31,8 +31,7 @@ export class NotificationService {
     readNotification(data) {
         if (data.markAllRead) {
             data = { markAllAsRead: true };
-        }
-        else {
+        } else {
             data = { notificationID: [data._id], markAllAsRead: false };
         }
         this.authRequired = true;

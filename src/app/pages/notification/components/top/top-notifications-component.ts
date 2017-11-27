@@ -77,52 +77,49 @@ export class TopNotifications {
         private dataService: DataService,
         private msgCenter: BaMsgCenterService) {
 
-        this.socketStoreAcceptRejectJob = this.msgCenter.getNotifications('Accept Reject Job').subscribe((message: any) => {
-            console.log(message);
-            this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
-            this.showNotificationToast(this.getTemplate(message.message, message.image), message);
-        });
+        // this.socketStoreAcceptRejectJob = this.msgCenter.getNotifications('Accept Reject Job').subscribe((message: any) => {
+        //     console.log(message);
+        //     this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
+        //     this.showNotificationToast(this.getTemplate(message.message, message.image), message);
+        // });
 
-        this.socketStoreConfirmLabour = this.msgCenter.getNotifications('confirmLabour').subscribe((message: any) => {
-            console.log(message);
-            this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
-        });
+        // this.socketStoreConfirmLabour = this.msgCenter.getNotifications('confirmLabour').subscribe((message: any) => {
+        //     console.log(message);
+        //     this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
+        //     this.showNotificationToast(this.getTemplate(message.message, message.image), message);
+        // });
 
-        this.socketStoreCancelLabour = this.msgCenter.getNotifications('cancelLabour').subscribe((message: any) => {
-            console.log(message);
-            this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
-        });
+        // this.socketStoreCancelLabour = this.msgCenter.getNotifications('cancelLabour').subscribe((message: any) => {
+        //     console.log(message);
+        //     this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
+        //     this.showNotificationToast(this.getTemplate(message.message, message.image), message);
+        // });
 
-        this.socketStoreNewJob = this.msgCenter.getNotifications('new Job').subscribe((message: any) => {
-            console.log(message);
-            this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
-        });
+        // this.socketStoreNewJob = this.msgCenter.getNotifications('new Job').subscribe((message: any) => {
+        //     console.log(message);
+        //     this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
+        //     this.showNotificationToast(this.getTemplate(message.message, message.image), message);
+        // });
 
-        this.socketStoreActiveToInProgress = this.msgCenter.getNotifications('activeToInProgress').subscribe((message: any) => {
-            console.log(message);
-            this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
-        });
+        // this.socketStoreActiveToInProgress = this.msgCenter.getNotifications('activeToInProgress').subscribe((message: any) => {
+        //     console.log(message);
+        //     this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
+        //     this.showNotificationToast(this.getTemplate(message.message, message.image), message);
+        // });
 
-        this.socketStoreInProgressToComplete = this.msgCenter.getNotifications('inProgressToComplete').subscribe((message: any) => {
-            console.log(message);
-            this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
-        });
+        // this.socketStoreInProgressToComplete = this.msgCenter.getNotifications('inProgressToComplete').subscribe((message: any) => {
+        //     console.log(message);
+        //     this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
+        //     this.showNotificationToast(this.getTemplate(message.message, message.image), message);
+        // });
 
         this.notificationStore = this.store
             .select('notification')
             .subscribe((res: any) => {
-
                 this.notifications = res.notifications;
-                //console.log(res.notification);
-                // this.notifications = this.notifications.map(function (record,index) {
-                //    record.createdAt = new Date(record.createdAt).toLocaleDateString()
-                //   return record;
-                // })
                 this.count = res.notificationCount;
                 this.activeNotification = (res.activeNotification) ? res.activeNotification : null;
                 this.unreadNotificationCount = res.unreadNotificationCount;
-                // console.log("notification1...........................",res)
-
             });
 
         if (this.authService.getSocketConnection()) {
@@ -130,12 +127,9 @@ export class TopNotifications {
             });
 
             this.authService.getSocketConnection().on('notification', (data) => {
-                //console.log(data);
                 if (data.notification && data.unreadNotificationCount) {
                     this.notifications.unshift(data.notification);
                     this.notifications.pop();
-
-
                     this.store.dispatch({
                         type: notification.actionTypes.PUSH_NOTIFICATION, payload: {
                             notification: this.notifications,
@@ -162,7 +156,54 @@ export class TopNotifications {
         //this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: {currentPage: this.page, limit: this.limit} });
         console.log(data);
         let eventType = data.flag;
-        let jobId = data.payload ? data.payload.jobId : null;
+        let id;
+        switch (eventType) {
+            case 'ACCEPT_JOB':
+                id = data.payload ? data.payload.jobId : null;
+                if (id) {
+                    this.dataService.setData('jobId', id);
+                    this.router.navigate(['pages/posts/postdetails']);
+                }
+                break;
+            case 'REJECT_JOB':
+                id = data.payload ? data.payload.jobId : null;
+                if (id) {
+                    this.dataService.setData('jobId', id);
+                    this.router.navigate(['pages/posts/postdetails']);
+                }
+                break;
+            case 'CONFIRM_LABOUR':
+                id = data.payload ? data.payload.jobId : null;
+                if (id) {
+                    this.dataService.setData('jobId', id);
+                    this.router.navigate(['pages/posts/postdetails']);
+                }
+                break;
+            case 'CONFIRM_LABOUR':
+                id = data.payload ? data.payload.jobId : null;
+                if (id) {
+                    this.dataService.setData('jobId', id);
+                    this.router.navigate(['pages/posts/postdetails']);
+                }
+                break;
+            case 'CANCEL_LABOUR':
+                id = data.payload ? data.payload.jobId : null;
+                if (id) {
+                    this.dataService.setData('jobId', id);
+                    this.router.navigate(['pages/posts/postdetails']);
+                }
+                break;
+            case 'POST_JOB':
+                id = data.payload ? data.payload.jobId : null;
+                if (id) {
+                    this.dataService.setData('jobId', id);
+                    this.router.navigate(['pages/posts/postdetails']);
+                }
+                break;
+            default:
+                break;
+        }
+
         if (!data.isRead) {
             //console.log('READ_NOTIFICATION is FIRING .....');
             //this.store.dispatch({ type: notification.actionTypes.READ_NOTIFICATION, payload: data });
@@ -206,9 +247,15 @@ export class TopNotifications {
             toast.onTap.toPromise().then(() => {
                 console.log('clicked', notification);
                 let eventType = notification ? notification.eventType : null;
-                let id = notification ? notification.id : null;
+                let id;
                 switch (eventType) {
                     case 'ACCEPT_JOB':
+                        id = notification ? notification.id : null;
+                        this.dataService.setData('jobId', id);
+                        this.router.navigate(['pages/posts/postdetails']);
+                        break;
+                    case 'REJECT_JOB':
+                        id = notification ? notification.id : null;
                         this.dataService.setData('jobId', id);
                         this.router.navigate(['pages/posts/postdetails']);
                         break;

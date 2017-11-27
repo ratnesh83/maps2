@@ -5,7 +5,7 @@
                 <h3>Your Notifications</h3>
                 <div *ngIf="notifications && notifications.length > 0" class="notification-section">
                     <md-card class="notification-card notification-card-element" *ngFor="let notification of notifications; let i = index" [ngClass]="{'muted' : !notification.isRead}">
-                        <md-card-header class="notification-card-header">
+                        <md-card-header (click)="read(notification)" class="notification-card-header">
                             <div md-card-avatar class="notification-header-image">
                                 <img mat-card-avatar [src]="notification.payload ? notification.payload.profilePicture ? notification.payload.profilePicture.thumb ? notification.payload.profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png' : 'assets/img/user.png'">
                             </div>
