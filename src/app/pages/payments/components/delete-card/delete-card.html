@@ -1,20 +1,6 @@
-<div class="modal-content container">
-    <div class="modal-body paddingGiven">
-      <div class="row">
-        <div class="col-lg-8 col-sm-8 col-xs-8 col-md-8 text-left"></div>
-        <h1 class="textCancel">
-          Can't Post Job. No card added by admin.
-        </h1>
-        </div>
-      </div>
-      <div class="row">
-        <div class="row">
-          <div class="col-lg-6 col-sm-6 col-md-6 col-xs-6">
-          <button class="viewApplicants" (click)="deleteCard()" style="margin:10px;">delete</button>
-          <button class="viewApplicants" (click)="setAsDefault()" style="margin:10px;">default</button>          
-         </div>
-        </div>
-      </div>
-    </div>
 
-  
+  <div class="container">
+            <button class="btn btn-del col-sm-12" (click)="deleteCard()" >Delete this card</button>
+            <button class="btn btn-del col-sm-12" (click)="setAsDefault()" >Set As default</button>  
+            <button class="btn btn-del col-sm-12" (click)="closeModal()" >Cancel</button>            
+  </div>

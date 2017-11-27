@@ -50,7 +50,10 @@
                         </div>
                     </div>
                     <div class="input-div col-sm-12 ">
-                        <input class="donation-input col-sm-12" type="text" #amount [value]="donateAmount" name="donateAmount" placeholder="Enter amount you want to donate($)">
+                        <form [formGroup]="form">
+                        <input class="donation-input col-sm-12" type="number" #amount [value]="donateAmount" name="donateAmount" placeholder="Enter amount you want to donate($)" formControlName="amount">
+                        <div class="alert alert-danger" *ngIf="submitted == true && form.get('amount').invalid">Please enter amount you want to donate</div>
+                        </form>
                     </div>
                     <div class="text-center">
                         <button class="save-card-btn col-sm-6" (click)="donate(amount.value)">

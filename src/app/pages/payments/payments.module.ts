@@ -20,6 +20,8 @@ import {
     MdDialogModule
 } from '@angular/material';
 import { deleteCardModal } from './components/delete-card/delete-card.modal';
+import { WarningModal } from './components/warning/warning.modal';
+
 
 @NgModule({
     imports: [
@@ -42,10 +44,12 @@ import { deleteCardModal } from './components/delete-card/delete-card.modal';
     declarations: [
         Payments,
         AllPayments,
-        deleteCardModal
+        deleteCardModal,
+        WarningModal
     ],
     entryComponents: [
-        deleteCardModal
+        deleteCardModal,
+        WarningModal        
     ],
 
 })

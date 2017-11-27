@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, AbstractControl, FormBuilder, Validators, FormControl } from '@angular/forms';
 import * as donation from '../../state/donation.actions';
 import { Router } from '@angular/router';
 import { BaThemeSpinner } from '../../../../theme/services';
@@ -18,6 +18,7 @@ export class Donation implements OnInit {
     public selected='';
     public donationHistory;
     public donationsStore;
+    public submitted = false;
     ngOnInit(){
         this._spinner.hide();
     }
@@ -33,10 +34,16 @@ export class Donation implements OnInit {
 
     }
     
+    form = new FormGroup({
+        'amount': new FormControl('',[Validators.required])
+    });
+    
     donate(value){
+        this.submitted = true;
+        if(this.form.valid){
       localStorage.setItem('payamount',value);
       this.router.navigate(['/pages/payments']);
-    }
+    }}
 
     changeAmount(value,id){
         this.donateAmount = value;

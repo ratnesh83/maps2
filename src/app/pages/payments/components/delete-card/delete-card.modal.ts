@@ -8,7 +8,7 @@ import { BaThemeSpinner } from '../../../../theme/services';
 
 
 @Component({
-  selector: 'add-card-modal',
+  selector: 'delete-card-modal',
   templateUrl: 'delete-card.html'
 })
 

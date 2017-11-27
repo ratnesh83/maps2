@@ -16,12 +16,14 @@ import * as app from '../../../../state/app.actions';
 import 'style-loader!./all-payments.scss';
 import { PaymentValidator } from '../../../../theme/validators/payment.validator';
 import { deleteCardModal } from '../delete-card/delete-card.modal';
+import { WarningModal } from '../warning/warning.modal';
 
 @Component({
     selector: 'all-payments',
     templateUrl: 'all-payments.html'
 })
 export class AllPayments implements OnDestroy {
+    public warningModel;
     
     public deleteCardActionModel;
 
@@ -49,12 +51,12 @@ export class AllPayments implements OnDestroy {
     title = '';
     message = '';
 
+
     public cards=[];
     public defaultCard;
     public planmode;
     public donatemode;
     public amount;
-  
     constructor(private fb: FormBuilder,
                 private store: Store<any>,
                 private _zone: NgZone,
@@ -97,11 +99,13 @@ export class AllPayments implements OnDestroy {
     form = new FormGroup({
         'card_holder_name': new FormControl('',[Validators.required, EmailValidator.onlyAlpha]),
         'card_number': new FormControl('',[Validators.required, PaymentValidator.cardNumber]),
-        'card_expire_date': new FormControl('',[Validators.required, PaymentValidator.expiryDate]),
+        'card_expire_date': new FormControl('',[Validators.required, PaymentValidator.expiryDate,Validators.minLength(5)]),
         'card_cvv': new FormControl('',[Validators.required, PaymentValidator.cvvValid])
     });
 
     onSubmit(value){
+        this.submitted = true;
+       if(this.form.valid){
         this._spinner.show();
         let expiryMonth = value.card_expire_date.split('-');
         let expiryYear = expiryMonth[1];
@@ -133,12 +137,15 @@ export class AllPayments implements OnDestroy {
                   }
                 });
             });
-          }
-          openModalNew(value){
-            console.log(value,"abc");
+          }}
+          openModalNew(value,isDefault){
+              if(isDefault == true){
+                this.warningModel = this.modalService.open(WarningModal, { size: 'sm' });             
+              }
+              else{
             this.store.dispatch({ type: payment.actionTypes.CONFIRM_DELETE,payload:{card:value.cardId}});              
             this.deleteCardActionModel = this.modalService.open(deleteCardModal, { size: 'sm' });
-          }
+          }}
           pay(){
               let formValue;
                if(localStorage.getItem('payamount')){

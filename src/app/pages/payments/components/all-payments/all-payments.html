@@ -19,13 +19,13 @@
             <md-card-content>
                 <div class="container">
                     <div class="row">
-                        <div class="card-outer col-sm-12 col-md-6" *ngFor="let item of cards" (click)="openModalNew(item)">
+                        <div class="card-outer col-sm-12 col-md-6" *ngFor="let item of cards" (click)="openModalNew(item,item.isDefault)">
                             <div class="added-card col-sm-12">
-                           <span *ngIf="item.cardType == 'Visa'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/visa_credit-card-logos/new_visa.gif" border="0" /></span>
-                           <span *ngIf="item.cardType == 'American Express'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/american_express_credit-card-logos/american_express_logo_1.gif" border="0" /></span>
-                           <span *ngIf="item.cardType == 'MasterCard'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/mastercard_credit-card-logos/mastercard_logo_1.gif" border="0" /></span>
-                           <span *ngIf="item.cardType == 'Discover'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/discover_credit-card-logos/discover_network1.jpg" border="0" /></span>&nbsp;                           
-                             <span id="card-no">XXXX-XXXX-XXXX-{{item.last4Digits}}&nbsp;<span class="defaultcheck" *ngIf="item.isDefault == true">&#10004;</span></span>
+                           <span class="card_photo" *ngIf="item.cardType == 'Visa'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/visa_credit-card-logos/new_visa.gif" border="0" /></span>
+                           <span class="card_photo" *ngIf="item.cardType == 'American Express'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/american_express_credit-card-logos/american_express_logo_1.gif" border="0" /></span>
+                           <span class="card_photo" *ngIf="item.cardType == 'MasterCard'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/mastercard_credit-card-logos/mastercard_logo_1.gif" border="0" /></span>
+                           <span class="card_photo" *ngIf="item.cardType == 'Discover'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/discover_credit-card-logos/discover_network1.jpg" border="0" /></span>&nbsp;                           
+                             <span class="hidden_no" id="card-no">XXXX-XXXX-XXXX-{{item.last4Digits}}&nbsp;<span class="defaultcheck" *ngIf="item.isDefault == true">&#10004;</span></span>
                             </div>
                         </div>
                     </div>
@@ -38,28 +38,28 @@
                         <div class="row">
                             <div class="card-outer col-sm-12 col-md-6">
                                 <input class="card-input col-sm-12" placeholder="Card Holder Name" formControlName="card_holder_name">
-                                <div class="alert alert-danger" *ngIf="form.get('card_holder_name').touched && form.get('card_holder_name').invalid">
+                                <div class="alert alert-danger" *ngIf="(form.get('card_holder_name').touched || submitted == true) && form.get('card_holder_name').invalid">
                                     <div *ngIf="form.get('card_holder_name').errors.required">Please enter card holder's name</div>
                                     <div *ngIf="!form.get('card_holder_name').errors.required">Please enter only alphabets</div>
                                 </div>
                             </div>
                             <div class="card-outer col-sm-12 col-md-6">
                                 <input class="card-input col-sm-12" placeholder="Card Number" formControlName="card_number">
-                                <div class="alert alert-danger" *ngIf="form.get('card_number').touched && form.get('card_number').invalid">
+                                <div class="alert alert-danger" *ngIf="(form.get('card_number').touched || submitted == true) && form.get('card_number').invalid">
                                     <div *ngIf="form.get('card_number').errors.required">Please enter card number</div>
                                     <div *ngIf="!form.get('card_number').errors.required">Please enter correct card number</div>
                                 </div>
                             </div>
                             <div class="card-outer col-sm-12 col-md-6">
-                                <input class="card-input col-sm-12" placeholder="Exp. Date" formControlName="card_expire_date" pattern="(1[0-2]|0[1-9])\/(1[5-9]|2\d)">                                
-                                <div class="alert alert-danger" *ngIf="form.get('card_expire_date').touched && form.get('card_expire_date').invalid">
+                                <input class="card-input col-sm-12" placeholder="Exp. Date(DD-MM)" formControlName="card_expire_date">                                
+                                <div class="alert alert-danger" *ngIf="(form.get('card_expire_date').touched || submitted == true) && form.get('card_expire_date').invalid">
                                     <div *ngIf="form.get('card_expire_date').errors.required">Please enter expiry date</div>
                                     <div *ngIf="!form.get('card_expire_date').errors.required">Please enter correct expiry date</div>
                                 </div>
                             </div>
                             <div class="card-outer col-sm-12 col-md-6">
                                 <input class="card-input col-sm-12" placeholder="CVV/CVC" formControlName="card_cvv">
-                                <div class="alert alert-danger" *ngIf="form.get('card_cvv').touched && form.get('card_cvv').invalid">
+                                <div class="alert alert-danger" *ngIf="(form.get('card_cvv').touched || submitted == true) && form.get('card_cvv').invalid">
                                     <div *ngIf="form.get('card_cvv').errors.required">Please enter cvv/cvc</div>
                                     <div *ngIf="!form.get('card_cvv').errors.required">Please enter correct cvv/cvc</div>
                                 </div>

@@ -63,9 +63,11 @@ export class UserProfileEdit {
                 this.profileAddress = res.locationDetails.addressLine1;
                 }
                 this.profileEmail = res.email;
-                this.profileDescription = res.description;     
+                this.profileDescription = res.description; 
+                this.isEditMode = false;                    
             });
-            this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO});                        
+            this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO});   
+                             
     }
 
     onSubmit(){

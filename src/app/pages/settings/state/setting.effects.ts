@@ -563,7 +563,8 @@ export class SettingEffects {
                           }
                       });
                   }
-                  this.router.navigate(['/pages/settings']);
+                  this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO,payload:{mode:1}});                                          
+                  this.router.navigate(['/pages/settings/userprofileedit']);
               }
             }
             , (error) => {
