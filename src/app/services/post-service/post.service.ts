@@ -98,4 +98,24 @@ export class PostService {
         return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
     }
 
+    hireLabor(payload) {
+        this.authRequired = true;
+        this.utcOffset = false;
+        let formData = new FormData();
+        formData.append('jobId', payload.jobId);
+        formData.append('labourId', payload.laborId);
+        let url = environment.APP.API_URL + environment.APP.HIRE_LABOR;
+        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+    }
+
+    rejectLabor(payload) {
+        this.authRequired = true;
+        this.utcOffset = false;
+        let formData = new FormData();
+        formData.append('jobId', payload.jobId);
+        formData.append('labourId', payload.laborId);
+        let url = environment.APP.API_URL + environment.APP.REJECT_LABOR;
+        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+    }
+
 }

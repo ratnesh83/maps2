@@ -61,6 +61,8 @@
         </md-card>
 
         <md-card-actions style="margin-left: 0px; margin-right: 0px; text-align: center">
+            <button *ngIf="canApply && canApply == 2" class="col-12 col-sm-6 btn-submit" md-raised-button color="primary"
+                disabled style="background-color: #026eff">CANCELLED BY EMPLOYER</button>
             <button *ngIf="canApply && canApply == 1" class="col-12 col-sm-6 btn-submit" md-raised-button (click)="applyJob()" color="primary"
                 style="background-color: #026eff">APPLY</button>
             <button *ngIf="canApply != null && canApply == 0" class="col-12 col-sm-6 btn-submit" md-raised-button (click)="cancelJob()"

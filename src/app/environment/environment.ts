@@ -32,6 +32,8 @@ export const environment = {
         POST_FEEDBACK: '/api/v1/jobs/ratings/',
         EDIT_POST_JOB: '/api/v1/jobs/editJob/',
         CHECK_APPLY: '/api/v1/jobs/checkIfEligibleToApply',
+        HIRE_LABOR: '/api/v1/jobs/confirmLabour',
+        REJECT_LABOR: '/api/v1/jobs/cancelLabour',
 
         GET_ALL_BOOKING: '/admin/getAllAvailabeBooking',
         GET_ALL_OUTGOING_BOOKING: '/admin/getOngoingBooking',

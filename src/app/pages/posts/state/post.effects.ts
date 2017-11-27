@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { cloneDeep, random } from 'lodash';
 import { PostService } from '../../../services/post-service/post.service';
+import { DataService } from '../../../services/data-service/data.service';
 import * as post from './post.actions';
 import * as app from '../../../state/app.actions';
 import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from '../../../theme/services';
@@ -273,13 +274,98 @@ export class PostEffects {
 
         });
 
+    @Effect({ dispatch: false })
+    hireLabor$ = this.actions$
+        .ofType('APP_HIRE_LABOR')
+        .do((action) => {
+            this._spinner.show();
+            this.PostService.hireLabor(action.payload).subscribe((result) => {
+                this._spinner.hide();
+                if (result.message == 'Action complete.' || result.statusCode == 200 || result.statusCode == 201) {
+                    let payload = result.data;
+                    this.store.dispatch(new post.AppHireLaborSuccess(payload));
+                    this.toastrService.clear();
+                    this.toastrService.success(result.message || 'Labor hired successfully', 'Success');
+                }
+            }
+                , (error) => {
+                    this._spinner.hide();
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        } else {
+                            this.toastrService.clear();
+                            this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                        }
+                    }
+                }
+            );
+        });
+
+
+    @Effect({ dispatch: false })
+    hireLaborSuccess: Observable<Action> = this.actions$
+        .ofType('APP_HIRE_LABOR_SUCCESS')
+        .do((action) => {
+            this.store.dispatch({
+                type: post.actionTypes.APP_GET_LABORS, payload: {
+                    jobId: this.dataService.getData('jobId')
+                }
+            });
+        });
+
+    @Effect({ dispatch: false })
+    rejectLabor$ = this.actions$
+        .ofType('APP_REJECT_LABOR')
+        .do((action) => {
+            this._spinner.show();
+            this.PostService.rejectLabor(action.payload).subscribe((result) => {
+                this._spinner.hide();
+                if (result.message == 'Action complete.' || result.statusCode == 200 || result.statusCode == 201) {
+                    let payload = result.data;
+                    this.store.dispatch(new post.AppRejectLaborSuccess(payload));
+                    this.toastrService.clear();
+                    this.toastrService.success(result.message || 'Labor rejected successfully', 'Success');
+                }
+            }
+                , (error) => {
+                    this._spinner.hide();
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        } else {
+                            this.toastrService.clear();
+                            this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                        }
+                    }
+                }
+            );
+        });
+
+
+    @Effect({ dispatch: false })
+    rejectLaborSuccess: Observable<Action> = this.actions$
+        .ofType('APP_REJECT_LABOR_SUCCESS')
+        .do((action) => {
+            this.store.dispatch({
+                type: post.actionTypes.APP_GET_LABORS, payload: {
+                    jobId: this.dataService.getData('jobId')
+                }
+            });
+        });
+
     constructor(
         private actions$: Actions,
         private store: Store<any>,
         private router: Router,
         private PostService: PostService,
         private toastrService: ToastrService,
-        private _spinner: BaThemeSpinner
+        private _spinner: BaThemeSpinner,
+        private dataService: DataService
     ) { }
 
 }

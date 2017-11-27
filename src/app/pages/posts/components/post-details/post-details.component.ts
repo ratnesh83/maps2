@@ -118,4 +118,24 @@ export class PostDetails implements OnInit {
         }
     }
 
+    hire(laborId, jobId) {
+        let data = {
+            jobId: jobId,
+            laborId: laborId
+        };
+        this.store.dispatch({
+            type: post.actionTypes.APP_HIRE_LABOR, payload: data
+        });
+    }
+
+    reject(laborId, jobId) {
+        let data = {
+            jobId: jobId,
+            laborId: laborId
+        };
+        this.store.dispatch({
+            type: post.actionTypes.APP_REJECT_LABOR, payload: data
+        });
+    }
+
 }
