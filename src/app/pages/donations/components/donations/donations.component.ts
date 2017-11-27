@@ -38,13 +38,10 @@ export class Donation implements OnInit {
         'amount': new FormControl('',[Validators.required])
     });
     
-    donate(value){
-        this.submitted = true;
-        if(this.form.valid){
+    donate(value){      
       localStorage.setItem('payamount',value);
       this.router.navigate(['/pages/payments']);
-    }}
-
+    }
     changeAmount(value,id){
         this.donateAmount = value;
         this.selected = id;

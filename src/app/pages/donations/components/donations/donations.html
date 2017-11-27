@@ -49,17 +49,16 @@
                             or
                         </div>
                     </div>
+                    <form>
                     <div class="input-div col-sm-12 ">
-                        <form [formGroup]="form">
-                        <input class="donation-input col-sm-12" type="number" #amount [value]="donateAmount" name="donateAmount" placeholder="Enter amount you want to donate($)" formControlName="amount">
-                        <div class="alert alert-danger" *ngIf="submitted == true && form.get('amount').invalid">Please enter amount you want to donate</div>
-                        </form>
+                        <input class="donation-input col-sm-12" type="number" #amount [value]="donateAmount" name="donateAmount" placeholder="Enter amount you want to donate($)" required>
                     </div>
                     <div class="text-center">
-                        <button class="save-card-btn col-sm-6" (click)="donate(amount.value)">
+                        <button type = "submit" class="save-card-btn col-sm-6" (click)="donate(amount.value)">
                             SUBMIT
                         </button>
                     </div>
+                    </form>
                 </div>
             </md-card-content>
         </md-card>
