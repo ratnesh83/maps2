@@ -331,9 +331,9 @@ export class PostJob implements OnInit {
             addressLine1: this.locationAddress.value,
             addressLine2: this.locationAddress.value,
             city: this.city.value,
-            cityShort: this.cityShort.value,
+            cityShort: this.cityShort.value ? this.cityShort.value : this.city.value,
             state: this.state.value,
-            stateShort: this.stateShort.value,
+            stateShort: this.stateShort.value ? this.stateShort.value : this.state.value,
             country: this.country.value,
             zipCode: this.zipCode.value
         };
