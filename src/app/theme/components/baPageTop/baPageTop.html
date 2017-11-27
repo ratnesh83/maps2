@@ -27,7 +27,7 @@
                             EMPLOYER LIST
                         </a>
                     </li>
-                    <li (click)="goToCompaniesList()" class="dropdown-item my-net-li">
+                    <!-- <li (click)="goToCompaniesList()" class="dropdown-item my-net-li">
                         <a class="signout my-net-link">
                             COMPANY LIST
                         </a>
@@ -36,14 +36,14 @@
                         <a class="signout my-net-link">
                             FRIEND LIST
                         </a>
-                    </li>
+                    </li> -->
                 </ul>
 
             </a>
 
             <div class="user-profile clearfix">
                 <div class="dropdown al-user-profile">
-                    <top-notification class="top-notify"></top-notification>
+                    <top-notification class="hidden-xs-up top-notify"></top-notification>
                     <img [src]="profilePicture" data-toggle="dropdown" aria-expanded="false">
                     <span class="hidden-xs-down" data-toggle="dropdown" aria-expanded="false">
                         {{ name }}

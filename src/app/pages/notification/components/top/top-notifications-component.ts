@@ -60,6 +60,8 @@ export class TopNotifications {
     public count: number;
     public activeNotification;
     public unreadNotificationCount;
+    public notificationStore;
+    public socketStore;
 
     constructor(private authService: AuthService,
         private store: Store<any>,
@@ -165,6 +167,15 @@ export class TopNotifications {
             toast.onTap.toPromise().then(() => {
                 console.log('clicked', data);
             });
+        }
+    }
+
+    ngOnDestroy() {
+        if (this.socketStore) {
+            this.socketStore.unsubscribe();
+        }
+        if (this.notificationStore) {
+            this.notificationStore.unsubscribe();
         }
     }
 
