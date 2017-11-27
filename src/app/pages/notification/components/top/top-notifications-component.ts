@@ -6,7 +6,11 @@ import { BaMsgCenterService } from '../../../../theme/components/baMsgCenter/baM
 import { DataService } from '../../../../services/data-service/data.service';
 import { Router } from '@angular/router';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
+import { JwtHelper } from 'angular2-jwt';
 import * as notification from '../../state/notification.actions';
+import * as job from '../../../jobs/state/job.actions';
+import * as post from '../../../posts/state/post.actions';
+import * as request from '../../../requests/state/request.actions';
 
 @Component({
     selector: 'top-notification',
@@ -162,42 +166,55 @@ export class TopNotifications {
                 id = data.payload ? data.payload.jobId : null;
                 if (id) {
                     this.dataService.setData('jobId', id);
-                    this.router.navigate(['pages/posts/postdetails']);
+                    this.router.navigate(['pages/posts/postdetails']).then((result) => {
+                        if (!result) {
+                            this.getPostDetails();
+                        }
+                    });
                 }
                 break;
             case 'REJECT_JOB':
                 id = data.payload ? data.payload.jobId : null;
                 if (id) {
                     this.dataService.setData('jobId', id);
-                    this.router.navigate(['pages/posts/postdetails']);
+                    this.router.navigate(['pages/posts/postdetails']).then((result) => {
+                        if (!result) {
+                            this.getPostDetails();
+                        }
+                    });
                 }
                 break;
             case 'CONFIRM_LABOUR':
                 id = data.payload ? data.payload.jobId : null;
                 if (id) {
                     this.dataService.setData('jobId', id);
-                    this.router.navigate(['pages/posts/postdetails']);
-                }
-                break;
-            case 'CONFIRM_LABOUR':
-                id = data.payload ? data.payload.jobId : null;
-                if (id) {
-                    this.dataService.setData('jobId', id);
-                    this.router.navigate(['pages/posts/postdetails']);
+                    this.router.navigate(['pages/posts/postdetails']).then((result) => {
+                        if (!result) {
+                            this.getPostDetails();
+                        }
+                    });
                 }
                 break;
             case 'CANCEL_LABOUR':
                 id = data.payload ? data.payload.jobId : null;
                 if (id) {
                     this.dataService.setData('jobId', id);
-                    this.router.navigate(['pages/posts/postdetails']);
+                    this.router.navigate(['pages/posts/postdetails']).then((result) => {
+                        if (!result) {
+                            this.getPostDetails();
+                        }
+                    });
                 }
                 break;
             case 'POST_JOB':
                 id = data.payload ? data.payload.jobId : null;
                 if (id) {
                     this.dataService.setData('jobId', id);
-                    this.router.navigate(['pages/posts/postdetails']);
+                    this.router.navigate(['pages/posts/postdetails']).then((result) => {
+                        if (!result) {
+                            this.getPostDetails();
+                        }
+                    });
                 }
                 break;
             default:
@@ -231,6 +248,48 @@ export class TopNotifications {
         `;
     }
 
+    getJobDetails() {
+        let user;
+        let jwtHelper: JwtHelper = new JwtHelper();
+        let token = localStorage.getItem('tokenSession');
+        if (token && !jwtHelper.isTokenExpired(token)) {
+            user = jwtHelper.decodeToken(token);
+        }
+        this.store.dispatch({
+            type: job.actionTypes.APP_CHECK_APPLY,
+            payload: {
+                jobId: this.dataService.getData('jobId'),
+                laborId: user._id
+            }
+        });
+        this.store.dispatch({
+            type: job.actionTypes.APP_GET_JOB, payload: {
+                jobId: this.dataService.getData('jobId')
+            }
+        });
+    }
+
+    getPostDetails() {
+        this.store.dispatch({
+            type: post.actionTypes.APP_GET_JOB, payload: {
+                jobId: this.dataService.getData('jobId')
+            }
+        });
+        this.store.dispatch({
+            type: post.actionTypes.APP_GET_LABORS, payload: {
+                jobId: this.dataService.getData('jobId')
+            }
+        });
+    }
+
+    getRequestDetails() {
+        this.store.dispatch({
+            type: request.actionTypes.APP_GET_REQUEST, payload: {
+                requestId: this.dataService.getData('requestId')
+            }
+        });
+    }
+
     showNotificationToast(data, notification) {
         if (this.toastId) {
             this.toastrService.remove(this.toastId);
@@ -252,12 +311,53 @@ export class TopNotifications {
                     case 'ACCEPT_JOB':
                         id = notification ? notification.eventId : null;
                         this.dataService.setData('jobId', id);
-                        this.router.navigate(['pages/posts/postdetails']);
+                        this.router.navigate(['pages/posts/postdetails']).then((result) => {
+                            if (!result) {
+                                this.getPostDetails();
+                            }
+                        });
                         break;
                     case 'REJECT_JOB':
                         id = notification ? notification.eventId : null;
                         this.dataService.setData('jobId', id);
-                        this.router.navigate(['pages/posts/postdetails']);
+                        this.router.navigate(['pages/posts/postdetails']).then((result) => {
+                            if (!result) {
+                                this.getPostDetails();
+                            }
+                        });
+                        break;
+                    case 'CONFIRM_LABOUR':
+                        id = notification ? notification.eventId : null;
+                        if (id) {
+                            this.dataService.setData('jobId', id);
+                            this.router.navigate(['pages/posts/postdetails']).then((result) => {
+                                if (!result) {
+                                    this.getPostDetails();
+                                }
+                            });
+                        }
+                        break;
+                    case 'CANCEL_LABOUR':
+                        id = notification ? notification.eventId : null;
+                        if (id) {
+                            this.dataService.setData('jobId', id);
+                            this.router.navigate(['pages/posts/postdetails']).then((result) => {
+                                if (!result) {
+                                    this.getPostDetails();
+                                }
+                            });
+                        }
+                        break;
+                    case 'POST_JOB':
+                        id = notification ? notification.eventId : null;
+                        if (id) {
+                            this.dataService.setData('jobId', id);
+                            this.router.navigate(['pages/posts/postdetails']).then((result) => {
+                                if (!result) {
+                                    this.getPostDetails();
+                                }
+                            });
+                        }
                         break;
                     default:
                         break;

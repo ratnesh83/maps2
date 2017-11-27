@@ -14,8 +14,8 @@ import 'style-loader!./cancel-job-dialog.scss';
             </md-dialog-content>
             <md-dialog-actions>
                 <div>
-                    <button md-button md-dialog-close class="btn-success" (click)="cancelJob()">YES</button>
-                    <button md-button [md-dialog-close]="true">NO</button>
+                    <button md-button md-dialog-close style="background-color: #026eff; color: white" class="btn-success" (click)="cancelJob()">YES</button>
+                    <button md-button style="background-color: #026eff; color: white" [md-dialog-close]="true">NO</button>
                 </div>
             </md-dialog-actions>
     `
