@@ -31,6 +31,10 @@ export const environment = {
         GET_TOP_LIST: '/api/v2/user/getAppLatestData',
         POST_FEEDBACK: '/api/v1/jobs/ratings/',
         EDIT_POST_JOB: '/api/v1/jobs/editJob/',
+        CHECK_APPLY: '/api/v1/jobs/checkIfEligibleToApply',
+        HIRE_LABOR: '/api/v1/jobs/confirmLabour',
+        REJECT_LABOR: '/api/v1/jobs/cancelLabour',
+        CANCEL_JOB: '/api/v1/jobs/cancelJob/',
 
         GET_ALL_BOOKING: '/admin/getAllAvailabeBooking',
         GET_ALL_OUTGOING_BOOKING: '/admin/getOngoingBooking',
@@ -56,7 +60,7 @@ export const environment = {
         CHANGE_PASSWORD: '/user/changePassword',
         GET_DASHBOARD_COUNT: '/admin/getDashboardCount',
 
-        GET_ALL_NOTIFICATION: '/notification/admin/getAllNotification',
+        GET_ALL_NOTIFICATION: '/api/v2/user/getNotifications',
         CLEAR_ALL_NOTIFICATION: '/notification/admin/clearNotification',
         READ_NOTIFICATION: '/notification/admin/readNotification',
         SETTINGS_KEY_MESSAGE: '/multilingual/addResourceBundle',

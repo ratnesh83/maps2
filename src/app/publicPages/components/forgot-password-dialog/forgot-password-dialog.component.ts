@@ -98,7 +98,7 @@ export class ForgotPasswordDialog {
 
     ngOnDestroy() {
         if (this.storeData) {
-            // this.storeData.unsubscribe();
+            this.storeData.unsubscribe();
         }
     }
 

@@ -35,7 +35,7 @@ export class FeedbackEffects {
                         this.store.dispatch({
                             type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
                         });
-                    } else {
+                    } else if (error) {
                         this.toastrService.clear();
                         this.toastrService.error(error.message || 'Something went wrong', 'Error');
                     }
@@ -47,7 +47,7 @@ export class FeedbackEffects {
         .ofType('GET_FEEDBACKS_SUCCESS')
         .do((action) => {
         });
-    
+
     constructor(
         private actions$: Actions,
         private store: Store<any>,

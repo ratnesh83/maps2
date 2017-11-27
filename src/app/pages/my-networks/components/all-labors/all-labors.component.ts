@@ -58,8 +58,8 @@ export class AllLaborList implements OnInit {
                     this.labors = res.labors;
                     if (this.labors) {
                         for (let i = 0; i < this.labors.length; i++) {
-                            this.labors.showPhone = false;
-                            this.labors.showEmail = false;
+                            this.labors[i].showPhone = false;
+                            this.labors[i].showEmail = false;
                         }
                     }
                 }
@@ -155,7 +155,7 @@ export class AllLaborList implements OnInit {
 
     ngOnDestroy() {
         if (this.laborListStore) {
-            // this.laborListStore.unsubscribe();
+            this.laborListStore.unsubscribe();
         }
     }
 
@@ -176,10 +176,13 @@ export class AllLaborList implements OnInit {
         let returnAddress;
         if (address) {
             returnAddress = address;
+            if (returnAddress && country && country.toString().toLowerCase() == 'united states') {
+                returnAddress = returnAddress.toString().replace(', USA', '');
+            }
             if (city && address.toString().toLowerCase().indexOf(city.toString().toLowerCase()) == -1) {
                 returnAddress = returnAddress + ', ' + city;
             }
-            if (zipCode && address.indexOf(zipCode) != -1) {
+            if (zipCode && address.indexOf(zipCode) == -1) {
                 returnAddress = returnAddress + ', ' + zipCode;
             }
             if (state && state.toString().toLowerCase() != city.toString().toLowerCase() && address.toString().toLowerCase().indexOf(state.toString().toLowerCase()) == -1) {

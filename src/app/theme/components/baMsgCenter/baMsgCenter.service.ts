@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
+import { AuthHttp, JwtHelper } from 'angular2-jwt';
 import * as io from 'socket.io-client';
 import { environment } from '../../../environment/environment';
-
 
 @Injectable()
 export class BaMsgCenterService {
@@ -88,37 +88,38 @@ export class BaMsgCenterService {
         return this._messages;
     }
 
-    public getNotifications(): Array<Object> {
+    public getNotificationsArray(): Array<Object> {
         return this._notifications;
     }
 
-
-    //private url = 'http://localhost:5000';
     private url = environment.APP.API_URL;
     private socket;
-
+    public user;
+    public jwtHelper: JwtHelper = new JwtHelper();
 
     constructor() {
+
         let token = localStorage.getItem('token');
-        let headerToken = 'Bearer ' + token;
-        this.socket = io(this.url, {
+        this.user = this.jwtHelper.decodeToken(token);
+        let userType;
+        if (this.user) {
+            userType = this.user.userType;
+        }
+        let headerToken = token;
+        this.socket = io(this.url + '?accessToken=' + token + '&userType=' + userType, {
             extraHeaders: {
                 Authorization: headerToken
             }
         });
     }
 
-
-
-    sendMessage(message) {
-        this.socket.emit('add-message', message);
+    sendMessage(key, message) {
+        this.socket.emit(key, message);
     }
 
-    getMsg() {
+    getNotifications(socket) {
         let observable = new Observable(observer => {
-
-            //console.log("Got hit  ");
-            this.socket.on('message', (data) => {
+            this.socket.on(socket, (data) => {
                 observer.next(data);
             });
         });

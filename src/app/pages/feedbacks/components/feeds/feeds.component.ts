@@ -45,7 +45,7 @@ export class Feeds {
 
     ngOnDestroy() {
         if (this.feedbackStore) {
-            // this.feedbackStore.unsubscribe();
+            this.feedbackStore.unsubscribe();
         }
     }
 

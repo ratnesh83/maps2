@@ -1,0 +1,92 @@
+<div class="container-fluid animated bounce friend-container">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-12 col-sm-12 user-friends-heading">
+                <md-card class="friends-card-heading">
+                    <md-card-header class="friends-card-header friends-card-heading">
+                        <md-card-title style="font-weight: 600; color: #474747; margin-bottom: 0px">
+                            <h2>Friend List</h2>
+                        </md-card-title>
+                        <div class="friends-header-rating">
+                            <div class="filter-div">
+                                <i class="fa fa-filter"></i>
+                            </div>
+                        </div>
+                    </md-card-header>
+                </md-card>
+            </div>
+        </div>
+    </div>
+
+    <div class="friends-section page-input-block">
+        <md-card *ngIf="!showLoading" class="friends-card">
+            <md-card-content *ngIf="friends">
+                <md-card class="friends-card friends-card-inner" *ngFor="let friend of friends; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
+                    <md-card-header class="friends-card-header">
+                        <div md-card-avatar class="friends-header-image">
+                            <img mat-card-avatar [src]="friend.labourId?.profilePicture?.image?.thumb ? friend.labourId.profilePicture?.image?.thumb : 'assets/img/user.png'">
+                        </div>
+                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{friend.labourId ? friend.labourId.fullName ? friend.labourId.fullName : friend.labourId.lastName
+                            ? (friend.labourId.firstName + ' ' + friend.labourId.lastName) : friend.labourId.firstName :
+                            ''}}</md-card-title>
+                        <md-card-subtitle style="font-weight: 500">{{ (friend.distance / 1609.34).toFixed(1) + ' mile away' }}</md-card-subtitle>
+                        <div class="friends-header-view">
+                            <div>
+                                <i *ngIf="!friend?.labourId?.isPhoneNumberHidden && !friend.showPhone" (click)="showPhoneInfo(i)" class="fa fa-phone-square"></i>
+                                <i *ngIf="!friend.showEmail" (click)="showEmailInfo(i)" class="fa fa-envelope"></i>
+                            </div>
+                            <div *ngIf="friend.showPhone">{{friend.labourId?.countryCode + ' ' + friend.labourId?.phoneNumber}}</div>
+                            <div *ngIf="friend.showEmail">{{friend.labourId?.email}}</div>
+                        </div>
+                    </md-card-header>
+                    <md-card-header style="margin-top: 5px" class="friends-card-header">
+                        <div md-card-avatar class="friends-header-image">
+                            <img mat-card-avatar [src]="friend.jobId?.categoryId?.image?.thumb ? friend.jobId?.categoryId?.image?.thumb : 'assets/img/image-placeholder.jpg'">
+                        </div>
+                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">
+                            {{ friend.jobId.category ? friend.jobId.category + ': ' + friend.jobId.subCategory : friend.jobId.category }}
+                        </md-card-title>
+                        <md-card-subtitle style="font-weight: 500">
+                            {{ showAddress(friend?.labourAddress?.addressLine1, friend?.labourAddress?.city, friend?.labourAddress?.zipCode, friend?.labourAddress?.state,
+                            friend?.labourAddress?.country) }}
+                        </md-card-subtitle>
+                    </md-card-header>
+                </md-card>
+                <div *ngIf="friends && friends.length == 0">
+                    No friends found.
+                </div>
+            </md-card-content>
+            <md-card-content *ngIf="!friends">
+                Loading...
+                <i class="fa fa-spinner fa-spin"></i>
+            </md-card-content>
+        </md-card>
+        <md-card *ngIf="showLoading" class="friends-card">
+            {{ locationStatus + ' ' }}
+            <i *ngIf="locationStatus == 'Fetching current location...'" class="fa fa-spinner fa-spin"></i>
+        </md-card>
+    </div>
+
+    <!-- <div class="panel-footer">
+        <div class="row">
+            <div *ngIf="count > 4" class="col-sm-12 rar-align page-select">
+                <span class="first-last-ctrl">
+                    <span [ngClass]="{'enabled': pageIndex > 0}" class="page-controls" (click)="pageIndex > 0 && goToFirstPage($event)">
+                        <span mdTooltip="{{(pageIndex > 0) ? 'First page' : ''}}">
+                            <i [ngClass]="{'enabled': pageIndex > 0}" class="fa fa-fast-backward"></i>
+                        </span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                    <span [ngClass]="{'enabled': pageIndex * pageSize + pageSize < length}" class="page-controls" (click)="pageIndex * pageSize + pageSize < length && goToLastPage($event)">
+                        <span mdTooltip="{{(pageIndex * pageSize + pageSize < length) ? 'Last page' : ''}}">
+                            <i [ngClass]="{'enabled': pageIndex * pageSize + pageSize < length}" class="fa fa-fast-forward"></i>
+                        </span>
+                    </span>
+                </span>
+                <md-paginator #friendListPaginator class="mat-paginator-pg" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                    (page)="pageChange($event)">
+                </md-paginator>
+            </div>
+        </div>
+    </div> -->
+</div>

@@ -128,7 +128,7 @@ export class Login {
 
     ngOnDestroy() {
         if (this.storeData) {
-            // this.storeData.unsubscribe();
+            this.storeData.unsubscribe();
         }
         localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
     }

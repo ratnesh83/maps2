@@ -63,7 +63,65 @@ a.al-logo:hover {
 .top-nav-links:hover {
     color: #026eff;
 }
-
+ul.my-networks-div {
+    top: 66px;
+    left: 350px;
+    height: max-content;
+    width: 180px;
+    border: 1px solid transparent;
+    li {
+        cursor: pointer;
+        padding: 0.75rem 1.5rem;  
+    }
+}
+.my-net-link {
+    color: #474747 !important;
+    font-size: 13px;
+    font-weight: 500;
+}
+ul.my-networks-div:after {
+    bottom: 100%;
+    right: 0;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(255, 255, 255, 0);
+    border-bottom-color: darken(#ffffff, 5%);
+    border-width: 10px;
+    margin-right: 25px;
+}
+.my-networks-div {
+    a {
+        display: block;
+        margin: auto 0px;
+    }
+    span {
+        margin: auto 10px;
+        color: #474747;
+        cursor: pointer;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100px;
+    }
+    i {
+        margin: auto 0px;
+        cursor: pointer;
+        color: #474747;
+    }
+    img {
+        margin: auto 0px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+    }
+    .top-notify {
+        display: flex;
+    }
+}
 .al-user-profile {
     display: flex;
     float: right;
@@ -162,11 +220,10 @@ a.collapse-menu-link {
 .top-dropdown-menu[_ngcontent-c1] > a[_ngcontent-c1]
 {
     &:hover{
-        background: darken(#ffffff, 15%);
-        color:#fff !important;
+        background: darken(#f2f2f2, 10%);
     }
-    background:darken(#ffffff, 5%);
-    color:#474747;
+    background: #f2f2f2;
+    color:#474747 !important;
 }
 .icon-palette {
     display: inline-block;

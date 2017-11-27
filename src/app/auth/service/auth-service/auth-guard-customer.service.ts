@@ -12,10 +12,10 @@ export class AuthGuardCustomer implements CanActivate {
     }
 
     checkAdmin(url): boolean {
-        if (this.authService.user.role === 'USER') {
+        if (this.authService.user && this.authService.user.userType === 'USER') {
             return true;
         }
-
+        this.router.navigate(['/pages/labors/alllabors']);
         return false;
     }
 }

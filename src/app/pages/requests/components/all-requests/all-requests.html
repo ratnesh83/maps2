@@ -39,6 +39,9 @@
                             No requests found.
                         </div>
                     </md-card-content>
+                    <md-card-content *ngIf="!requests">
+                        Loading... <i class="fa fa-spinner fa-spin"></i>
+                    </md-card-content>
                 </md-card>
             </div>
 
@@ -81,6 +84,9 @@
                         <div *ngIf="requests && requests.length == 0">
                             No requests found.
                         </div>
+                    </md-card-content>
+                    <md-card-content *ngIf="!requests">
+                        Loading... <i class="fa fa-spinner fa-spin"></i>
                     </md-card-content>
                 </md-card>
             </div>
@@ -132,6 +138,9 @@
                         <div *ngIf="requests && requests.length == 0">
                             No requests found.
                         </div>
+                    </md-card-content>
+                    <md-card-content *ngIf="!requests">
+                        Loading... <i class="fa fa-spinner fa-spin"></i>
                     </md-card-content>
                 </md-card>
             </div>

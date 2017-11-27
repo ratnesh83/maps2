@@ -33,6 +33,7 @@ export class AllJobs implements OnInit {
     public filter;
     public showPhone: boolean = false;
     public showEmail: boolean = false;
+    public showLoading: boolean = false;
     public searchLocation;
     public positions = [];
     public markers = [];
@@ -108,7 +109,7 @@ export class AllJobs implements OnInit {
                         let employer;
                         for (let i = 0; i < this.topList.employers.length; i++) {
                             employer = {
-                                name: this.topList.employers[i].fullName ? this.topList.employers[i].fullName : this.topList.employers[i].firstName + ' ' + this.topList.employers[i].lastName,
+                                name: this.topList.employers[i].fullName ? this.topList.employers[i].fullName : this.topList.employers[i].lastName ? this.topList.employers[i].firstName + ' ' + this.topList.employers[i].lastName : this.topList.employers[i].firstName,
                                 createdAt: this.topList.employers[i].createdAt,
                                 picture: this.topList.employers[i].profilePicture ? this.topList.employers[i].profilePicture.thumb : 'assets/img/user.png'
                             };
@@ -157,6 +158,7 @@ export class AllJobs implements OnInit {
                     if (res.jobs && res.getJobHit) {
                         this.count = res.count;
                         this.jobs = [];
+                        let jobs = [];
                         for (let i = 0; i < res.jobs.length; i++) {
                             let coordinates = [0, 0];
                             if (res.jobs[i].employerAddress && res.jobs[i].employerAddress.location) {
@@ -186,9 +188,10 @@ export class AllJobs implements OnInit {
                                 email: res.jobs[i].employerId ? res.jobs[i].employerId.email : ''
                             };
                             
-                            this.jobs.push(job);
-                            this.createMapCluster(this.jobs);
+                            // this.jobs.push(job);
+                            jobs.push(job);
                         }
+                        this.createMapCluster(jobs);
                     }
                 }
             });
@@ -198,13 +201,17 @@ export class AllJobs implements OnInit {
         }
 
         if (navigator.geolocation) {
+            this.showLoading = true;
             navigator.geolocation.getCurrentPosition((response) => {
+                this.showLoading = false;
                 this.showPosition(response);
             }, (error) => {
+                this.showLoading = false;
                 this.toastrService.clear();
                 this.toastrService.error(error.message || 'Error in fetching your current location', 'Error');
             });
         } else {
+            this.showLoading = false;
             this.toastrService.clear();
             this.toastrService.warning('Geolocation is not supported by this browser', 'Error');
         }
@@ -264,15 +271,18 @@ export class AllJobs implements OnInit {
                     }
                 }
             }
+            this.jobs.push(markers[i]);
         }
     }
 
     showPosition(position) {
         if (position && position.coords) {
+            this.showLoading = true;
             let latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
             let geocoder = new google.maps.Geocoder();
             this.geocoder(geocoder, latlng)
                 .then((result) => {
+                    this.showLoading = false;
                     let results = result;
                     if (results[0]) {
                         this.searchLocation = results[0].formatted_address;
@@ -357,6 +367,7 @@ export class AllJobs implements OnInit {
                     }
                 })
                 .catch((error: any) => {
+                    this.showLoading = false;
                     // console.error(error);
                 });
         }

@@ -15,7 +15,13 @@ export const actionTypes = {
     APP_POST_JOB: 'APP_POST_JOB',
     APP_POST_JOB_SUCCESS: 'APP_POST_JOB_SUCCESS',
     APP_EDIT_POST: 'APP_EDIT_POST',
-    APP_EDIT_POST_SUCCESS: 'APP_EDIT_POST_SUCCESS'
+    APP_EDIT_POST_SUCCESS: 'APP_EDIT_POST_SUCCESS',
+    APP_HIRE_LABOR: 'APP_HIRE_LABOR',
+    APP_HIRE_LABOR_SUCCESS: 'APP_HIRE_LABOR_SUCCESS',
+    APP_REJECT_LABOR: 'APP_REJECT_LABOR',
+    APP_REJECT_LABOR_SUCCESS: 'APP_REJECT_LABOR_SUCCESS',
+    APP_CANCEL_POST: 'APP_CANCEL_POST',
+    APP_CANCEL_POST_SUCCESS: 'APP_CANCEL_POST_SUCCESS'
 
 };
 
@@ -78,6 +84,21 @@ export class AppPostJob implements Action {
 
 export class AppPostJobSuccess implements Action {
     type = actionTypes.APP_POST_JOB_SUCCESS;
+    constructor(public payload: credentials) { }
+}
+
+export class AppHireLaborSuccess implements Action {
+    type = actionTypes.APP_HIRE_LABOR_SUCCESS;
+    constructor(public payload: credentials) { }
+}
+
+export class AppRejectLaborSuccess implements Action {
+    type = actionTypes.APP_REJECT_LABOR_SUCCESS;
+    constructor(public payload: credentials) { }
+}
+
+export class AppCancelJobSuccess implements Action {
+    type = actionTypes.APP_CANCEL_POST_SUCCESS;
     constructor(public payload: credentials) { }
 }
 

@@ -93,11 +93,12 @@ export class PagesMenuService {
                         path: 'mynetworks',
                         data: {
                             menu: {
-                                title: 'LABOR LIST',
+                                title: 'MY NETWORKS',
                                 icon: 'icon-wrap fa fa-tasks',
                                 selected: false,
                                 expanded: false,
-                                order: 100
+                                order: 100,
+                                auth: ['admin']
                             }
                         },
                     },
@@ -109,7 +110,8 @@ export class PagesMenuService {
                                 icon: 'icon-wrap fa fa-newspaper-o',
                                 selected: false,
                                 expanded: false,
-                                order: 100
+                                order: 100,
+                                auth: ['admin']
                             }
                         },
                     },
@@ -171,7 +173,8 @@ export class PagesMenuService {
                                 icon: 'icon-wrap fa fa-question',
                                 selected: false,
                                 expanded: false,
-                                order: 100
+                                order: 100,
+                                auth: ['admin']
                             }
                         }
                     }

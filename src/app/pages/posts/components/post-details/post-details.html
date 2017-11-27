@@ -25,14 +25,15 @@
             </div>
         </div>
     </div>
-    <div *ngIf="post" class="posts-section">
+    <div class="posts-section">
         <md-card class="posts-card">
-            <md-card-content>
+            <md-card-content *ngIf="post">
                 <p class="md-card-content-posts-label">
                     Job Location
                 </p>
                 <p class="md-card-content-posts-content">
-                    {{post.employerAddress ? showAddress(post.employerAddress.addressLine1, post.employerAddress.city, post.employerAddress.zipCode, post.employerAddress.state, post.employerAddress.country) : ''}}
+                    {{post.employerAddress ? showAddress(post.employerAddress.addressLine1, post.employerAddress.city, post.employerAddress.zipCode,
+                    post.employerAddress.state, post.employerAddress.country) : ''}}
                 </p>
                 <p class="md-card-content-posts-label">
                     Job Date
@@ -53,6 +54,10 @@
                     {{post.requiredLabourers}}
                 </p>
             </md-card-content>
+            <md-card-content *ngIf="!post">
+                Loading...
+                <i class="fa fa-spinner fa-spin"></i>
+            </md-card-content>
         </md-card>
 
     </div>
@@ -61,10 +66,12 @@
             <md-card-subtitle style="font-weight: 500">Labor List</md-card-subtitle>
             <div style="margin-top: 10px" *ngFor="let labour of labours; let i = index">
                 <md-card-header class="posts-card-header">
-                    <div *ngIf="labour.labourId" md-card-avatar class="posts-header-image">
+                    <div *ngIf="labour.labourId" style="position: relative" md-card-avatar class="posts-header-image">
+                        <i *ngIf="labour.requestStatus == 'CONFIRMED_BY_EMPLOYER'" style="position: absolute; top: -5px; right: 0px; color: #68d426" class="fa fa-check"></i>
+                        <i *ngIf="labour.requestStatus == 'CANCELLED_BY_EMPLOYER'" style="position: absolute; top: -5px; right: 0px; color: red" class="fa fa-close"></i>
                         <img *ngIf="labour.labourId.profilePicture" mat-card-avatar [src]="labour.labourId.profilePicture.thumb ? labour.labourId.profilePicture.thumb : 'assets/img/default-profile.jpg'">
                     </div>
-                    <md-card-title *ngIf="labour.labourId" style="font-weight: 600; color: #1b1b1b">{{labour.labourId.fullName ? labour.labourId.fullName : labour.labourId.firstName + ' ' + labour.labourId.lastName}}</md-card-title>
+                    <md-card-title *ngIf="labour.labourId" style="font-weight: 600; color: #1b1b1b">{{labour.labourId.fullName ? labour.labourId.fullName : labour.labourId.lastName ? labour.labourId.firstName + ' ' + labour.labourId.lastName : labour.labourId.firstName}}</md-card-title>
                     <md-card-subtitle style="font-weight: 500; color: #026eff; cursor: pointer; font-size: small" (click)="viewProfile('id')">View Profile</md-card-subtitle>
                     <div *ngIf="labour.labourId" class="posts-header-contact">
                         <div>
@@ -75,16 +82,13 @@
                         <div *ngIf="labour.showEmail">{{labour.labourId.email}}</div>
                     </div>
                 </md-card-header>
-                <!-- <md-card-content>
+                <md-card-content *ngIf="labour.requestStatus != 'CANCELLED_BY_EMPLOYER'" style="margin-bottom: 0px">
                     <md-card-actions style="margin-left: 0px; margin-right: 0px">
-                        <button md-raised-button>HIRE</button>
-                        <button md-raised-button>REJECT</button>
+                        <button style="background-color: #026eff" color="primary" *ngIf="labour.requestStatus != 'CANCELLED_BY_EMPLOYER' && labour.requestStatus != 'CONFIRMED_BY_EMPLOYER' && labour.requestStatus == 'ACCEPTED_BY_LABOUR'" (click)="hire(labour?.labourId?._id, labour?.jobId)" md-raised-button>HIRE</button>
+                        <button style="background-color: #026eff" color="primary" *ngIf="labour.requestStatus != 'CANCELLED_BY_EMPLOYER' && labour.requestStatus != 'CONFIRMED_BY_EMPLOYER' && labour.requestStatus == 'ACCEPTED_BY_LABOUR'" (click)="reject(labour?.labourId?._id, labour?.jobId)" md-raised-button>REJECT</button>
                     </md-card-actions>
-                </md-card-content> -->
+                </md-card-content>
             </div>
-
         </md-card>
-
     </div>
-
 </div>

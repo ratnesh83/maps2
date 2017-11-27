@@ -61,6 +61,13 @@
             </md-card-content>
         </md-card>
     </div>
+    <div *ngIf="!feedbacks" class="feeds-section">
+        <md-card class="feedback-card">
+            <md-card-content>
+                Loading... <i class="fa fa-spinner fa-spin"></i>
+            </md-card-content>
+        </md-card>
+    </div>
     <!-- <div class="panel-footer">
         <div class="row">
             <div *ngIf="count > 4" class="col-sm-12 rar-align page-select">

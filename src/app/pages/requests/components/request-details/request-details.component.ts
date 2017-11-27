@@ -94,12 +94,12 @@ export class RequestDetails implements OnInit {
 
     ngOnDestroy() {
         if (this.requestStore) {
-            // this.requestStore.unsubscribe();
+            this.requestStore.unsubscribe();
         }
         if (this.storeData) {
-            // this.storeData.unsubscribe();
+            this.storeData.unsubscribe();
         }
-        this.dataService.removeData('requestId');
+        // this.dataService.removeData('requestId');
     }
 
     getRequestDetails() {
@@ -114,10 +114,13 @@ export class RequestDetails implements OnInit {
         let returnAddress;
         if (address) {
             returnAddress = address;
+            if (returnAddress && country && country.toString().toLowerCase() == 'united states') {
+                returnAddress = returnAddress.toString().replace(', USA', '');
+            }
             if (city && address.toString().toLowerCase().indexOf(city.toString().toLowerCase()) == -1) {
                 returnAddress = returnAddress + ', ' + city;
             }
-            if (zipCode && address.indexOf(zipCode) != -1) {
+            if (zipCode && address.indexOf(zipCode) == -1) {
                 returnAddress = returnAddress + ', ' + zipCode;
             }
             if (state && state.toString().toLowerCase() != city.toString().toLowerCase() && address.toString().toLowerCase().indexOf(state.toString().toLowerCase()) == -1) {

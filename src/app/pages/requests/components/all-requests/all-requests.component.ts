@@ -139,10 +139,13 @@ export class AllRequests implements OnInit {
         let returnAddress;
         if (address) {
             returnAddress = address;
+            if (returnAddress && country && country.toString().toLowerCase() == 'united states') {
+                returnAddress = returnAddress.toString().replace(', USA', '');
+            }
             if (city && address.toString().toLowerCase().indexOf(city.toString().toLowerCase()) == -1) {
                 returnAddress = returnAddress + ', ' + city;
             }
-            if (zipCode && address.indexOf(zipCode) != -1) {
+            if (zipCode && address.indexOf(zipCode) == -1) {
                 returnAddress = returnAddress + ', ' + zipCode;
             }
             if (state && state.toString().toLowerCase() != city.toString().toLowerCase() && address.toString().toLowerCase().indexOf(state.toString().toLowerCase()) == -1) {
@@ -215,6 +218,7 @@ export class AllRequests implements OnInit {
     }
 
     openFeedbackDialog(data) {
+        // to: data.employerId ? data.employerId.userType == 'USER' ? 'EMPLOYER' : 'LABOUR' : '',        
         let payload = {
             jobId: data.jobId ? data.jobId._id : '',
             userId: data.employerId ? data.employerId._id : '',
@@ -223,7 +227,7 @@ export class AllRequests implements OnInit {
             picture: data.employerId ? data.employerId.profilePicture.thumb ? data.employerId.profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png',
             category: data.jobId ? data.jobId.category : '',
             subCategory: data.jobId ? data.jobId.subCategory : '',
-            to: data.employerId ? data.employerId.userType == 'USER' ? 'EMPLOYER' : 'LABOUR' : ''
+            to: 'EMPLOYER'
         };
         let dialogRef = this.dialog.open(FeedbackDialog);
         dialogRef.componentInstance.userDetails = payload;

@@ -21,6 +21,7 @@ import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from '../theme
         <router-outlet>
             <ba-sidebar></ba-sidebar>
         </router-outlet>
+        <i style="display: none" class="fa fa-spinner fa-spin"></i>
       </div>
     </div>
     <!--<footer class="al-footer clearfix">

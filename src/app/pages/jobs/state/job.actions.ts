@@ -14,7 +14,9 @@ export const actionTypes = {
     APP_ACCEPT_JOB: 'APP_ACCEPT_JOB',
     APP_ACCEPT_JOB_SUCCESS: 'APP_ACCEPT_JOB_SUCCESS',
     APP_GET_TOP_LIST: 'APP_GET_TOP_LIST',
-    APP_GET_TOP_LIST_SUCCESS: 'APP_GET_TOP_LIST_SUCCESS'
+    APP_GET_TOP_LIST_SUCCESS: 'APP_GET_TOP_LIST_SUCCESS',
+    APP_CHECK_APPLY: 'APP_CHECK_APPLY',
+    APP_CHECK_APPLY_SUCCESS: 'APP_CHECK_APPLY_SUCCESS'
 
 };
 
@@ -82,6 +84,11 @@ export class AppGetTopList implements Action {
 
 export class AppGetTopListSuccess implements Action {
     type = actionTypes.APP_GET_TOP_LIST_SUCCESS;
+    constructor(public payload: credentials) { }
+}
+
+export class AppCheckApplySuccess implements Action {
+    type = actionTypes.APP_CHECK_APPLY_SUCCESS;
     constructor(public payload: credentials) { }
 }
 

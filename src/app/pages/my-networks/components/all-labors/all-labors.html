@@ -26,9 +26,9 @@
                         <div md-card-avatar class="labors-header-image">
                             <img mat-card-avatar [src]="labor.labourId?.profilePicture?.image?.thumb ? labor.labourId.profilePicture?.image?.thumb : 'assets/img/user.png'">
                         </div>
-                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{labor.labourId ? labor.labourId.fullName ? labor.labourId.fullName : labor.labourId.firstName ?
+                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{labor.labourId ? labor.labourId.fullName ? labor.labourId.fullName : labor.labourId.lastName ?
                             (labor.labourId.firstName + ' ' + labor.labourId.lastName) : labor.labourId.firstName : ''}}</md-card-title>
-                        <md-card-subtitle style="font-weight: 500">{{ labor.distance.toFixed(1) + ' mile away' }}</md-card-subtitle>
+                        <md-card-subtitle style="font-weight: 500">{{ (labor.distance / 1609.34).toFixed(1) + ' mile away' }}</md-card-subtitle>
                         <div class="labors-header-view">
                             <div>
                                 <i *ngIf="!labor?.labourId?.isPhoneNumberHidden && !labor.showPhone" (click)="showPhoneInfo(i)" class="fa fa-phone-square"></i>
@@ -55,9 +55,14 @@
                     No labors found.
                 </div>
             </md-card-content>
+            <md-card-content *ngIf="!labors">
+                Loading...
+                <i class="fa fa-spinner fa-spin"></i>
+            </md-card-content>
         </md-card>
         <md-card *ngIf="showLoading" class="labors-card">
-            {{ locationStatus + ' ' }} <i *ngIf="locationStatus == 'Fetching current location...'" class="fa fa-spinner fa-spin"></i>
+            {{ locationStatus + ' ' }}
+            <i *ngIf="locationStatus == 'Fetching current location...'" class="fa fa-spinner fa-spin"></i>
         </md-card>
     </div>
 

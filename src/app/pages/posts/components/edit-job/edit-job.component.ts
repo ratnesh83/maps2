@@ -119,24 +119,24 @@ export class EditPost implements OnInit {
             .subscribe((res: any) => {
                 if (res) {
                     this.post = res.post;
-                    if (res.categories) {
-                        this.categories = [];
-                        for (let i = 0; i < res.categories.length; i++) {
-                            this.categories.push(res.categories[i]);
-                        }
-                    }
-                    if (res.subCategories) {
-                        this.subCategories = [];
-                        for (let i = 0; i < res.subCategories.length; i++) {
-                            this.subCategories.push(res.subCategories[i]);
-                        }
-                    }
+                    // if (res.categories) {
+                    //     this.categories = [];
+                    //     for (let i = 0; i < res.categories.length; i++) {
+                    //         this.categories.push(res.categories[i]);
+                    //     }
+                    // }
+                    // if (res.subCategories) {
+                    //     this.subCategories = [];
+                    //     for (let i = 0; i < res.subCategories.length; i++) {
+                    //         this.subCategories.push(res.subCategories[i]);
+                    //     }
+                    // }
                     if (this.post) {
                         this.jobDetail.setValue(this.post.title);
                         this.category.setValue(this.post.category);
-                        if(this.subCategories && this.subCategories.length == 0) {
-                            this.subCategories.push(this.post.subCategory);
-                        }
+                        // if(this.subCategories && this.subCategories.length == 0) {
+                        //     this.subCategories.push(this.post.subCategory);
+                        // }
                         this.subCategory.setValue(this.post.subCategory);
                         this.categoryId.setValue(this.post.categoryId);
                         this.subCategoryId.setValue(this.post.subCategoryId);
@@ -165,10 +165,10 @@ export class EditPost implements OnInit {
     };
 
     ngOnInit() {
-        this.store.dispatch({
+        /* this.store.dispatch({
             type: post.actionTypes.APP_GET_CATEGORIES,
             payload: {}
-        });
+        }); */
         this.store.dispatch({
             type: post.actionTypes.APP_GET_JOB, payload: {
                 jobId: this.dataService.getData('jobId')
@@ -180,7 +180,7 @@ export class EditPost implements OnInit {
         if (this.postStore) {
             this.postStore.unsubscribe();
         }
-        this.dataService.removeData('jobId');
+        // this.dataService.removeData('jobId');
     }
 
     getAddress(event) {

@@ -58,19 +58,22 @@ import 'style-loader!./user-detail-dialog.scss';
 })
 
 export class EmployerDetailDialog {
-    
+
     public userDetails;
-    
+
     constructor(public dialog: MdDialog) { }
 
     showAddress(address, city, zipCode, state, country): String {
         let returnAddress;
         if (address) {
             returnAddress = address;
+            if (returnAddress && country && country.toString().toLowerCase() == 'united states') {
+                returnAddress = returnAddress.toString().replace(', USA', '');
+            }
             if (city && address.toString().toLowerCase().indexOf(city.toString().toLowerCase()) == -1) {
                 returnAddress = returnAddress + ', ' + city;
             }
-            if (zipCode && address.indexOf(zipCode) != -1) {
+            if (zipCode && address.indexOf(zipCode) == -1) {
                 returnAddress = returnAddress + ', ' + zipCode;
             }
             if (state && state.toString().toLowerCase() != city.toString().toLowerCase() && address.toString().toLowerCase().indexOf(state.toString().toLowerCase()) == -1) {
