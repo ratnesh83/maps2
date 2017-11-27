@@ -104,12 +104,12 @@ export class JobDetails implements OnInit {
 
     ngOnDestroy() {
         if (this.postStore) {
-            // this.postStore.unsubscribe();
+            this.postStore.unsubscribe();
         }
         if (this.storeData) {
-            // this.storeData.unsubscribe();
+            this.storeData.unsubscribe();
         }
-        this.dataService.removeData('jobId');
+        // this.dataService.removeData('jobId');
     }
 
     getPostDetails() {

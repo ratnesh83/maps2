@@ -94,12 +94,12 @@ export class RequestDetails implements OnInit {
 
     ngOnDestroy() {
         if (this.requestStore) {
-            // this.requestStore.unsubscribe();
+            this.requestStore.unsubscribe();
         }
         if (this.storeData) {
-            // this.storeData.unsubscribe();
+            this.storeData.unsubscribe();
         }
-        this.dataService.removeData('requestId');
+        // this.dataService.removeData('requestId');
     }
 
     getRequestDetails() {

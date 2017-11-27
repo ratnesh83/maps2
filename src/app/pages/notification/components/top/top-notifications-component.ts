@@ -50,8 +50,8 @@ import * as notification from '../../state/notification.actions';
         </ul>
     `
 })
-export class TopNotifications {
 
+export class TopNotifications {
 
     public notifications;
     public toastId;
@@ -68,11 +68,11 @@ export class TopNotifications {
         private toastrService: ToastrService,
         private msgCenter: BaMsgCenterService) {
 
-        this.msgCenter.getNotifications().subscribe((message) => {
+        this.socketStore = this.msgCenter.getNotifications().subscribe((message) => {
             console.log(message);
         });
 
-        this.store
+        this.notificationStore = this.store
             .select('notification')
             .subscribe((res: any) => {
 

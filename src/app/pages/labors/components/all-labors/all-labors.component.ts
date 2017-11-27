@@ -409,7 +409,7 @@ export class AllLabors implements OnInit {
 
     showLaborDetail(labor) {
         this.dataService.setData('userId', labor.id);
-        this.router.navigate(['pages/settings/userprofile']);
+        this.router.navigate(['pages/settings']);
         /* let dialogRef = this.dialog.open(UserDetailDialog);
         dialogRef.componentInstance.userDetails = labor; */
     }

@@ -90,7 +90,7 @@ export class ChangePasswordDialog {
 
     ngOnDestroy() {
         if (this.storeData) {
-            // this.storeData.unsubscribe();
+            this.storeData.unsubscribe();
         }
     }
 

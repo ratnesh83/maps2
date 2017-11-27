@@ -180,7 +180,7 @@ export class EditPost implements OnInit {
         if (this.postStore) {
             this.postStore.unsubscribe();
         }
-        this.dataService.removeData('jobId');
+        // this.dataService.removeData('jobId');
     }
 
     getAddress(event) {
