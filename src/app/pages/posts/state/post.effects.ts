@@ -33,7 +33,8 @@ export class PostEffects {
                                 type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
                             });
                         } else {
-
+                            this.toastrService.clear();
+                            this.toastrService.error(error.message || 'Something went wrong', 'Error');
                         }
                     }
                 }
@@ -74,7 +75,8 @@ export class PostEffects {
                                 type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
                             });
                         } else {
-
+                            this.toastrService.clear();
+                            this.toastrService.error(error.message || 'Something went wrong', 'Error');
                         }
                     }
                 }
@@ -108,7 +110,8 @@ export class PostEffects {
                                 type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
                             });
                         } else {
-
+                            this.toastrService.clear();
+                            this.toastrService.error(error.message || 'Something went wrong', 'Error');
                         }
                     }
                 }
@@ -142,7 +145,8 @@ export class PostEffects {
                                 type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
                             });
                         } else {
-
+                            this.toastrService.clear();
+                            this.toastrService.error(error.message || 'Something went wrong', 'Error');
                         }
                     }
                 }
@@ -176,7 +180,8 @@ export class PostEffects {
                                 type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
                             });
                         } else {
-
+                            this.toastrService.clear();
+                            this.toastrService.error(error.message || 'Something went wrong', 'Error');
                         }
                     }
                 }
