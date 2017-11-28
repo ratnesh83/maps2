@@ -54,7 +54,7 @@ export class BaPageTop {
         if (token && !this.jwtHelper.isTokenExpired(token)) {
             this.user = this.jwtHelper.decodeToken(token);
             this.homeUrl = this.user ? this.user.userType == 'USER' ? '/pages/jobs/alljobs' : '/pages/labors/alllabors' : '/pages';
-            this.profileUrl = this.user ? this.user.userType == 'USER' ? '/pages/settings' : '/pages/settings' : '/pages/settings';
+            this.profileUrl = this.user ? this.user.userType == 'USER' ? '/pages/settings' : '/pages/settings/userprofileedit' : '/pages/settings/employerprofileedit';
             this.showMyRequestLink = this.user ? this.user.userType == 'EMPLOYER' ? false : true : true;
             this.store.dispatch({
                 type: auth.actionTypes.AUTH_GET_USER_DETAILS_BY_ID,

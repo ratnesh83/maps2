@@ -210,9 +210,9 @@ export class TopNotifications {
                 id = data.payload ? data.payload.jobId : null;
                 if (id) {
                     this.dataService.setData('jobId', id);
-                    this.router.navigate(['pages/posts/postdetails']).then((result) => {
+                    this.router.navigate(['pages/jobs/jobdetails']).then((result) => {
                         if (!result) {
-                            this.getPostDetails();
+                            this.getJobDetails();
                         }
                     });
                 }
@@ -357,9 +357,9 @@ export class TopNotifications {
                         id = notification ? notification.eventID : null;
                         if (id) {
                             this.dataService.setData('jobId', id);
-                            this.router.navigate(['pages/posts/postdetails']).then((result) => {
+                            this.router.navigate(['pages/jobs/jobdetails']).then((result) => {
                                 if (!result) {
-                                    this.getPostDetails();
+                                    this.getJobDetails();
                                 }
                             });
                         }
