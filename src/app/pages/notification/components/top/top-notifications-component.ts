@@ -50,7 +50,7 @@ import * as request from '../../../requests/state/request.actions';
                         </div>
                     </a>
                 </div>
-                <a style="font-weight: 500" routerLink="notification/all-notifications">See all</a>
+                <a style="font-weight: 500; color: #474747" routerLink="notification/all-notifications">See all</a>
                 </div>
             </li>
         </ul>

@@ -1,11 +1,11 @@
 <div class="container-fluid messagePanel animated bounce">
-    <div *ngIf="request" class="panel-heading">
+    <div class="panel-heading">
         <div class="row">
             <div class="col-12 col-sm-12 user-feed-heading">
                 <md-card class="requests-card-heading">
-                    <md-card-header class="requests-card-header requests-card-heading">
+                    <md-card-header *ngIf="request" class="requests-card-header requests-card-heading">
                         <md-card-title style="font-weight: 600; color: #1b1b1b">
-                            <h3>{{request.title}}</h3>
+                            <h3 style="text-align: left">{{request.title}}</h3>
                         </md-card-title>
                         <md-card-subtitle style="font-weight: 500; margin-bottom: 0px; font-size: small">{{request.category ? request.category + ': ' + request.subCategory : request.category}}</md-card-subtitle>
                         <div class="requests-header-right">
@@ -18,16 +18,16 @@
                             </div>
                         </div>
                     </md-card-header>
-                    <md-card-content>
-
+                    <md-card-content *ngIf="!request">
+                        Loading... <i class="fa fa-spinner fa-spin"></i>
                     </md-card-content>
                 </md-card>
             </div>
         </div>
     </div>
     <div class="requests-section">
-        <md-card class="requests-card">
-            <md-card-content *ngIf="request">
+        <md-card *ngIf="request" class="requests-card">
+            <md-card-content>
                 <p class="md-card-content-requests-label">
                     Job Location
                 </p>
@@ -53,9 +53,6 @@
                     {{request.requiredLabourers}}
                 </p>
                 
-            </md-card-content>
-            <md-card-content *ngIf="!request">
-                Loading... <i class="fa fa-spinner fa-spin"></i>
             </md-card-content>
         </md-card>
         <md-card-actions *ngIf="request && (request.jobStatus == 'IN_PROGRESS' || request.jobStatus == 'CONFIRMED')" style="margin-left: 0px; margin-right: 0px; text-align: center">
