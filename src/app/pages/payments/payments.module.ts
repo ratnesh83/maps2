@@ -19,7 +19,7 @@ import {
     MdSelectModule,
     MdDialogModule
 } from '@angular/material';
-import { deleteCardModal } from './components/delete-card/delete-card.modal';
+import { DeleteCardModal } from './components/delete-card/delete-card.modal';
 import { WarningModal } from './components/warning/warning.modal';
 
 
@@ -44,11 +44,11 @@ import { WarningModal } from './components/warning/warning.modal';
     declarations: [
         Payments,
         AllPayments,
-        deleteCardModal,
+        DeleteCardModal,
         WarningModal
     ],
     entryComponents: [
-        deleteCardModal,
+        DeleteCardModal,
         WarningModal        
     ],
 

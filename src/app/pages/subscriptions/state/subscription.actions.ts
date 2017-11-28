@@ -81,7 +81,7 @@ export class AppSubscriptionError implements Action {
     constructor(public payload: credentials) { }
 }
 export class GetPlanAction implements Action {
-    type = actionTypes.GET_PLAN
+    type = actionTypes.GET_PLAN;
     constructor(public payload: credentials) { }
 }
 

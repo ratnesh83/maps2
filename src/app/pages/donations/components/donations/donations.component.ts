@@ -23,7 +23,7 @@ export class Donation implements OnInit {
         this._spinner.hide();
     }
    
-    constructor(private activeModal: NgbActiveModal, private store: Store<any>, private router:Router,private _spinner:BaThemeSpinner) {
+    constructor(private activeModal: NgbActiveModal, private store: Store<any>, private router: Router, private _spinner: BaThemeSpinner) {
         this.donationsStore = this.store
         .select('donation')
         .subscribe((res: any) => {

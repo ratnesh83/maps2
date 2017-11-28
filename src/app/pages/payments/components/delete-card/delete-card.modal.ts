@@ -12,12 +12,12 @@ import { BaThemeSpinner } from '../../../../theme/services';
   templateUrl: 'delete-card.html'
 })
 
-export class deleteCardModal {
+export class DeleteCardModal {
     public card;
     constructor(
         public activeModal: NgbActiveModal,
         private store: Store<any>,
-        private _spinner:BaThemeSpinner
+        private _spinner: BaThemeSpinner
     ) {
 
         this.store
