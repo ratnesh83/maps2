@@ -1,3 +1,81 @@
-<div class="container messagePanel animated bounce">
-    <h2>Donations</h2>
+<div class="container-fluid animated bounce">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-12 col-sm-12 user-jobs-heading">
+                <md-card class="jobs-card-heading">
+                    <md-card-header class="jobs-card-header jobs-card-heading">
+                        <md-card-title style="font-weight: 600; color: #474747; margin-bottom: 0px">
+                            <h2>Donations</h2>
+                        </md-card-title>
+                    </md-card-header>
+                </md-card>
+            </div>
+        </div>
+    </div>
+    <div class="support-section">
+        <md-card class="support-card">
+            <md-card-content>
+                <div class="container">
+                    <div class="row text-center">
+                        <div class="donation-head col-sm-12">
+                            <h1>THANK YOU</h1>
+                        </div>
+                        <div class="donation-subhead col-sm-12">
+                            <h3>FOR YOUR SUPPORT!</h3>
+                        </div>
+                        <div class="image col-sm-12">
+                            <img src="assets/img/group.png">
+                        </div>
+                    </div>
+                    <div class="row price-btns side-margin">
+                        <div class="col-sm-12 col-md-4 price-btn">
+                            <button class="price col-sm-12" (click)="changeAmount(10,1)" id="1" [class.active]="selected == '1'">$10</button>
+                        </div>
+                        <div class="col-sm-12 col-md-4 price-btn">
+                            <button class="price col-sm-12" (click)="changeAmount(20,2)" id="2" [class.active]="selected == '2'">$20</button>
+                        </div>
+                        <div class="col-sm-12 col-md-4 price-btn">
+                            <button class="price col-sm-12" (click)="changeAmount(30,3)" id="3" [class.active]="selected == '3'">$30</button>
+                        </div>
+                        <div class="col-sm-12 col-md-6 price-btn">
+                            <button class="price col-sm-12" (click)="changeAmount(40,4)" id="4" [class.active]="selected == '4'">$40</button>
+                        </div>
+                        <div class="col-sm-12 col-md-6 price-btn">
+                            <button class="price col-sm-12" (click)="changeAmount(50,5)" id="5" [class.active]="selected == '5'">$50</button>
+                        </div>
+                    </div>
+                    <div class="row text-center or-text">
+                        <div class="col-sm-12">
+                            or
+                        </div>
+                    </div>
+                    <form>
+                    <div class="input-div col-sm-12 ">
+                        <input class="donation-input col-sm-12" type="number" #amount [value]="donateAmount" name="donateAmount" placeholder="Enter amount you want to donate($)" required>
+                    </div>
+                    <div class="text-center">
+                        <button type = "submit" class="save-card-btn col-sm-6" (click)="donate(amount.value)">
+                            SUBMIT
+                        </button>
+                    </div>
+                    </form>
+                </div>
+            </md-card-content>
+        </md-card>
+    </div>
+</div>
+<i style="display: none" class="fa fa-spinner fa-spin"></i>
+
+<div class="hidden-md-down left-notification-bar">
+    <div class="notification">
+        <div class="notification-banner">
+            Donation History
+        </div>
+        <md-card class="left-notification-card">
+            <md-card-header *ngFor="let item of donationHistory" class="left-notification-head animated bounceInRight">
+                <md-card-title class="left-notification-title"><span class="donateAmount">$&nbsp;{{ item.amount | number }}</span><span class="donateDate">{{item.createdAt | date}}</span></md-card-title>
+                <md-card-subtitle class="left-notification-subtitle">XXXX-XXXX-XXXX-{{item.last4Digits}}</md-card-subtitle>
+            </md-card-header>
+        </md-card>
+    </div>
 </div>

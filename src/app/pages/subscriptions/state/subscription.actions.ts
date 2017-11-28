@@ -14,7 +14,9 @@ export const actionTypes = {
     EDIT_SUBSCRIPTION: 'EDIT_SUBSCRIPTION',
     EDIT_SUBSCRIPTION_SUCCESS: 'EDIT_SUBSCRIPTION_SUCCESS',
     SUBSCRIPTION_ERROR: 'SUBSCRIPTION_ERROR',
-   
+    GET_PLAN: 'GET_PLAN',
+    GET_PLAN_SUCCESS: 'GET_PLAN_SUCCESS'
+
 };
 
 type credentials = {};
@@ -78,7 +80,15 @@ export class AppSubscriptionError implements Action {
     type = actionTypes.SUBSCRIPTION_ERROR;
     constructor(public payload: credentials) { }
 }
+export class GetPlanAction implements Action {
+    type = actionTypes.GET_PLAN
+    constructor(public payload: credentials) { }
+}
 
+export class GetPlanSuccessAction implements Action {
+    type = actionTypes.GET_PLAN_SUCCESS;
+    constructor(public payload: any) { }
+}
 export type Actions
     = AppGetAllSubscriptions
     | AppGetAllSubscriptionsSuccess
@@ -91,6 +101,8 @@ export type Actions
     | AppBlockSubscriptionSuccess
     | AppEditSubscription
     | AppEditSubscriptionSuccess
-    | AppSubscriptionError;
+    | AppSubscriptionError
+    | GetPlanAction
+    | GetPlanSuccessAction ;
 
 

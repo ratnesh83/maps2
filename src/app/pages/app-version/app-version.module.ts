@@ -10,6 +10,13 @@ import { routing } from './app-version.routing';
 import { AppVersion } from './app-version.component';
 import { Version } from './components/version/version.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import {
+    MdButtonModule,
+    MdAutocompleteModule,
+    MdCardModule,
+    MdSelectModule,
+    MdDialogModule
+} from '@angular/material';
 
 @NgModule({
     imports: [
@@ -20,7 +27,12 @@ import { NgxPaginationModule } from 'ngx-pagination';
         NgxPaginationModule,
         routing,
         NgPipesModule,
-        NgbModule
+        NgbModule,
+        MdButtonModule,
+        MdAutocompleteModule,
+        MdCardModule,
+        MdSelectModule,
+        MdDialogModule
     ],
     declarations: [
         AppVersion,

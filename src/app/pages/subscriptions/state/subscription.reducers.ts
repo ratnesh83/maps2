@@ -64,6 +64,8 @@ export const subscription: ActionReducer<any> = (state = initialState, action: A
         case 'BLOCK_SUBSCRIPTION_SUCCESS':
             return Object.assign({}, state, { activeSubscription: action.payload, error: null });
 
+
+
         case 'SUBSCRIPTION_ERROR':
             return Object.assign(
                 {},
@@ -73,6 +75,11 @@ export const subscription: ActionReducer<any> = (state = initialState, action: A
                     editSubscription: null,
                     error: action.payload
                 });
+        case 'GET_PLAN':
+            return Object.assign({}, state);
+
+        case 'GET_PLAN_SUCCESS':
+            return Object.assign({}, action.payload);
 
         default:
             return state;

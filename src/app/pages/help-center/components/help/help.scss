@@ -1,35 +1,61 @@
 @import "../../../../theme/sass/conf/conf";
-.messagePanel {
-    background-color: transparent;
-    min-height: 400px;
+@import "../../../../theme/sass/conf/conf";
+.contact-section {
+    margin-top: 10px;
 }
-.pnl-footer {
-    margin-top: 30px;
+.contact-card {
+    margin-bottom: 10px;
 }
-.messagePanel .h4 {
-    margin: 13px 0px 14px 13px;
-    size: 30px;
+.inner-content{
 }
-.messagePanel.form-control {
-    color: black;
+.support-image{
+    padding:0 10px 0 10px;
 }
-.language {
-    margin-top: 20px;
+.text-content{
+    margin-top:35px;
+    .head{
+    font-family: "Roboto", sans-serif;;
+    font-size: 20px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-align: left;
+    color: #1b1b1b;
 }
-.languageSelect {
-    position: absolute;
-    width: 100px;
+.content{
+    font-family: "Roboto", sans-serif;;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.9px;
+    text-align: left;
+    color: #b1b1b1;
 }
-.text {
-    color: black;
 }
-.add-a-key {
-    margin: 13px 0px 24px 0px;
-    text-align: center;
+.jobs-card-heading {
+    width: 100%;
+.line-dash{
+    border:2px dashed lightgrey;
+    width:1px;
+    height:100%;
+    margin-left:95px;
+  }
 }
-form-group label {
-    margin-bottom: 5px;
-    color: #ffffff;
-    font-weight: 400;
-    font-size: 17px;
+@media only screen and (max-width: 768px) { 
+    .inner-content{
+        text-align: center;
+    }
+    .support-image{
+        margin: 0 auto;        
+    }
+    .text-content{
+        .head{
+            text-align: center;
+        }
+        .content{
+            text-align: center;
+        }
+    }
+    .buy-btn{
+        margin: 0 auto;        
+    }
+
 }

@@ -11,7 +11,8 @@ import * as payment from './state/payment.actions';
             <ba-content-top></ba-content-top>
             <all-payments></all-payments>
         </div>
-    `
+    `,
+    styles: ['delete-card-modal { background:none; }']
 })
 export class Payments {
 

@@ -262,6 +262,48 @@ export class ApiService {
                 }
             });
     }
+    deleteApiWithPath(url, authRequired, utcOffset) {
+        this.getToken(authRequired, utcOffset);
+        this.options = new RequestOptions({
+            'headers': this.headers,
+   
+        });
+
+        return this.http.delete(url, this.options)
+            .map((res: Response) => res.json())
+            .catch((error: any) => {
+                try {
+                    return (Observable.throw(error.json()));
+                } catch (jsonError) {
+                    let minimumViableError = {
+                        success: false
+                    };
+                    return (Observable.throw(minimumViableError));
+                }
+            });
+    }
+
+    putApiWithPath(url,data, authRequired, utcOffset) {
+        this.getToken(authRequired, utcOffset);
+        this.options = new RequestOptions({
+            'headers': this.headers,
+   
+        });
+
+        return this.http.put(url, data,this.options)
+            .map((res: Response) => res.json())
+            .catch((error: any) => {
+                try {
+                    return (Observable.throw(error.json()));
+                } catch (jsonError) {
+                    let minimumViableError = {
+                        success: false
+                    };
+                    return (Observable.throw(minimumViableError));
+                }
+            });
+    }
+
 
     putApi(url, data, authRequired, utcOffset) {
         return this.http.put(url, data, this.getToken(authRequired, utcOffset))

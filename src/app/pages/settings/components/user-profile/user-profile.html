@@ -16,7 +16,7 @@
                     <img md-card-avatar class="main-header-image" src='assets/img/default-profile.jpg'>
                 </div>
             </md-card-header>
-            <md-card-title class="main-card-title text-uppercase ">JOHN SMITH</md-card-title>
+            <md-card-title class="main-card-title text-uppercase ">{{profile.fullName}}</md-card-title>
             <md-card-subtitle class="main-card-subtitle d-flex justify-content-center">
                 <p class="text">Donec facilisis tortor ut augue lacinia, at viverra est semp Donec facilisis tortor ut augue lacinia, at
                     viverra est semp.</p>
@@ -64,12 +64,12 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-md-4" *ngFor="let item of products">
+                    <div class="col-md-4" *ngFor="let item of profile.documents">
                         <md-card class="">
                             <md-card-content class="">
-                                <img class="img-fluid " [src]="item.imgPath">
-                                <md-card-title class="">{{item.title}}</md-card-title>
-                                <md-card-subtitle>{{item.subTitle}}</md-card-subtitle>
+                                <img class="img-fluid " [src]="item.url">
+                                <md-card-title class="">{{item.info}}</md-card-title>
+                                <md-card-subtitle>{{item.name}}</md-card-subtitle>
                             </md-card-content>
                         </md-card>
                     </div>
@@ -90,15 +90,15 @@
                         <div class="row">
                             <div class="col-6">
                                 <md-card-subtitle>Office Number</md-card-subtitle>
-                                <md-card-title>+1 9888611221</md-card-title>
+                                <md-card-title>{{profile.countryCode}}&nbsp;{{profile.phoneNumber}}</md-card-title>
                             </div> 
                             <div class="col-6 ">
                                 <md-card-subtitle>Category</md-card-subtitle>
-                                <md-card-title>Health Care</md-card-title>
+                                <md-card-title>{{profile.categoryId ? profile.categoryId.name : '--'}}</md-card-title>
                             </div>
                             <div class="col-12">
                                 <md-card-subtitle>Address</md-card-subtitle>
-                                <md-card-title>1245 West Broadway, Vancouver…</md-card-title>
+                                <md-card-title>{{profile.locationDetails ? profile.locationDetails.addressLine1 : '--' }}</md-card-title>
                             </div>
                         </div>
                     </md-card>

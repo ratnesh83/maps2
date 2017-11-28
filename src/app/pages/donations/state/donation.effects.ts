@@ -57,6 +57,22 @@ export class DonationsEffects {
 
         });
 
+        @Effect({dispatch: false})
+        getProfileInfo$ = this.actions$
+          .ofType('GET_DONATIONS')
+          .do((action) => {
+            this.DonationsService.getDonations(action.payload).subscribe((result) => {
+                if (result.statusCode == 200) {
+                  let payload = result.data;
+                  this.store.dispatch(new donation.GetDonationsSuccessAction(payload));            
+                }
+              }
+              , (error) => {
+                if (error.statusCode === 401 || error.statusCode === 403) {
+                }
+              }
+            );
+          });
 
     constructor(
         private actions$: Actions,

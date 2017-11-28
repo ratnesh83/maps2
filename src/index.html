@@ -34,6 +34,13 @@
                 <% } %>
                     <!-- base url -->
                     <base href="<%= htmlWebpackPlugin.options.metadata.baseUrl %>">
+
+                    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+                    <script src="https://checkout.stripe.com/checkout.js"></script>
+                  
+                    <script type="text/javascript">
+                      Stripe.setPublishableKey('pk_test_KpMxAkuFN2P5cy1nTk06cke2');
+                    </script>
     </head>
 
     <body>

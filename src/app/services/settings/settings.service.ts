@@ -10,6 +10,7 @@ import { ApiService } from '../api-service/api.service';
 export class SettingsService {
     authRequired;
     utcOffset;
+    contentTypeRequired;
     constructor(public http: Http, private apiService: ApiService) {
     }
 
@@ -132,6 +133,40 @@ export class SettingsService {
         let url = environment.APP.API_URL + environment.APP.UPLOAD_FILE;
         return this.apiService.postFileApi(url, payload, this.authRequired, this.utcOffset);
     }
+    getProfileInfo(payload) {
+        // let skip = (payload.currentPage - 1) * payload.limit;
+        let url = environment.APP.API_URL + environment.APP.GET_PROFILE_INFO+"?userId="+payload;
+        this.authRequired = true;
+        this.utcOffset = false;
+        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+      }
+
+      updateProfileInfo(payload) {
+        // let skip = (payload.currentPage - 1) * payload.limit;
+        let url = environment.APP.API_URL + environment.APP.UPDATE_PROFILE_INFO;
+        this.authRequired = true;
+        this.utcOffset = false;        
+        return this.apiService.putFileApi(url,payload,this.authRequired, this.utcOffset);
+      }
+      addCard(payload){
+        let url = environment.APP.API_URL + environment.APP.ADD_CARD;
+        this.authRequired = true;
+        this.utcOffset = false;        
+        return this.apiService.postFileApi(url,payload,this.authRequired, this.utcOffset);
+      }
+      getCards(payload){
+        let url = environment.APP.API_URL + environment.APP.GET_CARDS;
+        this.authRequired = true;
+        this.utcOffset = false;        
+        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+      }
+      getProfileInfoId(payload) {
+        // let skip = (payload.currentPage - 1) * payload.limit;
+        let url = environment.APP.API_URL + environment.APP.GET_PROFILE_INFO_ID+"?userId="+payload;
+        this.authRequired = true;
+        this.utcOffset = false;
+        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+      }
 
 }
 

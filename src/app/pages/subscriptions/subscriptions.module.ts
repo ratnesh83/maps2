@@ -22,8 +22,11 @@ import {
     MdNativeDateModule,
     MdDialogModule,
     MdTooltipModule,
+    MdAutocompleteModule,
+    MdCardModule,
     MdPaginatorModule
 } from '@angular/material';
+
 
 @NgModule({
     imports: [
@@ -41,6 +44,8 @@ import {
         MdPaginatorModule,
         MdNativeDateModule,
         MdDialogModule,
+        MdCardModule,
+        MdPaginatorModule,
         NgxPaginationModule,
         MdTooltipModule,
         routing,

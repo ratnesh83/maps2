@@ -27,7 +27,12 @@ export const actionTypes = {
     APP_UPDATE_MACHINE_SUCCESS: 'APP_UPDATE_MACHINE_SUCCESS',
     UPLOAD_FILE: 'UPLOAD_FILE',
     UPLOAD_FILE_SUCCESS: 'UPLOAD_FILE_SUCCESS',
-    SETTINGS_ERROR: 'SETTINGS_ERROR'
+    SETTINGS_ERROR: 'SETTINGS_ERROR',
+    GET_PROFILE_INFO: 'GET_PROFILE_INFO',
+    GET_PROFILE_INFO_SUCCESS: 'GET_PROFILE_INFO_SUCCESS',
+    GET_PROFILE_INFO_ID: 'GET_PROFILE_INFO_ID',
+    GET_PROFILE_INFO_ID_SUCCESS: 'GET_PROFILE_INFO_ID_SUCCESS',
+    UPDATE_PROFILE_INFO: 'UPDATE_PROFILE_INFO'
 };
 
 type credentials = {};
@@ -157,30 +162,50 @@ export class AppSettingsError implements Action {
     constructor() { }
 }
 
+export class GetProfileInfo implements Action {
+    type = actionTypes.GET_PROFILE_INFO;
+    constructor(public payload: any) { }
+}
+export class GetProfileInfoSuccessAction implements Action {
+    type = actionTypes.GET_PROFILE_INFO_SUCCESS;
+    constructor(public payload: any) { }
+}
+export class GetProfileInfoId implements Action {
+    type = actionTypes.GET_PROFILE_INFO_ID;
+    constructor(public payload: any) { }
+}
+export class GetProfileInfoIdSuccessAction implements Action {
+    type = actionTypes.GET_PROFILE_INFO_ID_SUCCESS;
+    constructor(public payload: any) { }
+}
 export type Actions
-= AppGetServiceRadii
-| AppGetServiceRadiiSuccess
-| AppSetServiceRadii
-| AppSetServiceRadiiSuccess
-| AppGetQualification
-| AppGetQualificationSuccess
-| AppSetQualification
-| AppSetQualificationSuccess
-| AppDeleteQualification
-| AppDeleteQualificationSuccess
-| AppGetExpertise
-| AppGetExpertiseSuccess
-| AppSetExpertise
-| AppSetExpertiseSuccess
-| AppUpdateExpertise
-| AppUpdateExpertiseSuccess
-| AppGetEquipments
-| AppGetEquipmentsSuccess
-| AppUpdateEquipments
-| AppUpdateEquipmentsSuccess
-| AppSettingsError
-| AppAddMachine
-| AppAddMachineSuccess
-| AppUploadFile
-| AppUploadFileSuccess;
+    = AppGetServiceRadii
+    | AppGetServiceRadiiSuccess
+    | AppSetServiceRadii
+    | AppSetServiceRadiiSuccess
+    | AppGetQualification
+    | AppGetQualificationSuccess
+    | AppSetQualification
+    | AppSetQualificationSuccess
+    | AppDeleteQualification
+    | AppDeleteQualificationSuccess
+    | AppGetExpertise
+    | AppGetExpertiseSuccess
+    | AppSetExpertise
+    | AppSetExpertiseSuccess
+    | AppUpdateExpertise
+    | AppUpdateExpertiseSuccess
+    | AppGetEquipments
+    | AppGetEquipmentsSuccess
+    | AppUpdateEquipments
+    | AppUpdateEquipmentsSuccess
+    | AppSettingsError
+    | AppAddMachine
+    | AppAddMachineSuccess
+    | AppUploadFile
+    | AppUploadFileSuccess
+    | GetProfileInfo
+    | GetProfileInfoSuccessAction
+    | GetProfileInfoId
+    | GetProfileInfoIdSuccessAction;
 

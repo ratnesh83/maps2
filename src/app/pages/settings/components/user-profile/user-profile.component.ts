@@ -33,18 +33,22 @@ export class UserProfile {
     public settingStore;
     public jobItems;
     public products;
+    public profile;
     constructor(
         private store: Store<any>,
         private modalService: NgbModal,
         private fb: FormBuilder,
         private toastrService: ToastrService,
-        private renderer: Renderer
-    ) {
+        private renderer: Renderer,
+        private baThemeSpinner: BaThemeSpinner
+    ) { this.baThemeSpinner.show();
         this.settingStore = this.store
             .select('setting')
             .subscribe((res: any) => {
-                
+                this.profile = res;
+                console.log(this.profile);                
             });
+        this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO_ID});            
     };
     bringFileSelector(): boolean {
         this.renderer.invokeElementMethod(this._fileUpload.nativeElement, 'click');

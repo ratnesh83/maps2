@@ -1,3 +1,81 @@
-<div class="container animated bounce">
-    <h2>Payments</h2>
+<div class="container-fluid animated bounce">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-12 col-sm-12 user-jobs-heading">
+                <md-card class="jobs-card-heading">
+                    <md-card-header class="jobs-card-header jobs-card-heading">
+                        <md-card-title style="font-weight: 600; color: #474747; margin-bottom: 0px">
+                           <h2>Payments</h2>
+                            <h2 class="amount" *ngIf="donatemode">Donate&nbsp;&nbsp;$&nbsp;{{amount}}</h2>
+                            <h2 class="amount"  *ngIf="planmode">Pay&nbsp;&nbsp;$&nbsp;{{amount}}</h2>
+                        </md-card-title>
+                    </md-card-header>
+                </md-card>
+            </div>
+        </div>
+    </div>
+    <div class="contact-section">
+        <md-card class="contact-card">
+            <md-card-content>
+                <div class="container">
+                    <div class="row">
+                        <div class="card-outer col-sm-12 col-md-6" *ngFor="let item of cards" (click)="openModalNew(item,item.isDefault)">
+                            <div class="added-card col-sm-12">
+                           <span class="card_photo" *ngIf="item.cardType == 'Visa'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/visa_credit-card-logos/new_visa.gif" border="0" /></span>
+                           <span class="card_photo" *ngIf="item.cardType == 'American Express'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/american_express_credit-card-logos/american_express_logo_1.gif" border="0" /></span>
+                           <span class="card_photo" *ngIf="item.cardType == 'MasterCard'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/mastercard_credit-card-logos/mastercard_logo_1.gif" border="0" /></span>
+                           <span class="card_photo" *ngIf="item.cardType == 'Discover'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/discover_credit-card-logos/discover_network1.jpg" border="0" /></span>&nbsp;                           
+                             <span class="hidden_no" id="card-no">XXXX-XXXX-XXXX-{{item.last4Digits}}&nbsp;<span class="defaultcheck" *ngIf="item.isDefault == true">&#10004;</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="hr-text" data-content="or">
+                    <md-card-title style="font-weight: 600; color: #474747; margin-bottom: 30px; margin-top:30px;">
+                        <h2>Add new card</h2>
+                    </md-card-title>
+                    <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+                        <div class="row">
+                            <div class="card-outer col-sm-12 col-md-6">
+                                <input class="card-input col-sm-12" placeholder="Card Holder Name" formControlName="card_holder_name">
+                                <div class="alert alert-danger" *ngIf="(form.get('card_holder_name').touched || submitted == true) && form.get('card_holder_name').invalid">
+                                    <div *ngIf="form.get('card_holder_name').errors.required">Please enter card holder's name</div>
+                                    <div *ngIf="!form.get('card_holder_name').errors.required">Please enter only alphabets</div>
+                                </div>
+                            </div>
+                            <div class="card-outer col-sm-12 col-md-6">
+                                <input class="card-input col-sm-12" placeholder="Card Number" formControlName="card_number">
+                                <div class="alert alert-danger" *ngIf="(form.get('card_number').touched || submitted == true) && form.get('card_number').invalid">
+                                    <div *ngIf="form.get('card_number').errors.required">Please enter card number</div>
+                                    <div *ngIf="!form.get('card_number').errors.required">Please enter correct card number</div>
+                                </div>
+                            </div>
+                            <div class="card-outer col-sm-12 col-md-6">
+                                <input class="card-input col-sm-12" placeholder="Exp. Date(DD-MM)" formControlName="card_expire_date">                                
+                                <div class="alert alert-danger" *ngIf="(form.get('card_expire_date').touched || submitted == true) && form.get('card_expire_date').invalid">
+                                    <div *ngIf="form.get('card_expire_date').errors.required">Please enter expiry date</div>
+                                    <div *ngIf="!form.get('card_expire_date').errors.required">Please enter correct expiry date</div>
+                                </div>
+                            </div>
+                            <div class="card-outer col-sm-12 col-md-6">
+                                <input class="card-input col-sm-12" placeholder="CVV/CVC" formControlName="card_cvv">
+                                <div class="alert alert-danger" *ngIf="(form.get('card_cvv').touched || submitted == true) && form.get('card_cvv').invalid">
+                                    <div *ngIf="form.get('card_cvv').errors.required">Please enter cvv/cvc</div>
+                                    <div *ngIf="!form.get('card_cvv').errors.required">Please enter correct cvv/cvc</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="save-card-btn col-sm-5">
+                                SAVE CARD
+                            </button>
+                            <button type="button" class="save-card-btn col-sm-5" (click)="pay()" *ngIf="planmode || donatemode">
+                                PROCEED
+                            </button>
+                            </div>  
+                    </form>            
+                </div>
+            </md-card-content>
+        </md-card>
+    </div>
 </div>

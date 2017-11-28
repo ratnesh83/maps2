@@ -12,7 +12,7 @@
                 <!-- employee profile start-->
                 <md-card-header class="main-card-header d-flex justify-content-center">
                     <div md-card-avatar class="main-header-image">
-                        <img md-card-avatar class="main-header-image" src='assets/img/default-profile.jpg'>
+                        <img md-card-avatar class="main-header-image" [src]='profile.profilePicture && profile.profilePicture.original ? profile.profilePicture.original : "assets/img/default-profile.jpg"'>
                     </div>
                 </md-card-header>
                 <md-card-title class="main-card-title text-uppercase ">{{profile.contactPerson}}</md-card-title>
@@ -23,15 +23,15 @@
                             <div class="row">
                                 <div class="col-8">
                                     <md-card-subtitle>Contact Person</md-card-subtitle>
-                                    <md-card-title class="info">{{profile.contactPerson}}</md-card-title>
+                                    <md-card-title class="info">{{profile.fullName}}</md-card-title>
                                 </div>
                                 <div class="col-4">
                                     <md-card-subtitle>Office Number</md-card-subtitle>
-                                    <md-card-title class="info">{{profile.contactNumber}}</md-card-title>
+                                    <md-card-title class="info">{{profile.countryCode}}&nbsp;{{profile.phoneNumber}}</md-card-title>
                                 </div>
                                 <div class="col-8">
                                     <md-card-subtitle>Address</md-card-subtitle>
-                                    <md-card-title class="info">{{profile.address}}</md-card-title>
+                                    <md-card-title class="info">{{profile.locationDetails ? profile.locationDetails.addressLine1 : '--'}}</md-card-title>
                                 </div>
                                 <div class="col-4">
                                     <md-card-subtitle>Category</md-card-subtitle>
@@ -53,12 +53,12 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-md-4" *ngFor="let item of products">
+                        <div class="col-md-4" *ngFor="let item of profile.documents">
                             <md-card class="">
                                 <md-card-content class="">
-                                    <img class="img-fluid " [src]="item.imgPath">
-                                    <md-card-title class="">{{item.title}}</md-card-title>
-                                    <md-card-subtitle>{{item.subTitle}}</md-card-subtitle>
+                                    <img class="img-fluid " [src]="item.url">
+                                    <md-card-title class="">{{item.info}}</md-card-title>
+                                    <md-card-subtitle>{{item.name}}</md-card-subtitle>
                                 </md-card-content>
                             </md-card>
                         </div>
@@ -70,30 +70,30 @@
             <div class="conatainer section-container" *ngIf="isEditMode">
                <div class="main-card-header d-flex justify-content-center">
                     <div md-card-avatar class="main-header-image">
-                        <img md-card-avatar class="main-header-image" src='assets/img/default-profile.jpg'>
+                        <img md-card-avatar class="main-header-image" [src]='assets/img/default-profile.jpg'>
                     </div>
                     
                 </div>
                 <div class="row">
                     <div class="col-6 form-group">
-                        <label class="editLable" for="comapanyName">Full Name</label>
-                        <input class="form-control" type="text" name="companyName" id="companyName">
+                        <label class="editLable" for="fullName">Full Name</label>
+                        <input class="form-control" type="text" name="profileName" id="fullName" [(ngModel)]="profileName">
                     </div>
                     <div class="col-6 form-group">
-                        <label class="editLable" for="comapanyName">Contact Number</label>
-                        <input class="form-control" type="text" name="companyName" id="companyName">
+                        <label class="editLable" for="contactNumber">Contact Number</label>
+                        <input class="form-control" type="text" name="profileNumber" id="contactNumber" [(ngModel)]="profileNumber">
                     </div>
                     <div class="col-6 form-group">
                         <label class="editLable" for="comapanyName">Job Category</label>
-                        <input class="form-control" type="text" name="companyName" id="companyName">
+                        <input class="form-control" type="text" name="companyName" id="companyName" >
                     </div>
                     <div class="col-6 form-group">
                         <label class="editLable" for="comapanyName">Availability Calendar</label>
-                        <input class="form-control" type="text" name="companyName" id="companyName">
+                        <input class="form-control" type="text" name="companyName" id="companyName" >
                     </div>
                     <div class="col-6 form-group">
                         <label class="editLable" for="comapanyName">Address</label>
-                        <input class="form-control" type="text" name="companyName" id="companyName">
+                        <input class="form-control" type="text" name="profileAddress" id="companyName" [(ngModel)]="profileAddress">
                     </div>
                     <div class="col-6 form-group">
                         <label class="editLable" for="comapanyName">Willing to</label>
@@ -104,7 +104,7 @@
                     </div>
                     <div class="col-12 form-group">
                         <label class="editLable" for="comapanyName">Description</label>
-                        <textarea class="form-control" id="exampleTextarea" rows="3" style="border: solid 1px #f0f0f0"></textarea>
+                        <textarea class="form-control" id="exampleTextarea" rows="3" style="border: solid 1px #f0f0f0" [(ngModel)]="profileDescription" name="profileDescription"></textarea>
                     </div>
                     
                 </div>
@@ -116,7 +116,7 @@
                 <div class="d-flex justify-content-center">
                     <button class="btn btn-lg btn-custom" *ngIf="!isEditMode" (click)="toogleEdit()">Edit Profile</button>
                     <button class="btn btn-lg btn-custom" *ngIf="!isEditMode">Change Password</button>
-                    <button class="btn btn-lg btn-custom" *ngIf="isEditMode" (click)="toogleEdit()">Save Profile</button>
+                    <button class="btn btn-lg btn-custom" *ngIf="isEditMode" (click)="onSubmit()" href="">Save Profile</button>
                 </div>
             </div>
         </div>

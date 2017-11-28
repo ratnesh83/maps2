@@ -35,6 +35,12 @@ export class EmployeeProfileEdit {
     public isEditMode = false;
     public isEdited;
     public profile;
+    public profileName;
+    public profileCompanyName;
+    public profileEmail;
+    public profileNumber;
+    public profileDescription;
+    
     constructor(
         private store: Store<any>,
         private modalService: NgbModal,
@@ -45,9 +51,28 @@ export class EmployeeProfileEdit {
         this.settingStore = this.store
             .select('setting')
             .subscribe((res: any) => {
-                
+                console.log(res);
+                this.profile = res;
+                this.profileName = res.fullName;
+                this.profileCompanyName = res.companyName;
+                this.profileEmail = res.email;
+                this.profileDescription = res.description;
+                this.profileNumber = res.phoneNumber;
             });
+        this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO });
     };
+    onSubmit(){
+        
+            let fd = new FormData();
+            if(this.profileName){
+            fd.append('fullName',this.profileName);     
+            fd.append('companyName',this.profileCompanyName);     
+            fd.append('email',this.profileEmail);
+            fd.append('description',this.profileDescription);
+            }
+            this.store.dispatch({type: setting.actionTypes.UPDATE_PROFILE_INFO, payload: fd});
+          }
+        
     bringFileSelector(): boolean {
         this.renderer.invokeElementMethod(this._fileUpload.nativeElement, 'click');
         return false;
@@ -83,7 +108,7 @@ export class EmployeeProfileEdit {
             jQuery('html, body').animate({ scrollTop: this._scrollContainerExp.nativeElement.scrollHeight + this._scrollContainerQual.nativeElement.scrollHeight }, { duration: 500 });
         }
     }
-        
+
     checkFileSize(size): boolean {
         if (size > 5000000) {
             return false;
@@ -118,13 +143,13 @@ export class EmployeeProfileEdit {
                 imgPath: 'assets/img/product_img_3.png'
             }
         ];
-        this.profile ={
-            companyName:'Careerhub',
-            companyWebsite:'www.careerhub.com',
-            contactPerson:'James Smith',
-            contactNumber:'+1 9888611221',
-            address:'1245 West Broadway, Vancouver…',
-            category:'Health Care',
+        this.profile = {
+            companyName: 'Careerhub',
+            companyWebsite: 'www.careerhub.com',
+            contactPerson: 'James Smith',
+            contactNumber: '+1 9888611221',
+            address: '1245 West Broadway, Vancouver…',
+            category: 'Health Care',
             description: 'Donec facilisis tortor ut augue lacinia, at viverra est semp Donec facilisis tortor ut augue lacinia, at viverra est semp.'
         };
     }
@@ -135,7 +160,7 @@ export class EmployeeProfileEdit {
         } */
     }
     ngAfterViewInit() {
-        
+
     }
     _keyPressCsvNumber(event: any) {
         const pattern = /^[0-9,]*$/;
@@ -144,7 +169,7 @@ export class EmployeeProfileEdit {
             event.preventDefault();
         }
     }
-    toogleEdit(){
+    toogleEdit() {
         this.isEditMode = !this.isEditMode;
         console.log(this.isEditMode);
     }

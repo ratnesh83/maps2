@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import * as subscription from '../../state/subscription.actions';
 import * as app from '../../../../state/app.actions';
+import { Router } from '@angular/router';
 import {
     MdSort,
     MdDialog,
@@ -58,7 +59,9 @@ export class AllSubscriptions {
     optionsModel: number[];
     myOptions: IMultiSelectOption[];
     myOptionsSelected;
-
+    plans;
+    planCount;
+    numbers;
     priorities = [
         { value: 1, name: 'High' },
         { value: 2, name: 'Mediium' },
@@ -79,7 +82,8 @@ export class AllSubscriptions {
         private modalService: NgbModal,
         private fb: FormBuilder,
         private toastrService: ToastrService,
-        public dialog: MdDialog
+        public dialog: MdDialog,
+        public router:Router
     ) {
         this.form = fb.group({
             'subscriptionId': ['', Validators.compose([])],
@@ -121,38 +125,44 @@ export class AllSubscriptions {
         this.store
             .select('subscription')
             .subscribe((res: any) => {
-                this.subscriptions = res.subscriptions;
-                this.count = res.count;
-                this.length = this.count;
-                this.limit = this.pageSize;
-                this.activeSubscription = (res.activeSubscription) ? res.activeSubscription : null;
-                this.pageIndex = res.currentPage - 1;
+                console.log(res);
+                this.plans = res.data;
+                console.log(this.plans);
+                this.planCount =Object.keys(res).length;   
+                this.numbers = Array(this.planCount).fill(0).map((x,i)=>i);
+                // this.subscriptions = res.subscriptions;
+                // this.count = res.count;
+                // this.length = this.count;
+                // this.limit = this.pageSize;
+                // this.activeSubscription = (res.activeSubscription) ? res.activeSubscription : null;
+                // this.pageIndex = res.currentPage - 1;
 
-                if (res.getSubscription) {
-                    this.isTabChangeSuccess = false;
-                }
+                // if (res.getSubscription) {
+                //     this.isTabChangeSuccess = false;
+                // }
 
-                if (res.addSubscription) {
-                    this.updateLoading = false;
-                    this.scrollToTop();
-                    setTimeout(() => {
-                        this.openForm = false;
-                    }, 500);
-                }
+                // if (res.addSubscription) {
+                //     this.updateLoading = false;
+                //     this.scrollToTop();
+                //     setTimeout(() => {
+                //         this.openForm = false;
+                //     }, 500);
+                // }
 
-                if (res.editSubscription) {
-                    this.updateLoading = false;
-                    this.scrollToTop();
-                    setTimeout(() => {
-                        this.openForm = false;
-                    }, 500);
-                }
+                // if (res.editSubscription) {
+                //     this.updateLoading = false;
+                //     this.scrollToTop();
+                //     setTimeout(() => {
+                //         this.openForm = false;
+                //     }, 500);
+                // }
 
-                if (res.error) {
-                    this.updateLoading = false;
-                }
+                // if (res.error) {
+                //     this.updateLoading = false;
+                // }
 
             });
+            this.store.dispatch({type: subscription.actionTypes.GET_PLAN});            
         this.onLoad();
     };
 
@@ -163,30 +173,30 @@ export class AllSubscriptions {
     };
 
     getAllSubscription() {
-        this.store.dispatch({
-            type: subscription.actionTypes.APP_GET_ALL_SUBSCRIPTIONS, payload: {
-                currentPage: this.page,
-                limit: this.pageSize,
-                role: this.role,
-                filter: this.filter,
-                value: this.value,
-                applicableFor: this.applicableFor
-            }
-        });
-    };
+    //     this.store.dispatch({
+    //         type: subscription.actionTypes.APP_GET_ALL_SUBSCRIPTIONS, payload: {
+    //             currentPage: this.page,
+    //             limit: this.pageSize,
+    //             role: this.role,
+    //             filter: this.filter,
+    //             value: this.value,
+    //             applicableFor: this.applicableFor
+    //         }
+    //     });
+    }
 
     pageChange(page) {
-        this.store.dispatch({
-            type: subscription.actionTypes.APP_GET_ALL_SUBSCRIPTIONS, payload: {
-                subscription: (this.searchKey != '') ? this.searchKey : undefined,
-                currentPage: page.pageIndex + 1,
-                limit: page.pageSize,
-                role: this.role,
-                filter: this.filter,
-                applicableFor: this.applicableFor
-            }
-        });
-        this.pageSize = page.pageSize;
+        // this.store.dispatch({
+        //     type: subscription.actionTypes.APP_GET_ALL_SUBSCRIPTIONS, payload: {
+        //         subscription: (this.searchKey != '') ? this.searchKey : undefined,
+        //         currentPage: page.pageIndex + 1,
+        //         limit: page.pageSize,
+        //         role: this.role,
+        //         filter: this.filter,
+        //         applicableFor: this.applicableFor
+        //     }
+        // });
+        // this.pageSize = page.pageSize;
     }
 
     goToLastPage(index) {
@@ -573,8 +583,14 @@ export class AllSubscriptions {
             event.preventDefault();
         }
     }
+    pay(item){
+        localStorage.setItem('pay',item._id);
+        localStorage.setItem('amount',item.cost);        
+        this.router.navigate(['/pages/payments']);
+    }
 }
 
 function compare(a, b, isAsc) {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
 }
+

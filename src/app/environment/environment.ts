@@ -98,8 +98,19 @@ export const environment = {
         GET_ALL_JOBS: '/admin/getAllJobs',
 
         UPLOAD_FILE: '/user/uploadFile',
-        UPLOAD_MULTIPLE_FILES: '/user/uploadMultipleFiles'
+        UPLOAD_MULTIPLE_FILES: '/user/uploadMultipleFiles',
 
+        GET_PROFILE_INFO: '/api/v2/web/user/detailsById',
+        UPDATE_PROFILE_INFO: '/api/v1/user/editWebProfile',
+        ADD_CARD: '/api/v1/card/addCard',
+        GET_CARDS: '/api/v1/card/getCards',
+        DONATE: '/api/v1/donations',
+        SET_AS_DEFAULT: '/api/v1/card/setDefaultCard',
+        DELETE_CARD: '/api/v1/card/deleteCard',
+        GET_PLAN: '/api/v1/membershipPlan/getUsersPlan',
+        BUY_PLAN: '/api/v1/membershipPlan/buyPlan',
+        GET_DONATIONS: '/api/v1/donations',
+        GET_PROFILE_INFO_ID: '/api/v2/web/user/detailsById',
     },
 
     ERROR: {

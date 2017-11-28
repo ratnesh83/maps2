@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container">
     <div *ngIf="subscriptions" class="animated bounce">
         <div #scrollBottom class="panel panel-default panel-table">
             <div class="panel-heading">
@@ -329,5 +329,45 @@
                 </div>
             </form>
         </div>
+    </div>
+</div> -->
+<div class="container-fluid animated bounce">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-12 col-sm-12 user-jobs-heading">
+                <md-card class="jobs-card-heading">
+                    <md-card-header class="jobs-card-heading jobs-card-header">
+                        <md-card-title style="font-weight: 600; color: #474747; margin-bottom: 0px">
+                            <h2>Membership Plans</h2>
+                        </md-card-title>
+                    </md-card-header>
+                </md-card>
+            </div>
+        </div>
+    </div>
+    <div class="contact-section">
+        <md-card class="contact-card">
+            <md-card-content>
+                <div *ngFor="let item of plans; let i = index">
+                    <div class="row" style="height:60px" *ngIf="i !== 0">
+                        <div class="line-dash hidden-sm-down"></div>
+                    </div>
+                    <div class="row inner-content col-sm-12">
+                        <div class="support-image">
+                            <img [src]="item.image.original || '../../../../../assets/img/blue-bg.jpg'">
+                        </div>
+                        <div class="text-content col-sm-12 col-md-7">
+                            <div class="head">
+                                {{item.title}}
+                            </div>
+                            <div class="content">
+                                {{item.description}}
+                            </div>
+                            <button class="btn buy-btn" *ngIf="item.isBought === false" (click)="pay(item)">Buy Membership</button>
+                        </div>
+                    </div>
+                </div>
+            </md-card-content>
+        </md-card>
     </div>
 </div>
