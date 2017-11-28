@@ -44,17 +44,19 @@ export class NotificationEffects {
                         });
                     }
                     let notifications;
-                    let count = 0;
+                    let unReadCount = 0;
+                    let totalCount = 0;
                     if(result && result.data && result.data.notification) {
                         notifications = result.data.notification;
-                        count = result.data.count;
+                        unReadCount = result.data.unReadCount;
+                        totalCount = result.data.totalCount;
                     }
                     let payload = {
                         notifications: notifications,
-                        count: count,
+                        count: totalCount,
                         currentPage: action.payload.currentPage,
                         limit: action.payload.limit,
-                        unreadNotificationCount: count,
+                        unreadNotificationCount: unReadCount,
                         type: notificationType
                     };
                     this.notificationData = payload;
