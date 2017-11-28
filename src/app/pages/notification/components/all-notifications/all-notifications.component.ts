@@ -74,14 +74,7 @@ export class AllNotifications {
                 id = data.payload ? data.payload.jobId : null;
                 if (id) {
                     this.dataService.setData('jobId', id);
-                    this.router.navigate(['pages/posts/postdetails']);
-                }
-                break;
-            case 'CONFIRM_LABOUR':
-                id = data.payload ? data.payload.jobId : null;
-                if (id) {
-                    this.dataService.setData('jobId', id);
-                    this.router.navigate(['pages/posts/postdetails']);
+                    this.router.navigate(['pages/jobs/jobdetails']);
                 }
                 break;
             case 'CANCEL_LABOUR':
