@@ -19,7 +19,7 @@ const OptimizeJsPlugin = require('optimize-js-plugin');
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 3004;
-const APIURL = process.env.APIURL || "http://52.90.243.185:3000";
+const APIURL = process.env.APIURL || "http://54.87.58.194:3001";
 const METADATA = webpackMerge(commonConfig({ env: APIURL }).metadata, {
     host: HOST,
     port: PORT,
