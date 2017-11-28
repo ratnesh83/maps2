@@ -24,6 +24,12 @@
         width: auto;
     }
 }
+.companies-card-heading .no-margin {
+    .mat-card-header-text {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+}
 .companies-card-heading {
     width: 100%;
 }

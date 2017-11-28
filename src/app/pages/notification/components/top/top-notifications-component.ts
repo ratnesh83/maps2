@@ -310,25 +310,29 @@ export class TopNotifications {
                 let id;
                 switch (eventType) {
                     case 'ACCEPT_JOB':
-                        id = notification ? notification.eventId : null;
-                        this.dataService.setData('jobId', id);
-                        this.router.navigate(['pages/posts/postdetails']).then((result) => {
-                            if (!result) {
-                                this.getPostDetails();
-                            }
-                        });
+                        id = notification ? notification.eventID : null;
+                        if (id) {
+                            this.dataService.setData('jobId', id);
+                            this.router.navigate(['pages/posts/postdetails']).then((result) => {
+                                if (!result) {
+                                    this.getPostDetails();
+                                }
+                            });
+                        }
                         break;
                     case 'REJECT_JOB':
-                        id = notification ? notification.eventId : null;
-                        this.dataService.setData('jobId', id);
-                        this.router.navigate(['pages/posts/postdetails']).then((result) => {
-                            if (!result) {
-                                this.getPostDetails();
-                            }
-                        });
+                        id = notification ? notification.eventID : null;
+                        if (id) {
+                            this.dataService.setData('jobId', id);
+                            this.router.navigate(['pages/posts/postdetails']).then((result) => {
+                                if (!result) {
+                                    this.getPostDetails();
+                                }
+                            });
+                        }
                         break;
                     case 'CONFIRM_LABOUR':
-                        id = notification ? notification.eventId : null;
+                        id = notification ? notification.eventID : null;
                         if (id) {
                             this.dataService.setData('jobId', id);
                             this.router.navigate(['pages/posts/postdetails']).then((result) => {
@@ -339,7 +343,7 @@ export class TopNotifications {
                         }
                         break;
                     case 'CANCEL_LABOUR':
-                        id = notification ? notification.eventId : null;
+                        id = notification ? notification.eventID : null;
                         if (id) {
                             this.dataService.setData('jobId', id);
                             this.router.navigate(['pages/posts/postdetails']).then((result) => {
@@ -350,7 +354,7 @@ export class TopNotifications {
                         }
                         break;
                     case 'POST_JOB':
-                        id = notification ? notification.eventId : null;
+                        id = notification ? notification.eventID : null;
                         if (id) {
                             this.dataService.setData('jobId', id);
                             this.router.navigate(['pages/posts/postdetails']).then((result) => {

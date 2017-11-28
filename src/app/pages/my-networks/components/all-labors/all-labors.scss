@@ -30,6 +30,12 @@
 .labors-section {
     margin-top: 10px;
 }
+.labors-card-heading .no-margin {
+    .mat-card-header-text {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+}
 .labors-card {
     margin-bottom: 10px;
     .with-margin {
