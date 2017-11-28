@@ -1,9 +1,9 @@
 <div class="container-fluid messagePanel animated bounce">
-    <div *ngIf="job" class="panel-heading">
+    <div class="panel-heading">
         <div class="row">
             <div class="col-12 col-sm-12 user-feed-heading">
                 <md-card class="posts-card-heading">
-                    <md-card-header class="posts-card-header posts-card-heading">
+                    <md-card-header *ngIf="job" class="posts-card-header posts-card-heading">
                         <md-card-title style="font-weight: 600; color: #1b1b1b">
                             <h3>{{job.title}}</h3>
                         </md-card-title>
@@ -18,16 +18,17 @@
                             </div>
                         </div>
                     </md-card-header>
-                    <md-card-content>
-
+                    <md-card-content *ngIf="!job">
+                        Loading...
+                        <i class="fa fa-spinner fa-spin"></i>
                     </md-card-content>
                 </md-card>
             </div>
         </div>
     </div>
     <div class="posts-section">
-        <md-card class="posts-card">
-            <md-card-content *ngIf="job">
+        <md-card *ngIf="job" class="posts-card">
+            <md-card-content>
                 <p class="md-card-content-posts-label">
                     Job Location
                 </p>
@@ -54,15 +55,10 @@
                     {{job.requiredLabourers}}
                 </p>
             </md-card-content>
-            <md-card-content *ngIf="!job">
-                Loading...
-                <i class="fa fa-spinner fa-spin"></i>
-            </md-card-content>
         </md-card>
 
-        <md-card-actions style="margin-left: 0px; margin-right: 0px; text-align: center">
-            <button *ngIf="canApply && canApply == 2" class="col-12 col-sm-6 btn-submit" md-raised-button color="primary"
-                disabled style="background-color: #026eff">CANCELLED BY EMPLOYER</button>
+        <md-card-actions *ngIf="job" style="margin-left: 0px; margin-right: 0px; text-align: center">
+            <button *ngIf="canApply && canApply == 2" class="col-12 col-sm-6 btn-submit" md-raised-button color="primary" disabled style="background-color: #026eff">CANCELLED BY EMPLOYER</button>
             <button *ngIf="canApply && canApply == 1" class="col-12 col-sm-6 btn-submit" md-raised-button (click)="applyJob()" color="primary"
                 style="background-color: #026eff">APPLY</button>
             <button *ngIf="canApply != null && canApply == 0" class="col-12 col-sm-6 btn-submit" md-raised-button (click)="cancelJob()"
