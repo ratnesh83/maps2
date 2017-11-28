@@ -106,7 +106,8 @@ export const environment = {
         DELETE_CARD: '/api/v1/card/deleteCard',
         GET_PLAN: '/api/v1/membershipPlan/getUsersPlan',
         BUY_PLAN: '/api/v1/membershipPlan/buyPlan',
-        GET_DONATIONS: '/api/v1/donations'
+        GET_DONATIONS: '/api/v1/donations',
+        GET_PROFILE_INFO_ID: '/api/v2/web/user/detailsById',
     },
 
     ERROR: {

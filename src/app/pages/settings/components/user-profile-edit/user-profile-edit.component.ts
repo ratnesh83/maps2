@@ -15,6 +15,14 @@ import 'style-loader!./user-profile-edit.scss';
     templateUrl: './user-profile-edit.html',
 })
 export class UserProfileEdit {
+    country: any;
+    zipCode: any;
+    state: any;
+    city: any;
+    longitude: any;
+    latitude: any;
+    streetAddress: any;
+    locationAddress: any;
 
     @ViewChild('file') public _fileUpload: ElementRef;
     @ViewChildren('file') public _filesUpload: QueryList<HTMLInputElement>;
@@ -42,6 +50,7 @@ export class UserProfileEdit {
     public profileNumber;
     public profileAddress;
     public profileDescription;
+    public categoryId;
 
     constructor(
         private store: Store<any>,
@@ -62,6 +71,9 @@ export class UserProfileEdit {
                 {        
                 this.profileAddress = res.locationDetails.addressLine1;
                 }
+                if(res.categoryId){
+                this.categoryId = res.categoryId.name;
+                }
                 this.profileEmail = res.email;
                 this.profileDescription = res.description; 
                 this.isEditMode = false;                    
@@ -78,6 +90,45 @@ export class UserProfileEdit {
           fd.append('description',this.profileDescription); 
           }
           this.store.dispatch({type: setting.actionTypes.UPDATE_PROFILE_INFO, payload: fd});
+        }
+        getAddress(event) {
+            let addressComponents = event.address_components;
+            let latitude = event.geometry.location.lat();
+            let longitude = event.geometry.location.lng();
+            let formattedAddress = event.formatted_address;
+            let locationName = event.streetAddress;
+            let route = '';
+            let locality = '';
+            let city = '';
+            let state = '';
+            let country = '';
+            let postal = '';
+            for (let i = 0; i < addressComponents.length; i++) {
+                let types = addressComponents[i].types;
+                for (let j = 0; j < types.length; j++) {
+                    if (types[j] == 'administrative_area_level_1') {
+                        state = addressComponents[i].long_name;
+                    } else if (types[j] == 'administrative_area_level_2') {
+                        city = addressComponents[i].long_name;
+                    } else if (types[j] == 'locality') {
+                        locality = addressComponents[i].long_name;
+                    } else if (types[j] == 'country') {
+                        country = addressComponents[i].long_name;
+                    } else if (types[j] == 'postal_code') {
+                        postal = addressComponents[i].long_name;
+                    } else if (types[j] == 'route') {
+                        route = addressComponents[i].long_name;
+                    }
+                }
+            }
+            this.locationAddress.setValue(formattedAddress);
+            this.streetAddress.setValue(locationName);
+            this.latitude.setValue(latitude);
+            this.longitude.setValue(longitude);
+            this.city.setValue(city);
+            this.state.setValue(state);
+            this.zipCode.setValue(postal);
+            this.country.setValue(country);
         }
       
     bringFileSelector(): boolean {

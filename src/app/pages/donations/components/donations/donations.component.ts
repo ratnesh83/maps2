@@ -39,8 +39,14 @@ export class Donation implements OnInit {
     });
     
     donate(value){      
+        if(value == null || value == undefined || value == ''){
+
+        }
+        else{
+            console.log(value);
       localStorage.setItem('payamount',value);
       this.router.navigate(['/pages/payments']);
+        }
     }
     changeAmount(value,id){
         this.donateAmount = value;

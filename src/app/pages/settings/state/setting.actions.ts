@@ -30,6 +30,8 @@ export const actionTypes = {
     SETTINGS_ERROR: 'SETTINGS_ERROR',
     GET_PROFILE_INFO: 'GET_PROFILE_INFO',
     GET_PROFILE_INFO_SUCCESS: 'GET_PROFILE_INFO_SUCCESS',
+    GET_PROFILE_INFO_ID: 'GET_PROFILE_INFO_ID',
+    GET_PROFILE_INFO_ID_SUCCESS: 'GET_PROFILE_INFO_ID_SUCCESS',
     UPDATE_PROFILE_INFO: 'UPDATE_PROFILE_INFO'
 };
 
@@ -162,38 +164,48 @@ export class AppSettingsError implements Action {
 
 export class GetProfileInfo implements Action {
     type = actionTypes.GET_PROFILE_INFO;
-    constructor(public payload:any) { }
+    constructor(public payload: any) { }
 }
 export class GetProfileInfoSuccessAction implements Action {
     type = actionTypes.GET_PROFILE_INFO_SUCCESS;
     constructor(public payload: any) { }
-  }
+}
+export class GetProfileInfoId implements Action {
+    type = actionTypes.GET_PROFILE_INFO_ID;
+    constructor(public payload: any) { }
+}
+export class GetProfileInfoIdSuccessAction implements Action {
+    type = actionTypes.GET_PROFILE_INFO_ID_SUCCESS;
+    constructor(public payload: any) { }
+}
 export type Actions
-= AppGetServiceRadii
-| AppGetServiceRadiiSuccess
-| AppSetServiceRadii
-| AppSetServiceRadiiSuccess
-| AppGetQualification
-| AppGetQualificationSuccess
-| AppSetQualification
-| AppSetQualificationSuccess
-| AppDeleteQualification
-| AppDeleteQualificationSuccess
-| AppGetExpertise
-| AppGetExpertiseSuccess
-| AppSetExpertise
-| AppSetExpertiseSuccess
-| AppUpdateExpertise
-| AppUpdateExpertiseSuccess
-| AppGetEquipments
-| AppGetEquipmentsSuccess
-| AppUpdateEquipments
-| AppUpdateEquipmentsSuccess
-| AppSettingsError
-| AppAddMachine
-| AppAddMachineSuccess
-| AppUploadFile
-| AppUploadFileSuccess
-| GetProfileInfo
-| GetProfileInfoSuccessAction;
+    = AppGetServiceRadii
+    | AppGetServiceRadiiSuccess
+    | AppSetServiceRadii
+    | AppSetServiceRadiiSuccess
+    | AppGetQualification
+    | AppGetQualificationSuccess
+    | AppSetQualification
+    | AppSetQualificationSuccess
+    | AppDeleteQualification
+    | AppDeleteQualificationSuccess
+    | AppGetExpertise
+    | AppGetExpertiseSuccess
+    | AppSetExpertise
+    | AppSetExpertiseSuccess
+    | AppUpdateExpertise
+    | AppUpdateExpertiseSuccess
+    | AppGetEquipments
+    | AppGetEquipmentsSuccess
+    | AppUpdateEquipments
+    | AppUpdateEquipmentsSuccess
+    | AppSettingsError
+    | AppAddMachine
+    | AppAddMachineSuccess
+    | AppUploadFile
+    | AppUploadFileSuccess
+    | GetProfileInfo
+    | GetProfileInfoSuccessAction
+    | GetProfileInfoId
+    | GetProfileInfoIdSuccessAction;
 

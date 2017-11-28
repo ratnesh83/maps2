@@ -525,6 +525,7 @@ export class SettingEffects {
   getProfileInfo$ = this.actions$
     .ofType('GET_PROFILE_INFO')
     .do((action) => {
+        console.log("2");
         let token = localStorage.getItem('tokenSession');
         let user;
         if (token && !this.jwtHelper.isTokenExpired(token)) {
@@ -545,6 +546,28 @@ export class SettingEffects {
         }
       );
     });
+    @Effect({dispatch: false})
+    getProfileInfoId$ = this.actions$
+      .ofType('GET_PROFILE_INFO_ID')
+      .do((action) => {
+          console.log("1");
+         let userId =  "5a1262033766a15de4c793c7";
+        this.SettingsService.getProfileInfoId(userId).subscribe((result) => {
+            console.log("pp")
+            if (result.statusCode == 200) {
+              let payload = result.data;
+              this._spinner.hide();
+              this.store.dispatch(new setting.GetProfileInfoIdSuccessAction(payload));            
+            }
+          }
+          , (error) => {
+            this._spinner.hide();            
+            if (error.statusCode === 401 || error.statusCode === 403) {
+            }
+            this.store.dispatch(new setting.GetProfileInfoSuccessAction({}));                        
+          }
+        );
+      });
     @Effect({dispatch: false})
     updateProfileInfo$ = this.actions$
         .ofType('UPDATE_PROFILE_INFO')

@@ -48,7 +48,7 @@ export class UserProfile {
                 this.profile = res;
                 console.log(this.profile);                
             });
-            this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO});            
+        this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO_ID});            
     };
     bringFileSelector(): boolean {
         this.renderer.invokeElementMethod(this._fileUpload.nativeElement, 'click');

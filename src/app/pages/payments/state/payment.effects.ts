@@ -43,13 +43,29 @@ export class PaymentEffects {
           console.log(action.payload);
         this.SettingsService.addCard(action.payload.data).subscribe((result) => {
             if (result.statusCode == 200) {
-              this.store.dispatch({ type: payment.actionTypes.GET_CARDS});                        
+              this.store.dispatch({ type: payment.actionTypes.GET_CARDS});     
+              let m = "card added successfully";
+              let t = 'success';
+              const opt = cloneDeep(this.options);
+              const inserted = this.toastrService[types[0]](m, t, opt);
+                if (inserted) {
+                  this.lastInserted.push(inserted.toastId);
+                }
+                return inserted;                   
             }
           }
           , (error) => {
             if (error.statusCode === 401 || error.statusCode === 403) {    
             }
             this._spinner.hide();   
+            let m = error.message;
+            let t = 'error';
+            const opt = cloneDeep(this.options);
+            const inserted = this.toastrService[types[1]](m, t, opt);
+              if (inserted) {
+                this.lastInserted.push(inserted.toastId);
+              }
+              return inserted;
           }
         );
       });
@@ -70,7 +86,15 @@ export class PaymentEffects {
             , (error) => {
               if (error.statusCode === 401 || error.statusCode === 403) {
               }
-              this._spinner.hide();                                        
+              this._spinner.hide();       
+              let m = error.message;
+              let t = 'error';
+              const opt = cloneDeep(this.options);
+              const inserted = this.toastrService[types[1]](m, t, opt);
+                if (inserted) {
+                  this.lastInserted.push(inserted.toastId);
+                }
+                return inserted;                                 
             }
           );
         });
@@ -97,9 +121,16 @@ export class PaymentEffects {
               }
               , (error) => {
                 if (error.statusCode === 401 || error.statusCode === 403) {
-                  console.log("error");
                 }
                 this._spinner.hide();   
+                let m = error.message;
+                let t = 'error';
+                const opt = cloneDeep(this.options);
+                const inserted = this.toastrService[types[1]](m, t, opt);
+                  if (inserted) {
+                    this.lastInserted.push(inserted.toastId);
+                  }
+                  return inserted;
               }
             );
           }
@@ -109,7 +140,7 @@ export class PaymentEffects {
                 this.router.navigate(['/pages/subscriptions']);                                   
                 console.log("paln success");
                 localStorage.removeItem('pay');
-                let m = 'paln $'+result.data.amount+' successfully';
+                let m = 'plan opted successfully';
                 let t = 'Success';
                 const opt = cloneDeep(this.options);
                 const inserted = this.toastrService[types[0]](m, t, opt);
@@ -128,7 +159,7 @@ export class PaymentEffects {
               let m = error.message;
               let t = 'error';
               const opt = cloneDeep(this.options);
-              const inserted = this.toastrService[types[0]](m, t, opt);
+              const inserted = this.toastrService[types[1]](m, t, opt);
                 if (inserted) {
                   this.lastInserted.push(inserted.toastId);
                 }
@@ -145,14 +176,29 @@ export class PaymentEffects {
               this.DonationsService.deleteCard(action.payload).subscribe((result) => {
                   if (result.statusCode == 200) {
                     console.log("deleleted");
-                    this.store.dispatch({ type: payment.actionTypes.GET_CARDS});                    
+                    this.store.dispatch({ type: payment.actionTypes.GET_CARDS});   
+                    let m = 'card deleted successfully';
+                    let t = 'success';
+                    const opt = cloneDeep(this.options);
+                    const inserted = this.toastrService[types[0]](m, t, opt);
+                      if (inserted) {
+                        this.lastInserted.push(inserted.toastId);
+                      }
+                      return inserted;                 
                   }
                 }
                 , (error) => {
                   if (error.statusCode === 401 || error.statusCode === 403) {
-                    console.log("error");
                   }
-                  this._spinner.hide();   
+                  this._spinner.hide();  
+                  let m = error.message;
+                  let t = 'error';
+                  const opt = cloneDeep(this.options);
+                  const inserted = this.toastrService[types[1]](m, t, opt);
+                    if (inserted) {
+                      this.lastInserted.push(inserted.toastId);
+                    }
+                    return inserted; 
                 }
               );
             });
@@ -163,14 +209,29 @@ export class PaymentEffects {
                 this.DonationsService.setAsDefault(action.payload).subscribe((result) => {
                     if (result.statusCode == 200) {
                       console.log("set as default");
-                      this.store.dispatch({ type: payment.actionTypes.GET_CARDS});                    
+                      this.store.dispatch({ type: payment.actionTypes.GET_CARDS});    
+                      let m = "Card is set to default";
+                      let t = 'sucess';
+                      const opt = cloneDeep(this.options);
+                      const inserted = this.toastrService[types[0]](m, t, opt);
+                        if (inserted) {
+                          this.lastInserted.push(inserted.toastId);
+                        }
+                        return inserted;                
                     }
                   }
                   , (error) => {
                     if (error.statusCode === 401 || error.statusCode === 403) {
-                      console.log("error");
                     }
                     this._spinner.hide();   
+                    let m = error.message;
+                    let t = 'error';
+                    const opt = cloneDeep(this.options);
+                    const inserted = this.toastrService[types[1]](m, t, opt);
+                      if (inserted) {
+                        this.lastInserted.push(inserted.toastId);
+                      }
+                      return inserted;
                   }
                 );
               });

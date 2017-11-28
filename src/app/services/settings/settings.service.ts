@@ -160,6 +160,14 @@ export class SettingsService {
         this.utcOffset = false;        
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
       }
+      getProfileInfoId(payload) {
+        // let skip = (payload.currentPage - 1) * payload.limit;
+        let url = environment.APP.API_URL + environment.APP.GET_PROFILE_INFO_ID+"?userId="+payload;
+        this.authRequired = true;
+        this.utcOffset = false;
+        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+      }
+
 }
 
 

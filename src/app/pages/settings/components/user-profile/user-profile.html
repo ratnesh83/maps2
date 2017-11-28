@@ -94,11 +94,11 @@
                             </div> 
                             <div class="col-6 ">
                                 <md-card-subtitle>Category</md-card-subtitle>
-                                <md-card-title>Health Care</md-card-title>
+                                <md-card-title>{{profile.categoryId ? profile.categoryId.name : '--'}}</md-card-title>
                             </div>
                             <div class="col-12">
                                 <md-card-subtitle>Address</md-card-subtitle>
-                                <md-card-title>{{profile.locationDetails ? profile.locationDetails.addressLine1 : hello }}</md-card-title>
+                                <md-card-title>{{profile.locationDetails ? profile.locationDetails.addressLine1 : '--' }}</md-card-title>
                             </div>
                         </div>
                     </md-card>
