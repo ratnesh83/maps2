@@ -41,8 +41,8 @@ export class BaPageTop {
                         this.name = this.titleCase(res.userDetails.firstName);
                     }
                     this.profilePicture = res.userDetails.profilePicture ? res.userDetails.profilePicture.thumb ? res.userDetails.profilePicture.thumb : 'assets/img/user.png' : 'assets/img/user.png';
-                    if (res.userDetails.categoryId) {
-                        this.dataService.setCategoryId(res.userDetails.categoryId);
+                    if (res.userDetails.categoryId && res.userDetails.categoryId._id) {
+                        this.dataService.setCategoryId(res.userDetails.categoryId._id);
                     }
                 }
             });
