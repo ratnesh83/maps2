@@ -23,6 +23,7 @@ export class BaPageTop {
     public profilePicture;
     public homeUrl;
     public profileUrl;
+    public showMyRequestLink: boolean = false;
 
     constructor(private _state: GlobalState,
         private store: Store<any>,
@@ -54,6 +55,7 @@ export class BaPageTop {
             this.user = this.jwtHelper.decodeToken(token);
             this.homeUrl = this.user ? this.user.userType == 'USER' ? '/pages/jobs/alljobs' : '/pages/labors/alllabors' : '/pages';
             this.profileUrl = this.user ? this.user.userType == 'USER' ? '/pages/settings' : '/pages/settings' : '/pages/settings';
+            this.showMyRequestLink = this.user ? this.user.userType == 'EMPLOYER' ? false : true : true;
             this.store.dispatch({
                 type: auth.actionTypes.AUTH_GET_USER_DETAILS_BY_ID,
                 payload: {
