@@ -29,7 +29,7 @@
                         <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{employer.employerId ? employer.employerId.fullName ? employer.employerId.fullName : employer.employerId.lastName
                             ? (employer.employerId.firstName + ' ' + employer.employerId.lastName) : employer.employerId.firstName
                             : ''}}</md-card-title>
-                        <md-card-subtitle style="font-weight: 500">{{ (employer.distance / 1609.34).toFixed(1) + ' mile away' }}</md-card-subtitle>
+                        <!-- <md-card-subtitle style="font-weight: 500">{{ (employer.distance / 1609.34).toFixed(1) + ' mile away' }}</md-card-subtitle> -->
                         <div class="employers-header-view">
                             <div>
                                 <i *ngIf="!employer?.labourId?.isPhoneNumberHidden && !employer.showPhone" (click)="showPhoneInfo(i)" class="fa fa-phone-square"></i>
