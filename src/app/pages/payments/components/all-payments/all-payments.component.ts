@@ -4,6 +4,8 @@ import { BaThemeSpinner } from '../../../../theme/services';
 import { Store } from '@ngrx/store';
 import { FormGroup, AbstractControl, FormBuilder, Validators ,FormControl} from '@angular/forms';
 import { ToastrService , ToastrConfig } from 'ngx-toastr';
+import { cloneDeep, random } from 'lodash';
+
 const types = ['success', 'error', 'info', 'warning'];
 import { EmailValidator} from '../../../../theme/validators';
 import { NgbModal, NgbActiveModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
@@ -81,6 +83,8 @@ export class AllPayments implements OnDestroy {
             .subscribe((res: any) => {
                console.log(res);
                this.cards = res.cardDetails;
+               if(this.cards){
+               this.count = this.cards.length;}
                this.defaultCard = res.defaultCard;
             });
             this.store.dispatch({ type: payment.actionTypes.GET_CARDS});  
@@ -105,7 +109,7 @@ export class AllPayments implements OnDestroy {
 
     onSubmit(value){
         this.submitted = true;
-       if(this.form.valid){
+       if(this.form.valid && (this.count < 4)){
         this._spinner.show();
         let expiryMonth = value.card_expire_date.split('-');
         let expiryYear = expiryMonth[1];
@@ -137,7 +141,20 @@ export class AllPayments implements OnDestroy {
                   }
                 });
             });
-          }}
+          }
+          else{
+              if((this.count >= 4) && this.form.valid){
+                let m = "Can not add more than 4 cards";
+                let t = 'error';
+                const opt = cloneDeep(this.options);
+                const inserted = this.toastrService[types[0]](m, t, opt);
+                  if (inserted) {
+                    this.lastInserted.push(inserted.toastId);
+                  }
+                  return inserted;
+              }
+          }
+        }
           openModalNew(value,isDefault){
               if(isDefault == true){
                 this.warningModel = this.modalService.open(WarningModal, { size: 'sm' });             

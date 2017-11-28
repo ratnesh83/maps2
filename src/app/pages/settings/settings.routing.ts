@@ -6,6 +6,7 @@ import { Settings } from './settings.component';
 import { UserProfile } from './components/user-profile/user-profile.component';
 import { UserProfileEdit } from './components/user-profile-edit/user-profile-edit.component';
 import { EmployeeProfileEdit } from './components/employee-profile-edit/employee-profile-edit.component';
+import { AvailabilityCalendar } from './components/availability-calendar/availability-calendar.component';
 
 const routes: Routes = [
     {
@@ -15,7 +16,8 @@ const routes: Routes = [
             { path: 'userprofile', component: UserProfile },
             { path: 'employerprofile', component: AllSettings },
             { path: 'userprofileedit', component: UserProfileEdit },
-            { path: 'employerprofileedit', component: EmployeeProfileEdit }
+            { path: 'employerprofileedit', component: EmployeeProfileEdit },
+            { path: 'calender', component: AvailabilityCalendar },            
         ]
     }
 ];
