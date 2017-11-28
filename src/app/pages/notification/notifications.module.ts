@@ -10,7 +10,7 @@ import { PopNotification } from './components/pop/pop-notification.component';
 import { AllNotifications } from './components/all-notifications/all-notifications.component';
 import { Notifications } from './notifications.component';
 import { NgaModule } from '../../theme/nga.module';
-import { MdCardModule } from '@angular/material';
+import { MdCardModule, MdPaginatorModule, MdTooltipModule } from '@angular/material';
 
 @NgModule({
     declarations: [
@@ -21,6 +21,8 @@ import { MdCardModule } from '@angular/material';
         CommonModule,
         FormsModule,
         MdCardModule,
+        MdTooltipModule,
+        MdPaginatorModule,
         ReactiveFormsModule,
         NgxPaginationModule,
         routing,

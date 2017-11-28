@@ -1,7 +1,8 @@
 
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { MdPaginator } from '@angular/material';
 import { DataService } from '../../../../services/data-service/data.service';
 import * as notification from '../../state/notification.actions';
 import 'style-loader!./all-notifications.scss';
@@ -12,12 +13,17 @@ import 'style-loader!./all-notifications.scss';
 })
 export class AllNotifications {
 
+    @ViewChild('notificationsPaginator') private _paginator: MdPaginator;
     public notifications;
     public page = 1;
     public limit = 100;
+    public pageIndex = 0;
     public count: number;
     public activeNotification;
     public unreadNotificationCount;
+    public length;
+    public pageSize = 10;
+    public pageSizeOptions = [5, 10, 25, 100, 500];
 
     constructor(private store: Store<any>,
         private router: Router,
@@ -27,10 +33,12 @@ export class AllNotifications {
             .select('notification')
             .subscribe((res: any) => {
                 this.notifications = res.notifications;
-                this.count = res.notificationCount;
+                this.count = res.count;
                 this.activeNotification = (res.activeNotification) ? res.activeNotification : null;
                 this.unreadNotificationCount = res.unreadNotificationCount;
-                //console.log(this.notifications);
+                this.length = this.count;
+                this.limit = this.pageSize;
+                this.pageIndex = res.currentPage - 1;
             });
 
         // this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
@@ -123,6 +131,33 @@ export class AllNotifications {
         } else {
             return false;
         }
+    }
+
+    pageChange(page) {
+        this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.pageSize } });
+        this.pageSize = page.pageSize;
+    }
+
+    goToLastPage(index) {
+        this._paginator.pageIndex = Math.ceil(this.length / this.pageSize) - 1;
+        let page = {
+            pageIndex: Math.ceil(this.length / this.pageSize) - 1,
+            pageSize: this.pageSize,
+            length: this.length
+        };
+        this.pageChange(page);
+        this._paginator._changePageSize(this.pageSize);
+    }
+
+    goToFirstPage(index) {
+        this._paginator.pageIndex = 0;
+        let page = {
+            pageIndex: 0,
+            pageSize: this.pageSize,
+            length: this.length
+        };
+        this.pageChange(page);
+        this._paginator._changePageSize(this.pageSize);
     }
 
 }

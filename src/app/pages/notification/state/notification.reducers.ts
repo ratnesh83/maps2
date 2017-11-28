@@ -5,7 +5,7 @@ const initialState: any = {
     notifications: null,
     count: 0,
     currentPage: 0,
-    limit: 0,
+    limit: 10,
     activeNotification: null,
     unreadNotificationCount: 0
 };

@@ -98,7 +98,6 @@ export class AllRequests implements OnInit {
         });
     }
 
-
     showRequestDetail(id) {
         this.dataService.setData('requestId', id);
         this.router.navigate(['pages/requests/requestdetails']);
