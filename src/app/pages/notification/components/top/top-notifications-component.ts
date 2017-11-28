@@ -300,6 +300,7 @@ export class TopNotifications {
         toasterConfig.enableHtml = true;
         toasterConfig.toastClass = 'toast toast-custom';
         toasterConfig.timeOut = 10000;
+        toasterConfig.extendedTimeOut = 5000;
         let toast = this.toastrService.info(data, null, toasterConfig);
         if (toast) {
             this.toastId = toast.toastId;
