@@ -561,6 +561,9 @@ export class AuthEffects {
                     localStorage.removeItem('jobId');
                     localStorage.removeItem('userId');
                     localStorage.removeItem('requestId');
+                    localStorage.removeItem('pay');
+                    localStorage.removeItem('payamount');
+                    localStorage.removeItem('amount');
                     this.dataService.removeUserRegisterationId();
                     this.dataService.removeUserRegisterationAccessToken();
                     this.dataService.removeCategoryId();
@@ -575,6 +578,9 @@ export class AuthEffects {
                     localStorage.removeItem('jobId');
                     localStorage.removeItem('userId');
                     localStorage.removeItem('requestId');
+                    localStorage.removeItem('pay');
+                    localStorage.removeItem('payamount');
+                    localStorage.removeItem('amount');
                     this.dataService.removeUserRegisterationId();
                     this.dataService.removeUserRegisterationAccessToken();
                     this.dataService.removeCategoryId();
