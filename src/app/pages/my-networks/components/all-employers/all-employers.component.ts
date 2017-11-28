@@ -55,16 +55,19 @@ export class AllEmployerList implements OnInit {
             .select('network')
             .subscribe((res: any) => {
                 if (res) {
-                    
-                    // this.employers = res.employers ? res.employers.employerList : null;
-                    this.employers = res.employers ? [] : null;
+
+                    this.employers = null;
+                    let employers = res.employers ? res.employers.employerList : null;
                     console.log(res);
-                    if (this.employers) {
-                        for (let i = 0; i < this.employers.length; i++) {
+                    if (employers) {
+                        this.employers = [];
+                        for (let i = 0; i < employers.length; i++) {
+                            this.employers.push(employers[i]);
                             this.employers[i].showPhone = false;
                             this.employers[i].showEmail = false;
                         }
                     }
+                    console.log(this.employers);
                 }
                 /* if (res && res.employers && res.employers.jobs) {
                     this.employers = res.employers.jobs;
