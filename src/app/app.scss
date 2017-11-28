@@ -50,19 +50,19 @@
 }
 #toast-container .toast.toast-info.toast-custom {
     background-image: none !important;
-    background-color: #ffffff;
-    color: #333333;
+    background-color: lighten(#026eff, 5%);
+    color: white;
     border-radius: 0px;
-    border: 1px solid #bbbbbb;
     .toast-close-button {
-        color: #333333;
+        font-weight: normal;
+        font-size: 16px;
     }
 }
+
 .toast-custom.toast.toast-info {
     padding-left: 15px !important;
     .toast-message {
         font-size: small;
-        font-weight: 500;
         .image-class {
             padding: 0px;
             display: flex;

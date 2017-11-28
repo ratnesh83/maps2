@@ -31,8 +31,8 @@ export class NotificationEffects {
                     //console.log("result of notification.....................",result)
                     let notificationType = (action.payload.type) ? action.payload.currentPage.type : 'all';
                     // creating state payload for next action
-                    if (result && result.data && result.data.length > 0) {
-                        result.data = result.data.map(function (record, index) {
+                    if (result && result.data && result.data.notification && result.data.notification.length > 0) {
+                        result.data.notification = result.data.notification.map(function (record, index) {
                             /* let currentTime = new Date(record.createdAt);
                             let currentOffset = currentTime.getTimezoneOffset();
                             let ISTOffset = currentOffset;
@@ -43,12 +43,18 @@ export class NotificationEffects {
                             return record;
                         });
                     }
+                    let notifications;
+                    let count = 0;
+                    if(result && result.data && result.data.notification) {
+                        notifications = result.data.notification;
+                        count = result.data.count;
+                    }
                     let payload = {
-                        notifications: result.data,
-                        count: result.data.length,
+                        notifications: notifications,
+                        count: count,
                         currentPage: action.payload.currentPage,
                         limit: action.payload.limit,
-                        unreadNotificationCount: result.data.length,
+                        unreadNotificationCount: count,
                         type: notificationType
                     };
                     this.notificationData = payload;
@@ -64,7 +70,6 @@ export class NotificationEffects {
                         });
 
                     }
-
                 }
             );
         });
