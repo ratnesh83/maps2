@@ -29,9 +29,9 @@ export class PaymentEffects {
         private store: Store<any>,
         private SettingsService: SettingsService,
         private SubscriptionService: SubscriptionService,         
-        private DonationsService:DonationsService,       
+        private DonationsService: DonationsService,       
         private router: Router,
-        private _spinner:BaThemeSpinner,
+        private _spinner: BaThemeSpinner,
         /* private paymentService: paymentService, */
         private toastrService: ToastrService
     ) { }
@@ -44,7 +44,7 @@ export class PaymentEffects {
         this.SettingsService.addCard(action.payload.data).subscribe((result) => {
             if (result.statusCode == 200) {
               this.store.dispatch({ type: payment.actionTypes.GET_CARDS});     
-              let m = "card added successfully";
+              let m = 'card added successfully';
               let t = 'success';
               const opt = cloneDeep(this.options);
               const inserted = this.toastrService[types[0]](m, t, opt);
@@ -74,7 +74,7 @@ export class PaymentEffects {
       getCards$ = this.actions$
         .ofType('GET_CARDS')
         .do((action) => {    
-          console.log("pp");
+          console.log('pp');
           this.SettingsService.getCards(action.payload).subscribe((result) => {
               if (result.statusCode == 200) {
                 let payload = result.data;
@@ -107,7 +107,7 @@ export class PaymentEffects {
             this.DonationsService.donate(action.payload.data).subscribe((result) => {
                 if (result.statusCode == 201) {
                   this.router.navigate(['/pages/donations']);                                   
-                  console.log("donated");
+                  console.log('donated');
                   localStorage.removeItem('payamount');
                   let m = 'donated $'+result.data.amount+' successfully';
                   let t = 'Success';
@@ -138,7 +138,7 @@ export class PaymentEffects {
             this.SubscriptionService.buyPlan(action.payload.data).subscribe((result) => {
               if (result.statusCode == 200) {
                 this.router.navigate(['/pages/subscriptions']);                                   
-                console.log("paln success");
+                console.log('paln success');
                 localStorage.removeItem('pay');
                 let m = 'plan opted successfully';
                 let t = 'Success';
@@ -175,7 +175,7 @@ export class PaymentEffects {
                 console.log(action.payload);
               this.DonationsService.deleteCard(action.payload).subscribe((result) => {
                   if (result.statusCode == 200) {
-                    console.log("deleleted");
+                    console.log('deleleted');
                     this.store.dispatch({ type: payment.actionTypes.GET_CARDS});   
                     let m = 'card deleted successfully';
                     let t = 'success';
@@ -208,9 +208,9 @@ export class PaymentEffects {
               .do((action) => {
                 this.DonationsService.setAsDefault(action.payload).subscribe((result) => {
                     if (result.statusCode == 200) {
-                      console.log("set as default");
+                      console.log('set as default');
                       this.store.dispatch({ type: payment.actionTypes.GET_CARDS});    
-                      let m = "Card is set to default";
+                      let m = 'Card is set to default';
                       let t = 'sucess';
                       const opt = cloneDeep(this.options);
                       const inserted = this.toastrService[types[0]](m, t, opt);

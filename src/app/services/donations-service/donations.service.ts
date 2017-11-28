@@ -133,27 +133,27 @@ export class DonationsService {
         return this.apiService.postFileApi(url, payload, this.authRequired, this.utcOffset);
     }
     donate(payload){
-        console.log("service");
+        console.log('service');
         let url = environment.APP.API_URL + environment.APP.DONATE;
         this.authRequired = true;
         this.utcOffset = false;        
         return this.apiService.postFileApi(url,payload,this.authRequired, this.utcOffset);
     }
     deleteCard(payload){
-        let url = environment.APP.API_URL + environment.APP.DELETE_CARD+"/"+payload.card;
+        let url = environment.APP.API_URL + environment.APP.DELETE_CARD+'/'+payload.card;
         this.authRequired = true;
         this.utcOffset = false;
         return this.apiService.deleteApiWithPath(url, this.authRequired, this.utcOffset);
     }
     setAsDefault(payload){
         console.log(payload);
-        let url = environment.APP.API_URL + environment.APP.SET_AS_DEFAULT+"/"+payload.card;
+        let url = environment.APP.API_URL + environment.APP.SET_AS_DEFAULT+'/'+payload.card;
         this.authRequired = true;
         this.utcOffset = false;
         return this.apiService.putApiWithPath(url,{}, this.authRequired, this.utcOffset);
     }
     getDonations(payload){
-        let url = environment.APP.API_URL + environment.APP.GET_DONATIONS+"?limit=10&skip=0";
+        let url = environment.APP.API_URL + environment.APP.GET_DONATIONS+'?limit=10&skip=0';
         this.authRequired = true;
         this.utcOffset = false;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);

@@ -228,11 +228,10 @@ export class SubscriptionEffects {
         getPlan$ = this.actions$
           .ofType('GET_PLAN')
           .do((action) => { 
-              console.log("1")         
             this.SubscriptionService.getPlans().subscribe((result) => {
                 console.log(result);
                 if (result.statusCode == 200) {
-                    console.log("2");
+                    console.log('2');
                   let payload = result;
                   this._spinner.hide();
                   this.store.dispatch(new subscription.GetPlanSuccessAction(payload));            

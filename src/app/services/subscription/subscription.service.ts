@@ -70,14 +70,14 @@ export class SubscriptionService {
         return this.apiService.postFileApi(url, payload, this.authRequired, this.utcOffset);
     }
     getPlans(){
-        console.log("3");
+        console.log('3');
         let url = environment.APP.API_URL + environment.APP.GET_PLAN;
         this.authRequired = true;
         this.utcOffset = false;        
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
     buyPlan(payload){
-        console.log("plan");
+        console.log('plan');
         let url = environment.APP.API_URL + environment.APP.BUY_PLAN;
         this.authRequired = true;
         this.utcOffset = false;        

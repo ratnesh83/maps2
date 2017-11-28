@@ -2,12 +2,12 @@ import { Component, NgZone, OnDestroy } from '@angular/core';
 import * as payment from '../../state/payment.actions';
 import { BaThemeSpinner } from '../../../../theme/services';
 import { Store } from '@ngrx/store';
-import { FormGroup, AbstractControl, FormBuilder, Validators ,FormControl} from '@angular/forms';
+import { FormGroup, AbstractControl, FormBuilder, Validators ,FormControl } from '@angular/forms';
 import { ToastrService , ToastrConfig } from 'ngx-toastr';
 import { cloneDeep, random } from 'lodash';
 
 const types = ['success', 'error', 'info', 'warning'];
-import { EmailValidator} from '../../../../theme/validators';
+import { EmailValidator } from '../../../../theme/validators';
 import { NgbModal, NgbActiveModal, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
 
 
@@ -17,7 +17,7 @@ import * as app from '../../../../state/app.actions';
 
 import 'style-loader!./all-payments.scss';
 import { PaymentValidator } from '../../../../theme/validators/payment.validator';
-import { deleteCardModal } from '../delete-card/delete-card.modal';
+import { DeleteCardModal } from '../delete-card/delete-card.modal';
 import { WarningModal } from '../warning/warning.modal';
 
 @Component({
@@ -64,7 +64,7 @@ export class AllPayments implements OnDestroy {
                 private _zone: NgZone,
                 private modalService: NgbModal,                
                 private toastrService: ToastrService,
-                private _spinner:BaThemeSpinner) {
+                private _spinner: BaThemeSpinner) {
 
         // this.form = this.fb.group({
         //     'cardNumber1': ['', Validators.compose([Validators.required, PaymentValidator.cardNumber])],
@@ -88,14 +88,14 @@ export class AllPayments implements OnDestroy {
                this.defaultCard = res.defaultCard;
             });
             this.store.dispatch({ type: payment.actionTypes.GET_CARDS});  
-            if(localStorage.getItem("payamount")){
+            if(localStorage.getItem('payamount')){
                 this.donatemode = true;
-                this.amount = localStorage.getItem("payamount");
+                this.amount = localStorage.getItem('payamount');
             }
             else{
-            if(localStorage.getItem("pay")){
+            if(localStorage.getItem('pay')){
                 this.planmode = true;
-                this.amount = localStorage.getItem("amount");
+                this.amount = localStorage.getItem('amount');
             }
         }
         }
@@ -131,8 +131,8 @@ export class AllPayments implements OnDestroy {
                         'setDefault': true
                       }                    
                     };
-                    console.log("hello");
-                    console.log(formValue)
+                    console.log('hello');
+                    console.log(formValue);
                       this.store.dispatch({type: payment.actionTypes.ADD_CARD, payload: formValue});
                   }
                   else { 
@@ -144,7 +144,7 @@ export class AllPayments implements OnDestroy {
           }
           else{
               if((this.count >= 4) && this.form.valid){
-                let m = "Can not add more than 4 cards";
+                let m = 'Can not add more than 4 cards';
                 let t = 'error';
                 const opt = cloneDeep(this.options);
                 const inserted = this.toastrService[types[0]](m, t, opt);

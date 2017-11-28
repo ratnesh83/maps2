@@ -525,7 +525,7 @@ export class SettingEffects {
   getProfileInfo$ = this.actions$
     .ofType('GET_PROFILE_INFO')
     .do((action) => {
-        console.log("2");
+        console.log('2');
         let token = localStorage.getItem('tokenSession');
         let user;
         if (token && !this.jwtHelper.isTokenExpired(token)) {
@@ -550,10 +550,9 @@ export class SettingEffects {
     getProfileInfoId$ = this.actions$
       .ofType('GET_PROFILE_INFO_ID')
       .do((action) => {
-          console.log("1");
-         let userId =  "5a1262033766a15de4c793c7";
+          console.log('1');
+         let userId =  '5a1262033766a15de4c793c7';
         this.SettingsService.getProfileInfoId(userId).subscribe((result) => {
-            console.log("pp")
             if (result.statusCode == 200) {
               let payload = result.data;
               this._spinner.hide();
@@ -575,7 +574,7 @@ export class SettingEffects {
             console.log(action.payload);
           this.SettingsService.updateProfileInfo(action.payload).subscribe((result) => {
               if (result.statusCode == 200) {
-                  console.log("success");
+                  console.log('success');
                   let token = localStorage.getItem('tokenSession');
                   if (token && !this.jwtHelper.isTokenExpired(token)) {
                       let user = this.jwtHelper.decodeToken(token);
@@ -592,7 +591,7 @@ export class SettingEffects {
             }
             , (error) => {
               if (error.statusCode === 401 || error.statusCode === 403) {
-                  console.log("error");
+                  console.log('error');
                 this.store.dispatch({
                   type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
                 });
