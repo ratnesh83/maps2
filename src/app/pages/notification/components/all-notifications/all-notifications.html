@@ -2,7 +2,7 @@
     <div class="container animated bounce">
         <div class="row">
             <div class="col-md-12 col-xs-12 col-sm-12">
-                <h3>Your Notifications</h3>
+                <h3 style="text-align: left">Your Notifications</h3>
                 <div *ngIf="notifications && notifications.length > 0" class="notification-section">
                     <md-card class="notification-card notification-card-element" *ngFor="let notification of notifications; let i = index" [ngClass]="{'muted' : !notification.isRead}">
                         <md-card-header (click)="read(notification)" class="notification-card-header">
@@ -35,5 +35,27 @@
                 </div>
             </div>
         </div>
+        <!-- <div class="panel-footer">
+            <div class="row">
+                <div *ngIf="count > 4" class="col-sm-12 rar-align page-select">
+                    <span class="first-last-ctrl">
+                        <span [ngClass]="{'enabled': pageIndex > 0}" class="page-controls" (click)="pageIndex > 0 && goToFirstPage($event)">
+                            <span mdTooltip="{{(pageIndex > 0) ? 'First page' : ''}}">
+                                <i [ngClass]="{'enabled': pageIndex > 0}" class="fa fa-fast-backward"></i>
+                            </span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </span>
+                        <span [ngClass]="{'enabled': pageIndex * pageSize + pageSize < length}" class="page-controls" (click)="pageIndex * pageSize + pageSize < length && goToLastPage($event)">
+                            <span mdTooltip="{{(pageIndex * pageSize + pageSize < length) ? 'Last page' : ''}}">
+                                <i [ngClass]="{'enabled': pageIndex * pageSize + pageSize < length}" class="fa fa-fast-forward"></i>
+                            </span>
+                        </span>
+                    </span>
+                    <md-paginator #notificationsPaginator class="mat-paginator-pg" [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+                        (page)="pageChange($event)">
+                    </md-paginator>
+                </div>
+            </div>
+        </div> -->
     </div>
 </div>

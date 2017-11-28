@@ -51,6 +51,7 @@ export class NotificationEffects {
                         unReadCount = result.data.unReadCount;
                         totalCount = result.data.totalCount;
                     }
+                    console.log(result.data);
                     let payload = {
                         notifications: notifications,
                         count: totalCount,

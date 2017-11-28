@@ -59,8 +59,8 @@ export class PostDetails implements OnInit {
     }
 
     viewProfile(id) {
-        // this.dataService.setData('userId', id);
-        // this.router.navigate(['/pages/settings']);
+        this.dataService.setData('userId', id);
+        this.router.navigate(['/pages/settings/userprofile']);
     }
 
     ngOnDestroy() {
