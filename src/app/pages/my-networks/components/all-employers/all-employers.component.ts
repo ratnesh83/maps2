@@ -55,7 +55,10 @@ export class AllEmployerList implements OnInit {
             .select('network')
             .subscribe((res: any) => {
                 if (res) {
-                    this.employers = res.labors;
+                    
+                    // this.employers = res.employers ? res.employers.employerList : null;
+                    this.employers = res.employers ? [] : null;
+                    console.log(res);
                     if (this.employers) {
                         for (let i = 0; i < this.employers.length; i++) {
                             this.employers[i].showPhone = false;
@@ -86,7 +89,7 @@ export class AllEmployerList implements OnInit {
                     };
                     this.data = data;
                     this.showLoading = false;
-                    this.getAllEmployerLists(data);
+                    // this.getAllEmployerLists(data);
                     this.geocoder(geocoder, latlng)
                         .then((result) => {
                             let results = result;
@@ -150,7 +153,7 @@ export class AllEmployerList implements OnInit {
     }
 
     ngOnInit() {
-        // this.getAllEmployerListsCallback();
+        this.getAllEmployerLists();
     }
 
     ngOnDestroy() {
@@ -159,12 +162,10 @@ export class AllEmployerList implements OnInit {
         }
     }
 
-    getAllEmployerLists(data) {
+    getAllEmployerLists() {
         this.showLoading = false;
         this.store.dispatch({
-            type: employer.actionTypes.APP_GET_LABORS_LIST, payload: {
-                data: data
-            }
+            type: employer.actionTypes.APP_GET_EMPLOYERS_LIST, payload: {}
         });
     }
 
