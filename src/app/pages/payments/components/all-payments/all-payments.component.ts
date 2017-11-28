@@ -161,7 +161,7 @@ export class AllPayments implements OnDestroy {
               }
               else{
             this.store.dispatch({ type: payment.actionTypes.CONFIRM_DELETE,payload:{card:value.cardId}});              
-            this.deleteCardActionModel = this.modalService.open(deleteCardModal, { size: 'sm' });
+            this.deleteCardActionModel = this.modalService.open(DeleteCardModal, { size: 'sm' });
           }}
           pay(){
               let formValue;
