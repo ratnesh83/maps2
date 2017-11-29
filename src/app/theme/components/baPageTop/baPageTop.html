@@ -16,7 +16,7 @@
                     <i aria-expanded="false" style="margin-left: 5px" class="fa fa-caret-down hidden-xs-down" style="margin-left: 10px; font-size: large; color: #026eff"></i>
                 </span>
 
-                <ul class="dropdown-menu top-dropdown-menu my-networks-div" aria-labelledby="my-networks">
+                <ul class="dropdown-menu top-dropdown-menu my-networks-div" [ngClass]="{'my-networks-div-emp': !showMyRequestLink}" aria-labelledby="my-networks">
                     <li (click)="goToLaborList()"  class="dropdown-item my-net-li">
                         <a class="signout my-net-link">
                             LABOR LIST
