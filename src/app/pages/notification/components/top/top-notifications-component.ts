@@ -221,11 +221,8 @@ export class TopNotifications {
                 break;
         }
 
-        if (!data.isRead) {
-            //console.log('READ_NOTIFICATION is FIRING .....');
-            //this.store.dispatch({ type: notification.actionTypes.READ_NOTIFICATION, payload: data });
-        } else {
-            //this.store.dispatch({ type: notification.actionTypes.SHOW_NOTIFICATION, payload: data });
+        if (data && !data.isRead && data._id) {
+            this.store.dispatch({ type: notification.actionTypes.READ_NOTIFICATION, payload: { _id: data._id} });
         }
 
     }
@@ -366,6 +363,9 @@ export class TopNotifications {
                         break;
                     default:
                         break;
+                }
+                if (notification && !notification.isRead && notification._id) {
+                    this.store.dispatch({ type: notification.actionTypes.READ_NOTIFICATION, payload: { _id: notification._id} });
                 }
             });
         }

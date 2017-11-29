@@ -65,7 +65,7 @@ export const environment = {
 
         GET_ALL_NOTIFICATION: '/api/v2/user/getNotifications',
         CLEAR_ALL_NOTIFICATION: '/notification/admin/clearNotification',
-        READ_NOTIFICATION: '/notification/admin/readNotification',
+        READ_NOTIFICATION: '/api/v2/user/updateNotification',
         SETTINGS_KEY_MESSAGE: '/multilingual/addResourceBundle',
 
         EDIT_WORKER_BY_ID_SUCCESS: '/admin/worker/updateProfile',

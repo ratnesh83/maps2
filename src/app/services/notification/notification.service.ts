@@ -29,11 +29,6 @@ export class NotificationService {
     }
 
     readNotification(data) {
-        if (data.markAllRead) {
-            data = { markAllAsRead: true };
-        } else {
-            data = { notificationID: [data._id], markAllAsRead: false };
-        }
         this.authRequired = true;
         this.utcOffset = false;
         let url = environment.APP.API_URL + environment.APP.READ_NOTIFICATION;

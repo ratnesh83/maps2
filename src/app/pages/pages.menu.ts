@@ -135,8 +135,7 @@ export class PagesMenuService {
                                 icon: 'icon-wrap fa fa-tasks',
                                 selected: false,
                                 expanded: false,
-                                order: 100,
-                                auth: ['USER']
+                                order: 100
                             }
                         },
                     },

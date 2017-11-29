@@ -96,7 +96,7 @@ export class NotificationEffects {
             this.notificationService.readNotification(action.payload).subscribe((result) => {
                 if (result.statusCode === 200) {
                     action.payload.isRead = true;
-                    this.store.dispatch({ type: notification.actionTypes.SHOW_NOTIFICATION, payload: action.payload });
+                    // this.store.dispatch({ type: notification.actionTypes.SHOW_NOTIFICATION, payload: action.payload });
                     this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: state.currentPage, limit: state.limit } });
                 }
             }

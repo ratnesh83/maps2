@@ -95,6 +95,10 @@ export class AllNotifications {
                 break;
         }
 
+        if (data && !data.isRead && data._id) {
+            this.store.dispatch({ type: notification.actionTypes.READ_NOTIFICATION, payload: { _id: data._id } });
+        }
+
         /* if (!data.isRead) {
             this.store.dispatch({ type: notification.actionTypes.READ_NOTIFICATION, payload: data });
             this.store.dispatch({ type: notification.actionTypes.SHOW_NOTIFICATION, payload: data });
