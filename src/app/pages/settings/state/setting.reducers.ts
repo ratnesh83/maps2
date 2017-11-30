@@ -107,6 +107,8 @@ export const setting: ActionReducer<any> = (state = initialState, action: Action
         case 'UPDATE_PROFILE_INFO':
             return Object.assign({}, state);
 
+        case 'APP_GET_AVAILABILITY_SUCCESS':
+            return Object.assign({}, state, action.payload);
 
         default:
             return state;

@@ -32,7 +32,9 @@ export const actionTypes = {
     GET_PROFILE_INFO_SUCCESS: 'GET_PROFILE_INFO_SUCCESS',
     GET_PROFILE_INFO_ID: 'GET_PROFILE_INFO_ID',
     GET_PROFILE_INFO_ID_SUCCESS: 'GET_PROFILE_INFO_ID_SUCCESS',
-    UPDATE_PROFILE_INFO: 'UPDATE_PROFILE_INFO'
+    UPDATE_PROFILE_INFO: 'UPDATE_PROFILE_INFO',
+    APP_GET_AVAILABILITY: 'APP_GET_AVAILABILITY',
+    APP_GET_AVAILABILITY_SUCCESS: 'APP_GET_AVAILABILITY_SUCCESS'
 };
 
 type credentials = {};
@@ -178,6 +180,15 @@ export class GetProfileInfoIdSuccessAction implements Action {
     type = actionTypes.GET_PROFILE_INFO_ID_SUCCESS;
     constructor(public payload: any) { }
 }
+export class GetAvailability implements Action {
+    type = actionTypes.APP_GET_AVAILABILITY;
+    constructor(public payload: any) { }
+}
+export class GetAvailabilitySuccess implements Action {
+    type = actionTypes.APP_GET_AVAILABILITY_SUCCESS;
+    constructor(public payload: any) { }
+}
+
 export type Actions
     = AppGetServiceRadii
     | AppGetServiceRadiiSuccess
