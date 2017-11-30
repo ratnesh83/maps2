@@ -46,12 +46,11 @@ export class NotificationEffects {
                     let notifications;
                     let unReadCount = 0;
                     let totalCount = 0;
-                    if(result && result.data && result.data.notification) {
+                    if (result && result.data && result.data.notification) {
                         notifications = result.data.notification;
                         unReadCount = result.data.unReadCount;
                         totalCount = result.data.totalCount;
                     }
-                    console.log(result.data);
                     let payload = {
                         notifications: notifications,
                         count: totalCount,
