@@ -82,37 +82,31 @@ export class TopNotifications {
         private msgCenter: BaMsgCenterService) {
 
         this.socketStoreAcceptRejectJob = this.msgCenter.getNotifications('Accept Reject Job').subscribe((message: any) => {
-            console.log(message);
             this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
             this.showNotificationToast(this.getTemplate(message.message, message.image), message);
         });
 
         this.socketStoreConfirmLabour = this.msgCenter.getNotifications('confirmLabour').subscribe((message: any) => {
-            console.log(message);
             this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
             this.showNotificationToast(this.getTemplate(message.message, message.image), message);
         });
 
         this.socketStoreCancelLabour = this.msgCenter.getNotifications('cancelLabour').subscribe((message: any) => {
-            console.log(message);
             this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
             this.showNotificationToast(this.getTemplate(message.message, message.image), message);
         });
 
         this.socketStoreNewJob = this.msgCenter.getNotifications('new Job').subscribe((message: any) => {
-            console.log(message);
             this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
             this.showNotificationToast(this.getTemplate(message.message, message.image), message);
         });
 
         this.socketStoreActiveToInProgress = this.msgCenter.getNotifications('activeToInProgress').subscribe((message: any) => {
-            console.log(message);
             this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
             this.showNotificationToast(this.getTemplate(message.message, message.image), message);
         });
 
         this.socketStoreInProgressToComplete = this.msgCenter.getNotifications('inProgressToComplete').subscribe((message: any) => {
-            console.log(message);
             this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
             this.showNotificationToast(this.getTemplate(message.message, message.image), message);
         });
@@ -158,7 +152,6 @@ export class TopNotifications {
     read(data) {
         //console.log("notification2...........................",this.notifications)
         //this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: {currentPage: this.page, limit: this.limit} });
-        console.log(data);
         let eventType = data.flag;
         let id;
         switch (eventType) {
@@ -302,7 +295,6 @@ export class TopNotifications {
         if (toast) {
             this.toastId = toast.toastId;
             toast.onTap.toPromise().then(() => {
-                console.log('clicked', notification);
                 let eventType = notification ? notification.eventType : null;
                 let id;
                 switch (eventType) {

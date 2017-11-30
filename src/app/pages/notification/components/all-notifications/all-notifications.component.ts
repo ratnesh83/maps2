@@ -52,7 +52,6 @@ export class AllNotifications {
     }
 
     read(data) {
-        console.log(data);
         let eventType = data.flag;
         let id;
         switch (eventType) {
