@@ -118,7 +118,7 @@
             </div>
         </md-card>
     </div>
-    <div class="notification">
+    <div *ngIf="usersNotifications" class="notification">
         <div class="notification-banner">
             Employer just joined
         </div>
@@ -135,7 +135,7 @@
             </div>
         </md-card>
     </div>
-    <div class="notification">
+    <div *ngIf="jobsNotifications" class="notification">
         <div class="notification-banner">
             New jobs
         </div>
