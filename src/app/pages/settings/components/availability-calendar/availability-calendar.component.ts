@@ -1,4 +1,4 @@
-import { Component, Input, SimpleChange } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as setting from '../../state/setting.actions';
 import * as app from '../../../../state/app.actions';
@@ -16,7 +16,6 @@ import 'style-loader!./availability-calendar.scss';
 })
 export class AvailabilityCalendar {
 
-    @Input() changes;
     public calendarConfiguration: any;
     private _calendar: Object;
     public settings;
@@ -72,10 +71,6 @@ export class AvailabilityCalendar {
         }
     }
 
-    ngOnChanges(changes: SimpleChange) {
-        console.log(changes);
-    }
-
     _onSelect(start, end) {
         if (this._calendar != null) {
             let eventData;
@@ -94,7 +89,6 @@ export class AvailabilityCalendar {
                 payload: formData
             });
             jQuery(this._calendar).fullCalendar('renderEvent', eventData, true);
-
             jQuery(this._calendar).fullCalendar('unselect');
         }
     }

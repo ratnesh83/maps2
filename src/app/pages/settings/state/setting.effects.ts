@@ -67,10 +67,10 @@ export class SettingEffects {
     updateCalendarInfo$ = this.actions$
         .ofType('UPDATE_CALENDER_INFO')
         .do((action) => {
-            console.log(action.payload);
+            this._spinner.show();
             this.SettingsService.updateProfileInfo(action.payload).subscribe((result) => {
+                this._spinner.hide();
                 if (result.statusCode == 200) {
-                    console.log('success');
                     let token = localStorage.getItem('tokenSession');
                     if (token && !this.jwtHelper.isTokenExpired(token)) {
                         let user = this.jwtHelper.decodeToken(token);
@@ -85,8 +85,8 @@ export class SettingEffects {
                 }
             }
                 , (error) => {
+                    this._spinner.hide();
                     if (error.statusCode === 401 || error.statusCode === 403) {
-                        console.log('error');
                         this.store.dispatch({
                             type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
                         });

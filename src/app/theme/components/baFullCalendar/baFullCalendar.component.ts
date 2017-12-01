@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input, Output, ElementRef, EventEmitter } from '@angular/core';
+import { Component, ViewChild, Input, Output, ElementRef, EventEmitter, SimpleChange } from '@angular/core';
 import 'fullcalendar/dist/fullcalendar.js';
 import 'style-loader!./baFullCalendar.scss';
 
@@ -8,8 +8,9 @@ import 'style-loader!./baFullCalendar.scss';
 })
 export class BaFullCalendar {
 
-    @Input() baFullCalendarConfiguration: Object;
+    @Input() baFullCalendarConfiguration: any;
     @Input() baFullCalendarClass: string;
+    @Input() baRenderEvent: any;
     @Output() onCalendarReady = new EventEmitter<any>();
 
     @ViewChild('baFullCalendar') public _selector: ElementRef;
@@ -18,4 +19,10 @@ export class BaFullCalendar {
         let calendar = jQuery(this._selector.nativeElement).fullCalendar(this.baFullCalendarConfiguration);
         this.onCalendarReady.emit(calendar);
     }
+
+    ngOnChanges(changes: SimpleChange) {
+        
+    }
+
+
 }
