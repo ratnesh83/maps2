@@ -1,6 +1,7 @@
 import { Component, ViewChild, ViewChildren, QueryList, ElementRef, Renderer } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 import * as setting from '../../state/setting.actions';
 import * as app from '../../../../state/app.actions';
 import { FormGroup, AbstractControl, FormBuilder, Validators, FormArray } from '@angular/forms';
@@ -46,7 +47,8 @@ export class EmployeeProfileEdit {
         private modalService: NgbModal,
         private fb: FormBuilder,
         private toastrService: ToastrService,
-        private renderer: Renderer
+        private renderer: Renderer,
+        private router: Router
     ) {
         this.settingStore = this.store
             .select('setting')
@@ -152,6 +154,10 @@ export class EmployeeProfileEdit {
             category: 'Health Care',
             description: 'Donec facilisis tortor ut augue lacinia, at viverra est semp Donec facilisis tortor ut augue lacinia, at viverra est semp.'
         };
+    }
+
+    openCalendar() {
+        this.router.navigate(['/pages/settings/calender']);
     }
 
     ngOnDestroy() {
