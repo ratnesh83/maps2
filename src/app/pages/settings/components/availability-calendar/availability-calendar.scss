@@ -5,3 +5,15 @@
 .fc-title {
     color: white;
 }
+.btn-submit.mat-raised-button.mat-primary {
+    background-color: #026eff;
+    border-color: #026eff;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    height: 50px;
+}
+.btn-submit.mat-raised-button.mat-primary[disabled] {
+    background-color: rgba(0, 0, 0, 0.15) !important;
+    border-color: transparent;
+}

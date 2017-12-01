@@ -1,7 +1,10 @@
-<div class="container">
-    <div class="container col-xs-12 animated bounce">
+<div class="container-fluid">
+    <div class="col-xs-12 animated bounce">
         <md-card>
             <ba-full-calendar *ngIf="calendarConfiguration" [baFullCalendarConfiguration]="calendarConfiguration" baFullCalendarClass="blurCalendar" (onCalendarReady)="onCalendarReady($event)"></ba-full-calendar>
         </md-card>
+        <md-card-actions class="text-center" style="margin-left: 0px; margin-right: 0px; margin-top: 10px">
+            <button (click)="goToProfile()" class="col-12 col-sm-6 btn-submit" md-raised-button color="primary">DONE</button>
+        </md-card-actions>
     </div>
 </div>

@@ -5,6 +5,8 @@ import * as app from '../../../../state/app.actions';
 import { CalendarService } from '../../../../services/calendar-service/calendar.service';
 import { FormGroup, AbstractControl, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { BaThemeSpinner } from '../../../../theme/services';
+import { JwtHelper } from 'angular2-jwt';
+import { Router } from '@angular/router';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import 'style-loader!./availability-calendar.scss';
 
@@ -20,11 +22,14 @@ export class AvailabilityCalendar {
     public settings;
     public form: FormGroup;
     public settingStore;
+    public user;
+    public jwtHelper: JwtHelper = new JwtHelper();
     public busyDates = [];
 
     constructor(
         private store: Store<any>,
         private fb: FormBuilder,
+        private router: Router,
         private toastrService: ToastrService,
         private _calendarService: CalendarService
     ) {
@@ -43,6 +48,9 @@ export class AvailabilityCalendar {
                     this.calendarConfiguration.select = (start, end) => {
                         this._onSelect(start, end);
                     };
+                    this.calendarConfiguration.selectAllow = (selectInfo) => {
+                        this._onSelectAllow(selectInfo);
+                    };
                     this.calendarConfiguration.eventClick = (jsEvent, view) => {
                         this._onEventClick(jsEvent, view);
                     };
@@ -58,6 +66,10 @@ export class AvailabilityCalendar {
         this.store.dispatch({
             type: setting.actionTypes.APP_GET_AVAILABILITY, payload: {}
         });
+        let token = localStorage.getItem('tokenSession');
+        if (token && !this.jwtHelper.isTokenExpired(token)) {
+            this.user = this.jwtHelper.decodeToken(token);
+        }
     }
 
     ngOnChanges(changes: SimpleChange) {
@@ -108,6 +120,13 @@ export class AvailabilityCalendar {
         }
     }
 
+    _onSelectAllow(selectInfo) {
+        let end = new Date(new Date(selectInfo.end).setTime(new Date(selectInfo.end).getTime() - (24 * 60 * 60 * 1000)));
+        if (this.checkUniqueFromArray(this.busyDates, this.getLocalToUtcTime(end, end.getTimezoneOffset()))) {
+            this.busyDates.push(this.getLocalToUtcTime(end, end.getTimezoneOffset()));
+        }
+    }
+
     getLocalToUtcTime(date, offset) {
         let localDate = new Date();
         let timezoneOffset = new Date().getTimezoneOffset();
@@ -150,6 +169,18 @@ export class AvailabilityCalendar {
     ngOnDestroy() {
         if (this.settingStore) {
             this.settingStore.unsubscribe();
+        }
+    }
+
+    goToProfile() {
+        let token = localStorage.getItem('tokenSession');
+        if (token && !this.jwtHelper.isTokenExpired(token)) {
+            this.user = this.jwtHelper.decodeToken(token);
+            if (this.user.userType == 'EMPLOYER') {
+                this.router.navigate(['/pages/settings/employerprofileedit']);
+            } else if (this.user.userType == 'USER') {
+                this.router.navigate(['/pages/settings/userprofileedit']);
+            }
         }
     }
 
