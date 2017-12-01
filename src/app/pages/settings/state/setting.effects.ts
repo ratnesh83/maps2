@@ -29,12 +29,12 @@ export class SettingEffects {
                 this._spinner.hide();
                 if (result.statusCode == 200 || result.message == 'Action complete.') {
                     let busyDateToSend = [];
-                    if(result && result.data) {
-                        for(let i = 0; i < result.data.length; i++) {
+                    if (result && result.data) {
+                        for (let i = 0; i < result.data.length; i++) {
                             let results = result.data[i];
-                            if(results && results.busyDates) {
+                            if (results && results.busyDates) {
                                 let busyDates = results.busyDates;
-                                for(let j = 0; j < busyDates.length; j++) {
+                                for (let j = 0; j < busyDates.length; j++) {
                                     busyDateToSend.push(busyDates[j]);
                                 }
                             }
@@ -42,7 +42,8 @@ export class SettingEffects {
                     }
                     let dates = this.CalendarService.getData(busyDateToSend);
                     let payload = {
-                        availabilities: dates
+                        availabilities: dates,
+                        busyDates: busyDateToSend
                     };
                     this.store.dispatch(new setting.GetAvailabilitySuccess(payload));
                 }
@@ -56,6 +57,38 @@ export class SettingEffects {
                     } else {
                         this.store.dispatch({
                             type: setting.actionTypes.SETTINGS_ERROR, payload: error
+                        });
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    updateCalendarInfo$ = this.actions$
+        .ofType('UPDATE_CALENDER_INFO')
+        .do((action) => {
+            console.log(action.payload);
+            this.SettingsService.updateProfileInfo(action.payload).subscribe((result) => {
+                if (result.statusCode == 200) {
+                    console.log('success');
+                    let token = localStorage.getItem('tokenSession');
+                    if (token && !this.jwtHelper.isTokenExpired(token)) {
+                        let user = this.jwtHelper.decodeToken(token);
+                        this.store.dispatch({
+                            type: auth.actionTypes.AUTH_GET_USER_DETAILS_BY_ID,
+                            payload: {
+                                userId: user._id
+                            }
+                        });
+                    }
+                    this.store.dispatch({ type: setting.actionTypes.APP_GET_AVAILABILITY, payload: { } });
+                }
+            }
+                , (error) => {
+                    if (error.statusCode === 401 || error.statusCode === 403) {
+                        console.log('error');
+                        this.store.dispatch({
+                            type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
                         });
                     }
                 }

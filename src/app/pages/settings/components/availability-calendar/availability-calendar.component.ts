@@ -32,10 +32,14 @@ export class AvailabilityCalendar {
         this.settingStore = this.store
             .select('setting')
             .subscribe((res: any) => {
+                if (res && res.busyDates) {
+                    this.busyDates = [];
+                    for (let i = 0; i < res.busyDates.length; i++) {
+                        this.busyDates.push(this.getLocalToUtcTime(new Date(res.busyDates[i]), new Date(res.busyDates[i]).getTimezoneOffset));
+                    }
+                }
                 if (res && res.availabilities) {
-                    console.log(res.availabilities);
                     this.calendarConfiguration = res.availabilities;
-                    
                     this.calendarConfiguration.select = (start, end) => {
                         this._onSelect(start, end);
                     };
@@ -61,38 +65,46 @@ export class AvailabilityCalendar {
     }
 
     _onSelect(start, end) {
-        console.log(this.getLocalToUtcTime(start._d, start._d.getTimezoneOffset()));
         if (this._calendar != null) {
-            let title = prompt('Event Title:');
             let eventData;
-            if (title) {
-                eventData = {
-                    title: title,
-                    start: start,
-                    end: end
-                };
-                let formData = new FormData();
-                formData.append('busyDates', JSON.stringify([this.getLocalToUtcTime(start._d, start._d.getTimezoneOffset())]));
-                this.store.dispatch({
-                    type: setting.actionTypes.UPDATE_PROFILE_INFO, 
-                    payload: formData
-                });
-                jQuery(this._calendar).fullCalendar('renderEvent', eventData, true);
+            eventData = {
+                title: 'Scheduled',
+                start: start,
+                end: end
+            };
+            let formData = new FormData();
+            if (this.checkUniqueFromArray(this.busyDates, this.getLocalToUtcTime(start._d, start._d.getTimezoneOffset()))) {
+                this.busyDates.push(this.getLocalToUtcTime(start._d, start._d.getTimezoneOffset()));
             }
+            formData.append('busyDates', JSON.stringify(this.busyDates));
+            this.store.dispatch({
+                type: setting.actionTypes.UPDATE_CALENDER_INFO,
+                payload: formData
+            });
+            jQuery(this._calendar).fullCalendar('renderEvent', eventData, true);
+
             jQuery(this._calendar).fullCalendar('unselect');
         }
     }
 
     _onEventClick(jsEvent, view) {
-        console.log(jsEvent, view);
+        let start = jsEvent.start;
+        let dateToRemove = this.getLocalToUtcTime(start._d, start._d.getTimezoneOffset());
+        for (let i = 0; i < this.busyDates.length; i++) {
+            if (this.busyDates[i].toString().indexOf(dateToRemove.toString()) != -1) {
+                this.busyDates.splice(i, 1);
+            }
+        }
         if (this._calendar != null) {
-            let title = prompt('Event Title:');
-            let eventData;
             if (jsEvent && jsEvent._id) {
-
+                let formData = new FormData();
+                formData.append('busyDates', JSON.stringify(this.busyDates));
+                this.store.dispatch({
+                    type: setting.actionTypes.UPDATE_CALENDER_INFO,
+                    payload: formData
+                });
                 jQuery(this._calendar).fullCalendar('removeEvents', jsEvent._id);
             }
-            
         }
     }
 
@@ -117,13 +129,22 @@ export class AvailabilityCalendar {
         let year = localDate.getFullYear().toString();
         let month = (localDate.getMonth() + 1).toString();
         let day = localDate.getDate().toString();
-        if(month.length == 1) {
+        if (month.length == 1) {
             month = '0' + month;
         }
-        if(day.length == 1) {
+        if (day.length == 1) {
             day = '0' + day;
         }
         return (year + '-' + month + '-' + day);
+    }
+
+    checkUniqueFromArray(datesArray: any[], date): boolean {
+        for (let i = 0; i < datesArray.length; i++) {
+            if (datesArray[i].toString().indexOf(date.toString()) != -1) {
+                return false;
+            }
+        }
+        return true;
     }
 
     ngOnDestroy() {
