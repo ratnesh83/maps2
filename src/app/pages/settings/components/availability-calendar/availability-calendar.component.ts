@@ -14,6 +14,7 @@ import 'style-loader!./availability-calendar.scss';
     selector: 'availability-calendar',
     templateUrl: './availability-calendar.html',
 })
+
 export class AvailabilityCalendar {
 
     public calendarConfiguration: any;
@@ -53,6 +54,8 @@ export class AvailabilityCalendar {
                     this.calendarConfiguration.eventClick = (jsEvent, view) => {
                         this._onEventClick(jsEvent, view);
                     };
+                    this.calendarConfiguration.selectOverlap = false;
+                    this.calendarConfiguration.selectHelper = true;
                 }
             });
     }
@@ -80,9 +83,6 @@ export class AvailabilityCalendar {
                 end: end
             };
             let formData = new FormData();
-            if (this.checkUniqueFromArray(this.busyDates, this.getLocalToUtcTime(start._d, start._d.getTimezoneOffset()))) {
-                this.busyDates.push(this.getLocalToUtcTime(start._d, start._d.getTimezoneOffset()));
-            }
             formData.append('busyDates', JSON.stringify(this.busyDates));
             this.store.dispatch({
                 type: setting.actionTypes.UPDATE_CALENDER_INFO,
