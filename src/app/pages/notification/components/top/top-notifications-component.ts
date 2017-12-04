@@ -332,7 +332,6 @@ export class TopNotifications {
     }
 
     showNotificationToast(data, notification) {
-        console.log(notification);
         if (this.toastId) {
             this.toastrService.remove(this.toastId);
         }
