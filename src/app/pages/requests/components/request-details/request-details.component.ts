@@ -31,6 +31,7 @@ export class RequestDetails implements OnInit {
     public storeData;
     public jwtHelper: JwtHelper = new JwtHelper();
     public user;
+    public canApply;
     public address;
     public latitude;
     public longitude;
@@ -60,6 +61,7 @@ export class RequestDetails implements OnInit {
             .subscribe((res: any) => {
                 if (res) {
                     this.request = res.request;
+                    this.canApply = res.canApply;
                 }
                 if (res) {
                     this.labours = res.labours;
