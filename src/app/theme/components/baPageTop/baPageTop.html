@@ -5,19 +5,19 @@
             <a class="al-logo clearfix">
                 <img style="outline: none; cursor: pointer" routerLink="{{ homeUrl }}" src="assets/img/logo-2.png">
 
-                <span routerLink="/pages/posts/allposts" class="hidden-md-down top-nav-links" style="margin-left: 41px">
+                <span routerLink="/pages/posts/allposts" class="hidden-md-down top-nav-links" style="margin-left: 41px; font-size: large; color: #026eff">
                     MY POSTS
                 </span>
-                <span *ngIf="showMyRequestLink" routerLink="/pages/requests/allrequests" class="hidden-md-down top-nav-links">
+                <span *ngIf="showMyRequestLink" style="font-size: large; color: #026eff" routerLink="/pages/requests/allrequests" class="hidden-md-down top-nav-links">
                     MY REQUESTS
                 </span>
-                <span id="my-networks" data-toggle="dropdown" aria-expanded="false" class="hidden-md-down top-nav-links" style="margin-left: 10px">
+                <span id="my-networks" data-toggle="dropdown" aria-expanded="false" class="hidden-md-down top-nav-links" style="margin-left: 10px; font-size: large; color: #026eff">
                     MY NETWORKS
-                    <i aria-expanded="false" style="margin-left: 5px" class="fa fa-caret-down hidden-xs-down"></i>
+                    <i aria-expanded="false" style="margin-left: 5px" class="fa fa-caret-down hidden-xs-down" style="margin-left: 10px; font-size: large; color: #026eff"></i>
                 </span>
 
-                <ul class="dropdown-menu top-dropdown-menu my-networks-div" aria-labelledby="my-networks">
-                    <li (click)="goToLaborList()" class="dropdown-item my-net-li">
+                <ul class="dropdown-menu top-dropdown-menu my-networks-div" [ngClass]="{'my-networks-div-emp': !showMyRequestLink}" aria-labelledby="my-networks">
+                    <li (click)="goToLaborList()"  class="dropdown-item my-net-li">
                         <a class="signout my-net-link">
                             LABOR LIST
                         </a>

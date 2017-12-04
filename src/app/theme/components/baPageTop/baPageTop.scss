@@ -65,7 +65,7 @@ a.al-logo:hover {
 }
 ul.my-networks-div {
     top: 66px;
-    left: 350px;
+    left: 450px;
     height: max-content;
     width: 180px;
     border: 1px solid transparent;
@@ -73,6 +73,9 @@ ul.my-networks-div {
         cursor: pointer;
         padding: 0.75rem 1.5rem;  
     }
+}
+.my-networks-div-emp {
+    left: 315px !important;
 }
 .my-net-link {
     color: #474747 !important;

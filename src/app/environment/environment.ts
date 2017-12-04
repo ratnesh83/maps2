@@ -23,7 +23,7 @@ export const environment = {
         GET_ALL_REQUESTS: '/api/v2/webJobs/myRequestsWeb',
         GET_POST: '/api/v2/webJobs/jobById',
         GET_LABORS: '/api/v2/webJobs/getLaboursWeb',
-        GET_EMPLOYERS: '/api/v2/webJobs/getLaboursWeb',
+        GET_EMPLOYERS: '/api/v2/jobs/employerList',
         GET_COMPANIES: '/api/v2/webJobs/getLaboursWeb',
         GET_FRIENDS: '/api/v2/webJobs/getLaboursWeb',
         GET_ALL_JOBS_POSTS: '/api/v2/webJobs/jobSearch',
@@ -38,6 +38,7 @@ export const environment = {
         HIRE_LABOR: '/api/v1/jobs/confirmLabour',
         REJECT_LABOR: '/api/v1/jobs/cancelLabour',
         CANCEL_JOB: '/api/v1/jobs/cancelJob/',
+        GET_ALL_AVAILABILITY: '/api/v1/user/getAvailability',
 
         GET_ALL_BOOKING: '/admin/getAllAvailabeBooking',
         GET_ALL_OUTGOING_BOOKING: '/admin/getOngoingBooking',
@@ -65,7 +66,8 @@ export const environment = {
 
         GET_ALL_NOTIFICATION: '/api/v2/user/getNotifications',
         CLEAR_ALL_NOTIFICATION: '/notification/admin/clearNotification',
-        READ_NOTIFICATION: '/notification/admin/readNotification',
+        READ_NOTIFICATION: '/api/v2/user/updateNotification',
+        ACCEPT_INVITATION: '/api/v2/invite/acceptInvite',
         SETTINGS_KEY_MESSAGE: '/multilingual/addResourceBundle',
 
         EDIT_WORKER_BY_ID_SUCCESS: '/admin/worker/updateProfile',

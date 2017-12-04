@@ -2,7 +2,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { MdPaginator } from '@angular/material';
+import {
+    MdDialog,
+    MdPaginator
+} from '@angular/material';
+import { JwtHelper } from 'angular2-jwt';
+import { ConfirmInvitationDialog } from '../../../confirm-invitation-dialog/confirm-invitation-dialog.component';
 import { DataService } from '../../../../services/data-service/data.service';
 import * as notification from '../../state/notification.actions';
 import 'style-loader!./all-notifications.scss';
@@ -27,6 +32,7 @@ export class AllNotifications {
 
     constructor(private store: Store<any>,
         private router: Router,
+        private dialog: MdDialog,
         private dataService: DataService) {
 
         this.store
@@ -51,11 +57,46 @@ export class AllNotifications {
         // this.store.dispatch({ type: booking.actionTypes.APP_GETALL_BOOKING, payload: {currentPage:this.page,limit:this.limit,type:"all"} })
     }
 
+    confirmInvitation(id) {
+        let user;
+        let jwtHelper: JwtHelper = new JwtHelper();
+        let token = localStorage.getItem('tokenSession');
+        if (token && !jwtHelper.isTokenExpired(token)) {
+            user = jwtHelper.decodeToken(token);
+        }
+        let dialogRef = this.dialog.open(ConfirmInvitationDialog);
+        dialogRef.componentInstance.id = id;
+    }
+
     read(data) {
-        console.log(data);
         let eventType = data.flag;
         let id;
+        let role;
         switch (eventType) {
+            case 'INVITATION':
+                id = data.inviteId;
+                this.confirmInvitation(id);
+                break;
+            case 'ACCEPT_INVITATION':
+                id = data.userAccepted;
+                role = data.invitedUserRole;
+                if (id) {
+                    this.dataService.setData('userId', id);
+                    if (role == 'EMPLOYER') {
+                        this.router.navigate(['/pages/settings/employerprofile']).then((result) => {
+                            if (!result && window && window.location) {
+                                window.location.reload();
+                            }
+                        });
+                    } else {
+                        this.router.navigate(['/pages/settings/userprofile']).then((result) => {
+                            if (!result && window && window.location) {
+                                window.location.reload();
+                            }
+                        });
+                    }
+                }
+                break;
             case 'ACCEPT_JOB':
                 id = data.payload ? data.payload.jobId : null;
                 if (id) {
@@ -74,14 +115,7 @@ export class AllNotifications {
                 id = data.payload ? data.payload.jobId : null;
                 if (id) {
                     this.dataService.setData('jobId', id);
-                    this.router.navigate(['pages/posts/postdetails']);
-                }
-                break;
-            case 'CONFIRM_LABOUR':
-                id = data.payload ? data.payload.jobId : null;
-                if (id) {
-                    this.dataService.setData('jobId', id);
-                    this.router.navigate(['pages/posts/postdetails']);
+                    this.router.navigate(['pages/jobs/jobdetails']);
                 }
                 break;
             case 'CANCEL_LABOUR':
@@ -95,11 +129,15 @@ export class AllNotifications {
                 id = data.payload ? data.payload.jobId : null;
                 if (id) {
                     this.dataService.setData('jobId', id);
-                    this.router.navigate(['pages/posts/postdetails']);
+                    this.router.navigate(['pages/jobs/jobdetails']);
                 }
                 break;
             default:
                 break;
+        }
+
+        if (data && !data.isRead && data._id) {
+            this.store.dispatch({ type: notification.actionTypes.READ_NOTIFICATION, payload: { _id: data._id } });
         }
 
         /* if (!data.isRead) {

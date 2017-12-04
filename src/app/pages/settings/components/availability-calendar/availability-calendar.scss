@@ -1,14 +1,20 @@
 @import "../../../../theme/sass/conf/conf";
-.mat-input-invalid .mat-input-placeholder {
-  color: $warning;
+.fc-content {
+    text-align: center;
+    padding: 5px 0px;
 }
-.mat-input-error {
-  color: $warning;
+.fc-title {
+    color: white;
 }
-.no-padding {
-  padding-left: 0px;
-  padding-right: 0px;
+.btn-submit.mat-raised-button.mat-primary {
+    background-color: #026eff;
+    border-color: #026eff;
+    border-radius: 3px;
+    font-weight: bold;
+    font-size: 0.95rem;
+    height: 50px;
 }
-.page-header{
-  margin-bottom:24px 
+.btn-submit.mat-raised-button.mat-primary[disabled] {
+    background-color: rgba(0, 0, 0, 0.15) !important;
+    border-color: transparent;
 }

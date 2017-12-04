@@ -113,6 +113,7 @@
             <div class="col-md-12 section-heading">
                 <div class="d-flex justify-content-center">
                     <button class="btn btn-lg btn-custom" *ngIf="!isEditMode" (click)="toogleEdit()">Edit Profile</button>
+                    <button class="btn btn-lg btn-custom" *ngIf="!isEditMode" (click)="openCalendar()">Edit Calendar</button>
                     <button class="btn btn-lg btn-custom" *ngIf="!isEditMode">Change Password</button>
                     <button class="btn btn-lg btn-custom" *ngIf="isEditMode" (click)="onSubmit()">Save Profile</button>
                 </div>

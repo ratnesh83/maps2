@@ -9,10 +9,10 @@ export const actionTypes = {
     PUSH_NOTIFICATION: 'PUSH_NOTIFICATION',
     PUSH_NOTIFICATION_SUCCESS: 'PUSH_NOTIFICATION_SUCCESS',
     SHOW_NOTIFICATION: 'SHOW_NOTIFICATION',
-    SHOW_NOTIFICATION_SUCCESS: 'SHOW_NOTIFICATION_SUCCESS'
+    SHOW_NOTIFICATION_SUCCESS: 'SHOW_NOTIFICATION_SUCCESS',
+    ACCEPT_INVITATION: 'ACCEPT_INVITATION',
+    ACCEPT_INVITATION_SUCCESS: 'ACCEPT_INVITATION_SUCCESS'
 };
-
-
 
 export class GetAllNotificationAction implements Action {
     type = actionTypes.GET_ALL_NOTIFICATION;
@@ -24,7 +24,6 @@ export class GetAllNotificationSuccessAction implements Action {
     constructor(public payload: any) { }
 }
 
-
 export class ReadNotificationAction implements Action {
     type = actionTypes.READ_NOTIFICATION;
     constructor(public payload: any) { }
@@ -34,8 +33,6 @@ export class ReadNotificationSuccessAction implements Action {
     type = actionTypes.READ_NOTIFICATION_SUCCESS;
     constructor(public payload: any) { }
 }
-
-
 
 export class PushNotificationAction implements Action {
     type = actionTypes.PUSH_NOTIFICATION;
@@ -56,6 +53,11 @@ export class ShowNotificationSuccessAction implements Action {
     constructor(public payload: any) { }
 }
 
+export class AcceptInvitationSuccessAction implements Action {
+    type = actionTypes.ACCEPT_INVITATION_SUCCESS;
+    constructor(public payload: any) { }
+}
+
 export type Actions
     = GetAllNotificationAction
     | GetAllNotificationSuccessAction
@@ -64,5 +66,6 @@ export type Actions
     | PushNotificationAction
     | PushNotificationSuccessAction
     | ShowNotificationAction
-    | ShowNotificationSuccessAction;
+    | ShowNotificationSuccessAction
+    | AcceptInvitationSuccessAction;
 

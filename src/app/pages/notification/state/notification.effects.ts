@@ -46,12 +46,11 @@ export class NotificationEffects {
                     let notifications;
                     let unReadCount = 0;
                     let totalCount = 0;
-                    if(result && result.data && result.data.notification) {
+                    if (result && result.data && result.data.notification) {
                         notifications = result.data.notification;
                         unReadCount = result.data.unReadCount;
                         totalCount = result.data.totalCount;
                     }
-                    console.log(result.data);
                     let payload = {
                         notifications: notifications,
                         count: totalCount,
@@ -66,12 +65,12 @@ export class NotificationEffects {
                 }
             }
                 , (error) => {
-
-                    if (error.statusCode === 401 || error.statusCode === 403) {
-                        this.store.dispatch({
-                            type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
-                        });
-
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        }
                     }
                 }
             );
@@ -96,18 +95,18 @@ export class NotificationEffects {
             this.notificationService.readNotification(action.payload).subscribe((result) => {
                 if (result.statusCode === 200) {
                     action.payload.isRead = true;
-                    this.store.dispatch({ type: notification.actionTypes.SHOW_NOTIFICATION, payload: action.payload });
+                    // this.store.dispatch({ type: notification.actionTypes.SHOW_NOTIFICATION, payload: action.payload });
                     this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: state.currentPage, limit: state.limit } });
                 }
             }
                 , (error) => {
-                    if (error.statusCode === 401 || error.statusCode === 403) {
-                        this.store.dispatch({
-                            type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
-                        });
-
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        }
                     }
-
                 }
             );
         });
@@ -141,17 +140,40 @@ export class NotificationEffects {
                 };
             }
                 , (error) => {
-
-                    if (error.statusCode === 401 || error.statusCode === 403) {
-                        this.store.dispatch({
-                            type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
-                        });
-
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        }
                     }
-
                 }
             );
 
+        });
+
+    @Effect({ dispatch: false })
+    confirmInvite: Observable<any> = this.actions$
+        .ofType('ACCEPT_INVITATION')
+        .withLatestFrom(this.store)
+        .do((storeState) => {
+            let action = storeState[0];
+            let state = storeState[1].notification;
+            this.notificationService.acceptInvitaion(action.payload).subscribe((result) => {
+                if (result.statusCode === 200) {
+                    this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: state.currentPage, limit: state.limit } });
+                }
+            }
+                , (error) => {
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        }
+                    }
+                }
+            );
         });
 
 }

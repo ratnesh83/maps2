@@ -54,6 +54,47 @@ export class MyNetworkEffects {
 
         });
 
+    @Effect({ dispatch: false })
+    getEmployerList$ = this.actions$
+        .ofType('APP_GET_EMPLOYERS_LIST')
+        .do((action) => {
+            this._spinner.show();
+            this.MyNetworkService.getAllEmployerList(action.payload).subscribe((result) => {
+                this._spinner.hide();
+                if (result.message == 'Action complete.' || result.statusCode == 200) {
+                    /* let payload = {
+                        jobs: result.data,
+                        currentPage: action.payload.currentPage,
+                        limit: action.payload.limit,
+                        count: result.data.count
+                    }; */
+                    let payload = result.data;
+                    this.store.dispatch(new network.AppGetEmployerSuccess(payload));
+                }
+            }
+                , (error) => {
+                    this._spinner.hide();
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        } else {
+                            this.toastrService.clear();
+                            this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                        }
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    getEmployerListSuccess: Observable<Action> = this.actions$
+        .ofType('APP_GET_EMPLOYERS_LIST_SUCCESS')
+        .do((action) => {
+
+        });
+
     constructor(
         private actions$: Actions,
         private store: Store<any>,

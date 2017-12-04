@@ -551,7 +551,7 @@ export class SettingEffects {
     getProfileInfoId$ = this.actions$
       .ofType('GET_PROFILE_INFO_ID')
       .do((action) => {
-         let userId =  localStorage.getItem('userId');
+         let userId =  '5a1262033766a15de4c793c7';
         this.SettingsService.getProfileInfoId(userId,action.payload).subscribe((result) => {
             if (result.statusCode == 200) {
               let payload = result.data;

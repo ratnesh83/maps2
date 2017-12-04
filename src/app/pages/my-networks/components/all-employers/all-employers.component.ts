@@ -55,13 +55,19 @@ export class AllEmployerList implements OnInit {
             .select('network')
             .subscribe((res: any) => {
                 if (res) {
-                    this.employers = res.labors;
-                    if (this.employers) {
-                        for (let i = 0; i < this.employers.length; i++) {
+
+                    this.employers = null;
+                    let employers = res.employers ? res.employers.employerList : null;
+                    console.log(res);
+                    if (employers) {
+                        this.employers = [];
+                        for (let i = 0; i < employers.length; i++) {
+                            this.employers.push(employers[i]);
                             this.employers[i].showPhone = false;
                             this.employers[i].showEmail = false;
                         }
                     }
+                    console.log(this.employers);
                 }
                 /* if (res && res.employers && res.employers.jobs) {
                     this.employers = res.employers.jobs;
@@ -86,7 +92,7 @@ export class AllEmployerList implements OnInit {
                     };
                     this.data = data;
                     this.showLoading = false;
-                    this.getAllEmployerLists(data);
+                    // this.getAllEmployerLists(data);
                     this.geocoder(geocoder, latlng)
                         .then((result) => {
                             let results = result;
@@ -150,7 +156,7 @@ export class AllEmployerList implements OnInit {
     }
 
     ngOnInit() {
-        // this.getAllEmployerListsCallback();
+        this.getAllEmployerLists();
     }
 
     ngOnDestroy() {
@@ -159,12 +165,10 @@ export class AllEmployerList implements OnInit {
         }
     }
 
-    getAllEmployerLists(data) {
+    getAllEmployerLists() {
         this.showLoading = false;
         this.store.dispatch({
-            type: employer.actionTypes.APP_GET_LABORS_LIST, payload: {
-                data: data
-            }
+            type: employer.actionTypes.APP_GET_EMPLOYERS_LIST, payload: {}
         });
     }
 

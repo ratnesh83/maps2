@@ -29,6 +29,7 @@ import { FeedbackService } from './services/feedback-service/feedback.service';
 import { HomeService } from './services/home-service/home.service';
 import { DonationsService } from './services/donations-service/donations.service';
 import { NotificationService } from './services/notification/notification.service';
+import { CalendarService } from './services/calendar-service/calendar.service';
 import { ApiService } from './services/api-service/api.service';
 import { SettingsService } from './services/settings/settings.service';
 import { SubscriptionService } from './services/subscription/subscription.service';
@@ -128,6 +129,7 @@ export type StoreType = {
         CommonService,
         DonationsService,
         HomeService,
+        CalendarService,
         ApiService,
         AuthGuard,
         AuthGuardPublic,

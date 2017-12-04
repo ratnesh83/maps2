@@ -1,39 +1,39 @@
 import { Component } from '@angular/core';
 import { MdDialog } from '@angular/material';
 import { Store } from '@ngrx/store';
-import * as post from '../../state/post.actions';
-import 'style-loader!./cancel-job-dialog.scss';
+import * as notification from '../notification/state/notification.actions';
+import 'style-loader!./confirm-invitation-dialog.scss';
 
 @Component({
-    selector: 'cancel-job-dialog',
+    selector: 'confirm-invitation-dialog',
     template: `
             <md-dialog-content style="box-shadow: none; background-color: initial; min-width: initial; margin: initial">
                 <div class="col-sm-12">
-                    Are you sure you want to cancel the job?
+                    Are you sure you want to accept the invitation?
                 </div>
             </md-dialog-content>
             <md-dialog-actions>
                 <div>
-                    <button md-button md-dialog-close style="background-color: #026eff; color: white" class="btn-success btn-submit-diag" (click)="cancelJob()">YES</button>
+                    <button md-button md-dialog-close style="background-color: #026eff; color: white" class="btn-success btn-submit-diag" (click)="acceptInvitation()">YES</button>
                     <button md-button style="background-color: #026eff; color: white" class="btn-submit-diag" [md-dialog-close]="true">NO</button>
                 </div>
             </md-dialog-actions>
     `
 })
 
-export class CancelJobDialog {
+export class ConfirmInvitationDialog {
 
-    public jobId;
+    public id;
 
     constructor(public dialog: MdDialog,
         private store: Store<any>) { }
 
-    cancelJob() {
+    acceptInvitation() {
         let data = {
-            jobId: this.jobId,
+            userId: this.id,
         };
         this.store.dispatch({
-            type: post.actionTypes.APP_CANCEL_POST, payload: data
+            type: notification.actionTypes.ACCEPT_INVITATION, payload: data
         });
     }
 

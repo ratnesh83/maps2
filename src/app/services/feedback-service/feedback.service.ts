@@ -23,6 +23,6 @@ export class FeedbackService {
         this.authRequired = true;
         this.utcOffset = false;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
-    };
+    }
     
 }

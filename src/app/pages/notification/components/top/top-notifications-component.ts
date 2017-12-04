@@ -4,9 +4,11 @@ import { AuthService } from '../../../../auth/service/auth-service/auth.service'
 import { NotificationService } from '../../../../services/notification-service';
 import { BaMsgCenterService } from '../../../../theme/components/baMsgCenter/baMsgCenter.service';
 import { DataService } from '../../../../services/data-service/data.service';
+import { MdDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { JwtHelper } from 'angular2-jwt';
+import { ConfirmInvitationDialog } from '../../../confirm-invitation-dialog/confirm-invitation-dialog.component';
 import * as notification from '../../state/notification.actions';
 import * as job from '../../../jobs/state/job.actions';
 import * as post from '../../../posts/state/post.actions';
@@ -50,7 +52,7 @@ import * as request from '../../../requests/state/request.actions';
                         </div>
                     </a>
                 </div>
-                <a style="font-weight: 500" routerLink="notification/all-notifications">See all</a>
+                <a style="font-weight: 500; color: #474747" routerLink="notification/all-notifications">See all</a>
                 </div>
             </li>
         </ul>
@@ -73,46 +75,53 @@ export class TopNotifications {
     public socketStoreNewJob;
     public socketStoreActiveToInProgress;
     public socketStoreInProgressToComplete;
+    public socketStoreInvitation;
+    public socketStoreAcceptInvitation;
 
     constructor(private authService: AuthService,
         private store: Store<any>,
         private toastrService: ToastrService,
         private router: Router,
         private dataService: DataService,
+        private dialog: MdDialog,
         private msgCenter: BaMsgCenterService) {
 
         this.socketStoreAcceptRejectJob = this.msgCenter.getNotifications('Accept Reject Job').subscribe((message: any) => {
-            console.log(message);
             this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
             this.showNotificationToast(this.getTemplate(message.message, message.image), message);
         });
 
         this.socketStoreConfirmLabour = this.msgCenter.getNotifications('confirmLabour').subscribe((message: any) => {
-            console.log(message);
             this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
             this.showNotificationToast(this.getTemplate(message.message, message.image), message);
         });
 
         this.socketStoreCancelLabour = this.msgCenter.getNotifications('cancelLabour').subscribe((message: any) => {
-            console.log(message);
             this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
             this.showNotificationToast(this.getTemplate(message.message, message.image), message);
         });
 
         this.socketStoreNewJob = this.msgCenter.getNotifications('new Job').subscribe((message: any) => {
-            console.log(message);
             this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
             this.showNotificationToast(this.getTemplate(message.message, message.image), message);
         });
 
         this.socketStoreActiveToInProgress = this.msgCenter.getNotifications('activeToInProgress').subscribe((message: any) => {
-            console.log(message);
             this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
             this.showNotificationToast(this.getTemplate(message.message, message.image), message);
         });
 
         this.socketStoreInProgressToComplete = this.msgCenter.getNotifications('inProgressToComplete').subscribe((message: any) => {
-            console.log(message);
+            this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
+            this.showNotificationToast(this.getTemplate(message.message, message.image), message);
+        });
+
+        this.socketStoreInvitation = this.msgCenter.getNotifications('invitation').subscribe((message: any) => {
+            this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
+            this.showNotificationToast(this.getTemplate(message.message, message.image), message);
+        });
+
+        this.socketStoreAcceptInvitation = this.msgCenter.getNotifications('acceptInvitation').subscribe((message: any) => {
             this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
             this.showNotificationToast(this.getTemplate(message.message, message.image), message);
         });
@@ -155,13 +164,48 @@ export class TopNotifications {
         }
     }
 
+    confirmInvitation(id) {
+        let user;
+        let jwtHelper: JwtHelper = new JwtHelper();
+        let token = localStorage.getItem('tokenSession');
+        if (token && !jwtHelper.isTokenExpired(token)) {
+            user = jwtHelper.decodeToken(token);
+        }
+        let dialogRef = this.dialog.open(ConfirmInvitationDialog);
+        dialogRef.componentInstance.id = id;
+    }
+
     read(data) {
-        //console.log("notification2...........................",this.notifications)
-        //this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: {currentPage: this.page, limit: this.limit} });
-        console.log(data);
+        // console.log("notification2...........................",this.notifications)
+        // this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: {currentPage: this.page, limit: this.limit} });
         let eventType = data.flag;
         let id;
+        let role;
         switch (eventType) {
+            case 'INVITATION':
+                id = data.inviteId;
+                this.confirmInvitation(id);
+                break;
+            case 'ACCEPT_INVITATION':
+                id = data.userAccepted;
+                role = data.invitedUserRole;
+                if (id) {
+                    this.dataService.setData('userId', id);
+                    if (role == 'EMPLOYER') {
+                        this.router.navigate(['/pages/settings/employerprofile']).then((result) => {
+                            if (!result && window && window.location) {
+                                window.location.reload();
+                            }
+                        });
+                    } else {
+                        this.router.navigate(['/pages/settings/userprofile']).then((result) => {
+                            if (!result && window && window.location) {
+                                window.location.reload();
+                            }
+                        });
+                    }
+                }
+                break;
             case 'ACCEPT_JOB':
                 id = data.payload ? data.payload.jobId : null;
                 if (id) {
@@ -188,9 +232,9 @@ export class TopNotifications {
                 id = data.payload ? data.payload.jobId : null;
                 if (id) {
                     this.dataService.setData('jobId', id);
-                    this.router.navigate(['pages/posts/postdetails']).then((result) => {
+                    this.router.navigate(['pages/jobs/jobdetails']).then((result) => {
                         if (!result) {
-                            this.getPostDetails();
+                            this.getJobDetails();
                         }
                     });
                 }
@@ -210,9 +254,9 @@ export class TopNotifications {
                 id = data.payload ? data.payload.jobId : null;
                 if (id) {
                     this.dataService.setData('jobId', id);
-                    this.router.navigate(['pages/posts/postdetails']).then((result) => {
+                    this.router.navigate(['pages/jobs/jobdetails']).then((result) => {
                         if (!result) {
-                            this.getPostDetails();
+                            this.getJobDetails();
                         }
                     });
                 }
@@ -221,11 +265,8 @@ export class TopNotifications {
                 break;
         }
 
-        if (!data.isRead) {
-            //console.log('READ_NOTIFICATION is FIRING .....');
-            //this.store.dispatch({ type: notification.actionTypes.READ_NOTIFICATION, payload: data });
-        } else {
-            //this.store.dispatch({ type: notification.actionTypes.SHOW_NOTIFICATION, payload: data });
+        if (data && !data.isRead && data._id) {
+            this.store.dispatch({ type: notification.actionTypes.READ_NOTIFICATION, payload: { _id: data._id } });
         }
 
     }
@@ -305,10 +346,33 @@ export class TopNotifications {
         if (toast) {
             this.toastId = toast.toastId;
             toast.onTap.toPromise().then(() => {
-                console.log('clicked', notification);
                 let eventType = notification ? notification.eventType : null;
                 let id;
                 switch (eventType) {
+                    case 'INVITATION':
+                        id = notification ? notification.eventID : null;
+                        this.confirmInvitation(id);
+                        break;
+                    case 'ACCEPT_INVITATION':
+                        id = notification ? notification.eventID : null;
+                        let type = notification.userType;
+                        if (id) {
+                            this.dataService.setData('userId', id);
+                            if (type == 'EMPLOYER') {
+                                this.router.navigate(['/pages/settings/employerprofile']).then((result) => {
+                                    if (!result && window && window.location) {
+                                        window.location.reload();
+                                    }
+                                });
+                            } else {
+                                this.router.navigate(['/pages/settings/userprofile']).then((result) => {
+                                    if (!result && window && window.location) {
+                                        window.location.reload();
+                                    }
+                                });
+                            }
+                        }
+                        break;
                     case 'ACCEPT_JOB':
                         id = notification ? notification.eventID : null;
                         if (id) {
@@ -335,9 +399,9 @@ export class TopNotifications {
                         id = notification ? notification.eventID : null;
                         if (id) {
                             this.dataService.setData('jobId', id);
-                            this.router.navigate(['pages/posts/postdetails']).then((result) => {
+                            this.router.navigate(['pages/jobs/jobdetails']).then((result) => {
                                 if (!result) {
-                                    this.getPostDetails();
+                                    this.getJobDetails();
                                 }
                             });
                         }
@@ -357,15 +421,18 @@ export class TopNotifications {
                         id = notification ? notification.eventID : null;
                         if (id) {
                             this.dataService.setData('jobId', id);
-                            this.router.navigate(['pages/posts/postdetails']).then((result) => {
+                            this.router.navigate(['pages/jobs/jobdetails']).then((result) => {
                                 if (!result) {
-                                    this.getPostDetails();
+                                    this.getJobDetails();
                                 }
                             });
                         }
                         break;
                     default:
                         break;
+                }
+                if (notification && !notification.isRead && notification._id) {
+                    this.store.dispatch({ type: notification.actionTypes.READ_NOTIFICATION, payload: { _id: notification._id } });
                 }
             });
         }
@@ -388,6 +455,12 @@ export class TopNotifications {
             this.socketStoreActiveToInProgress.unsubscribe();
         }
         if (this.socketStoreInProgressToComplete) {
+            this.socketStoreInProgressToComplete.unsubscribe();
+        }
+        if (this.socketStoreInvitation) {
+            this.socketStoreInProgressToComplete.unsubscribe();
+        }
+        if (this.socketStoreAcceptInvitation) {
             this.socketStoreInProgressToComplete.unsubscribe();
         }
         if (this.notificationStore) {

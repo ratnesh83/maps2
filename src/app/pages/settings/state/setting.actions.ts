@@ -36,7 +36,10 @@ export const actionTypes = {
     UPDATE_PROFILE_INFO: 'UPDATE_PROFILE_INFO',
     APP_GET_SUB_CATEGORIES: 'APP_GET_SUB_CATEGORIES',
     APP_GET_SUB_CATEGORIES_SUCCESS: 'APP_GET_SUB_CATEGORIES_SUCCESS',
-    SAVE_CAT: 'SAVE_CAT'
+    SAVE_CAT: 'SAVE_CAT',
+    APP_GET_AVAILABILITY: 'APP_GET_AVAILABILITY',
+    APP_GET_AVAILABILITY_SUCCESS: 'APP_GET_AVAILABILITY_SUCCESS',
+    UPDATE_CALENDER_INFO: 'UPDATE_CALENDER_INFO'
 };
 
 type credentials = {};
@@ -196,6 +199,15 @@ export class SaveCatAction implements Action {
     type = actionTypes.SAVE_CAT;
     constructor(public payload:any) { }
 }
+export class GetAvailability implements Action {
+    type = actionTypes.APP_GET_AVAILABILITY;
+    constructor(public payload: any) { }
+}
+export class GetAvailabilitySuccess implements Action {
+    type = actionTypes.APP_GET_AVAILABILITY_SUCCESS;
+    constructor(public payload: any) { }
+}
+
 export type Actions
     = AppGetServiceRadii
     | AppGetServiceRadiiSuccess

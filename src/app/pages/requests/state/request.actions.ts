@@ -14,8 +14,12 @@ export const actionTypes = {
     APP_POST_REQUEST_SUCCESS: 'APP_POST_REQUEST_SUCCESS',
     APP_CANCEL_JOB: 'APP_CANCEL_JOB',
     APP_CANCEL_JOB_SUCCESS: 'APP_CANCEL_JOB_SUCCESS',
+    APP_ACCEPT_JOB: 'APP_ACCEPT_JOB',
+    APP_ACCEPT_JOB_SUCCESS: 'APP_ACCEPT_JOB_SUCCESS',
     APP_POST_FEEDBACK: 'APP_POST_FEEDBACK',
-    APP_POST_FEEDBACK_SUCCESS: 'APP_POST_FEEDBACK_SUCCESS'
+    APP_POST_FEEDBACK_SUCCESS: 'APP_POST_FEEDBACK_SUCCESS',
+    APP_CHECK_APPLY: 'APP_CHECK_APPLY',
+    APP_CHECK_APPLY_SUCCESS: 'APP_CHECK_APPLY_SUCCESS'
 
 };
 
@@ -66,6 +70,16 @@ export class AppRequestJob implements Action {
     constructor(public payload: credentials) { }
 }
 
+export class AppAcceptJob implements Action {
+    type = actionTypes.APP_ACCEPT_JOB;
+    constructor(public payload: credentials) { }
+}
+
+export class AppAcceptJobSuccess implements Action {
+    type = actionTypes.APP_ACCEPT_JOB_SUCCESS;
+    constructor(public payload: credentials) { }
+}
+
 export class AppRequestJobSuccess implements Action {
     type = actionTypes.APP_POST_REQUEST_SUCCESS;
     constructor(public payload: credentials) { }
@@ -88,6 +102,11 @@ export class AppPostFeedback implements Action {
 
 export class AppPostFeedbackSuccess implements Action {
     type = actionTypes.APP_POST_FEEDBACK_SUCCESS;
+    constructor(public payload: credentials) { }
+}
+
+export class AppCheckApplySuccess implements Action {
+    type = actionTypes.APP_CHECK_APPLY_SUCCESS;
     constructor(public payload: credentials) { }
 }
 
