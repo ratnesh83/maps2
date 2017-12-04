@@ -65,12 +65,12 @@ export class NotificationEffects {
                 }
             }
                 , (error) => {
-
-                    if (error.statusCode === 401 || error.statusCode === 403) {
-                        this.store.dispatch({
-                            type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
-                        });
-
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        }
                     }
                 }
             );
@@ -100,13 +100,13 @@ export class NotificationEffects {
                 }
             }
                 , (error) => {
-                    if (error.statusCode === 401 || error.statusCode === 403) {
-                        this.store.dispatch({
-                            type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
-                        });
-
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        }
                     }
-
                 }
             );
         });
@@ -140,17 +140,40 @@ export class NotificationEffects {
                 };
             }
                 , (error) => {
-
-                    if (error.statusCode === 401 || error.statusCode === 403) {
-                        this.store.dispatch({
-                            type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
-                        });
-
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        }
                     }
-
                 }
             );
 
+        });
+
+    @Effect({ dispatch: false })
+    confirmInvite: Observable<any> = this.actions$
+        .ofType('ACCEPT_INVITATION')
+        .withLatestFrom(this.store)
+        .do((storeState) => {
+            let action = storeState[0];
+            let state = storeState[1].notification;
+            this.notificationService.acceptInvitaion(action.payload).subscribe((result) => {
+                if (result.statusCode === 200) {
+                    this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: state.currentPage, limit: state.limit } });
+                }
+            }
+                , (error) => {
+                    if (error) {
+                        if (error.statusCode === 401 || error.statusCode === 403) {
+                            this.store.dispatch({
+                                type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                            });
+                        }
+                    }
+                }
+            );
         });
 
 }

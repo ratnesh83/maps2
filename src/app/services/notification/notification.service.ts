@@ -35,6 +35,13 @@ export class NotificationService {
         return this.apiService.putApi(url, data, this.authRequired, this.utcOffset);
     }
 
+    acceptInvitaion(data) {
+        this.authRequired = true;
+        this.utcOffset = false;
+        let url = environment.APP.API_URL + environment.APP.ACCEPT_INVITATION;
+        return this.apiService.postApi(url, data, this.authRequired, this.utcOffset);
+    }
+
     readAllNotification() {
         let data = { markAllAsRead: true };
         let url = environment.APP.API_URL + environment.APP.READ_NOTIFICATION;

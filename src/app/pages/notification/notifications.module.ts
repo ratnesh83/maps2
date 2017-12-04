@@ -13,10 +13,6 @@ import { NgaModule } from '../../theme/nga.module';
 import { MdCardModule, MdPaginatorModule, MdTooltipModule } from '@angular/material';
 
 @NgModule({
-    declarations: [
-        Notifications,
-        AllNotifications
-    ],
     imports: [
         CommonModule,
         FormsModule,
@@ -29,7 +25,12 @@ import { MdCardModule, MdPaginatorModule, MdTooltipModule } from '@angular/mater
         NgbModalModule,
         NgaModule,
         NgPipesModule
-    ]
+    ],
+    declarations: [
+        Notifications,
+        AllNotifications
+    ],
+    entryComponents: []
 })
 
 export class NotificationsModule { }

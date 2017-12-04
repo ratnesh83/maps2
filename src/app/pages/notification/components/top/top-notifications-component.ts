@@ -4,9 +4,11 @@ import { AuthService } from '../../../../auth/service/auth-service/auth.service'
 import { NotificationService } from '../../../../services/notification-service';
 import { BaMsgCenterService } from '../../../../theme/components/baMsgCenter/baMsgCenter.service';
 import { DataService } from '../../../../services/data-service/data.service';
+import { MdDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { JwtHelper } from 'angular2-jwt';
+import { ConfirmInvitationDialog } from '../../../confirm-invitation-dialog/confirm-invitation-dialog.component';
 import * as notification from '../../state/notification.actions';
 import * as job from '../../../jobs/state/job.actions';
 import * as post from '../../../posts/state/post.actions';
@@ -79,6 +81,7 @@ export class TopNotifications {
         private toastrService: ToastrService,
         private router: Router,
         private dataService: DataService,
+        private dialog: MdDialog,
         private msgCenter: BaMsgCenterService) {
 
         this.socketStoreAcceptRejectJob = this.msgCenter.getNotifications('Accept Reject Job').subscribe((message: any) => {
@@ -147,6 +150,17 @@ export class TopNotifications {
         if (!data.isRead) {
             // this.store.dispatch({ type: notification.actionTypes.READ_NOTIFICATION, payload: data });
         }
+    }
+
+    confirmInvitation() {
+        let user;
+        let jwtHelper: JwtHelper = new JwtHelper();
+        let token = localStorage.getItem('tokenSession');
+        if (token && !jwtHelper.isTokenExpired(token)) {
+            user = jwtHelper.decodeToken(token);
+        }
+        let dialogRef = this.dialog.open(ConfirmInvitationDialog);
+        dialogRef.componentInstance.id = user._id;
     }
 
     read(data) {

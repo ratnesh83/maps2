@@ -2,7 +2,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { MdPaginator } from '@angular/material';
+import {
+    MdDialog,
+    MdPaginator
+} from '@angular/material';
+import { JwtHelper } from 'angular2-jwt';
+import { ConfirmInvitationDialog } from '../../../confirm-invitation-dialog/confirm-invitation-dialog.component';
 import { DataService } from '../../../../services/data-service/data.service';
 import * as notification from '../../state/notification.actions';
 import 'style-loader!./all-notifications.scss';
@@ -27,6 +32,7 @@ export class AllNotifications {
 
     constructor(private store: Store<any>,
         private router: Router,
+        private dialog: MdDialog,
         private dataService: DataService) {
 
         this.store
@@ -49,6 +55,17 @@ export class AllNotifications {
         this.page = page;
         // this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
         // this.store.dispatch({ type: booking.actionTypes.APP_GETALL_BOOKING, payload: {currentPage:this.page,limit:this.limit,type:"all"} })
+    }
+
+    confirmInvitation() {
+        let user;
+        let jwtHelper: JwtHelper = new JwtHelper();
+        let token = localStorage.getItem('tokenSession');
+        if (token && !jwtHelper.isTokenExpired(token)) {
+            user = jwtHelper.decodeToken(token);
+        }
+        let dialogRef = this.dialog.open(ConfirmInvitationDialog);
+        dialogRef.componentInstance.id = user._id;
     }
 
     read(data) {
