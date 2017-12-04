@@ -28,11 +28,15 @@ export const actionTypes = {
     UPLOAD_FILE: 'UPLOAD_FILE',
     UPLOAD_FILE_SUCCESS: 'UPLOAD_FILE_SUCCESS',
     SETTINGS_ERROR: 'SETTINGS_ERROR',
+
     GET_PROFILE_INFO: 'GET_PROFILE_INFO',
     GET_PROFILE_INFO_SUCCESS: 'GET_PROFILE_INFO_SUCCESS',
     GET_PROFILE_INFO_ID: 'GET_PROFILE_INFO_ID',
     GET_PROFILE_INFO_ID_SUCCESS: 'GET_PROFILE_INFO_ID_SUCCESS',
-    UPDATE_PROFILE_INFO: 'UPDATE_PROFILE_INFO'
+    UPDATE_PROFILE_INFO: 'UPDATE_PROFILE_INFO',
+    APP_GET_SUB_CATEGORIES: 'APP_GET_SUB_CATEGORIES',
+    APP_GET_SUB_CATEGORIES_SUCCESS: 'APP_GET_SUB_CATEGORIES_SUCCESS',
+    SAVE_CAT: 'SAVE_CAT'
 };
 
 type credentials = {};
@@ -178,6 +182,20 @@ export class GetProfileInfoIdSuccessAction implements Action {
     type = actionTypes.GET_PROFILE_INFO_ID_SUCCESS;
     constructor(public payload: any) { }
 }
+export class AppGetSubCategories implements Action {
+    type = actionTypes.APP_GET_SUB_CATEGORIES;
+    constructor(public payload: any) { }
+}
+
+export class AppGetSubCategoriesSuccess implements Action {
+    type = actionTypes.APP_GET_SUB_CATEGORIES_SUCCESS;
+    constructor(public payload:any) { }
+}
+
+export class SaveCatAction implements Action {
+    type = actionTypes.SAVE_CAT;
+    constructor(public payload:any) { }
+}
 export type Actions
     = AppGetServiceRadii
     | AppGetServiceRadiiSuccess
@@ -207,5 +225,8 @@ export type Actions
     | GetProfileInfo
     | GetProfileInfoSuccessAction
     | GetProfileInfoId
-    | GetProfileInfoIdSuccessAction;
+    | GetProfileInfoIdSuccessAction
+    | AppGetSubCategories
+    | AppGetSubCategoriesSuccess
+    | SaveCatAction;
 

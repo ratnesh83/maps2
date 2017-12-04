@@ -6,11 +6,12 @@ import * as donation from '../../state/donation.actions';
 import { Router } from '@angular/router';
 import { BaThemeSpinner } from '../../../../theme/services';
 
-import 'style-loader!./donations.scss';
+// import 'style-loader!./donations.scss';
 
 @Component({
     selector: 'donation',
     templateUrl: 'donations.html',
+    styleUrls: ['donations.scss']
 })
 
 export class Donation implements OnInit {

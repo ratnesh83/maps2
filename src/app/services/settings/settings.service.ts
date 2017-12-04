@@ -160,9 +160,16 @@ export class SettingsService {
         this.utcOffset = false;        
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
       }
-      getProfileInfoId(payload) {
+      getProfileInfoId(payload,user) {
         // let skip = (payload.currentPage - 1) * payload.limit;
-        let url = environment.APP.API_URL + environment.APP.GET_PROFILE_INFO_ID+'?userId='+payload;
+        let url;
+        if(user.role == 'user'){
+        url = environment.APP.API_URL + environment.APP.GET_PROFILE_INFO_ID_USER+'?userId='+payload+'&limit=10&skip=0';
+        }else{
+            if(user.role == 'employer'){
+             url = environment.APP.API_URL + environment.APP.GET_PROFILE_INFO_ID_EMPLOYER+'?userId='+payload+'&limit=10&skip=0';
+            }
+        }
         this.authRequired = true;
         this.utcOffset = false;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);

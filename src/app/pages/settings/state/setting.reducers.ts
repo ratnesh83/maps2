@@ -107,6 +107,13 @@ export const setting: ActionReducer<any> = (state = initialState, action: Action
         case 'UPDATE_PROFILE_INFO':
             return Object.assign({}, state);
 
+        case 'APP_GET_SUB_CATEGORIES_SUCCESS':
+            console.log(action.payload);
+            return Object.assign({}, state, { subCategories: action.payload });
+
+        case 'SAVE_CAT':
+            console.log(action.payload);
+            return Object.assign({}, state ,{selectedCat: action.payload});
 
         default:
             return state;

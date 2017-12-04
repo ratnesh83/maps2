@@ -1,7 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import 'style-loader!./delete-card.scss';
+// import 'style-loader!./delete-card.scss';
 import * as payment from '../../state/payment.actions';
 import { BaThemeSpinner } from '../../../../theme/services';
 
@@ -9,7 +9,8 @@ import { BaThemeSpinner } from '../../../../theme/services';
 
 @Component({
   selector: 'delete-card-modal',
-  templateUrl: 'delete-card.html'
+  templateUrl: 'delete-card.html',
+  styleUrls:['delete-card.scss']
 })
 
 export class DeleteCardModal {

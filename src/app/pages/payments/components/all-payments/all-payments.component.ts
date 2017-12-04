@@ -15,14 +15,15 @@ import { NgbModal, NgbActiveModal, NgbModalOptions } from '@ng-bootstrap/ng-boot
 import * as app from '../../../../state/app.actions';
 
 
-import 'style-loader!./all-payments.scss';
+// import 'style-loader!./all-payments.scss';
 import { PaymentValidator } from '../../../../theme/validators/payment.validator';
 import { DeleteCardModal } from '../delete-card/delete-card.modal';
 import { WarningModal } from '../warning/warning.modal';
 
 @Component({
     selector: 'all-payments',
-    templateUrl: 'all-payments.html'
+    templateUrl: 'all-payments.html',
+    styleUrls:['all-payments.scss']
 })
 export class AllPayments implements OnDestroy {
     public warningModel;
@@ -147,7 +148,7 @@ export class AllPayments implements OnDestroy {
                 let m = 'Can not add more than 4 cards';
                 let t = 'error';
                 const opt = cloneDeep(this.options);
-                const inserted = this.toastrService[types[0]](m, t, opt);
+                const inserted = this.toastrService[types[1]](m, t, opt);
                   if (inserted) {
                     this.lastInserted.push(inserted.toastId);
                   }
@@ -157,11 +158,11 @@ export class AllPayments implements OnDestroy {
         }
           openModalNew(value,isDefault){
               if(isDefault == true){
-                this.warningModel = this.modalService.open(WarningModal, { size: 'sm' });             
+                this.warningModel = this.modalService.open(WarningModal, { size: 'lg' });             
               }
               else{
             this.store.dispatch({ type: payment.actionTypes.CONFIRM_DELETE,payload:{card:value.cardId}});              
-            this.deleteCardActionModel = this.modalService.open(DeleteCardModal, { size: 'sm' });
+            this.deleteCardActionModel = this.modalService.open(DeleteCardModal, { size: 'lg' });
           }}
           pay(){
               let formValue;

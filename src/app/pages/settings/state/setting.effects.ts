@@ -4,6 +4,7 @@ import { Effect, Actions } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { SettingsService } from '../../../services/settings/settings.service';
+import { PostService } from '../../../services/post-service/post.service';
 import { Router } from '@angular/router';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { JwtHelper } from 'angular2-jwt';
@@ -550,9 +551,8 @@ export class SettingEffects {
     getProfileInfoId$ = this.actions$
       .ofType('GET_PROFILE_INFO_ID')
       .do((action) => {
-          console.log('1');
-         let userId =  '5a1262033766a15de4c793c7';
-        this.SettingsService.getProfileInfoId(userId).subscribe((result) => {
+         let userId =  localStorage.getItem('userId');
+        this.SettingsService.getProfileInfoId(userId,action.payload).subscribe((result) => {
             if (result.statusCode == 200) {
               let payload = result.data;
               this._spinner.hide();
@@ -599,6 +599,38 @@ export class SettingEffects {
             }
           );
       });
+      @Effect({ dispatch: false })
+      getSubCategories$ = this.actions$
+          .ofType('APP_GET_SUB_CATEGORIES')
+          .do((action) => {
+              this._spinner.show();
+              this.store.dispatch(new setting.SaveCatAction(action.payload.selectedCategory));              
+            this.PostService.getAllSubCategories(action.payload).subscribe((result) => {
+                console.log(action.payload)
+                  this._spinner.hide();
+                  if (result.message == 'Action complete.' || result.statusCode == 200 || result.statusCode == 201) {
+                      let payload = {
+                          'data': result.data,
+                          'edit': true}         
+
+                      this.store.dispatch(new setting.AppGetSubCategoriesSuccess(payload));
+                  }
+              }
+                  , (error) => {
+                      this._spinner.hide();
+                      if (error) {
+                          if (error.statusCode === 401 || error.statusCode === 403) {
+                              this.store.dispatch({
+                                  type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                              });
+                          } else {
+                              this.toastrService.clear();
+                              this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                          }
+                      }
+                  }
+              );
+          });
 
     constructor(
         private actions$: Actions,
@@ -606,6 +638,7 @@ export class SettingEffects {
         private router: Router,
         private toastrService: ToastrService,
         private SettingsService: SettingsService,
+        private PostService: PostService,        
         private _spinner: BaThemeSpinner
     ) {
     }

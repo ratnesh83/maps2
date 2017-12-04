@@ -15,11 +15,11 @@ import { BlockSubscriptionDialog } from '../block-subscription-dialog/block-subs
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 
-import 'style-loader!./all-subscriptions.scss';
 
 @Component({
     selector: 'all-subscriptions',
     templateUrl: 'all-subscriptions.html',
+    styleUrls:['all-subscriptions.scss']
 })
 export class AllSubscriptions {
     @ViewChild('scrollBottom') private _scrollContainer: ElementRef;
