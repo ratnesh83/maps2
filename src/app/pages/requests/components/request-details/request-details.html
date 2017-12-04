@@ -10,8 +10,8 @@
                         <md-card-subtitle style="font-weight: 500; margin-bottom: 0px; font-size: small">{{request.category ? request.category + ': ' + request.subCategory : request.category}}</md-card-subtitle>
                         <div class="requests-header-right">
                             <div style="margin-bottom: 0.5rem; color: #026eff; font-weight: 600">
-                                <h4>{{'$' + request.rate + '/' + (request.rateType == 'DAILY' ? 'day' : request.rateType == 'WEEKLY' ?
-                                    'week' : request.rateType == 'MONTHLY' ? 'month' : 'hr')}}</h4>
+                                <h4>{{'$' + request.rate + '/' + (request.rateType == 'DAILY' ? 'day' : request.rateType == 'WEEKLY'
+                                    ? 'week' : request.rateType == 'MONTHLY' ? 'month' : 'hr')}}</h4>
                             </div>
                             <div style="color: #1c9f7f; font-weight: 500; font-size: small">
                                 {{request.jobStatus == 'IN_PROGRESS' ? 'IN PROGRESS' : request.jobStatus}}
@@ -19,7 +19,8 @@
                         </div>
                     </md-card-header>
                     <md-card-content *ngIf="!request">
-                        Loading... <i class="fa fa-spinner fa-spin"></i>
+                        Loading...
+                        <i class="fa fa-spinner fa-spin"></i>
                     </md-card-content>
                 </md-card>
             </div>
@@ -32,7 +33,8 @@
                     Job Location
                 </p>
                 <p class="md-card-content-requests-content">
-                    {{request.employerAddress ? showAddress(request.employerAddress.addressLine1, request.employerAddress.city, request.employerAddress.zipCode, request.employerAddress.state, request.employerAddress.country) : ''}}
+                    {{request.employerAddress ? showAddress(request.employerAddress.addressLine1, request.employerAddress.city, request.employerAddress.zipCode,
+                    request.employerAddress.state, request.employerAddress.country) : ''}}
                 </p>
                 <p class="md-card-content-requests-label">
                     Job Date
@@ -52,11 +54,19 @@
                 <p class="md-card-content-requests-content">
                     {{request.requiredLabourers}}
                 </p>
-                
+
             </md-card-content>
         </md-card>
         <md-card-actions *ngIf="request && (request.jobStatus == 'IN_PROGRESS' || request.jobStatus == 'CONFIRMED')" style="margin-left: 0px; margin-right: 0px; text-align: center">
             <button class="col-12 col-sm-6 btn-submit" md-raised-button (click)="cancelJob()" color="primary" style="background-color: #026eff">CANCEL</button>
+        </md-card-actions>
+
+        <md-card-actions *ngIf="request" style="margin-left: 0px; margin-right: 0px; text-align: center">
+            <button *ngIf="canApply && canApply == 2" class="col-12 col-sm-6 btn-submit-cancel" md-raised-button color="primary" disabled>CANCELLED BY EMPLOYER</button>
+            <button *ngIf="canApply && canApply == 1" class="col-12 col-sm-6 btn-submit" md-raised-button (click)="applyJob()" color="primary"
+                style="background-color: #026eff">APPLY</button>
+            <button *ngIf="canApply != null && canApply == 0" class="col-12 col-sm-6 btn-submit" md-raised-button (click)="cancelJob()"
+                color="primary" style="background-color: #026eff">CANCEL</button>
         </md-card-actions>
 
     </div>

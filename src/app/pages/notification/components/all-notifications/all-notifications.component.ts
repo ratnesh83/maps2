@@ -57,7 +57,7 @@ export class AllNotifications {
         // this.store.dispatch({ type: booking.actionTypes.APP_GETALL_BOOKING, payload: {currentPage:this.page,limit:this.limit,type:"all"} })
     }
 
-    confirmInvitation() {
+    confirmInvitation(id) {
         let user;
         let jwtHelper: JwtHelper = new JwtHelper();
         let token = localStorage.getItem('tokenSession');
@@ -65,13 +65,17 @@ export class AllNotifications {
             user = jwtHelper.decodeToken(token);
         }
         let dialogRef = this.dialog.open(ConfirmInvitationDialog);
-        dialogRef.componentInstance.id = user._id;
+        dialogRef.componentInstance.id = id;
     }
 
     read(data) {
         let eventType = data.flag;
         let id;
         switch (eventType) {
+            case 'INVITATION':
+                id = data.inviteId;
+                this.confirmInvitation(id);
+                break;
             case 'ACCEPT_JOB':
                 id = data.payload ? data.payload.jobId : null;
                 if (id) {

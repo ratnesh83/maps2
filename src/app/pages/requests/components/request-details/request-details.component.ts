@@ -159,4 +159,18 @@ export class RequestDetails implements OnInit {
         });
     }
 
+    applyJob() {
+        let address = this.address;
+        address.latitude = this.latitude;
+        address.longitude = this.longitude;
+        delete address.location;
+        this.store.dispatch({
+            type: request.actionTypes.APP_ACCEPT_JOB, payload: {
+                jobId: this.dataService.getData('requestId'),
+                action: 'ACCEPTED_BY_LABOUR',
+                labourAddress: address
+            }
+        });
+    }
+
 }

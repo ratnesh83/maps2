@@ -35,6 +35,12 @@ export const request: ActionReducer<any> = (state = initialState, action: Action
         case 'APP_GET_LABORS_SUCCESS':
             return Object.assign({}, state, { labours: action.payload });
 
+        case 'APP_CHECK_APPLY':
+            return Object.assign({}, state, { canApply: null });
+
+        case 'APP_CHECK_APPLY_SUCCESS':
+            return Object.assign({}, state, action.payload);
+
         case 'APP_POST_FEEDBACK':
             return Object.assign({}, state, { postFeedback: null });
 

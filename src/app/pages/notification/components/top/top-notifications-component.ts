@@ -75,6 +75,8 @@ export class TopNotifications {
     public socketStoreNewJob;
     public socketStoreActiveToInProgress;
     public socketStoreInProgressToComplete;
+    public socketStoreInvitation;
+    public socketStoreAcceptInvitation;
 
     constructor(private authService: AuthService,
         private store: Store<any>,
@@ -110,6 +112,16 @@ export class TopNotifications {
         });
 
         this.socketStoreInProgressToComplete = this.msgCenter.getNotifications('inProgressToComplete').subscribe((message: any) => {
+            this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
+            this.showNotificationToast(this.getTemplate(message.message, message.image), message);
+        });
+
+        this.socketStoreInvitation = this.msgCenter.getNotifications('invitation').subscribe((message: any) => {
+            this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
+            this.showNotificationToast(this.getTemplate(message.message, message.image), message);
+        });
+
+        this.socketStoreAcceptInvitation = this.msgCenter.getNotifications('acceptInvitation').subscribe((message: any) => {
             this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
             this.showNotificationToast(this.getTemplate(message.message, message.image), message);
         });
@@ -152,7 +164,7 @@ export class TopNotifications {
         }
     }
 
-    confirmInvitation() {
+    confirmInvitation(id) {
         let user;
         let jwtHelper: JwtHelper = new JwtHelper();
         let token = localStorage.getItem('tokenSession');
@@ -160,15 +172,28 @@ export class TopNotifications {
             user = jwtHelper.decodeToken(token);
         }
         let dialogRef = this.dialog.open(ConfirmInvitationDialog);
-        dialogRef.componentInstance.id = user._id;
+        dialogRef.componentInstance.id = id;
     }
 
     read(data) {
-        //console.log("notification2...........................",this.notifications)
-        //this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: {currentPage: this.page, limit: this.limit} });
+        // console.log("notification2...........................",this.notifications)
+        // this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: {currentPage: this.page, limit: this.limit} });
         let eventType = data.flag;
         let id;
         switch (eventType) {
+            case 'INVITATION':
+                id = data.inviteId;
+                this.confirmInvitation(id);
+                break;
+            case 'ACCEPT_INVITATION':
+                id = data.userId;
+                if (id) {
+                    this.dataService.setData('userId', id);
+                    this.router.navigate(['/pages/settings/userprofile']).then((result) => {
+
+                    });
+                }
+                break;
             case 'ACCEPT_JOB':
                 id = data.payload ? data.payload.jobId : null;
                 if (id) {
@@ -229,7 +254,7 @@ export class TopNotifications {
         }
 
         if (data && !data.isRead && data._id) {
-            this.store.dispatch({ type: notification.actionTypes.READ_NOTIFICATION, payload: { _id: data._id} });
+            this.store.dispatch({ type: notification.actionTypes.READ_NOTIFICATION, payload: { _id: data._id } });
         }
 
     }
@@ -295,6 +320,7 @@ export class TopNotifications {
     }
 
     showNotificationToast(data, notification) {
+        console.log(notification);
         if (this.toastId) {
             this.toastrService.remove(this.toastId);
         }
@@ -312,6 +338,19 @@ export class TopNotifications {
                 let eventType = notification ? notification.eventType : null;
                 let id;
                 switch (eventType) {
+                    case 'INVITATION':
+                        id = notification ? notification.eventID : null;
+                        this.confirmInvitation(id);
+                        break;
+                    case 'ACCEPT_INVITATION':
+                        id = notification ? notification.eventID : null;
+                        if (id) {
+                            this.dataService.setData('userId', id);
+                            this.router.navigate(['/pages/settings/userprofile']).then((result) => {
+
+                            });
+                        }
+                        break;
                     case 'ACCEPT_JOB':
                         id = notification ? notification.eventID : null;
                         if (id) {
@@ -371,7 +410,7 @@ export class TopNotifications {
                         break;
                 }
                 if (notification && !notification.isRead && notification._id) {
-                    this.store.dispatch({ type: notification.actionTypes.READ_NOTIFICATION, payload: { _id: notification._id} });
+                    this.store.dispatch({ type: notification.actionTypes.READ_NOTIFICATION, payload: { _id: notification._id } });
                 }
             });
         }
@@ -394,6 +433,12 @@ export class TopNotifications {
             this.socketStoreActiveToInProgress.unsubscribe();
         }
         if (this.socketStoreInProgressToComplete) {
+            this.socketStoreInProgressToComplete.unsubscribe();
+        }
+        if (this.socketStoreInvitation) {
+            this.socketStoreInProgressToComplete.unsubscribe();
+        }
+        if (this.socketStoreAcceptInvitation) {
             this.socketStoreInProgressToComplete.unsubscribe();
         }
         if (this.notificationStore) {
