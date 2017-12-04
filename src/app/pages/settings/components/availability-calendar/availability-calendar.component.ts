@@ -56,6 +56,7 @@ export class AvailabilityCalendar {
                     };
                     this.calendarConfiguration.selectOverlap = false;
                     this.calendarConfiguration.selectHelper = true;
+                    this.calendarConfiguration.editable = false;
                 }
             });
     }
