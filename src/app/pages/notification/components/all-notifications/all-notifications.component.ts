@@ -71,10 +71,31 @@ export class AllNotifications {
     read(data) {
         let eventType = data.flag;
         let id;
+        let role;
         switch (eventType) {
             case 'INVITATION':
                 id = data.inviteId;
                 this.confirmInvitation(id);
+                break;
+            case 'ACCEPT_INVITATION':
+                id = data.userAccepted;
+                role = data.invitedUserRole;
+                if (id) {
+                    this.dataService.setData('userId', id);
+                    if (role == 'EMPLOYER') {
+                        this.router.navigate(['/pages/settings/employerprofile']).then((result) => {
+                            if (!result && window && window.location) {
+                                window.location.reload();
+                            }
+                        });
+                    } else {
+                        this.router.navigate(['/pages/settings/userprofile']).then((result) => {
+                            if (!result && window && window.location) {
+                                window.location.reload();
+                            }
+                        });
+                    }
+                }
                 break;
             case 'ACCEPT_JOB':
                 id = data.payload ? data.payload.jobId : null;
