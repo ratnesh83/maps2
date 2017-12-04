@@ -193,11 +193,15 @@ export class TopNotifications {
                     this.dataService.setData('userId', id);
                     if (role == 'EMPLOYER') {
                         this.router.navigate(['/pages/settings/employerprofile']).then((result) => {
-
+                            if (!result && window && window.location) {
+                                window.location.reload();
+                            }
                         });
                     } else {
                         this.router.navigate(['/pages/settings/userprofile']).then((result) => {
-
+                            if (!result && window && window.location) {
+                                window.location.reload();
+                            }
                         });
                     }
                 }
@@ -352,11 +356,22 @@ export class TopNotifications {
                         break;
                     case 'ACCEPT_INVITATION':
                         id = notification ? notification.eventID : null;
+                        let type = notification.userType;
                         if (id) {
                             this.dataService.setData('userId', id);
-                            this.router.navigate(['/pages/settings/userprofile']).then((result) => {
-
-                            });
+                            if (type == 'EMPLOYER') {
+                                this.router.navigate(['/pages/settings/employerprofile']).then((result) => {
+                                    if (!result && window && window.location) {
+                                        window.location.reload();
+                                    }
+                                });
+                            } else {
+                                this.router.navigate(['/pages/settings/userprofile']).then((result) => {
+                                    if (!result && window && window.location) {
+                                        window.location.reload();
+                                    }
+                                });
+                            }
                         }
                         break;
                     case 'ACCEPT_JOB':
