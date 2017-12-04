@@ -84,6 +84,13 @@ export class RequestDetails implements OnInit {
                     userId: this.user._id
                 }
             });
+            this.store.dispatch({
+                type: request.actionTypes.APP_CHECK_APPLY,
+                payload: {
+                    jobId: this.dataService.getData('requestId'),
+                    laborId: this.user._id
+                }
+            });
         }
     }
 
