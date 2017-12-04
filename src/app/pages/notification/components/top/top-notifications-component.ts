@@ -180,18 +180,26 @@ export class TopNotifications {
         // this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: {currentPage: this.page, limit: this.limit} });
         let eventType = data.flag;
         let id;
+        let role;
         switch (eventType) {
             case 'INVITATION':
                 id = data.inviteId;
                 this.confirmInvitation(id);
                 break;
             case 'ACCEPT_INVITATION':
-                id = data.userId;
+                id = data.userAccepted;
+                role = data.invitedUserRole;
                 if (id) {
                     this.dataService.setData('userId', id);
-                    this.router.navigate(['/pages/settings/userprofile']).then((result) => {
+                    if (role == 'EMPLOYER') {
+                        this.router.navigate(['/pages/settings/employerprofile']).then((result) => {
 
-                    });
+                        });
+                    } else {
+                        this.router.navigate(['/pages/settings/userprofile']).then((result) => {
+
+                        });
+                    }
                 }
                 break;
             case 'ACCEPT_JOB':
