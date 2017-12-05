@@ -194,12 +194,12 @@ export class AppGetSubCategories implements Action {
 
 export class AppGetSubCategoriesSuccess implements Action {
     type = actionTypes.APP_GET_SUB_CATEGORIES_SUCCESS;
-    constructor(public payload:any) { }
+    constructor(public payload: any) { }
 }
 
 export class SaveCatAction implements Action {
     type = actionTypes.SAVE_CAT;
-    constructor(public payload:any) { }
+    constructor(public payload: any) { }
 }
 export class GetAvailability implements Action {
     type = actionTypes.APP_GET_AVAILABILITY;

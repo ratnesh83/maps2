@@ -176,7 +176,6 @@ export class SettingsService {
       }
 
       followCompany(payload){
-          console.log("service");
         let url = environment.APP.API_URL + environment.APP.FOLLOW_COMPANY;
         this.authRequired = true;
         this.utcOffset = false;        

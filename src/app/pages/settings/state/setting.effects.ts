@@ -681,12 +681,13 @@ export class SettingEffects {
               this._spinner.show();
               this.store.dispatch(new setting.SaveCatAction(action.payload.selectedCategory));              
             this.PostService.getAllSubCategories(action.payload).subscribe((result) => {
-                console.log(action.payload)
+                console.log(action.payload);
                   this._spinner.hide();
                   if (result.message == 'Action complete.' || result.statusCode == 200 || result.statusCode == 201) {
                       let payload = {
                           'data': result.data,
-                          'edit': true}         
+                          'edit': true
+                        };        
 
                       this.store.dispatch(new setting.AppGetSubCategoriesSuccess(payload));
                   }
