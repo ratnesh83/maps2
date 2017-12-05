@@ -37,7 +37,7 @@
         </div>
         <div class="panel-footer">
             <div class="row">
-                <div *ngIf="count > 50" class="col-sm-12 rar-align page-select">
+                <div *ngIf="count > 25" class="col-sm-12 rar-align page-select">
                     <span class="first-last-ctrl">
                         <span [ngClass]="{'enabled': pageIndex > 0}" class="page-controls" (click)="pageIndex > 0 && goToFirstPage($event)">
                             <span mdTooltip="{{(pageIndex > 0) ? 'First page' : ''}}">
