@@ -55,10 +55,8 @@ export class AllEmployerList implements OnInit {
             .select('network')
             .subscribe((res: any) => {
                 if (res) {
-
                     this.employers = null;
                     let employers = res.employers ? res.employers.employerList : null;
-                    console.log(res);
                     if (employers) {
                         this.employers = [];
                         for (let i = 0; i < employers.length; i++) {
@@ -67,7 +65,6 @@ export class AllEmployerList implements OnInit {
                             this.employers[i].showEmail = false;
                         }
                     }
-                    console.log(this.employers);
                 }
                 /* if (res && res.employers && res.employers.jobs) {
                     this.employers = res.employers.jobs;
