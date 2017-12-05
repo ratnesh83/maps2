@@ -83,14 +83,14 @@ export class PostService {
         this.utcOffset = false;
         let formData = new FormData();
         formData.append('title', payload.title);
-        formData.append('employerAddress', JSON.stringify(payload.employerAddress));
-        formData.append('categoryId', payload.categoryId);
-        formData.append('subCategoryId', payload.subCategoryId);
+        //formData.append('employerAddress', JSON.stringify(payload.employerAddress));
+        //formData.append('categoryId', payload.categoryId);
+        //formData.append('subCategoryId', payload.subCategoryId);
         if (payload && payload.jobDetails) {
             formData.append('jobDetails', payload.jobDetails);
         }
-        formData.append('startDate', payload.startDate);
-        formData.append('endDate', payload.endDate);
+        //formData.append('startDate', payload.startDate);
+        //formData.append('endDate', payload.endDate);
         formData.append('rateType', payload.rateType);
         formData.append('rate', payload.rate);
         formData.append('requiredLabourers', payload.requiredLabourers);
