@@ -172,6 +172,11 @@ export class AllLaborList implements OnInit {
 
     }
 
+    openProfile(id) {
+        this.dataService.setData('userId', id);
+        this.router.navigate(['/pages/settings/userprofile']);
+    }
+
     showAddress(address, city, zipCode, state, country): String {
         let returnAddress;
         if (address) {

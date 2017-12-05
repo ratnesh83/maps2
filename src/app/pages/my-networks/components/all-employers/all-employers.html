@@ -24,11 +24,14 @@
                 <md-card class="employers-card employers-card-inner" *ngFor="let employer of employers; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
                     <md-card-header class="employers-card-header">
                         <div md-card-avatar class="employers-header-image">
-                            <img mat-card-avatar [src]="employer.employerId?.profilePicture?.image?.thumb ? employer.employerId.profilePicture?.image?.thumb : 'assets/img/user.png'">
+                            <img mat-card-avatar [src]="employer.employerId?.profilePicture?.thumb ? employer.employerId.profilePicture?.thumb : 'assets/img/user.png'">
                         </div>
                         <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{employer.employerId ? employer.employerId.fullName ? employer.employerId.fullName : employer.employerId.lastName
                             ? (employer.employerId.firstName + ' ' + employer.employerId.lastName) : employer.employerId.firstName
                             : ''}}</md-card-title>
+                        <md-card-subtitle style="font-weight: 500">
+                            <span style="font-weight: 500; color: #026eff; cursor: pointer; font-size: small" (click)="openProfile(employer.employerId?._id)">View Profile</span>
+                        </md-card-subtitle>
                         <!-- <md-card-subtitle style="font-weight: 500">{{ (employer.distance / 1609.34).toFixed(1) + ' mile away' }}</md-card-subtitle> -->
                         <div class="employers-header-view">
                             <div>

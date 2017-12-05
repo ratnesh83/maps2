@@ -230,6 +230,11 @@ export class AllEmployerList implements OnInit {
         this._paginator._changePageSize(this.pageSize);
     }
 
+    openProfile(id) {
+        this.dataService.setData('userId', id);
+        this.router.navigate(['/pages/settings/employerprofile']);
+    }
+
     showPhoneInfo(index) {
         if (this.employers[index]) {
             this.employers[index].showPhone = true;
