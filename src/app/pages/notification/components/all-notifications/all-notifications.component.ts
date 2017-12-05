@@ -21,14 +21,14 @@ export class AllNotifications {
     @ViewChild('notificationsPaginator') private _paginator: MdPaginator;
     public notifications;
     public page = 1;
-    public limit = 10;
+    public limit = 50;
     public pageIndex = 0;
     public count: number;
     public activeNotification;
     public unreadNotificationCount;
     public length;
-    public pageSize = 10;
-    public pageSizeOptions = [5, 10, 25, 100, 500];
+    public pageSize = 50;
+    public pageSizeOptions = [25, 50, 100, 500];
 
     constructor(private store: Store<any>,
         private router: Router,
