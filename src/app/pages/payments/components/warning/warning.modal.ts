@@ -1,7 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import 'style-loader!./warning.scss';
+// import 'style-loader!./warning.scss';
 import * as payment from '../../state/payment.actions';
 import { BaThemeSpinner } from '../../../../theme/services';
 
@@ -9,7 +9,8 @@ import { BaThemeSpinner } from '../../../../theme/services';
 
 @Component({
   selector: 'warning-modal',
-  templateUrl: 'warning.html'
+  templateUrl: 'warning.html',
+  styleUrls:['warning.scss']
 })
 
 export class WarningModal {

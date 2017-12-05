@@ -112,7 +112,10 @@ export const environment = {
         GET_PLAN: '/api/v1/membershipPlan/getUsersPlan',
         BUY_PLAN: '/api/v1/membershipPlan/buyPlan',
         GET_DONATIONS: '/api/v1/donations',
-        GET_PROFILE_INFO_ID: '/api/v2/web/user/detailsById',
+        GET_PROFILE_INFO_ID_USER: '/api/v2/jobs/viewLaborProfile',
+        GET_PROFILE_INFO_ID_EMPLOYER: '/api/v2/jobs/viewEmployerProfile',
+        FOLLOW_COMPANY: '/api/v2/jobs/followCompany'
+        
     },
 
     ERROR: {

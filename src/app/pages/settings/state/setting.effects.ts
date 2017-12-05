@@ -4,7 +4,7 @@ import { Effect, Actions } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { SettingsService } from '../../../services/settings/settings.service';
-import { CalendarService } from '../../../services/calendar-service/calendar.service';
+import { PostService } from '../../../services/post-service/post.service';
 import { Router } from '@angular/router';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { JwtHelper } from 'angular2-jwt';
@@ -13,6 +13,7 @@ import * as setting from './setting.actions';
 import * as app from '../../../state/app.actions';
 import * as auth from '../../../auth/state/auth.actions';
 import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from '../../../theme/services';
+import { CalendarService } from '../../../services/calendar-service/calendar.service';
 
 const types = ['success', 'error', 'info', 'warning'];
 
@@ -597,84 +598,130 @@ export class SettingEffects {
             this.toastrService.error(message, title);
         });
 
-    @Effect({ dispatch: false })
-    getProfileInfo$ = this.actions$
-        .ofType('GET_PROFILE_INFO')
-        .do((action) => {
-            console.log('2');
-            let token = localStorage.getItem('tokenSession');
-            let user;
-            if (token && !this.jwtHelper.isTokenExpired(token)) {
-                user = this.jwtHelper.decodeToken(token);
-            }
-
-            this.SettingsService.getProfileInfo(user._id).subscribe((result) => {
-                if (result.statusCode == 200) {
-                    let payload = result.data;
-                    this._spinner.hide();
-                    this.store.dispatch(new setting.GetProfileInfoSuccessAction(payload));
-                }
-            }
-                , (error) => {
-                    this._spinner.hide();
-                    if (error.statusCode === 401 || error.statusCode === 403) {
-                    }
-                }
-            );
-        });
-    @Effect({ dispatch: false })
+  @Effect({dispatch: false})
+  getProfileInfo$ = this.actions$
+    .ofType('GET_PROFILE_INFO')
+    .do((action) => {
+        console.log('2');
+        let token = localStorage.getItem('tokenSession');
+        let user;
+        if (token && !this.jwtHelper.isTokenExpired(token)) {
+             user = this.jwtHelper.decodeToken(token);
+        }
+    
+      this.SettingsService.getProfileInfo(user._id).subscribe((result) => {
+          if (result.statusCode == 200) {
+            let payload = result.data;
+            this._spinner.hide();
+            this.store.dispatch(new setting.GetProfileInfoSuccessAction(payload));            
+          }
+        }
+        , (error) => {
+          this._spinner.hide();            
+          if (error.statusCode === 401 || error.statusCode === 403) {
+          }
+        }
+      );
+    });
+    @Effect({dispatch: false})
     getProfileInfoId$ = this.actions$
-        .ofType('GET_PROFILE_INFO_ID')
-        .do((action) => {
-            console.log('1');
-            let userId = '5a1262033766a15de4c793c7';
-            this.SettingsService.getProfileInfoId(userId).subscribe((result) => {
-                if (result.statusCode == 200) {
-                    let payload = result.data;
-                    this._spinner.hide();
-                    this.store.dispatch(new setting.GetProfileInfoIdSuccessAction(payload));
-                }
+      .ofType('GET_PROFILE_INFO_ID')
+      .do((action) => {
+         let userId =  localStorage.getItem('userId');
+        this.SettingsService.getProfileInfoId(userId,action.payload).subscribe((result) => {
+            if (result.statusCode == 200) {
+              let payload = result.data;
+              this._spinner.hide();
+              this.store.dispatch(new setting.GetProfileInfoIdSuccessAction(payload));            
             }
-                , (error) => {
-                    this._spinner.hide();
-                    if (error.statusCode === 401 || error.statusCode === 403) {
-                    }
-                    this.store.dispatch(new setting.GetProfileInfoSuccessAction({}));
-                }
-            );
-        });
-    @Effect({ dispatch: false })
+          }
+          , (error) => {
+            this._spinner.hide();            
+            if (error.statusCode === 401 || error.statusCode === 403) {
+            }
+            this.store.dispatch(new setting.GetProfileInfoSuccessAction({}));                        
+          }
+        );
+      });
+    @Effect({dispatch: false})
     updateProfileInfo$ = this.actions$
         .ofType('UPDATE_PROFILE_INFO')
         .do((action) => {
             console.log(action.payload);
-            this.SettingsService.updateProfileInfo(action.payload).subscribe((result) => {
-                if (result.statusCode == 200) {
-                    console.log('success');
-                    let token = localStorage.getItem('tokenSession');
-                    if (token && !this.jwtHelper.isTokenExpired(token)) {
-                        let user = this.jwtHelper.decodeToken(token);
-                        this.store.dispatch({
-                            type: auth.actionTypes.AUTH_GET_USER_DETAILS_BY_ID,
-                            payload: {
-                                userId: user._id
-                            }
-                        });
-                    }
-                    this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO, payload: { mode: 1 } });
-                    this.router.navigate(['/pages/settings/userprofileedit']);
-                }
+          this.SettingsService.updateProfileInfo(action.payload).subscribe((result) => {
+              if (result.statusCode == 200) {
+                  console.log('success');
+                  let token = localStorage.getItem('tokenSession');
+                  if (token && !this.jwtHelper.isTokenExpired(token)) {
+                      let user = this.jwtHelper.decodeToken(token);
+                      this.store.dispatch({
+                          type: auth.actionTypes.AUTH_GET_USER_DETAILS_BY_ID,
+                          payload: {
+                              userId: user._id
+                          }
+                      });
+                  }
+                  this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO,payload:{mode:1}});                                          
+                  this.router.navigate(['/pages/settings/userprofileedit']);
+              }
             }
-                , (error) => {
-                    if (error.statusCode === 401 || error.statusCode === 403) {
-                        console.log('error');
-                        this.store.dispatch({
-                            type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
-                        });
-                    }
+            , (error) => {
+              if (error.statusCode === 401 || error.statusCode === 403) {
+                  console.log('error');
+                this.store.dispatch({
+                  type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                });
+              }  
+            }
+          );
+      });
+      @Effect({ dispatch: false })
+      getSubCategories$ = this.actions$
+          .ofType('APP_GET_SUB_CATEGORIES')
+          .do((action) => {
+              this._spinner.show();
+              this.store.dispatch(new setting.SaveCatAction(action.payload.selectedCategory));              
+            this.PostService.getAllSubCategories(action.payload).subscribe((result) => {
+                console.log(action.payload)
+                  this._spinner.hide();
+                  if (result.message == 'Action complete.' || result.statusCode == 200 || result.statusCode == 201) {
+                      let payload = {
+                          'data': result.data,
+                          'edit': true}         
+
+                      this.store.dispatch(new setting.AppGetSubCategoriesSuccess(payload));
+                  }
+              }
+                  , (error) => {
+                      this._spinner.hide();
+                      if (error) {
+                          if (error.statusCode === 401 || error.statusCode === 403) {
+                              this.store.dispatch({
+                                  type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                              });
+                          } else {
+                              this.toastrService.clear();
+                              this.toastrService.error(error.message || 'Something went wrong', 'Error');
+                          }
+                      }
+                  }
+              );
+          });
+          @Effect({dispatch: false})
+          followCompany$ = this.actions$
+            .ofType('FOLLOW_COMPANY')
+            .do((action) => {
+              this.SettingsService.followCompany(action.payload).subscribe((result) => {
+                  if (result.statusCode == 200) {  
+                  }
                 }
-            );
-        });
+                , (error) => {
+                  this._spinner.hide();            
+                  if (error.statusCode === 401 || error.statusCode === 403) {
+                  }
+                }
+              );
+            });
 
     constructor(
         private actions$: Actions,
@@ -683,6 +730,7 @@ export class SettingEffects {
         private toastrService: ToastrService,
         private SettingsService: SettingsService,
         private CalendarService: CalendarService,
+        private PostService: PostService,        
         private _spinner: BaThemeSpinner
     ) {
     }

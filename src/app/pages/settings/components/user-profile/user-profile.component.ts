@@ -9,6 +9,7 @@ import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 
 import 'style-loader!./user-profile.scss';
+import * as labor from '../../../labors/state/labor.actions';
 
 @Component({
     selector: 'user-profile',
@@ -34,6 +35,7 @@ export class UserProfile {
     public jobItems;
     public products;
     public profile;
+    public documents;
     constructor(
         private store: Store<any>,
         private modalService: NgbModal,
@@ -45,10 +47,16 @@ export class UserProfile {
         this.settingStore = this.store
             .select('setting')
             .subscribe((res: any) => {
-                this.profile = res;
-                console.log(this.profile);                
+                if(res.userDetails){
+                this.profile = res.userDetails[0];
+                this.documents  = res.userDetails[0].documents;
+                }
+                console.log(res);                
             });
-        this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO_ID});            
+
+                
+        this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO_ID,payload:{role:'user'}});
+              
     };
     bringFileSelector(): boolean {
         this.renderer.invokeElementMethod(this._fileUpload.nativeElement, 'click');

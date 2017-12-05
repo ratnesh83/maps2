@@ -6,8 +6,9 @@
                     <md-card-header class="jobs-card-header jobs-card-heading">
                         <md-card-title style="font-weight: 600; color: #474747; margin-bottom: 0px">
                            <h2>Payments</h2>
-                            <h2 class="amount" *ngIf="donatemode">Donate&nbsp;&nbsp;$&nbsp;{{amount}}</h2>
-                            <h2 class="amount"  *ngIf="planmode">Pay&nbsp;&nbsp;$&nbsp;{{amount}}</h2>
+                            <h2 class="amount" *ngIf="donatemode && count != 0">Donate&nbsp;&nbsp;$&nbsp;{{amount}}</h2>
+                            <h2 class="amount"  *ngIf="planmode && count != 0">Pay&nbsp;&nbsp;$&nbsp;{{amount}}</h2>
+                            <h2 class="amount"  *ngIf="(donatemode || planmode) && count == 0">Can not proceed.</h2>                            
                         </md-card-title>
                     </md-card-header>
                 </md-card>
@@ -19,6 +20,7 @@
             <md-card-content>
                 <div class="container">
                     <div class="row">
+                        <div class="alert alert-danger col-sm-12" *ngIf="count == 0">No card available</div>
                         <div class="card-outer col-sm-12 col-md-6" *ngFor="let item of cards" (click)="openModalNew(item,item.isDefault)">
                             <div class="added-card col-sm-12">
                            <span class="card_photo" *ngIf="item.cardType == 'Visa'" ><img alt="Credit Card Logos" title="Credit Card Logos" src="http://www.credit-card-logos.com/images/visa_credit-card-logos/new_visa.gif" border="0" /></span>
@@ -69,7 +71,7 @@
                             <button type="submit" class="save-card-btn col-sm-5">
                                 SAVE CARD
                             </button>
-                            <button type="button" class="save-card-btn col-sm-5" (click)="pay()" *ngIf="planmode || donatemode">
+                            <button type="button" class="save-card-btn col-sm-5" (click)="pay()" *ngIf="(planmode || donatemode) && count != 0">
                                 PROCEED
                             </button>
                             </div>  

@@ -70,10 +70,10 @@
             <div class="conatainer section-container" *ngIf="isEditMode">
                <div class="main-card-header d-flex justify-content-center">
                     <div md-card-avatar class="main-header-image">
-                        <img md-card-avatar class="main-header-image" [src]='assets/img/default-profile.jpg'>
-                    </div>
-                    
-                </div>
+                            <input type="file" class="displayNone" id="chooseFile" accept="image/*" (change)="getImage($event)"  (click)="makeValueNull($event)" />                                                        
+                            <img md-card-avatar class="main-header-image " id="previewImage" [src]='profile.profilePicture && profile.profilePicture.original ? profile.profilePicture.original : "assets/img/default-profile.jpg"' (click)="triggerEvent()">
+                        </div>
+                     </div>        
                 <div class="row">
                     <div class="col-6 form-group">
                         <label class="editLable" for="fullName">Full Name</label>
@@ -83,24 +83,30 @@
                         <label class="editLable" for="contactNumber">Contact Number</label>
                         <input class="form-control" type="text" name="profileNumber" id="contactNumber" [(ngModel)]="profileNumber">
                     </div>
-                    <div class="col-6 form-group">
-                        <label class="editLable" for="comapanyName">Job Category</label>
-                        <input class="form-control" type="text" name="companyName" id="companyName" >
-                    </div>
-                    <div class="col-6 form-group">
-                        <label class="editLable" for="comapanyName">Availability Calendar</label>
-                        <input class="form-control" type="text" name="companyName" id="companyName" >
-                    </div>
-                    <div class="col-6 form-group">
+                    <div class="col-12 col-sm-6 labors-input-box form-group">
+                            <label for="category" class="editLable">Category</label>
+                            <md-select [(ngModel)]="selectedCategory" class="category-select col-sm-12 form-select">
+                                <md-option (onSelectionChange)="changeCategory($event, category)" *ngFor="let category of categories" [value]="category._id">
+                                    {{ category.name }}
+                                </md-option>
+                            </md-select>
+                        </div>
+                        <div class="col-12 col-sm-6 labors-input-box form-group">
+                            <label for="category" class="editLable">Sub Category</label>
+                            <md-select [(ngModel)]="selectedSubCategory" class="category-select col-sm-12 form-select">
+                                <md-option  *ngFor="let category of subCategories" [value]="category._id">
+                                    {{ category.name }}
+                                </md-option>
+                            </md-select>
+                        </div>
+                    
+                    <!-- <div class="col-6 form-group">
                         <label class="editLable" for="comapanyName">Address</label>
                         <input class="form-control" type="text" name="profileAddress" id="companyName" [(ngModel)]="profileAddress">
-                    </div>
-                    <div class="col-6 form-group">
-                        <label class="editLable" for="comapanyName">Willing to</label>
-                        <section class="example-section">
-                            <md-checkbox class="margin-10" color="primary">Work</md-checkbox>
-                            <md-checkbox class="" color="primary">Hire</md-checkbox>
-                        </section>
+                    </div> -->
+                    <div class="col-12 col-sm-6 labors-input-box">
+                            <label for="address">Address</label>
+                            <input #inputLocationAddress ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)" class="form-control" [(ngModel)]="profileAddress">
                     </div>
                     <div class="col-12 form-group">
                         <label class="editLable" for="comapanyName">Description</label>

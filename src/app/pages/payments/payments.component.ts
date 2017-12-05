@@ -12,7 +12,7 @@ import * as payment from './state/payment.actions';
             <all-payments></all-payments>
         </div>
     `,
-    styles: ['delete-card-modal { background:none; }']
+    styles: ['delete-card-modal { margin-top:300px;}']
 })
 export class Payments {
 

@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import * as setting from '../../state/setting.actions';
 import * as app from '../../../../state/app.actions';
-import { FormGroup, AbstractControl, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, AbstractControl, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { BaThemeSpinner } from '../../../../theme/services';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
@@ -25,7 +25,6 @@ export class AllSettings {
     @ViewChild('qualificationName') private _qualificationName: ElementRef;
     @ViewChild('expertiseName') private _expertiseName: ElementRef;
     public settings;
-    public form: FormGroup;
     public serviceRadii: AbstractControl;
     public imageUploading: boolean = false;
     public fileUploadIndex;
@@ -34,6 +33,9 @@ export class AllSettings {
     public jobItems;
     public products;
     public profile;
+    public documents;
+
+    public employerId;
     constructor(
         private store: Store<any>,
         private modalService: NgbModal,
@@ -44,11 +46,23 @@ export class AllSettings {
         this.settingStore = this.store
             .select('setting')
             .subscribe((res: any) => {
-                console.log(res);
-                this.profile = res;
+                this.employerId = res._id;
+                if(res.userDetails){
+                    this.profile = res.userDetails[0];
+                    this.documents  = res.userDetails[0].documents;
+                    }
+                    console.log(res);
             });
-            this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO});                        
+            this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO_ID,payload:{role:'employer'}});                        
     };
+
+    follow(){
+        let fd = new FormData();
+        fd.append('employerId',this.employerId);
+        this.store.dispatch({ type: setting.actionTypes.FOLLOW_COMPANY,payload:fd});                        
+    }
+
+   
     bringFileSelector(): boolean {
         this.renderer.invokeElementMethod(this._fileUpload.nativeElement, 'click');
         return false;

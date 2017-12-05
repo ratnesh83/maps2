@@ -32,6 +32,7 @@ import { Settings } from './settings.component';
 import { NgaModule } from '../../theme/nga.module';
 import { UserProfile } from './components/user-profile/user-profile.component';
 import { UserProfileEdit } from './components/user-profile-edit/user-profile-edit.component';
+import { GooglePlaceModule } from 'ng2-google-place-autocomplete';
 import { AvailabilityCalendar } from './components/availability-calendar/availability-calendar.component';
 
 @NgModule({
@@ -59,6 +60,7 @@ import { AvailabilityCalendar } from './components/availability-calendar/availab
         MdPaginatorModule,
         MdTooltipModule,
         MdCheckboxModule,
+        GooglePlaceModule
     ],
     declarations: [
         Settings,
