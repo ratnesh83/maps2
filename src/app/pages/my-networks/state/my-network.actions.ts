@@ -6,6 +6,8 @@ export const actionTypes = {
     APP_GET_LABORS_LIST_SUCCESS: 'APP_GET_LABORS_LIST_SUCCESS',
     APP_GET_EMPLOYERS_LIST: 'APP_GET_EMPLOYERS_LIST',
     APP_GET_EMPLOYERS_LIST_SUCCESS: 'APP_GET_EMPLOYERS_LIST_SUCCESS',
+    APP_GET_FRIENDS_LIST: 'APP_GET_FRIENDS_LIST',
+    APP_GET_FRIENDS_LIST_SUCCESS: 'APP_GET_FRIENDS_LIST_SUCCESS',
 
 };
 
@@ -28,6 +30,16 @@ export class AppGetEmployerList implements Action {
 
 export class AppGetEmployerSuccess implements Action {
     type = actionTypes.APP_GET_EMPLOYERS_LIST_SUCCESS;
+    constructor(public payload: credentials) { }
+}
+
+export class AppGetFriendsList implements Action {
+    type = actionTypes.APP_GET_FRIENDS_LIST;
+    constructor(public payload: credentials) { }
+}
+
+export class AppGetFriendsSuccess implements Action {
+    type = actionTypes.APP_GET_FRIENDS_LIST_SUCCESS;
     constructor(public payload: credentials) { }
 }
 

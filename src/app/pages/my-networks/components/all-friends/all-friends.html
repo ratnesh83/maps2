@@ -5,7 +5,7 @@
                 <md-card class="friends-card-heading">
                     <md-card-header class="friends-card-header friends-card-heading no-margin">
                         <md-card-title style="font-weight: 600; color: #474747; margin-bottom: 0px">
-                            <h2>Friend List</h2>
+                            <h2>My Friend List</h2>
                         </md-card-title>
                         <div class="friends-header-rating">
                             <div class="filter-div">
@@ -19,36 +19,41 @@
     </div>
 
     <div class="friends-section page-input-block">
-        <md-card *ngIf="!showLoading" class="friends-card">
+        <md-card class="friends-card">
             <md-card-content *ngIf="friends">
                 <md-card class="friends-card friends-card-inner" *ngFor="let friend of friends; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
                     <md-card-header class="friends-card-header">
                         <div md-card-avatar class="friends-header-image">
-                            <img mat-card-avatar [src]="friend.labourId?.profilePicture?.image?.thumb ? friend.labourId.profilePicture?.image?.thumb : 'assets/img/user.png'">
+                            <img mat-card-avatar [src]="friend?.profilePicture?.thumb ? friend?.profilePicture?.thumb : 'assets/img/user.png'">
                         </div>
-                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{friend.labourId ? friend.labourId.fullName ? friend.labourId.fullName : friend.labourId.lastName
-                            ? (friend.labourId.firstName + ' ' + friend.labourId.lastName) : friend.labourId.firstName :
-                            ''}}</md-card-title>
-                        <md-card-subtitle style="font-weight: 500">{{ (friend.distance / 1609.34).toFixed(1) + ' mile away' }}</md-card-subtitle>
+                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{friend.fullName ? friend.fullName : friend.lastName ? (friend.firstName + ' ' + friend.lastName)
+                            : friend.firstName}}</md-card-title>
+                        <md-card-subtitle style="font-weight: 500"><span style="font-weight: 500; color: #026eff; cursor: pointer; font-size: small" (click)="openProfile(friend._id, friend.userType)">View Profile</span></md-card-subtitle>
                         <div class="friends-header-view">
                             <div>
                                 <i *ngIf="!friend?.labourId?.isPhoneNumberHidden && !friend.showPhone" (click)="showPhoneInfo(i)" class="fa fa-phone-square"></i>
                                 <i *ngIf="!friend.showEmail" (click)="showEmailInfo(i)" class="fa fa-envelope"></i>
                             </div>
-                            <div *ngIf="friend.showPhone">{{friend.labourId?.countryCode + ' ' + friend.labourId?.phoneNumber}}</div>
-                            <div *ngIf="friend.showEmail">{{friend.labourId?.email}}</div>
+                            <div *ngIf="friend.showPhone">{{friend?.countryCode + ' ' + friend?.phoneNumber}}</div>
+                            <div *ngIf="friend.showEmail">{{friend?.email}}</div>
                         </div>
                     </md-card-header>
-                    <md-card-header style="margin-top: 5px" class="friends-card-header">
-                        <div md-card-avatar class="friends-header-image">
-                            <img mat-card-avatar [src]="friend.jobId?.categoryId?.image?.thumb ? friend.jobId?.categoryId?.image?.thumb : 'assets/img/image-placeholder.jpg'">
+                    <md-card-header *ngIf="friend.labourAddress || friend.employerAddress" style="margin-top: 5px" class="friends-card-header">
+                        <!-- <div md-card-avatar class="friends-header-image">
+                            <img mat-card-avatar [src]="friend?.categoryId?.image?.thumb ? friend?.categoryId?.image?.thumb : 'assets/img/image-placeholder.jpg'">
                         </div>
                         <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">
-                            {{ friend.jobId.category ? friend.jobId.category + ': ' + friend.jobId.subCategory : friend.jobId.category }}
-                        </md-card-title>
+                            {{ friend?.category ? friend?.category + ': ' + friend?.subCategory : friend?.category }}
+                        </md-card-title> -->
                         <md-card-subtitle style="font-weight: 500">
-                            {{ showAddress(friend?.labourAddress?.addressLine1, friend?.labourAddress?.city, friend?.labourAddress?.zipCode, friend?.labourAddress?.state,
-                            friend?.labourAddress?.country) }}
+                            <span *ngIf="friend.labourAddress">
+                                {{ showAddress(friend?.labourAddress?.addressLine1, friend?.labourAddress?.city, friend?.labourAddress?.zipCode, friend?.labourAddress?.state,
+                                friend?.labourAddress?.country) }}
+                            </span>
+                            <span *ngIf="friend.employerAddress">
+                                {{ showAddress(friend?.employerAddress?.addressLine1, friend?.employerAddress?.city, friend?.employerAddress?.zipCode, friend?.employerAddress?.state,
+                                friend?.employerAddress?.country) }}
+                            </span>
                         </md-card-subtitle>
                     </md-card-header>
                 </md-card>
@@ -61,10 +66,10 @@
                 <i class="fa fa-spinner fa-spin"></i>
             </md-card-content>
         </md-card>
-        <md-card *ngIf="showLoading" class="friends-card">
+        <!-- <md-card *ngIf="showLoading" class="friends-card">
             {{ locationStatus + ' ' }}
             <i *ngIf="locationStatus == 'Fetching current location...'" class="fa fa-spinner fa-spin"></i>
-        </md-card>
+        </md-card> -->
     </div>
 
     <!-- <div class="panel-footer">

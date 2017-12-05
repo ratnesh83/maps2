@@ -68,7 +68,7 @@
                         <img *ngIf="labour.labourId.profilePicture" mat-card-avatar [src]="labour.labourId.profilePicture.thumb ? labour.labourId.profilePicture.thumb : 'assets/img/default-profile.jpg'">
                     </div>
                     <md-card-title *ngIf="labour.labourId" style="font-weight: 600; color: #1b1b1b">{{labour.labourId.fullName ? labour.labourId.fullName : labour.labourId.lastName ? labour.labourId.firstName + ' ' + labour.labourId.lastName : labour.labourId.firstName}}</md-card-title>
-                    <md-card-subtitle style="font-weight: 500; color: #026eff; cursor: pointer; font-size: small" (click)="viewProfile('id')">View Profile</md-card-subtitle>
+                    <md-card-subtitle style="font-weight: 500; color: #026eff; cursor: pointer; font-size: small" (click)="viewProfile(labour._id)">View Profile</md-card-subtitle>
                     <div *ngIf="labour.labourId" class="posts-header-contact">
                         <div>
                             <i (click)="showPhoneInfo(i)" *ngIf="!labour.labourId.isPhoneNumberHidden && !labour.showPhone" class="fa fa-phone-square"></i>

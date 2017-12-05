@@ -21,33 +21,41 @@ export class AllNotifications {
     @ViewChild('notificationsPaginator') private _paginator: MdPaginator;
     public notifications;
     public page = 1;
-    public limit = 100;
+    public limit = 50;
     public pageIndex = 0;
     public count: number;
     public activeNotification;
     public unreadNotificationCount;
     public length;
-    public pageSize = 10;
-    public pageSizeOptions = [5, 10, 25, 100, 500];
+    public pageSize = 50;
+    public pageSizeOptions = [25, 50, 100, 500];
 
     constructor(private store: Store<any>,
         private router: Router,
         private dialog: MdDialog,
         private dataService: DataService) {
 
+        this.limit = this.pageSize;
+
         this.store
             .select('notification')
             .subscribe((res: any) => {
-                this.notifications = res.notifications;
-                this.count = res.count;
+                this.notifications = res.allNotifications;
+                this.count = res.totalCount;
                 this.activeNotification = (res.activeNotification) ? res.activeNotification : null;
                 this.unreadNotificationCount = res.unreadNotificationCount;
                 this.length = this.count;
                 this.limit = this.pageSize;
-                this.pageIndex = res.currentPage - 1;
+                this.pageIndex = res.allCurrentPage - 1;
             });
 
-        // this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.limit } });
+        this.store.dispatch({
+            type: notification.actionTypes.GET_ALL_NOTIFICATIONS,
+            payload: {
+                currentPage: this.page,
+                limit: this.limit
+            }
+        });
 
     }
 
@@ -172,7 +180,13 @@ export class AllNotifications {
     }
 
     pageChange(page) {
-        this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: { currentPage: this.page, limit: this.pageSize } });
+        this.store.dispatch({
+            type: notification.actionTypes.GET_ALL_NOTIFICATIONS,
+            payload: {
+                currentPage: page.pageIndex + 1,
+                limit: page.pageSize
+            }
+        });
         this.pageSize = page.pageSize;
     }
 

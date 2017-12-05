@@ -22,6 +22,10 @@ export const notification: ActionReducer<any> = (state = initialState, action: A
 
             return Object.assign({}, action.payload);
 
+        case 'GET_ALL_NOTIFICATIONS_SUCCESS':
+
+            return Object.assign({}, action.payload);
+
         case 'READ_NOTIFICATION':
 
             return Object.assign({}, state, { activeNotification: action.payload });

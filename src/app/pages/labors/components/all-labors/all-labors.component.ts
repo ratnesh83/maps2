@@ -44,8 +44,8 @@ export class AllLabors implements OnInit {
     public categories = [];
     public categoryId;
     public center;
-    public latitude;
-    public longitude;
+    public latitude = 30.7188978;
+    public longitude = 76.81029809;
     public city;
     public state;
     public country;

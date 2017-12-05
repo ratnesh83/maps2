@@ -64,7 +64,7 @@ export class TopNotifications {
     public notifications;
     public toastId;
     public page = 1;
-    public limit = 40;
+    public limit = 50;
     public count: number;
     public activeNotification;
     public unreadNotificationCount;

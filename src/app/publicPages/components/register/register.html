@@ -74,7 +74,8 @@
                             (focus)="countryCodeClick()" class="form-control" placeholder="+1" [mdAutocomplete]="auto" maxlength="5"
                             (keypress)="_keyPressCountryCode($event)">
                         <md-autocomplete #auto="mdAutocomplete">
-                            <md-option *ngFor="let country of countries | async" (onSelectionChange)="setCountry('+' + country.phone_code, country.country_code, $event)" [value]="'+' + country.phone_code">
+                            <md-option *ngFor="let country of countries | async" (onSelectionChange)="setCountry('+' + country.phone_code, country.country_code, $event)"
+                                [value]="'+' + country.phone_code">
                                 <img class="flag-options" src="{{ 'assets/img/flags/iso/' + country.country_code?.toString()?.toLowerCase() + '.png' }}"> {{ ' +' + country.phone_code }}
                                 <span style="color: rgba(0, 0, 0, 0.3)">
                                     {{ country.country_code }}
@@ -118,6 +119,11 @@
                             class="form-control" placeholder="Confirm Password*" [formControl]="repeatPassword">
                     </div>
                 </div>
+                <div *ngIf="enableInvite" class="form-group row">
+                    <div class="col-12 col-sm-12">
+                        <input #inputreferral type="text" class="form-control" placeholder="Invite Code" maxlength="16" [formControl]="inviteCode">
+                    </div>
+                </div>
                 <div class="form-group row sigup-checkbox">
                     <div class="col-12 col-sm-12">
                         <md-checkbox color="primary" class="sigup-checkbox-margin" [formControl]="agreement"></md-checkbox>
@@ -125,6 +131,11 @@
                             <a class="terms-conditions" href="{{termsLink}}" target="_blank">Terms and Conditions.</a>
                         </span>
                     </div>
+                    <!-- <div class="col-12 col-sm-4 text-referral">
+                        <span class="terms">
+                            <span class="terms-conditions link" >Apply Referral</span>
+                        </span>
+                    </div> -->
                 </div>
                 <div class="form-action-btn">
                     <div class="form-group row">
