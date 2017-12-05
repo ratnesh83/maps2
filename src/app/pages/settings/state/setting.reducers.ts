@@ -113,9 +113,12 @@ export const setting: ActionReducer<any> = (state = initialState, action: Action
 
         case 'SAVE_CAT':
             console.log(action.payload);
-            return Object.assign({}, state ,{selectedCat: action.payload});
+            return Object.assign({}, state, { selectedCat: action.payload });
         case 'APP_GET_AVAILABILITY_SUCCESS':
             return Object.assign({}, state, action.payload);
+
+        case 'FOLLOW_COMPANY':
+            return Object.assign({}, state, '');
 
         default:
             return state;

@@ -116,11 +116,11 @@
 //             type: labor.actionTypes.APP_GET_CATEGORIES_LABOR,
 //             payload: {}
 //         }); 
-        
+
 //         this.checkFlag=true;        
 
 //     }
-   
+
 
 
 //     onSubmit() {
@@ -141,7 +141,7 @@
 //             }
 
 //             if(this.selectedSubCategory){
-             
+
 //             fd.append('subCategoryIds',JSON.stringify([this.selectedSubCategory]));
 //             }
 //             let locationDetails = {};
@@ -164,11 +164,11 @@
 //                     Object.assign(locationDetails,{ 'zipCode': this.zipCode});                                      
 //                 }
 //                 fd.append('locationDetails',JSON.stringify(locationDetails));
-                
+
 //             }
-      
+
 //             this.store.dispatch({ type: setting.actionTypes.UPDATE_PROFILE_INFO, payload: fd});
-        
+
 //     }
 //     changeCategory(event,data){
 //         if (event && event.isUserInput) {
@@ -328,13 +328,13 @@
 //     if (!fileObject.type.match(imageType)) {
 //       return;
 //     }
-   
+
 //     this.profilePic = data.target.files[0];
 //     // var photoss=data.target.value.split('.');
 //     //========only image===========
 //     // if(photoss[photoss.length-1]=='png' || photoss[photoss.length-1]=='jpeg' || photoss[photoss.length-1]=='jpg' || photoss[photoss.length-1]=='svg')
 //     // {
-    
+
 //       this.checkFlag=true;
 //       let reader  = new FileReader();
 //       reader.addEventListener('load', () =>{
@@ -366,13 +366,15 @@ import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 
 import 'style-loader!./user-profile-edit.scss';
-import * as labor  from '../../../labors/state/labor.actions';
+import * as labor from '../../../labors/state/labor.actions';
 
 @Component({
     selector: 'user-profile-edit',
     templateUrl: './user-profile-edit.html',
 })
 export class UserProfileEdit {
+    selectedSubCategory: any;
+    selectedCategory: any;
     country: any;
     zipCode: any;
     state: any;
@@ -398,7 +400,7 @@ export class UserProfileEdit {
     public imageUploadChildrenArray;
     public settingStore;
     public products;
-    public isEditMode = false;
+    public isEditMode = true;
     public isEdited;
     public profile;
 
@@ -409,6 +411,7 @@ export class UserProfileEdit {
     public profileAddress;
     public profileDescription;
     public categoryId;
+    public changePic;
 
     public categories = [];
     public subCategories = [];
@@ -424,92 +427,129 @@ export class UserProfileEdit {
         this.settingStore = this.store
             .select('setting')
             .subscribe((res: any) => {
-                console.log(res); 
-                this.profile = res; 
-                this.profilePic = res.profilePicture;                
+                console.log(res);
+                this.profile = res;
+                this.profilePic = res.profilePicture;
                 this.profileName = res.fullName;
-                this.profileNumber = res.phoneNumber;  
-                if(res.locationDetails)
-                {        
-                this.profileAddress = res.locationDetails.addressLine1;
+                this.profileNumber = res.phoneNumber;
+                if (res.locationDetails) {
+                    this.profileAddress = res.locationDetails.addressLine1;
                 }
-                if(res.categoryId){
-                this.categoryId = res.categoryId.name;
+                if (res.categoryId && !res.selectedCat) {
+                    this.selectedCategory = res.categoryId._id;
+                    this.changeCategory({ isUserInput: 'yes' }, res.categoryId);
+                    this.selectedSubCategory = res.subCategoryIds[0]._id;
+                    this.subCategories = res.subCategories;
                 }
-                this.profileEmail = res.email;
-                this.profileDescription = res.description; 
-                this.isEditMode = false;  
-              
-            });
-            this.store.select('labor')
-                        .subscribe((res: any) => {
-                            this.categories = res.categories;
-                            console.log(res);
-                        });                  
-                
-            this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO});
-            this.store.dispatch({
-                type: labor.actionTypes.APP_GET_CATEGORIES_LABOR,
-                payload: {}
-            });    
-                             
-    }
-
-    onSubmit(){
-      
-          let fd = new FormData();
-          if(this.profileName){
-          fd.append('fullName',this.profileName);   
-          }
-          fd.append('description',this.profileDescription); 
-          
-           if(this.profilePic){
-               fd.append('profilePicture',this.profilePic);
-          }
-
-          this.store.dispatch({type: setting.actionTypes.UPDATE_PROFILE_INFO, payload: fd});
-        }
-        getAddress(event) {
-            let addressComponents = event.address_components;
-            let latitude = event.geometry.location.lat();
-            let longitude = event.geometry.location.lng();
-            let formattedAddress = event.formatted_address;
-            let locationName = event.streetAddress;
-            let route = '';
-            let locality = '';
-            let city = '';
-            let state = '';
-            let country = '';
-            let postal = '';
-            for (let i = 0; i < addressComponents.length; i++) {
-                let types = addressComponents[i].types;
-                for (let j = 0; j < types.length; j++) {
-                    if (types[j] == 'administrative_area_level_1') {
-                        state = addressComponents[i].long_name;
-                    } else if (types[j] == 'administrative_area_level_2') {
-                        city = addressComponents[i].long_name;
-                    } else if (types[j] == 'locality') {
-                        locality = addressComponents[i].long_name;
-                    } else if (types[j] == 'country') {
-                        country = addressComponents[i].long_name;
-                    } else if (types[j] == 'postal_code') {
-                        postal = addressComponents[i].long_name;
-                    } else if (types[j] == 'route') {
-                        route = addressComponents[i].long_name;
+                else {
+                    if (res.selectedCat) {
+                        this.selectedCategory = res.selectedCat._id;
+                        this.subCategories = res.subCategories;
                     }
                 }
-            }
-            this.locationAddress = formattedAddress;
-            this.streetAddress = locationName;
-            this.latitude = latitude;
-            this.longitude = longitude;
-            this.city = city;
-            this.state = state;
-            this.zipCode = postal;
-            this.country = country;
-            console.log(this.locationAddress);
+                this.profileEmail = res.email;
+                this.profileDescription = res.description;
+                this.isEditMode = res.edit;
+                this.subCategories = res.subCategories;
+
+            });
+        this.store.select('labor')
+            .subscribe((res: any) => {
+                this.categories = res.categories;
+                console.log(res);
+            });
+
+        this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO });
+        this.store.dispatch({
+            type: labor.actionTypes.APP_GET_CATEGORIES_LABOR,
+            payload: {}
+        });
+
+    }
+
+    onSubmit() {
+
+        let fd = new FormData();
+        if (this.profileName) {
+            fd.append('fullName', this.profileName);
         }
-      
+
+        fd.append('description', this.profileDescription);
+
+        if (this.changePic) {
+            fd.append('profilePicture', this.changePic);
+        }
+        if (this.selectedCategory) {
+            fd.append('categoryId', this.selectedCategory);
+        }
+        if (this.selectedSubCategory) {         
+            fd.append('subCategoryIds', JSON.stringify([this.selectedSubCategory]));
+        }
+        let locationDetails = {};
+        if (this.latitude && this.longitude) {
+            Object.assign(locationDetails, { 'latitude': this.latitude });
+            Object.assign(locationDetails, { 'longitude': this.longitude });
+            if (this.locationAddress) {
+                Object.assign(locationDetails, { 'addressLine1': this.locationAddress });
+            }
+            if (this.city) {
+                Object.assign(locationDetails, { 'city': this.city });
+            }
+            if (this.state) {
+                Object.assign(locationDetails, { 'state': this.state });
+            }
+            if (this.country) {
+                Object.assign(locationDetails, { 'country': this.country });
+            }
+            if (this.zipCode) {
+                Object.assign(locationDetails, { 'zipCode': this.zipCode });
+            }
+            fd.append('locationDetails', JSON.stringify(locationDetails));
+        }
+
+        this.store.dispatch({ type: setting.actionTypes.UPDATE_PROFILE_INFO, payload: fd });
+    }
+    getAddress(event) {
+        let addressComponents = event.address_components;
+        let latitude = event.geometry.location.lat();
+        let longitude = event.geometry.location.lng();
+        let formattedAddress = event.formatted_address;
+        let locationName = event.streetAddress;
+        let route = '';
+        let locality = '';
+        let city = '';
+        let state = '';
+        let country = '';
+        let postal = '';
+        for (let i = 0; i < addressComponents.length; i++) {
+            let types = addressComponents[i].types;
+            for (let j = 0; j < types.length; j++) {
+                if (types[j] == 'administrative_area_level_1') {
+                    state = addressComponents[i].long_name;
+                } else if (types[j] == 'administrative_area_level_2') {
+                    city = addressComponents[i].long_name;
+                } else if (types[j] == 'locality') {
+                    locality = addressComponents[i].long_name;
+                } else if (types[j] == 'country') {
+                    country = addressComponents[i].long_name;
+                } else if (types[j] == 'postal_code') {
+                    postal = addressComponents[i].long_name;
+                } else if (types[j] == 'route') {
+                    route = addressComponents[i].long_name;
+                }
+            }
+        }
+        this.locationAddress = formattedAddress;
+        this.streetAddress = locationName;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.city = city;
+        this.state = state;
+        this.zipCode = postal;
+        this.country = country;
+        console.log(this.locationAddress);
+    }
+
     bringFileSelector(): boolean {
         this.renderer.invokeElementMethod(this._fileUpload.nativeElement, 'click');
         return false;
@@ -545,7 +585,7 @@ export class UserProfileEdit {
             jQuery('html, body').animate({ scrollTop: this._scrollContainerExp.nativeElement.scrollHeight + this._scrollContainerQual.nativeElement.scrollHeight }, { duration: 500 });
         }
     }
-        
+
     checkFileSize(size): boolean {
         if (size > 5000000) {
             return false;
@@ -580,11 +620,11 @@ export class UserProfileEdit {
                 imgPath: 'assets/img/product_img_3.png'
             }
         ];
-        this.profile ={
-            contactPerson:'James Smith',
-            contactNumber:'+1 9888611221',
-            address:'1245 West Broadway, Vancouver…',
-            category:'Health Care',
+        this.profile = {
+            contactPerson: 'James Smith',
+            contactNumber: '+1 9888611221',
+            address: '1245 West Broadway, Vancouver…',
+            category: 'Health Care',
             description: 'Donec facilisis tortor ut augue lacinia, at viverra est semp Donec facilisis tortor ut augue lacinia, at viverra est semp.'
         };
     }
@@ -599,7 +639,7 @@ export class UserProfileEdit {
         } */
     }
     ngAfterViewInit() {
-        
+
     }
     _keyPressCsvNumber(event: any) {
         const pattern = /^[0-9,]*$/;
@@ -608,43 +648,43 @@ export class UserProfileEdit {
             event.preventDefault();
         }
     }
-    toogleEdit(){
+    toogleEdit() {
         this.isEditMode = !this.isEditMode;
         console.log(this.isEditMode);
     }
-    changeCategory(event,data){
-                if (event && event.isUserInput) {
-                    this.subCategories = [];
-                    this.store.dispatch({
-                        type: setting.actionTypes.APP_GET_SUB_CATEGORIES,
-                        payload: { id: data._id, selectedCategory:data  }
-                    });
-                }        
-            }
+    changeCategory(event, data) {
+        if (event && event.isUserInput) {
+            this.subCategories = [];
+            this.store.dispatch({
+                type: setting.actionTypes.APP_GET_SUB_CATEGORIES,
+                payload: { id: data._id, selectedCategory: data }
+            });
+        }
+    }
 
-  getImage = (data: any): any =>{
-    let fileObject = data.target.files[0];
-    let imageType = /image.*/;
-    if (!fileObject.type.match(imageType)) {
-      return;
+    getImage = (data: any): any => {
+        let fileObject = data.target.files[0];
+        let imageType = /image.*/;
+        if (!fileObject.type.match(imageType)) {
+            return;
+        }
+
+        this.changePic = data.target.files[0];
+        let reader = new FileReader();
+        reader.addEventListener('load', () => {
+            document.getElementById('previewImage').setAttribute('src', reader.result);
+        }, false);
+        if (fileObject) {
+            reader.readAsDataURL(fileObject);
+        }
     }
-   
-    this.profilePic = data.target.files[0];  
-      let reader  = new FileReader();
-      reader.addEventListener('load', () =>{
-        document.getElementById('previewImage').setAttribute('src',reader.result) ;
-      }, false);
-      if (fileObject) {
-        reader.readAsDataURL(fileObject);
-      }
-    }
-    triggerEvent = () =>{
+    triggerEvent = () => {
         document.getElementById('chooseFile').click();
-      }
+    }
 
-  //==============update new image============
-  makeValueNull = (data: any): any =>{
-    data.srcElement.value = null;
-  }
+    //==============update new image============
+    makeValueNull = (data: any): any => {
+        data.srcElement.value = null;
+    }
 
 }

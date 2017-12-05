@@ -175,6 +175,14 @@ export class SettingsService {
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
       }
 
+      followCompany(payload){
+          console.log("service");
+        let url = environment.APP.API_URL + environment.APP.FOLLOW_COMPANY;
+        this.authRequired = true;
+        this.utcOffset = false;        
+        return this.apiService.putApi(url, payload, this.authRequired, this.utcOffset);
+      }
+
 }
 
 

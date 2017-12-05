@@ -114,6 +114,7 @@ export const environment = {
         GET_DONATIONS: '/api/v1/donations',
         GET_PROFILE_INFO_ID_USER: '/api/v2/jobs/viewLaborProfile',
         GET_PROFILE_INFO_ID_EMPLOYER: '/api/v2/jobs/viewEmployerProfile',
+        FOLLOW_COMPANY: '/api/v2/jobs/followCompany'
         
     },
 

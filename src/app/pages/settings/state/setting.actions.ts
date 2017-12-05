@@ -39,7 +39,9 @@ export const actionTypes = {
     SAVE_CAT: 'SAVE_CAT',
     APP_GET_AVAILABILITY: 'APP_GET_AVAILABILITY',
     APP_GET_AVAILABILITY_SUCCESS: 'APP_GET_AVAILABILITY_SUCCESS',
-    UPDATE_CALENDER_INFO: 'UPDATE_CALENDER_INFO'
+    UPDATE_CALENDER_INFO: 'UPDATE_CALENDER_INFO',
+
+    FOLLOW_COMPANY: 'FOLLOW_COMPANY'
 };
 
 type credentials = {};
@@ -207,6 +209,10 @@ export class GetAvailabilitySuccess implements Action {
     type = actionTypes.APP_GET_AVAILABILITY_SUCCESS;
     constructor(public payload: any) { }
 }
+export class FollowCompany implements Action {
+    type = actionTypes.FOLLOW_COMPANY;
+    constructor(public payload: any) { }
+}
 
 export type Actions
     = AppGetServiceRadii
@@ -240,5 +246,6 @@ export type Actions
     | GetProfileInfoIdSuccessAction
     | AppGetSubCategories
     | AppGetSubCategoriesSuccess
-    | SaveCatAction;
+    | SaveCatAction
+    | FollowCompany;
 

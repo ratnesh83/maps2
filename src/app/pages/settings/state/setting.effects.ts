@@ -13,13 +13,89 @@ import * as setting from './setting.actions';
 import * as app from '../../../state/app.actions';
 import * as auth from '../../../auth/state/auth.actions';
 import { BaImageLoaderService, BaThemePreloader, BaThemeSpinner } from '../../../theme/services';
+import { CalendarService } from '../../../services/calendar-service/calendar.service';
 
 const types = ['success', 'error', 'info', 'warning'];
 
 @Injectable()
 export class SettingEffects {
     public jwtHelper: JwtHelper = new JwtHelper();
-    
+
+    @Effect({ dispatch: false })
+    getAvailability$ = this.actions$
+        .ofType('APP_GET_AVAILABILITY')
+        
+        .do((action) => {
+            this._spinner.show();
+            this.CalendarService.getAllAvailability(action.payload).subscribe((result) => {
+                this._spinner.hide();
+                if (result.statusCode == 200 || result.message == 'Action complete.') {
+                    let busyDateToSend = [];
+                    if (result && result.data) {
+                        for (let i = 0; i < result.data.length; i++) {
+                            let results = result.data[i];
+                            if (results && results.busyDates) {
+                                let busyDates = results.busyDates;
+                                for (let j = 0; j < busyDates.length; j++) {
+                                    busyDateToSend.push(busyDates[j]);
+                                }
+                            }
+                        }
+                    }
+                    let dates = this.CalendarService.getData(busyDateToSend);
+                    let payload = {
+                        availabilities: dates,
+                        busyDates: busyDateToSend
+                    };
+                    this.store.dispatch(new setting.GetAvailabilitySuccess(payload));
+                }
+            }
+                , (error) => {
+                    this._spinner.hide();
+                    if (error.statusCode === 401 || error.statusCode === 403) {
+                        this.store.dispatch({
+                            type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                        });
+                    } else {
+                        this.store.dispatch({
+                            type: setting.actionTypes.SETTINGS_ERROR, payload: error
+                        });
+                    }
+                }
+            );
+        });
+
+    @Effect({ dispatch: false })
+    updateCalendarInfo$ = this.actions$
+        .ofType('UPDATE_CALENDER_INFO')
+        .do((action) => {
+            this._spinner.show();
+            this.SettingsService.updateProfileInfo(action.payload).subscribe((result) => {
+                this._spinner.hide();
+                if (result.statusCode == 200) {
+                    let token = localStorage.getItem('tokenSession');
+                    if (token && !this.jwtHelper.isTokenExpired(token)) {
+                        let user = this.jwtHelper.decodeToken(token);
+                        this.store.dispatch({
+                            type: auth.actionTypes.AUTH_GET_USER_DETAILS_BY_ID,
+                            payload: {
+                                userId: user._id
+                            }
+                        });
+                    }
+                    this.store.dispatch({ type: setting.actionTypes.APP_GET_AVAILABILITY, payload: { } });
+                }
+            }
+                , (error) => {
+                    this._spinner.hide();
+                    if (error.statusCode === 401 || error.statusCode === 403) {
+                        this.store.dispatch({
+                            type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
+                        });
+                    }
+                }
+            );
+        });
 
     @Effect({ dispatch: false })
     getServiceRadii$ = this.actions$
@@ -551,7 +627,7 @@ export class SettingEffects {
     getProfileInfoId$ = this.actions$
       .ofType('GET_PROFILE_INFO_ID')
       .do((action) => {
-         let userId =  '5a1262033766a15de4c793c7';
+         let userId =  localStorage.getItem('userId');
         this.SettingsService.getProfileInfoId(userId,action.payload).subscribe((result) => {
             if (result.statusCode == 200) {
               let payload = result.data;
@@ -631,6 +707,21 @@ export class SettingEffects {
                   }
               );
           });
+          @Effect({dispatch: false})
+          followCompany$ = this.actions$
+            .ofType('FOLLOW_COMPANY')
+            .do((action) => {
+              this.SettingsService.followCompany(action.payload).subscribe((result) => {
+                  if (result.statusCode == 200) {  
+                  }
+                }
+                , (error) => {
+                  this._spinner.hide();            
+                  if (error.statusCode === 401 || error.statusCode === 403) {
+                  }
+                }
+              );
+            });
 
     constructor(
         private actions$: Actions,
@@ -638,6 +729,7 @@ export class SettingEffects {
         private router: Router,
         private toastrService: ToastrService,
         private SettingsService: SettingsService,
+        private CalendarService: CalendarService,
         private PostService: PostService,        
         private _spinner: BaThemeSpinner
     ) {

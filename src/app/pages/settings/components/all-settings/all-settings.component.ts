@@ -34,6 +34,8 @@ export class AllSettings {
     public products;
     public profile;
     public documents;
+
+    public employerId;
     constructor(
         private store: Store<any>,
         private modalService: NgbModal,
@@ -44,6 +46,7 @@ export class AllSettings {
         this.settingStore = this.store
             .select('setting')
             .subscribe((res: any) => {
+                this.employerId = res._id;
                 if(res.userDetails){
                     this.profile = res.userDetails[0];
                     this.documents  = res.userDetails[0].documents;
@@ -52,6 +55,12 @@ export class AllSettings {
             });
             this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO_ID,payload:{role:'employer'}});                        
     };
+
+    follow(){
+        let fd = new FormData();
+        fd.append('employerId',this.employerId);
+        this.store.dispatch({ type: setting.actionTypes.FOLLOW_COMPANY,payload:fd});                        
+    }
 
    
     bringFileSelector(): boolean {

@@ -91,10 +91,15 @@
                                 </md-option>
                             </md-select>
                         </div>
-                    <div class="col-6 form-group">
-                        <label class="editLable" for="comapanyName">Availability Calendar</label>
-                        <input class="form-control" type="text" name="companyName" id="companyName" >
-                    </div>
+                        <div class="col-12 col-sm-6 labors-input-box form-group">
+                            <label for="category" class="editLable">Sub Category</label>
+                            <md-select [(ngModel)]="selectedSubCategory" class="category-select col-sm-12 form-select">
+                                <md-option  *ngFor="let category of subCategories" [value]="category._id">
+                                    {{ category.name }}
+                                </md-option>
+                            </md-select>
+                        </div>
+                    
                     <!-- <div class="col-6 form-group">
                         <label class="editLable" for="comapanyName">Address</label>
                         <input class="form-control" type="text" name="profileAddress" id="companyName" [(ngModel)]="profileAddress">
