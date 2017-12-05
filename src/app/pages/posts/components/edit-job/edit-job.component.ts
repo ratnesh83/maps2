@@ -375,6 +375,11 @@ export class EditPost implements OnInit {
             delete data.jobDetails;
         }
 
+        if(this.post && this.post.acceptedLabourers > 0) {
+            delete data.startDate;
+            delete data.endDate;
+        }
+
         this.store.dispatch({
             type: post.actionTypes.APP_EDIT_POST,
             payload: data
