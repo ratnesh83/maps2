@@ -46,12 +46,14 @@ export class Register {
     public signUpType: AbstractControl;
     public agreement: AbstractControl;
     public socialId: AbstractControl;
+    public inviteCode: AbstractControl;
     public termsLink;
     public socialMode;
     public countryCodes = [];
     public country_code;
 
     public submitted: boolean = false;
+    public enableInvite: boolean = true;
 
     constructor(private fb: FormBuilder,
         private store: Store<any>,
@@ -88,6 +90,7 @@ export class Register {
             'socialId': [''],
             'description': [''],
             'expertiseDescription': [''],
+            'inviteCode': [''],
             'passwords': fb.group({
                 'password': ['', Validators.compose([Validators.required, NameValidator.password])],
                 'repeatPassword': ['', Validators.compose([Validators.required])]
@@ -105,6 +108,7 @@ export class Register {
         this.signUpType = this.form.controls['signUpType'];
         this.agreement = this.form.controls['agreement'];
         this.socialId = this.form.controls['socialId'];
+        this.inviteCode = this.form.controls['inviteCode'];
         this.password = this.passwords.controls['password'];
         this.repeatPassword = this.passwords.controls['repeatPassword'];
         this.countryCode.setValue('+1');
@@ -194,6 +198,7 @@ export class Register {
         this.socialId.reset();
         this.description.reset();
         this.expertiseDescription.reset();
+        this.inviteCode.reset();
         this.socialMode = null;
     }
 
@@ -365,7 +370,8 @@ export class Register {
             description: this.description.value,
             companyName: this.companyName.value,
             socialId: this.socialId.value,
-            socialMode: this.socialMode
+            socialMode: this.socialMode,
+            referralCode: this.inviteCode.value
         };
 
         if (this.signUpType.value == 'USER') {
@@ -388,6 +394,10 @@ export class Register {
 
         if (this.password.value == null || this.password.value == '' || this.password.value == undefined) {
             delete data.password;
+        }
+
+        if (this.inviteCode.value == null || this.inviteCode.value == '' || this.inviteCode.value == undefined) {
+            delete data.referralCode;
         }
 
         this.store.dispatch({
