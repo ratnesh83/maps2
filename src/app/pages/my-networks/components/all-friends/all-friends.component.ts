@@ -55,7 +55,6 @@ export class AllFriendList implements OnInit {
             .select('network')
             .subscribe((res: any) => {
                 if (res) {
-                    console.log(res);
                     this.friends = res.friends;
                     if (this.friends) {
                         for (let i = 0; i < this.friends.length; i++) {
