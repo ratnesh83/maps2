@@ -49,6 +49,14 @@ export class MyNetworkService {
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
 
+    getAllFriendList(payload) {
+        let url;
+        url = environment.APP.API_URL + environment.APP.GET_FRIENDS;
+        this.authRequired = true;
+        this.utcOffset = false;
+        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+    }
+
     getAllCategories(payload) {
         let url;
         this.authRequired = false;

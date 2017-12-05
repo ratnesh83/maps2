@@ -55,7 +55,8 @@ export class AllFriendList implements OnInit {
             .select('network')
             .subscribe((res: any) => {
                 if (res) {
-                    this.friends = res.labors;
+                    console.log(res);
+                    this.friends = res.friends;
                     if (this.friends) {
                         for (let i = 0; i < this.friends.length; i++) {
                             this.friends[i].showPhone = false;
@@ -86,7 +87,6 @@ export class AllFriendList implements OnInit {
                     };
                     this.data = data;
                     this.showLoading = false;
-                    this.getAllFriendLists(data);
                     this.geocoder(geocoder, latlng)
                         .then((result) => {
                             let results = result;
@@ -150,7 +150,7 @@ export class AllFriendList implements OnInit {
     }
 
     ngOnInit() {
-        // this.getAllFriendListsCallback();
+        this.getAllFriendLists();
     }
 
     ngOnDestroy() {
@@ -159,12 +159,10 @@ export class AllFriendList implements OnInit {
         }
     }
 
-    getAllFriendLists(data) {
+    getAllFriendLists() {
         this.showLoading = false;
         this.store.dispatch({
-            type: friend.actionTypes.APP_GET_LABORS_LIST, payload: {
-                data: data
-            }
+            type: friend.actionTypes.APP_GET_FRIENDS_LIST, payload: {}
         });
     }
 
@@ -193,6 +191,15 @@ export class AllFriendList implements OnInit {
             }
         }
         return returnAddress;
+    }
+
+    openProfile(id, type) {
+        this.dataService.setData('userId', id);
+        if (type == 'EMPLOYER') {
+            this.router.navigate(['/pages/settings/employerprofile']);
+        } else {
+            this.router.navigate(['/pages/settings/userprofile']);
+        }
     }
 
     pageChange(page) {

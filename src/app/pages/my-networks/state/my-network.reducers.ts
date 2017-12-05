@@ -29,6 +29,12 @@ export const network: ActionReducer<any> = (state = initialState, action: Action
         case 'APP_GET_EMPLOYERS_LIST_SUCCESS':
             return Object.assign({}, state, { employers: action.payload });
 
+        case 'APP_GET_FRIENDS_LIST':
+            return Object.assign({}, state, { friends: null });
+
+        case 'APP_GET_FRIENDS_LIST_SUCCESS':
+            return Object.assign({}, state, { friends: action.payload });
+
         default:
             return state;
     }
