@@ -21,25 +21,25 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="row">
-                                <div class="col-8">
+                                <div class="col-sm-8">
                                     <md-card-subtitle>Contact Person</md-card-subtitle>
-                                    <md-card-title class="info">{{profile.fullName}}</md-card-title>
+                                    <md-card-title class="data">{{profile.fullName}}</md-card-title>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-4">
                                     <md-card-subtitle>Office Number</md-card-subtitle>
-                                    <md-card-title class="info">{{profile.countryCode}}&nbsp;{{profile.phoneNumber}}</md-card-title>
+                                    <md-card-title class="data">{{profile.countryCode}}&nbsp;{{profile.phoneNumber}}</md-card-title>
                                 </div>
-                                <div class="col-8">
+                                <div class="col-sm-8">
                                     <md-card-subtitle>Address</md-card-subtitle>
-                                    <md-card-title class="info">{{profile.locationDetails ? profile.locationDetails.addressLine1 : '--'}}</md-card-title>
+                                    <md-card-title class="data">{{profile.locationDetails ? profile.locationDetails.addressLine1 : '--'}}</md-card-title>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-4">
                                     <md-card-subtitle>Category</md-card-subtitle>
-                                    <md-card-title class="info">{{profile.category}}</md-card-title>
+                                    <md-card-title class="data">{{profile.categoryId ? profile.categoryId.name : '--'}}</md-card-title>
                                 </div>
                                 <div class="col-12">
                                     <md-card-subtitle>Description</md-card-subtitle>
-                                    <md-card-title class="info">{{profile.description}}</md-card-title>
+                                    <md-card-title class="data">{{profile.description}}</md-card-title>
                                 </div>
                             </div>
                         </div>
@@ -57,8 +57,8 @@
                             <md-card class="">
                                 <md-card-content class="">
                                     <img class="img-fluid " [src]="item.url">
-                                    <md-card-title class="">{{item.info}}</md-card-title>
-                                    <md-card-subtitle>{{item.name}}</md-card-subtitle>
+                                    <md-card-title id="portfolioInfo">{{item.info}}</md-card-title>
+                                    <md-card-subtitle></md-card-subtitle>
                                 </md-card-content>
                             </md-card>
                         </div>
@@ -81,12 +81,12 @@
                     </div>
                     <div class="col-6 form-group">
                         <label class="editLable" for="contactNumber">Contact Number</label>
-                        <input class="form-control" type="text" name="profileNumber" id="contactNumber" [(ngModel)]="profileNumber">
+                        <input class="form-control" type="text" name="profileNumber" id="contactNumber" [(ngModel)]="profileNumber" disabled>
                     </div>
                     <div class="col-12 col-sm-6 labors-input-box form-group">
                             <label for="category" class="editLable">Category</label>
                             <md-select [(ngModel)]="selectedCategory" class="category-select col-sm-12 form-select">
-                                <md-option (onSelectionChange)="changeCategory($event, category)" *ngFor="let category of categories" [value]="category._id">
+                                <md-option (onSelectionChange)="changeCategory($event, category, true)" *ngFor="let category of categories" [value]="category._id">
                                     {{ category.name }}
                                 </md-option>
                             </md-select>
@@ -94,9 +94,11 @@
                         <div class="col-12 col-sm-6 labors-input-box form-group">
                             <label for="category" class="editLable">Sub Category</label>
                             <md-select [(ngModel)]="selectedSubCategory" class="category-select col-sm-12 form-select">
+                                <div *ngIf="subCategories">
                                 <md-option  *ngFor="let category of subCategories" [value]="category._id">
                                     {{ category.name }}
                                 </md-option>
+                                </div>
                             </md-select>
                         </div>
                     
