@@ -15,7 +15,7 @@
                         <img md-card-avatar class="main-header-image" [src]='profile.profilePicture && profile.profilePicture.original ? profile.profilePicture.original : "assets/img/default-profile.jpg"'>
                     </div>
                 </md-card-header>
-        <md-card-title class="main-card-title text-uppercase ">{{profile.companyName}}</md-card-title>
+                <md-card-title class="main-card-title text-uppercase ">{{profile.companyName}}</md-card-title>
                 <md-card-title class="main-card-title-address text-lowercase">{{profile.email}}</md-card-title>
 
                 <div class="container section-container">
@@ -24,23 +24,23 @@
                             <div class="row">
                                 <div class="col-8">
                                     <md-card-subtitle>Contact Person</md-card-subtitle>
-                                    <md-card-title class="info">{{profile.fullName}}</md-card-title>
+                                    <md-card-title class="data">{{profile.fullName}}</md-card-title>
                                 </div>
                                 <div class="col-4">
                                     <md-card-subtitle>Office Number</md-card-subtitle>
-                                    <md-card-title class="info">{{profile.phoneNumber}}</md-card-title>
+                                    <md-card-title class="data">{{profile.phoneNumber}}</md-card-title>
                                 </div>
                                 <div class="col-8">
                                     <md-card-subtitle>Address</md-card-subtitle>
-                                    <md-card-title class="info">{{profile.locationDetails ? profile.locationDetails.addressLine1 : ''}}</md-card-title>
+                                    <md-card-title class="data">{{profile.locationDetails ? profile.locationDetails.addressLine1 : ''}}</md-card-title>
                                 </div>
                                 <div class="col-4">
                                     <md-card-subtitle>Category</md-card-subtitle>
-                                    <md-card-title class="info"></md-card-title>
+                                    <md-card-title class="data"></md-card-title>
                                 </div>
                                 <div class="col-12">
                                     <md-card-subtitle>Description</md-card-subtitle>
-                                    <md-card-title class="info">{{profile.description}}</md-card-title>
+                                    <md-card-title class="data">{{profile.description}}</md-card-title>
                                 </div>
                             </div>
                         </div>
@@ -69,11 +69,13 @@
             <!-- employee profile ends-->
 
             <div class="conatainer section-container" *ngIf="isEditMode">
-               <div class="main-card-header d-flex justify-content-center">
+                <div class="main-card-header d-flex justify-content-center">
                     <div md-card-avatar class="main-header-image">
-                        <img md-card-avatar class="main-header-image" src='assets/img/default-profile.jpg'>
+                        <input type="file" class="displayNone" id="chooseFile" accept="image/*" (change)="getImage($event)" (click)="makeValueNull($event)"
+                        />
+                        <img md-card-avatar class="main-header-image " id="previewImage" [src]='profile.profilePicture && profile.profilePicture.original ? profile.profilePicture.original : "assets/img/default-profile.jpg"'
+                            (click)="triggerEvent()">
                     </div>
-                    
                 </div>
                 <div class="row">
                     <div class="col-6 form-group">
@@ -90,21 +92,38 @@
                     </div>
                     <div class="col-6 form-group">
                         <label class="editLable" for="comapanyName">Contact Number</label>
-                        <input class="form-control" type="text" name="profileNumber" id="companyName" [(ngModel)]="profileNumber">
+                        <input class="form-control" type="text" name="profileNumber" id="companyName" [(ngModel)]="profileNumber" disabled>
                     </div>
-                    <div class="col-6 form-group">
-                        <label class="editLable" for="comapanyName">Address</label>
-                        <input class="form-control" type="text" name="companyName" id="companyName">
+                    <div class="col-12 col-sm-6 labors-input-box form-group">
+                        <label for="category" class="editLable">Category</label>
+                        <md-select [(ngModel)]="selectedCategory" class="category-select col-sm-12 form-select">
+                            <md-option (onSelectionChange)="changeCategory($event, category, true)" *ngFor="let category of categories" [value]="category._id">
+                                {{ category.name }}
+                            </md-option>
+                        </md-select>
                     </div>
-                    <div class="col-6 form-group">
-                        <label class="editLable" for="comapanyName">Category</label>
-                        <input class="form-control" type="text" name="companyName" id="companyName">
+                    <div class="col-12 col-sm-6 labors-input-box form-group">
+                        <label for="category" class="editLable">Sub Category</label>
+                        <md-select [(ngModel)]="selectedSubCategory" class="category-select col-sm-12 form-select">
+                            <div *ngIf="subCategories">
+                                <md-option *ngFor="let category of subCategories" [value]="category._id">
+                                    {{ category.name }}
+                                </md-option>
+                            </div>
+                        </md-select>
                     </div>
+                    <div class="col-12 col-sm-6 labors-input-box">
+                        <label for="address">Address</label>
+                        <input #inputLocationAddress ng2-google-place-autocomplete [options]="{ types: [] }" (setAddress)="getAddress($event)" class="form-control"
+                            [(ngModel)]="profileAddress">
+                    </div>
+
                     <div class="col-12 form-group">
                         <label class="editLable" for="comapanyName">Description</label>
-                        <textarea class="form-control" id="exampleTextarea" name="profileDescription" rows="3" style="border: solid 1px #f0f0f0" [(ngModel)]="profileDescription"></textarea>
+                        <textarea class="form-control" id="exampleTextarea" name="profileDescription" rows="3" style="border: solid 1px #f0f0f0"
+                            [(ngModel)]="profileDescription"></textarea>
                     </div>
-                    
+
                 </div>
             </div>
 

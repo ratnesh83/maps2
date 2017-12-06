@@ -400,7 +400,7 @@ export class UserProfileEdit {
     public imageUploadChildrenArray;
     public settingStore;
     public products;
-    public isEditMode = true;
+    public isEditMode = false;
     public isEdited;
     public profile;
 
@@ -437,20 +437,19 @@ export class UserProfileEdit {
                 }
                 if (res.categoryId && !res.selectedCat) {
                     this.selectedCategory = res.categoryId._id;
-                    this.changeCategory({ isUserInput: 'yes' }, res.categoryId);
+                    this.changeCategory({ isUserInput: 'yes' }, res.categoryId, false);
                     this.selectedSubCategory = res.subCategoryIds[0]._id;
                     this.subCategories = res.subCategories;
                 }
                 else {
-                    if (res.selectedCat) {
+                    if (res.selectedCat && Array.isArray(res.subCategories)) {
                         this.selectedCategory = res.selectedCat._id;
                         this.subCategories = res.subCategories;
                     }
                 }
                 this.profileEmail = res.email;
                 this.profileDescription = res.description;
-                this.isEditMode = res.edit;
-                this.subCategories = res.subCategories;
+                this.isEditMode = res.edit;                                      
 
             });
         this.store.select('labor')
@@ -468,12 +467,10 @@ export class UserProfileEdit {
     }
 
     onSubmit() {
-
         let fd = new FormData();
         if (this.profileName) {
             fd.append('fullName', this.profileName);
         }
-
         fd.append('description', this.profileDescription);
 
         if (this.changePic) {
@@ -506,8 +503,7 @@ export class UserProfileEdit {
             }
             fd.append('locationDetails', JSON.stringify(locationDetails));
         }
-
-        this.store.dispatch({ type: setting.actionTypes.UPDATE_PROFILE_INFO, payload: fd });
+       this.store.dispatch({ type: setting.actionTypes.UPDATE_PROFILE_INFO, payload: fd });
     }
     getAddress(event) {
         let addressComponents = event.address_components;
@@ -652,12 +648,12 @@ export class UserProfileEdit {
         this.isEditMode = !this.isEditMode;
         console.log(this.isEditMode);
     }
-    changeCategory(event, data) {
+    changeCategory(event, data, editmode) {
         if (event && event.isUserInput) {
             this.subCategories = [];
             this.store.dispatch({
                 type: setting.actionTypes.APP_GET_SUB_CATEGORIES,
-                payload: { id: data._id, selectedCategory: data }
+                payload: { id: data._id, selectedCategory: data, edit: editmode  }
             });
         }
     }

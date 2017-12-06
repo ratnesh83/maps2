@@ -73,9 +73,9 @@
 .section-heading{
 margin: 20px 0px 20px 0px;
 }
-.info{
-  font-size: 18px;
-  font-weight: bold;
+.data{
+  font-size: 16px;
+  font-weight: 400;
   letter-spacing: 1.1px;
   line-height: 20px;
   text-align: left;
@@ -140,4 +140,7 @@ md-select{
 #addImageId2{
   position: absolute;
   top: 60px;
+}
+#portfolioInfo{
+  margin-top:10px;
 }

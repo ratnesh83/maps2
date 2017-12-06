@@ -19,6 +19,8 @@ const types = ['success', 'error', 'info', 'warning'];
 
 @Injectable()
 export class SettingEffects {
+    options: ToastrConfig;
+    private lastInserted: number[] = [];
     public jwtHelper: JwtHelper = new JwtHelper();
 
     @Effect({ dispatch: false })
@@ -662,7 +664,14 @@ export class SettingEffects {
                       });
                   }
                   this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO,payload:{mode:1}});                                          
-                  this.router.navigate(['/pages/settings/userprofileedit']);
+                  let m = 'Profile Updated Successfully';
+                  let t = 'success';
+                  const opt = cloneDeep(this.options);
+                  const inserted = this.toastrService[types[0]](m, t, opt);
+                    if (inserted) {
+                      this.lastInserted.push(inserted.toastId);
+                    }
+                    return inserted;
               }
             }
             , (error) => {
@@ -672,6 +681,16 @@ export class SettingEffects {
                   type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
                 });
               }  
+              else{
+                let m = error.message;
+                let t = 'error';
+                const opt = cloneDeep(this.options);
+                const inserted = this.toastrService[types[1]](m, t, opt);
+                  if (inserted) {
+                    this.lastInserted.push(inserted.toastId);
+                  }
+                  return inserted;
+              }
             }
           );
       });
@@ -679,8 +698,8 @@ export class SettingEffects {
       getSubCategories$ = this.actions$
           .ofType('APP_GET_SUB_CATEGORIES')
           .do((action) => {
-              this._spinner.show();
-              this.store.dispatch(new setting.SaveCatAction(action.payload.selectedCategory));              
+            this._spinner.show();
+            this.store.dispatch(new setting.SaveCatAction({selectedCategory: action.payload.selectedCategory, edit: action.payload.edit}));              
             this.PostService.getAllSubCategories(action.payload).subscribe((result) => {
                 console.log(action.payload);
                   this._spinner.hide();

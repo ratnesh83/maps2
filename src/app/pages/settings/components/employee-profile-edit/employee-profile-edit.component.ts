@@ -8,6 +8,7 @@ import { FormGroup, AbstractControl, FormBuilder, Validators, FormArray } from '
 import { BaThemeSpinner } from '../../../../theme/services';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
+import * as labor from '../../../labors/state/labor.actions';
 
 import 'style-loader!./employee-profile-edit.scss';
 
@@ -41,7 +42,23 @@ export class EmployeeProfileEdit {
     public profileEmail;
     public profileNumber;
     public profileDescription;
-    
+    public profileAddress;
+    public changePic;
+
+    country: any;
+    zipCode: any;
+    state: any;
+    city: any;
+    longitude: any;
+    latitude: any;
+    streetAddress: any;
+    locationAddress: any;
+
+    selectedCategory: any;
+    selectedSubCategory: any;
+    subCategories: any;
+    categories: any;
+
     constructor(
         private store: Store<any>,
         private modalService: NgbModal,
@@ -60,21 +77,86 @@ export class EmployeeProfileEdit {
                 this.profileEmail = res.email;
                 this.profileDescription = res.description;
                 this.profileNumber = res.phoneNumber;
+                if (res.locationDetails) {
+                    this.profileAddress = res.locationDetails.addressLine1;
+                }
+                if (res.categoryId && !res.selectedCat) {
+                    this.selectedCategory = res.categoryId._id;
+                    this.changeCategory({ isUserInput: 'yes' }, res.categoryId, false);
+                    this.selectedSubCategory = res.subCategoryIds[0]._id;
+                    this.subCategories = res.subCategories;
+                }
+                else {
+                    if (res.selectedCat && Array.isArray(res.subCategories)) {
+                        this.selectedCategory = res.selectedCat._id;
+                        this.subCategories = res.subCategories;
+                    }
+                }
+                this.isEditMode = res.edit;
+
             });
+            this.store.select('labor')
+            .subscribe((res: any) => {
+                this.categories = res.categories;
+                console.log(res);
+            });
+
         this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO });
+        this.store.dispatch({
+            type: labor.actionTypes.APP_GET_CATEGORIES_LABOR,
+            payload: {}
+        });
+
     };
-    onSubmit(){
+    onSubmit() {
+
+        let fd = new FormData();
+        if (this.profileName) {
+            fd.append('fullName', this.profileName);
+        }
+        if (this.profileCompanyName) {
+            fd.append('companyName', this.profileCompanyName);
+        }
+        if (this.changePic) {
+            fd.append('profilePicture', this.changePic);
+        }
+        if (this.profileEmail) {
+            fd.append('email', this.profileEmail);
+        }
+        fd.append('description', this.profileDescription);
         
-            let fd = new FormData();
-            if(this.profileName){
-            fd.append('fullName',this.profileName);     
-            fd.append('companyName',this.profileCompanyName);     
-            fd.append('email',this.profileEmail);
-            fd.append('description',this.profileDescription);
+        if (this.selectedCategory) {
+            fd.append('categoryId', this.selectedCategory);
+        }
+        if (this.selectedSubCategory) {         
+            fd.append('subCategoryIds', JSON.stringify([this.selectedSubCategory]));
+        }
+
+        let locationDetails = {};
+        if (this.latitude && this.longitude) {
+            Object.assign(locationDetails, { 'latitude': this.latitude });
+            Object.assign(locationDetails, { 'longitude': this.longitude });
+            if (this.locationAddress) {
+                Object.assign(locationDetails, { 'addressLine1': this.locationAddress });
             }
-            this.store.dispatch({type: setting.actionTypes.UPDATE_PROFILE_INFO, payload: fd});
-          }
-        
+            if (this.city) {
+                Object.assign(locationDetails, { 'city': this.city });
+            }
+            if (this.state) {
+                Object.assign(locationDetails, { 'state': this.state });
+            }
+            if (this.country) {
+                Object.assign(locationDetails, { 'country': this.country });
+            }
+            if (this.zipCode) {
+                Object.assign(locationDetails, { 'zipCode': this.zipCode });
+            }
+            fd.append('locationDetails', JSON.stringify(locationDetails));
+        }
+
+        this.store.dispatch({ type: setting.actionTypes.UPDATE_PROFILE_INFO, payload: fd });
+    }
+
     bringFileSelector(): boolean {
         this.renderer.invokeElementMethod(this._fileUpload.nativeElement, 'click');
         return false;
@@ -178,5 +260,78 @@ export class EmployeeProfileEdit {
     toogleEdit() {
         this.isEditMode = !this.isEditMode;
         console.log(this.isEditMode);
+    }
+    getAddress(event) {
+        let addressComponents = event.address_components;
+        let latitude = event.geometry.location.lat();
+        let longitude = event.geometry.location.lng();
+        let formattedAddress = event.formatted_address;
+        let locationName = event.streetAddress;
+        let route = '';
+        let locality = '';
+        let city = '';
+        let state = '';
+        let country = '';
+        let postal = '';
+        for (let i = 0; i < addressComponents.length; i++) {
+            let types = addressComponents[i].types;
+            for (let j = 0; j < types.length; j++) {
+                if (types[j] == 'administrative_area_level_1') {
+                    state = addressComponents[i].long_name;
+                } else if (types[j] == 'administrative_area_level_2') {
+                    city = addressComponents[i].long_name;
+                } else if (types[j] == 'locality') {
+                    locality = addressComponents[i].long_name;
+                } else if (types[j] == 'country') {
+                    country = addressComponents[i].long_name;
+                } else if (types[j] == 'postal_code') {
+                    postal = addressComponents[i].long_name;
+                } else if (types[j] == 'route') {
+                    route = addressComponents[i].long_name;
+                }
+            }
+        }
+        this.locationAddress = formattedAddress;
+        this.streetAddress = locationName;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.city = city;
+        this.state = state;
+        this.zipCode = postal;
+        this.country = country;
+        console.log(this.locationAddress);
+    }
+    getImage = (data: any): any => {
+        let fileObject = data.target.files[0];
+        let imageType = /image.*/;
+        if (!fileObject.type.match(imageType)) {
+            return;
+        }
+
+        this.changePic = data.target.files[0];
+        let reader = new FileReader();
+        reader.addEventListener('load', () => {
+            document.getElementById('previewImage').setAttribute('src', reader.result);
+        }, false);
+        if (fileObject) {
+            reader.readAsDataURL(fileObject);
+        }
+    }
+    triggerEvent = () => {
+        document.getElementById('chooseFile').click();
+    }
+
+    //==============update new image============
+    makeValueNull = (data: any): any => {
+        data.srcElement.value = null;
+    }
+    changeCategory(event, data, editmode) {
+        if (event && event.isUserInput) {
+            this.subCategories = [];
+            this.store.dispatch({
+                type: setting.actionTypes.APP_GET_SUB_CATEGORIES,
+                payload: { id: data._id, selectedCategory: data, edit: editmode }
+            });
+        }
     }
 }
