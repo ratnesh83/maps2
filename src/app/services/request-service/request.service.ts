@@ -88,15 +88,8 @@ export class RequestService {
     postFeedback(payload) {
         this.authRequired = true;
         this.utcOffset = false;
-        let formData = new FormData();
-        formData.append('userId', payload.userId);
-        formData.append('to', payload.to);
-        formData.append('rating', payload.rating);
-        if (payload && payload.feedback) {
-            formData.append('feedback', payload.feedback);
-        }
         let url = environment.APP.API_URL + environment.APP.POST_FEEDBACK + payload.jobId;
-        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+        return this.apiService.putFileApi(url, payload.form, this.authRequired, this.utcOffset);
     }
 
 }

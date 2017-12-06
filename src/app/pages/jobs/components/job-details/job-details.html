@@ -42,10 +42,10 @@
                 <p class="md-card-content-posts-content">
                     {{job.startDate | date : 'dd/MM/yyyy'}} - {{job.endDate | date : 'dd/MM/yyyy'}}
                 </p>
-                <p class="md-card-content-posts-label">
+                <p *ngIf="job.jobDetails" class="md-card-content-posts-label">
                     Job Details
                 </p>
-                <p class="md-card-content-posts-content">
+                <p *ngIf="job.jobDetails" class="md-card-content-posts-content">
                     {{job.jobDetails}}
                 </p>
                 <p class="md-card-content-posts-label">

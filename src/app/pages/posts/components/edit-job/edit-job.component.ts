@@ -380,9 +380,25 @@ export class EditPost implements OnInit {
             delete data.endDate;
         }
 
+        let formData = new FormData();
+        formData.append('title', this.jobDetail.value);
+        if (this.jobDetails.value || this.jobDetails.value != '' || this.jobDetails.value != null) {
+            formData.append('jobDetails', this.jobDetails.value);
+        }
+        if (this.post && this.post.acceptedLabourers == 0) {
+            formData.append('startDate', this.getDateString(this.startDate.value));
+            formData.append('endDate', this.getDateString(this.endDate.value));
+        }
+        formData.append('rateType', this.rateType.value);
+        formData.append('rate', this.jobRate.value);
+        formData.append('requiredLabourers', this.labourCount.value);
+
         this.store.dispatch({
             type: post.actionTypes.APP_EDIT_POST,
-            payload: data
+            payload: {
+                jobId: this.dataService.getData('jobId'),
+                form: formData
+            }
         });
     }
 

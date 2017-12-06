@@ -78,49 +78,27 @@ export class PostService {
     editPost(payload) {
         this.authRequired = true;
         this.utcOffset = false;
-        let formData = new FormData();
-        formData.append('title', payload.title);
-        if (payload && payload.jobDetails) {
-            formData.append('jobDetails', payload.jobDetails);
-        }
-        if (payload && payload.startDate) {
-            formData.append('startDate', payload.startDate);
-        }
-        if (payload && payload.endDate) {
-            formData.append('endDate', payload.endDate);
-        }
-        formData.append('rateType', payload.rateType);
-        formData.append('rate', payload.rate);
-        formData.append('requiredLabourers', payload.requiredLabourers);
         let url = environment.APP.API_URL + environment.APP.EDIT_POST_JOB + payload.jobId;
-        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+        return this.apiService.putFileApi(url, payload.form, this.authRequired, this.utcOffset);
     }
 
     hireLabor(payload) {
         this.authRequired = true;
         this.utcOffset = false;
-        let formData = new FormData();
-        formData.append('jobId', payload.jobId);
-        formData.append('labourId', payload.laborId);
         let url = environment.APP.API_URL + environment.APP.HIRE_LABOR;
-        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+        return this.apiService.putFileApi(url, payload, this.authRequired, this.utcOffset);
     }
 
     rejectLabor(payload) {
         this.authRequired = true;
         this.utcOffset = false;
-        let formData = new FormData();
-        formData.append('jobId', payload.jobId);
-        formData.append('labourId', payload.laborId);
         let url = environment.APP.API_URL + environment.APP.REJECT_LABOR;
-        return this.apiService.putFileApi(url, formData, this.authRequired, this.utcOffset);
+        return this.apiService.putFileApi(url, payload, this.authRequired, this.utcOffset);
     }
 
     cancelJob(payload) {
         this.authRequired = true;
         this.utcOffset = false;
-        let formData = new FormData();
-        formData.append('jobId', payload.jobId);
         let url = environment.APP.API_URL + environment.APP.CANCEL_JOB + payload.jobId;
         return this.apiService.putFileApi(url, null, this.authRequired, this.utcOffset);
     }

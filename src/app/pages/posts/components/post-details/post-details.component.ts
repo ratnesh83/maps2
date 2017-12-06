@@ -123,8 +123,11 @@ export class PostDetails implements OnInit {
             jobId: jobId,
             laborId: laborId
         };
+        let formData = new FormData();
+        formData.append('jobId', jobId);
+        formData.append('labourId', laborId);
         this.store.dispatch({
-            type: post.actionTypes.APP_HIRE_LABOR, payload: data
+            type: post.actionTypes.APP_HIRE_LABOR, payload: formData
         });
     }
 
@@ -133,8 +136,11 @@ export class PostDetails implements OnInit {
             jobId: jobId,
             laborId: laborId
         };
+        let formData = new FormData();
+        formData.append('jobId', jobId);
+        formData.append('labourId', laborId);
         this.store.dispatch({
-            type: post.actionTypes.APP_REJECT_LABOR, payload: data
+            type: post.actionTypes.APP_REJECT_LABOR, payload: formData
         });
     }
 

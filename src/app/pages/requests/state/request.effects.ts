@@ -200,7 +200,7 @@ export class RequestEffects {
 
     @Effect({ dispatch: false })
     cancelJob$ = this.actions$
-        .ofType('APP_CANCEL_JOB')
+        .ofType('APP_CANCEL_JOB_REQUEST')
         .do((action) => {
             this._spinner.show();
             this.RequestService.cancelJob(action.payload).subscribe((result) => {
@@ -230,14 +230,14 @@ export class RequestEffects {
 
     @Effect({ dispatch: false })
     cancelJobSuccess: Observable<Action> = this.actions$
-        .ofType('APP_CANCEL_JOB_SUCCESS')
+        .ofType('APP_CANCEL_JOB_REQUEST_SUCCESS')
         .do((action) => {
             this.router.navigate(['/pages/requests/allrequests']);
         });
 
     @Effect({ dispatch: false })
     acceptJob$ = this.actions$
-        .ofType('APP_ACCEPT_JOB')
+        .ofType('APP_ACCEPT_JOB_REQUEST')
         .do((action) => {
             this._spinner.show();
             this.RequestService.acceptJob(action.payload).subscribe((result) => {
@@ -279,7 +279,7 @@ export class RequestEffects {
 
     @Effect({ dispatch: false })
     acceptJobSuccess: Observable<Action> = this.actions$
-        .ofType('APP_ACCEPT_JOB_SUCCESS')
+        .ofType('APP_ACCEPT_JOB_REQUEST_SUCCESS')
         .do((action) => {
             // this.router.navigate(['/pages/requests/allrequests']);
         });

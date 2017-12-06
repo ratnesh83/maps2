@@ -159,8 +159,10 @@ export class RequestDetails implements OnInit {
         address.latitude = this.latitude;
         address.longitude = this.longitude;
         delete address.location;
+        delete address.cityShort;
+        delete address.stateShort;
         this.store.dispatch({
-            type: request.actionTypes.APP_CANCEL_JOB, payload: {
+            type: request.actionTypes.APP_CANCEL_JOB_REQUEST, payload: {
                 jobId: this.dataService.getData('requestId'),
                 action: 'CANCELLED_BY_LABOUR',
                 labourAddress: address
@@ -173,8 +175,10 @@ export class RequestDetails implements OnInit {
         address.latitude = this.latitude;
         address.longitude = this.longitude;
         delete address.location;
+        delete address.cityShort;
+        delete address.stateShort;
         this.store.dispatch({
-            type: request.actionTypes.APP_ACCEPT_JOB, payload: {
+            type: request.actionTypes.APP_ACCEPT_JOB_REQUEST, payload: {
                 jobId: this.dataService.getData('requestId'),
                 action: 'ACCEPTED_BY_LABOUR',
                 labourAddress: address

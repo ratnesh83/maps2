@@ -160,6 +160,8 @@ export class JobDetails implements OnInit {
         address.latitude = this.latitude;
         address.longitude = this.longitude;
         delete address.location;
+        delete address.cityShort;
+        delete address.stateShort;
         this.store.dispatch({
             type: job.actionTypes.APP_ACCEPT_JOB, payload: {
                 jobId: this.dataService.getData('jobId'),
@@ -174,6 +176,8 @@ export class JobDetails implements OnInit {
         address.latitude = this.latitude;
         address.longitude = this.longitude;
         delete address.location;
+        delete address.cityShort;
+        delete address.stateShort;
         this.store.dispatch({
             type: job.actionTypes.APP_ACCEPT_JOB, payload: {
                 jobId: this.dataService.getData('jobId'),

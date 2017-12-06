@@ -12,10 +12,10 @@ export const actionTypes = {
     APP_GET_SUB_CATEGORIES_SUCCESS: 'APP_GET_SUB_CATEGORIES_SUCCESS',
     APP_POST_REQUEST: 'APP_POST_REQUEST',
     APP_POST_REQUEST_SUCCESS: 'APP_POST_REQUEST_SUCCESS',
-    APP_CANCEL_JOB: 'APP_CANCEL_JOB',
-    APP_CANCEL_JOB_SUCCESS: 'APP_CANCEL_JOB_SUCCESS',
-    APP_ACCEPT_JOB: 'APP_ACCEPT_JOB',
-    APP_ACCEPT_JOB_SUCCESS: 'APP_ACCEPT_JOB_SUCCESS',
+    APP_CANCEL_JOB_REQUEST: 'APP_CANCEL_JOB_REQUEST',
+    APP_CANCEL_JOB_REQUEST_SUCCESS: 'APP_CANCEL_JOB_REQUEST_SUCCESS',
+    APP_ACCEPT_JOB_REQUEST: 'APP_ACCEPT_JOB_REQUEST',
+    APP_ACCEPT_JOB_REQUEST_SUCCESS: 'APP_ACCEPT_JOB_REQUEST_SUCCESS',
     APP_POST_FEEDBACK: 'APP_POST_FEEDBACK',
     APP_POST_FEEDBACK_SUCCESS: 'APP_POST_FEEDBACK_SUCCESS',
     APP_CHECK_APPLY: 'APP_CHECK_APPLY',
@@ -71,12 +71,12 @@ export class AppRequestJob implements Action {
 }
 
 export class AppAcceptJob implements Action {
-    type = actionTypes.APP_ACCEPT_JOB;
+    type = actionTypes.APP_ACCEPT_JOB_REQUEST;
     constructor(public payload: credentials) { }
 }
 
 export class AppAcceptJobSuccess implements Action {
-    type = actionTypes.APP_ACCEPT_JOB_SUCCESS;
+    type = actionTypes.APP_ACCEPT_JOB_REQUEST_SUCCESS;
     constructor(public payload: credentials) { }
 }
 
@@ -86,12 +86,12 @@ export class AppRequestJobSuccess implements Action {
 }
 
 export class AppCancelJob implements Action {
-    type = actionTypes.APP_CANCEL_JOB;
+    type = actionTypes.APP_CANCEL_JOB_REQUEST;
     constructor(public payload: credentials) { }
 }
 
 export class AppCancelJobSuccess implements Action {
-    type = actionTypes.APP_CANCEL_JOB_SUCCESS;
+    type = actionTypes.APP_CANCEL_JOB_REQUEST_SUCCESS;
     constructor(public payload: credentials) { }
 }
 

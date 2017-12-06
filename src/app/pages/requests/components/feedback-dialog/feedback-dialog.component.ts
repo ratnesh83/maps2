@@ -58,8 +58,18 @@ export class FeedbackDialog {
         if(!data.feedback || data.feedback == '' || data.feedback == null || data.feedback === undefined) {
             delete data.feedback;
         }
+        let formData = new FormData();
+        formData.append('userId', this.userDetails.userId);
+        formData.append('to', this.userDetails.to);
+        formData.append('rating', this.rating ? this.rating.toString() : '0');
+        if (this.feedback || this.feedback != '' || this.feedback != null || this.feedback != undefined) {
+            formData.append('feedback', this.feedback);
+        }
         this.store.dispatch({
-            type: request.actionTypes.APP_POST_FEEDBACK, payload: data
+            type: request.actionTypes.APP_POST_FEEDBACK, payload: { 
+                form: formData,
+                jobId: this.userDetails.jobId
+            }
         });
     }
 
