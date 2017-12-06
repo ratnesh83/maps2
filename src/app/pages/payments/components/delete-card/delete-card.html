@@ -7,16 +7,10 @@
 <div class="modal-content text-center">
   <div class="modal-header">
     <button type="button" class="close" (click)="closeModal()">&times;</button>
-    <h4 class="modal-title">What you want to do ?</h4>
+    <h4 class="modal-title">&nbsp;&nbsp;What you want to do ?</h4>
   </div>
   <div class="modal-body">
-    <div class="row text-center">
-    <div class="col-sm-3">
-      <button class="btn btn-del col-sm-12" (click)="deleteCard()">Delete this card</button>
+    <button md-raised-button color="primary" (click)="deleteCard()">Delete this card</button>
+    <button md-raised-button color="primary" (click)="setAsDefault()">Set As Default</button>
     </div>
-    <div class="col-sm-3">
-      <button class="btn btn-del col-sm-12" (click)="setAsDefault()">Set As default</button>
-    </div>
-    </div>
-  </div>
 </div>

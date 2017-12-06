@@ -1,7 +1,10 @@
-
-<div class="container">
-<h3 class="warning">
-You can not delete this card. If you want to delete this card, set some other card as default.    
-</h3>                          
-<button class="btn btn-del col-sm-12" (click)="closeModal()" >OK</button>            
+<div class="modal-content text-center">
+    <div class="modal-header">
+        <button type="button" class="close" (click)="closeModal()">&times;</button>
+        <h4 class="modal-title">&nbsp;&nbsp;You can not delete this card. If you want to delete this card, set some other card as default.
+        </h4>
+    </div>
+    <div class="modal-body">
+        <button md-raised-button color="primary" (click)="closeModal()">OK</button>
+    </div>
 </div>
