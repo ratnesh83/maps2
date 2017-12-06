@@ -257,8 +257,8 @@ export class Register {
                         this.name.setValue(user.providerData[0].displayName);
                         this.email.setValue(user.providerData[0].email);
                         this.socialMode = 'TWITTER';
-                        localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
                     }
+                    localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
                 });
             })
             .catch((error: any) => {
