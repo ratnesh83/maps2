@@ -164,7 +164,13 @@ export class Login {
             if (user && user.providerData && user.providerData[0] && user.providerData[0].uid) {
                 this.onTwitterSubmit(user.providerData[0].uid);
             } else {
-                this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider());
+                this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider())
+                    .then((result: any) => {
+                        // console.log(result);
+                    })
+                    .catch((error: any) => {
+                        // console.log(error);
+                    });
             }
         });
     }
@@ -188,7 +194,7 @@ export class Login {
 
     getCountryFlag(country, country_code) {
         for (let i = 0; i < this.countryCodes.length; i++) {
-            if(country == '+1' && this.country_code == this.countryCodes[i].country_code) {
+            if (country == '+1' && this.country_code == this.countryCodes[i].country_code) {
                 return this.countryCodes[i].country_code;
             } else if (country != '+1' && country == this.countryCodes[i].phone_code) {
                 this.country_code = null;
@@ -289,7 +295,7 @@ export class Login {
                 this._phone.nativeElement.focus();
             }
             return;
-        } else if(this.phone.value && !this.countryCode.value) {
+        } else if (this.phone.value && !this.countryCode.value) {
             this.toastrService.clear();
             this.toastrService.error('Country code is required', 'Error');
             if (this._countryCode) {

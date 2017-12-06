@@ -245,18 +245,24 @@ export class Register {
     }
 
     loginTwitter() {
-            localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
-            this.authStore = this.afAuth.authState.subscribe((user: firebase.User) => {
-                if (user && user.providerData && user.providerData[0] && user.providerData[0].uid) {
-                    this.socialId.setValue(user.providerData[0].uid);
-                    this.name.setValue(user.providerData[0].displayName);
-                    this.email.setValue(user.providerData[0].email);
-                    this.socialMode = 'TWITTER';
-                    localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
-                } else {
-                    this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider());
-                }
-            });
+        localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
+        this.authStore = this.afAuth.authState.subscribe((user: firebase.User) => {
+            if (user && user.providerData && user.providerData[0] && user.providerData[0].uid) {
+                this.socialId.setValue(user.providerData[0].uid);
+                this.name.setValue(user.providerData[0].displayName);
+                this.email.setValue(user.providerData[0].email);
+                this.socialMode = 'TWITTER';
+                localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
+            } else {
+                this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider())
+                    .then((result: any) => {
+                        // console.log(result);
+                    })
+                    .catch((error: any) => {
+                        // console.log(error);
+                    });
+            }
+        });
     }
 
     onSubmit() {
