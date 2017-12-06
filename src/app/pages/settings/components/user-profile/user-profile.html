@@ -16,7 +16,7 @@
                     <img md-card-avatar class="main-header-image" [src]='profile.profilePicture.original || "assets/img/default-profile.jpg"'>
                 </div>
             </md-card-header>
-            <md-card-title class="main-card-title-user text-uppercase ">{{profile.firstName ? profile.firstName : '--' }}&nbsp;{{profile.lastName ? profile.lastName : '--' }}</md-card-title>
+            <md-card-title class="main-card-title-user text-uppercase ">{{profile.firstName ? profile.firstName : profile.fullName ? profile.fullName : '--' }}&nbsp;{{profile.lastName ? profile.lastName : '' }}</md-card-title>
             <md-card-subtitle class="main-card-subtitle d-flex justify-content-center">
             </md-card-subtitle>
             <div class="container section-container">
@@ -64,9 +64,9 @@
                     <div class="col-md-4" *ngFor="let item of documents">
                         <md-card class="">
                             <md-card-content class="">
-                                <img class="img-fluid " [src]="item.url">
+                                <img class="img-fluid " [src]='item.url || "assets/img/default-profile.jpg"' >
                                 <md-card-title class="">{{item.info}}</md-card-title>
-                                <md-card-subtitle>{{item.name}}</md-card-subtitle>
+                                <md-card-subtitle></md-card-subtitle>
                             </md-card-content>
                         </md-card>
                     </div>

@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="col-4">
                                     <md-card-subtitle>Category</md-card-subtitle>
-                                    <md-card-title class="data"></md-card-title>
+                                    <md-card-title class="data">{{profile.categoryId ? profile.categoryId.name : '--'}}</md-card-title>
                                 </div>
                                 <div class="col-12">
                                     <md-card-subtitle>Description</md-card-subtitle>
@@ -58,8 +58,8 @@
                             <md-card class="">
                                 <md-card-content class="">
                                     <img class="img-fluid " [src]="item.url">
-                                    <md-card-title class="">{{item.info}}</md-card-title>
-                                    <md-card-subtitle>{{item.name}}</md-card-subtitle>
+                                    <md-card-title class="portfolio">{{item.info}}</md-card-title>
+                                    <md-card-subtitle></md-card-subtitle>
                                 </md-card-content>
                             </md-card>
                         </div>

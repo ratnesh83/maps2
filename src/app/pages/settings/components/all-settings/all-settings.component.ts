@@ -53,7 +53,7 @@ export class AllSettings {
                     }
                     console.log(res);
             });
-            this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO_ID,payload:{role:'employer'}});                        
+            this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO_ID,payload: {role: 'employer'}});                        
     };
 
     follow(){

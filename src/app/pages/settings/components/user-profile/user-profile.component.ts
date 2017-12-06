@@ -163,10 +163,9 @@ export class UserProfile {
     }
 
     ngOnDestroy() {
-        /* if (this.settingStore) {
-            this.settingStore.unsubscribe();
-        } */
+       localStorage.removeItem('userId');
     }
+    
     ngAfterViewInit() {
         this.imageUploadChildrenArray = this._filesUpload.toArray();
         this._filesUpload.changes.subscribe(childern => {

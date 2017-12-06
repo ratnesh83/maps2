@@ -120,6 +120,14 @@ export const setting: ActionReducer<any> = (state = initialState, action: Action
         case 'FOLLOW_COMPANY':
             return Object.assign({}, state, '');
 
+        case 'APP_GET_CATEGORIES_LABOR':
+            delete state.getLaborHit;
+            delete state.getLaborCategoryHit;
+            return Object.assign({}, state);
+
+        case 'APP_GET_CATEGORIES_LABOR_SUCCESS':
+            return Object.assign({}, state, { categories: action.payload, getLaborCategoryHit: true });
+
         default:
             return state;
     }

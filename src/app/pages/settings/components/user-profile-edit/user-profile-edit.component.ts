@@ -432,6 +432,7 @@ export class UserProfileEdit {
                 this.profilePic = res.profilePicture;
                 this.profileName = res.fullName;
                 this.profileNumber = res.phoneNumber;
+                this.categories = res.categories;
                 if (res.locationDetails) {
                     this.profileAddress = res.locationDetails.addressLine1;
                 }
@@ -452,15 +453,11 @@ export class UserProfileEdit {
                 this.isEditMode = res.edit;                                      
 
             });
-        this.store.select('labor')
-            .subscribe((res: any) => {
-                this.categories = res.categories;
-                console.log(res);
-            });
+
 
         this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO });
         this.store.dispatch({
-            type: labor.actionTypes.APP_GET_CATEGORIES_LABOR,
+            type: setting.actionTypes.APP_GET_CATEGORIES_EDIT,
             payload: {}
         });
 
