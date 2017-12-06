@@ -59,6 +59,7 @@ export class AllJobs implements OnInit {
     public companiesNotifications = [];
     public jobsNotifications = [];
     public usersNotifications = [];
+    public laborsNotifications = [];
 
     constructor(
         private store: Store<any>,
@@ -86,10 +87,14 @@ export class AllJobs implements OnInit {
         this.topListStore = this.store
             .select('top')
             .subscribe((res: any) => {
+                
                 this.topList = res.topList;
                 this.companiesNotifications = [];
                 this.jobsNotifications = [];
                 this.usersNotifications = [];
+                this.laborsNotifications = [];
+                this.laborsNotifications = [];
+
                 if (res.topList) {
                     this.topList = res.topList;
 
@@ -102,6 +107,18 @@ export class AllJobs implements OnInit {
                                 picture: this.topList.companyName[i].profilePicture ? this.topList.companyName[i].profilePicture.thumb : 'assets/img/user.png'
                             };
                             this.companiesNotifications.push(company);
+                        }
+                    }
+                    
+                    if (this.topList.labours) {
+                        let labor;
+                        for (let i = 0; i < this.topList.labours.length; i++) {
+                            labor = {
+                                name: this.topList.labours[i].fullName ? this.topList.labours[i].fullName : this.topList.labours[i].lastName ? this.topList.labours[i].firstName + ' ' + this.topList.labours[i].lastName : this.topList.labours[i].firstName,
+                                createdAt: this.topList.labours[i].createdAt,
+                                picture: this.topList.labours[i].profilePicture ? this.topList.labours[i].profilePicture.thumb : 'assets/img/user.png'
+                            };
+                            this.laborsNotifications.push(labor);
                         }
                     }
 

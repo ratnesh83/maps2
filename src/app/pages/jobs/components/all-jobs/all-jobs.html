@@ -118,12 +118,12 @@
             </div>
         </md-card>
     </div>
-    <div *ngIf="usersNotifications" class="notification">
+    <div *ngIf="laborsNotifications" class="notification">
         <div class="notification-banner">
-            Employer just joined
+            Users just joined
         </div>
         <md-card class="left-notification-card">
-            <md-card-header *ngFor="let user of usersNotifications" class="left-notification-head animated bounceInRight">
+            <md-card-header *ngFor="let user of laborsNotifications" class="left-notification-head animated bounceInRight">
                 <div md-card-avatar class="notification-header-image">
                     <img mat-card-avatar [src]="user?.picture ? user?.picture : 'assets/img/user.png'">
                 </div>
