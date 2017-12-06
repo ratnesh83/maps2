@@ -19,7 +19,7 @@
     </div>
 
     <div class="employers-section page-input-block">
-        <md-card *ngIf="!showLoading" class="employers-card">
+        <md-card class="employers-card">
             <md-card-content *ngIf="employers">
                 <md-card class="employers-card employers-card-inner" *ngFor="let employer of employers; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
                     <md-card-header class="employers-card-header">
@@ -51,10 +51,6 @@
                 Loading...
                 <i class="fa fa-spinner fa-spin"></i>
             </md-card-content>
-        </md-card>
-        <md-card *ngIf="showLoading" class="employers-card">
-            {{ locationStatus + ' ' }}
-            <i *ngIf="locationStatus == 'Fetching current location...'" class="fa fa-spinner fa-spin"></i>
         </md-card>
     </div>
 
