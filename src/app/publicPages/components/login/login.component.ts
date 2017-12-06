@@ -201,6 +201,14 @@ export class Login {
         return 'us';
     }
 
+    focusCountryCode() {
+        if (this._countryCode) {
+            setTimeout(() => {
+                this._countryCode.nativeElement.focus();
+            });
+        }
+    }
+
     setCountry(phone_code, country_code, event) {
         if (event && event.isUserInput) {
             this.country_code = country_code;
