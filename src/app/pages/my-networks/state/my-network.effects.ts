@@ -110,8 +110,12 @@ export class MyNetworkEffects {
                         count: result.data.count
                     }; */
                     let payload;
-                    if (result.data) {
-                        payload = result.data.invite;
+                    if (result.data && result.data.length == 0) {
+                        payload = result.data;
+                    } else if (result.data && result.data[0] && result.data[0].invite) {
+                        payload = result.data[0].invite;
+                    } else {
+                        payload = [];
                     }
                     this.store.dispatch(new network.AppGetFriendsSuccess(payload));
                 }
