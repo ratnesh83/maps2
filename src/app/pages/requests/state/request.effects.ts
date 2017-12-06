@@ -126,7 +126,7 @@ export class RequestEffects {
 
     @Effect({ dispatch: false })
     getSubCategories$ = this.actions$
-        .ofType('APP_GET_SUB_CATEGORIES')
+        .ofType('APP_GET_SUB_CATEGORIES_REQUEST')
         .do((action) => {
             this._spinner.show();
             this.RequestService.getAllSubCategories(action.payload).subscribe((result) => {
@@ -154,7 +154,7 @@ export class RequestEffects {
 
     @Effect({ dispatch: false })
     getSubCategoriesSuccess: Observable<Action> = this.actions$
-        .ofType('APP_GET_SUB_CATEGORIES_SUCCESS')
+        .ofType('APP_GET_SUB_CATEGORIES_REQUEST_SUCCESS')
         .do((action) => {
 
         });

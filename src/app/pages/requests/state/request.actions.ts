@@ -8,8 +8,8 @@ export const actionTypes = {
     APP_GET_LABORS_SUCCESS: 'APP_GET_LABORS_SUCCESS',
     APP_GET_REQUEST: 'APP_GET_REQUEST',
     APP_GET_REQUEST_SUCCESS: 'APP_GET_REQUEST_SUCCESS',
-    APP_GET_SUB_CATEGORIES: 'APP_GET_SUB_CATEGORIES',
-    APP_GET_SUB_CATEGORIES_SUCCESS: 'APP_GET_SUB_CATEGORIES_SUCCESS',
+    APP_GET_SUB_CATEGORIES_REQUEST: 'APP_GET_SUB_CATEGORIES_REQUEST',
+    APP_GET_SUB_CATEGORIES_REQUEST_SUCCESS: 'APP_GET_SUB_CATEGORIES_REQUEST_SUCCESS',
     APP_POST_REQUEST: 'APP_POST_REQUEST',
     APP_POST_REQUEST_SUCCESS: 'APP_POST_REQUEST_SUCCESS',
     APP_CANCEL_JOB_REQUEST: 'APP_CANCEL_JOB_REQUEST',
@@ -56,12 +56,12 @@ export class AppGetLaborsSuccess implements Action {
 }
 
 export class AppGetSubCategories implements Action {
-    type = actionTypes.APP_GET_SUB_CATEGORIES;
+    type = actionTypes.APP_GET_SUB_CATEGORIES_REQUEST;
     constructor(public payload: credentials) { }
 }
 
 export class AppGetSubCategoriesSuccess implements Action {
-    type = actionTypes.APP_GET_SUB_CATEGORIES_SUCCESS;
+    type = actionTypes.APP_GET_SUB_CATEGORIES_REQUEST_SUCCESS;
     constructor(public payload: credentials) { }
 }
 
