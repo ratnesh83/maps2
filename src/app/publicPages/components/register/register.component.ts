@@ -135,6 +135,9 @@ export class Register {
         if (this.storeData) {
             this.storeData.unsubscribe();
         }
+        if (this.authStore) {
+            this.authStore.unsubscribe();
+        }
         localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
     }
 
@@ -175,6 +178,14 @@ export class Register {
             return 'default';
         }
         return 'us';
+    }
+
+    focusCountryCode() {
+        if (this._countryCode) {
+            setTimeout(() => {
+                this._countryCode.nativeElement.focus();
+            });
+        }
     }
 
     setCountry(phone_code, country_code, event) {
@@ -237,22 +248,26 @@ export class Register {
     }
 
     loginTwitter() {
-            localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
-            this.authStore = this.afAuth.authState.subscribe((user: firebase.User) => {
-                if (user && user.providerData && user.providerData[0] && user.providerData[0].uid) {
-                    this.socialId.setValue(user.providerData[0].uid);
-                    this.name.setValue(user.providerData[0].displayName);
-                    this.email.setValue(user.providerData[0].email);
-                    this.socialMode = 'TWITTER';
+        localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
+        this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider())
+            .then((result: any) => {
+                this.authStore = this.afAuth.authState.subscribe((user: firebase.User) => {
+                    if (user && user.providerData && user.providerData[0] && user.providerData[0].uid) {
+                        this.socialId.setValue(user.providerData[0].uid);
+                        this.name.setValue(user.providerData[0].displayName);
+                        this.email.setValue(user.providerData[0].email);
+                        this.socialMode = 'TWITTER';
+                    }
                     localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
-                } else {
-                    this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider());
-                }
+                });
+            })
+            .catch((error: any) => {
+                // console.log(error);
+                localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
             });
     }
 
     onSubmit() {
-
         this.submitted = true;
         let timezoneOffset = (new Date()).getTimezoneOffset();
 
@@ -398,6 +413,10 @@ export class Register {
 
         if (this.inviteCode.value == null || this.inviteCode.value == '' || this.inviteCode.value == undefined) {
             delete data.referralCode;
+        }
+
+        if (this.authStore) {
+            this.authStore.unsubscribe();
         }
 
         this.store.dispatch({

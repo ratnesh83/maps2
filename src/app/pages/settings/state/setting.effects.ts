@@ -26,7 +26,6 @@ export class SettingEffects {
     @Effect({ dispatch: false })
     getAvailability$ = this.actions$
         .ofType('APP_GET_AVAILABILITY')
-        
         .do((action) => {
             this._spinner.show();
             this.CalendarService.getAllAvailability(action.payload).subscribe((result) => {

@@ -17,13 +17,10 @@ export class PostService {
     getAllPosts(payload) {
         let url;
         let skip = payload.hasOwnProperty('skip') ? payload.skip : ((payload.currentPage - 1) * payload.limit);
-
         url = environment.APP.API_URL + environment.APP.GET_ALL_JOBS + '?limit=' + payload.limit + '&skip=' + skip;
-
         if (payload.post && payload.post != null) {
             url += '&searchUser=' + payload.post;
         }
-
         this.authRequired = true;
         this.utcOffset = false;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
@@ -83,14 +80,15 @@ export class PostService {
         this.utcOffset = false;
         let formData = new FormData();
         formData.append('title', payload.title);
-        formData.append('employerAddress', JSON.stringify(payload.employerAddress));
-        formData.append('categoryId', payload.categoryId);
-        formData.append('subCategoryId', payload.subCategoryId);
         if (payload && payload.jobDetails) {
             formData.append('jobDetails', payload.jobDetails);
         }
-        formData.append('startDate', payload.startDate);
-        formData.append('endDate', payload.endDate);
+        if (payload && payload.startDate) {
+            formData.append('startDate', payload.startDate);
+        }
+        if (payload && payload.endDate) {
+            formData.append('endDate', payload.endDate);
+        }
         formData.append('rateType', payload.rateType);
         formData.append('rate', payload.rate);
         formData.append('requiredLabourers', payload.requiredLabourers);
