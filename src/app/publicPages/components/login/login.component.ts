@@ -130,6 +130,9 @@ export class Login {
         if (this.storeData) {
             this.storeData.unsubscribe();
         }
+        if (this.authStore) {
+            this.authStore.unsubscribe();
+        }
         localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
     }
 
@@ -160,19 +163,19 @@ export class Login {
 
     loginTwitter() {
         localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
-        this.authStore = this.afAuth.authState.subscribe((user: firebase.User) => {
-            if (user && user.providerData && user.providerData[0] && user.providerData[0].uid) {
-                this.onTwitterSubmit(user.providerData[0].uid);
-            } else {
-                this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider())
-                    .then((result: any) => {
-                        // console.log(result);
-                    })
-                    .catch((error: any) => {
-                        // console.log(error);
-                    });
-            }
-        });
+        this.afAuth.auth.signInWithPopup(new firebase.auth.TwitterAuthProvider())
+            .then((result: any) => {
+                this.authStore = this.afAuth.authState.subscribe((user: firebase.User) => {
+                    if (user && user.providerData && user.providerData[0] && user.providerData[0].uid) {
+                        this.onTwitterSubmit(user.providerData[0].uid);
+                    }
+                    localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
+                });
+            })
+            .catch((error: any) => {
+                // console.log(error);
+                localStorage.removeItem('firebase:authUser:AIzaSyA15lGgPiGwKbYPonteaKgx8WoNUdkoPy8:[DEFAULT]');
+            });
     }
 
     countryCodeClick() {
