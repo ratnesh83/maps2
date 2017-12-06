@@ -71,63 +71,6 @@ export class AllFriendList implements OnInit {
                     this.pageIndex = res.currentPage - 1;
                 } */
             });
-
-        if (navigator.geolocation) {
-            this.showLoading = true;
-            this.locationStatus = 'Fetching current location...';
-            navigator.geolocation.getCurrentPosition((response) => {
-                if (response && response.coords) {
-                    let latlng = new google.maps.LatLng(response.coords.latitude, response.coords.longitude);
-                    let geocoder = new google.maps.Geocoder();
-                    let data = {
-                        latitude: response.coords.latitude,
-                        longitude: response.coords.longitude,
-                        sortBy: 'DISTANCE'
-                    };
-                    this.data = data;
-                    this.showLoading = false;
-                    this.geocoder(geocoder, latlng)
-                        .then((result) => {
-                            let results = result;
-                            if (results[0]) {
-                                // let addressComponents = results[0].address_components;
-                                // let latitude = results[0].geometry.location.lat();
-                                // let longitude = results[0].geometry.location.lng();
-                                // let data = {
-                                //     latitude: latitude,
-                                //     longitude: longitude,
-                                //     sortBy: 'DISTANCE'
-                                // };
-                                // this.data = data;
-                                // this.showLoading = false;
-                                // this.getAllFriendListsCallback(data);
-                            }
-                        })
-                        .catch((error: any) => {
-                            // console.error(error);
-                        });
-                }
-            }, (error) => {
-                this.showLoading = true;
-                this.locationStatus = 'Error .';
-                switch (error.code) {
-                    case 1:
-                        this.locationStatus = 'Location permission denied.';
-                        break;
-                    case 2:
-                        this.locationStatus = 'Position unavailable.';
-                        break;
-                    case 3:
-                        this.locationStatus = 'Fetching current location timed out.';
-                        break;
-                    default:
-                        break;
-                }
-            });
-        } else {
-            this.locationStatus = 'Geolocation is not supported by this browser.';
-            this.showLoading = true;
-        }
     }
 
     geocoder(geocoder, latlng): Promise<any> {
