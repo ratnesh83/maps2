@@ -39,6 +39,7 @@ export const environment = {
         REJECT_LABOR: '/api/v1/jobs/cancelLabour',
         CANCEL_JOB: '/api/v1/jobs/cancelJob/',
         GET_ALL_AVAILABILITY: '/api/v1/user/getAvailability',
+        SEND_INVITE: '/api/v2/invite/newUsers',
 
         GET_ALL_BOOKING: '/admin/getAllAvailabeBooking',
         GET_ALL_OUTGOING_BOOKING: '/admin/getOngoingBooking',

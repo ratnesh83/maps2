@@ -16,6 +16,7 @@ import {
     MdIconModule,
     MdPaginatorModule
 } from '@angular/material';
+
 @NgModule({
     imports: [
         CommonModule,

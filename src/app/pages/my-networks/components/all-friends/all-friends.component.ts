@@ -3,16 +3,18 @@ import { Store } from '@ngrx/store';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
+import { MdDialog } from '@angular/material';
 import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import * as friend from '../../state/my-network.actions';
 import * as app from '../../../../state/app.actions';
 import { MdPaginator } from '@angular/material';
 import { BaThemeSpinner } from '../../../../theme/services';
 import { DataService } from '../../../../services/data-service/data.service';
+import { SendInviteDialog } from '../send-invite-dialog/send-invite-dialog.component';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 import { NguiMapComponent } from '@ngui/map';
-import 'style-loader!./all-friends.scss';
 import { error } from 'util';
+import 'style-loader!./all-friends.scss';
 
 @Component({
     selector: 'all-friends',
@@ -47,7 +49,8 @@ export class AllFriendList implements OnInit {
         private modalService: NgbModal,
         private router: Router,
         private toastrService: ToastrService,
-        private dataService: DataService
+        private dataService: DataService,
+        private dialog: MdDialog
     ) {
         this.length = 1;
         this.pageIndex = 0;
@@ -142,6 +145,10 @@ export class AllFriendList implements OnInit {
         } else {
             this.router.navigate(['/pages/settings/userprofile']);
         }
+    }
+
+    openSendInvite() {
+        let dialogRef = this.dialog.open(SendInviteDialog);
     }
 
     pageChange(page) {

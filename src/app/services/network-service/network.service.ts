@@ -90,4 +90,11 @@ export class MyNetworkService {
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
 
+    sendInvite(payload) {
+        let url = environment.APP.API_URL + environment.APP.SEND_INVITE;
+        this.authRequired = true;
+        this.utcOffset = false;
+        return this.apiService.postFileApi(url, payload.form, this.authRequired, this.utcOffset);
+    }
+
 }

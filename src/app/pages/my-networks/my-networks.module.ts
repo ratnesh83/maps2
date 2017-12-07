@@ -28,6 +28,7 @@ import { AllLaborList } from './components/all-labors/all-labors.component';
 import { AllEmployerList } from './components/all-employers/all-employers.component';
 import { AllCompanyList } from './components/all-companies/all-companies.component';
 import { AllFriendList } from './components/all-friends/all-friends.component';
+import { SendInviteDialog } from './components/send-invite-dialog/send-invite-dialog.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { GooglePlaceModule } from 'ng2-google-place-autocomplete';
 import { NguiMapModule } from '@ngui/map';
@@ -65,9 +66,11 @@ import { NguiMapModule } from '@ngui/map';
         AllLaborList,
         AllEmployerList,
         AllCompanyList,
-        AllFriendList
+        AllFriendList,
+        SendInviteDialog
     ],
     entryComponents: [
+        SendInviteDialog
     ],
 })
 

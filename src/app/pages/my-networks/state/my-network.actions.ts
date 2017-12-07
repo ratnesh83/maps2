@@ -10,6 +10,8 @@ export const actionTypes = {
     APP_GET_FRIENDS_LIST_SUCCESS: 'APP_GET_FRIENDS_LIST_SUCCESS',
     APP_GET_COMPANIES_LIST: 'APP_GET_COMPANIES_LIST',
     APP_GET_COMPANIES_LIST_SUCCESS: 'APP_GET_COMPANIES_LIST_SUCCESS',
+    APP_SEND_INVITE: 'APP_SEND_INVITE',
+    APP_SEND_INVITE_SUCCESS: 'APP_SEND_INVITE_SUCCESS',
 
 };
 
@@ -52,6 +54,11 @@ export class AppGetCompaniesList implements Action {
 
 export class AppGetCompaniesListSuccess implements Action {
     type = actionTypes.APP_GET_COMPANIES_LIST_SUCCESS;
+    constructor(public payload: credentials) { }
+}
+
+export class AppSendInviteSuccess implements Action {
+    type = actionTypes.APP_SEND_INVITE_SUCCESS;
     constructor(public payload: credentials) { }
 }
 
