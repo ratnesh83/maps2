@@ -4,9 +4,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgUploaderModule } from 'ngx-uploader';
 import { TopNotifications } from '../pages/notification/components/top/top-notifications-component.ts';
-
 import { BaThemeConfig } from './theme.config';
-
 import { BaThemeConfigProvider } from './theme.configProvider';
 
 import {
@@ -25,7 +23,6 @@ import {
     BaPictureUploader,
     BaSidebar,
     BaFileUploader
-
 } from './components';
 
 import { BaCardBlur } from './components/baCard/baCardBlur.directive';

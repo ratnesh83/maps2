@@ -9,7 +9,8 @@
                         </md-card-title>
                         <div class="friends-header-rating">
                             <div class="filter-div">
-                                <i (click)="openSendInvite()" class="fa fa-filter"></i>
+                                <button (click)="openSendInvite()" md-raised-button color="primary" style="background-color: #026eff">SEND INVITE</button>
+                                <!-- <i class="fa fa-filter"></i> -->
                             </div>
                         </div>
                     </md-card-header>
@@ -28,7 +29,9 @@
                         </div>
                         <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{friend.fullName ? friend.fullName : friend.lastName ? (friend.firstName + ' ' + friend.lastName)
                             : friend.firstName}}</md-card-title>
-                        <md-card-subtitle style="font-weight: 500"><span style="font-weight: 500; color: #026eff; cursor: pointer; font-size: small" (click)="openProfile(friend._id, friend.userType)">View Profile</span></md-card-subtitle>
+                        <md-card-subtitle style="font-weight: 500">
+                            <span style="font-weight: 500; color: #026eff; cursor: pointer; font-size: small" (click)="openProfile(friend._id, friend.userType)">View Profile</span>
+                        </md-card-subtitle>
                         <div class="friends-header-view">
                             <div>
                                 <i *ngIf="!friend?.labourId?.isPhoneNumberHidden && !friend.showPhone" (click)="showPhoneInfo(i)" class="fa fa-phone-square"></i>

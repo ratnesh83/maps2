@@ -35,7 +35,6 @@ export class AuthService {
                     Authorization: headerToken
                 }
             });
-
             this.isLoggedIn = true;
             return this.isLoggedIn;
 
@@ -60,6 +59,9 @@ export class AuthService {
         localStorage.removeItem('token');
         localStorage.removeItem('tokenSession');
         localStorage.removeItem('userRegisterationId');
+        if (this.socket) {
+            this.socket.disconnect();
+        }
     }
 
 }

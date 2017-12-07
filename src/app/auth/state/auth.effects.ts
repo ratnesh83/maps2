@@ -568,6 +568,7 @@ export class AuthEffects {
                     this.dataService.removeUserRegisterationAccessToken();
                     this.dataService.removeCategoryId();
                     this.router.navigate(['login']);
+                    this.authService.logout();
                 }
             }
                 , (error) => {
@@ -585,6 +586,7 @@ export class AuthEffects {
                     this.dataService.removeUserRegisterationAccessToken();
                     this.dataService.removeCategoryId();
                     this.router.navigate(['login']);
+                    this.authService.logout();
                 }
             );
 

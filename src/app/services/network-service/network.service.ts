@@ -17,65 +17,57 @@ export class MyNetworkService {
     }
 
     getAllLabors(payload) {
-        let url;
         let query;
         if (payload && payload.data) {
             query = '?latitude=' + payload.data.latitude + '&longitude=' + payload.data.longitude + '&categoryId=' + payload.data.categoryId + '&addressType=' + payload.data.addressType + '&address=' + JSON.stringify(payload.data.address);
         }
-        url = environment.APP.API_URL + environment.APP.GET_ALL_LABORS + query;
+        let url = environment.APP.API_URL + environment.APP.GET_ALL_LABORS + query;
         this.authRequired = true;
         this.utcOffset = false;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
 
     getAllLaborList(payload) {
-        let url;
         let query;
         if (payload && payload.data) {
             query = '?latitude=' + payload.data.latitude + '&longitude=' + payload.data.longitude + '&sortBy=' + payload.data.sortBy;;
         }
-        url = environment.APP.API_URL + environment.APP.GET_ALL_LABOR_LIST + query;
+        let url = environment.APP.API_URL + environment.APP.GET_ALL_LABOR_LIST + query;
         this.authRequired = true;
         this.utcOffset = false;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
 
     getAllEmployerList(payload) {
-        let url;
-        let query;
-        url = environment.APP.API_URL + environment.APP.GET_EMPLOYERS;
+        let url = environment.APP.API_URL + environment.APP.GET_EMPLOYERS;
         this.authRequired = true;
         this.utcOffset = false;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
 
     getAllFriendList(payload) {
-        let url;
-        url = environment.APP.API_URL + environment.APP.GET_FRIENDS;
+        let url = environment.APP.API_URL + environment.APP.GET_FRIENDS;
         this.authRequired = true;
         this.utcOffset = false;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
 
     getAllCompaniesList(payload) {
-        let url;
-        url = environment.APP.API_URL + environment.APP.GET_COMPANIES;
+        let url = environment.APP.API_URL + environment.APP.GET_COMPANIES;
         this.authRequired = true;
         this.utcOffset = false;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
 
     getAllCategories(payload) {
-        let url;
         this.authRequired = false;
         this.utcOffset = false;
-        url = environment.APP.API_URL + environment.APP.GET_ALL_CATEGORIES;
+        let url = environment.APP.API_URL + environment.APP.GET_ALL_CATEGORIES;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
 
     getLaborDetail(payload) {
-        let url;
-        url = environment.APP.API_URL + environment.APP.GET_USER;
+        let url = environment.APP.API_URL + environment.APP.GET_USER;
         url += '?userID=' + payload.userId;
         this.authRequired = true;
         this.utcOffset = false;
@@ -83,10 +75,9 @@ export class MyNetworkService {
     }
 
     getTopList(payload) {
-        let url;
         this.authRequired = true;
         this.utcOffset = false;
-        url = environment.APP.API_URL + environment.APP.GET_TOP_LIST;
+        let url = environment.APP.API_URL + environment.APP.GET_TOP_LIST;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
 

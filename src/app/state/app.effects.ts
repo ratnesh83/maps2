@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Effect, Actions } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { AuthService } from '../auth/service/auth-service/auth.service';
+import { DataService } from '../services/data-service/data.service';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import * as app from './app.actions';
 import * as auth from '../auth/state/auth.actions';
@@ -20,7 +22,9 @@ export class AppEffects {
         private toastrService: ToastrService,
         private actions$: Actions,
         private router: Router,
+        private authService: AuthService,
         private activeModal: NgbActiveModal,
+        private dataService: DataService,
         private store: Store<any>,
         // private booking_service:booking_service,
 
@@ -58,6 +62,18 @@ export class AppEffects {
             let title = 'Authentication';
             this.toastrService.clear();
             this.toastrService.error(message, title);
+            localStorage.removeItem('token');
+            localStorage.removeItem('tokenSession');
+            localStorage.removeItem('jobId');
+            localStorage.removeItem('userId');
+            localStorage.removeItem('requestId');
+            localStorage.removeItem('pay');
+            localStorage.removeItem('payamount');
+            localStorage.removeItem('amount');
+            this.dataService.removeUserRegisterationId();
+            this.dataService.removeUserRegisterationAccessToken();
+            this.dataService.removeCategoryId();
+            this.authService.logout();
         });
 
     @Effect({ dispatch: false })
