@@ -450,8 +450,7 @@ export class UserProfileEdit {
                 }
                 this.profileEmail = res.email;
                 this.profileDescription = res.description;
-                this.isEditMode = res.edit;                                      
-
+                this.isEditMode = res.edit;                                   
             });
 
 

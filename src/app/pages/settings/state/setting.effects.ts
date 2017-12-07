@@ -604,7 +604,6 @@ export class SettingEffects {
     getProfileInfo$ = this.actions$
         .ofType('GET_PROFILE_INFO')
         .do((action) => {
-            console.log('2');
             let token = localStorage.getItem('tokenSession');
             let user;
             if (token && !this.jwtHelper.isTokenExpired(token)) {
@@ -615,7 +614,8 @@ export class SettingEffects {
                 if (result.statusCode == 200) {
                     let payload = result.data;
                     this._spinner.hide();
-                    this.store.dispatch(new setting.GetProfileInfoSuccessAction(payload));
+                    this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO_SUCCESS, payload: payload });
+
                 }
             }
                 , (error) => {
@@ -625,6 +625,18 @@ export class SettingEffects {
                 }
             );
         });
+
+    @Effect({ dispatch: false })
+    getCategoriesSuccess: Observable<Action> = this.actions$
+        .ofType('APP_GET_PROFILE_INFO_SUCCESS')
+        .do((action) => {
+            this.store.dispatch({
+                type: setting.actionTypes.APP_GET_CATEGORIES_EDIT,
+                payload: {}
+            });
+        });
+
+
     @Effect({ dispatch: false })
     getProfileInfoId$ = this.actions$
         .ofType('GET_PROFILE_INFO_ID')
@@ -649,10 +661,8 @@ export class SettingEffects {
     updateProfileInfo$ = this.actions$
         .ofType('UPDATE_PROFILE_INFO')
         .do((action) => {
-            console.log(action.payload);
             this.SettingsService.updateProfileInfo(action.payload).subscribe((result) => {
                 if (result.statusCode == 200) {
-                    console.log('success');
                     let token = localStorage.getItem('tokenSession');
                     if (token && !this.jwtHelper.isTokenExpired(token)) {
                         let user = this.jwtHelper.decodeToken(token);
@@ -664,6 +674,9 @@ export class SettingEffects {
                         });
                     }
                     this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO, payload: { mode: 1 } });
+                    
+                    
+
                     let m = 'Profile Updated Successfully';
                     let t = 'success';
                     const opt = cloneDeep(this.options);
@@ -708,7 +721,6 @@ export class SettingEffects {
                         'data': result.data,
                         'edit': true
                     };
-
                     this.store.dispatch(new setting.AppGetSubCategoriesSuccess(payload));
                 }
             }
@@ -752,6 +764,7 @@ export class SettingEffects {
                 this._spinner.hide();
                 if (result.message == 'Action complete.' || result.statusCode == 200) {
                     let payload = result.data;
+                    console.log(payload);
                     this.store.dispatch(new setting.AppGetCategoriesSuccess(payload));
                 }
             }
@@ -773,7 +786,7 @@ export class SettingEffects {
 
 
     @Effect({ dispatch: false })
-    getCategoriesSuccess: Observable<Action> = this.actions$
+    getCategoriesSuccess$: Observable<Action> = this.actions$
         .ofType('APP_GET_CATEGORIES_EDIT_SUCCESS')
         .do((action) => {
 
@@ -784,7 +797,7 @@ export class SettingEffects {
         private router: Router,
         private toastrService: ToastrService,
         private SettingsService: SettingsService,
-        private LaborService: LaborService,        
+        private LaborService: LaborService,
         private CalendarService: CalendarService,
         private PostService: PostService,
         private _spinner: BaThemeSpinner
