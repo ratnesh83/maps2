@@ -123,7 +123,6 @@ export const setting: ActionReducer<any> = (state = initialState, action: Action
         case 'APP_GET_CATEGORIES_EDIT':
             delete state.getLaborHit;
             delete state.getLaborCategoryHit;
-            console.log("second");
             return Object.assign({}, state);
 
         case 'APP_GET_CATEGORIES_EDIT_SUCCESS':

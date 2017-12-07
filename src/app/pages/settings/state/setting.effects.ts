@@ -630,7 +630,6 @@ export class SettingEffects {
     getCategoriesSuccess: Observable<Action> = this.actions$
         .ofType('APP_GET_PROFILE_INFO_SUCCESS')
         .do((action) => {
-            console.log("11");
             this.store.dispatch({
                 type: setting.actionTypes.APP_GET_CATEGORIES_EDIT,
                 payload: {}
@@ -760,14 +759,12 @@ export class SettingEffects {
     getCategories$ = this.actions$
         .ofType('APP_GET_CATEGORIES_EDIT')
         .do((action) => {
-            console.log("first");
             this._spinner.show();
             this.LaborService.getAllCategories(action.payload).subscribe((result) => {
                 this._spinner.hide();
                 if (result.message == 'Action complete.' || result.statusCode == 200) {
                     let payload = result.data;
                     console.log(payload);
-                    console.log("third");
                     this.store.dispatch(new setting.AppGetCategoriesSuccess(payload));
                 }
             }
