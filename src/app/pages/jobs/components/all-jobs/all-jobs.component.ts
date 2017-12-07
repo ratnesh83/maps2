@@ -69,6 +69,7 @@ export class AllJobs implements OnInit {
         private dataService: DataService,
         private dialog: MdDialog
     ) {
+        this.jobs = [];
         this.addressType = 'COUNTRY';
         this.bounds = new google.maps.LatLngBounds();
 
