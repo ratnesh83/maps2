@@ -439,6 +439,7 @@ export class TopNotifications {
     }
 
     ngOnDestroy() {
+        
         if (this.socketStoreAcceptRejectJob) {
             this.socketStoreAcceptRejectJob.unsubscribe();
         }

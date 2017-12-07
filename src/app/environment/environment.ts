@@ -24,7 +24,7 @@ export const environment = {
         GET_POST: '/api/v2/webJobs/jobById',
         GET_LABORS: '/api/v2/webJobs/getLaboursWeb',
         GET_EMPLOYERS: '/api/v2/jobs/employerList',
-        GET_COMPANIES: '/api/v2/webJobs/getLaboursWeb',
+        GET_COMPANIES: '/api/v2/invite/followedCompanies',
         GET_FRIENDS: '/api/v2/invite/invitedUsers',
         GET_ALL_JOBS_POSTS: '/api/v2/webJobs/jobSearch',
         GET_ALL_LABORS: '/api/v2/webJobs/laborSearch',

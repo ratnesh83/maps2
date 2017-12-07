@@ -55,7 +55,7 @@ export class AllCompanyList implements OnInit {
             .select('network')
             .subscribe((res: any) => {
                 if (res) {
-                    this.companies = res.labors;
+                    this.companies = res.follow;
                     if (this.companies) {
                         for (let i = 0; i < this.companies.length; i++) {
                             this.companies[i].showPhone = false;
@@ -105,7 +105,7 @@ export class AllCompanyList implements OnInit {
     getAllCompanyLists() {
         this.showLoading = false;
         this.store.dispatch({
-            type: company.actionTypes.APP_GET_LABORS_LIST, payload: {}
+            type: company.actionTypes.APP_GET_COMPANIES_LIST, payload: {}
         });
     }
 
@@ -134,6 +134,15 @@ export class AllCompanyList implements OnInit {
             }
         }
         return returnAddress;
+    }
+
+    openProfile(id, type) {
+        this.dataService.setData('userId', id);
+        if (type == 'EMPLOYER') {
+            this.router.navigate(['/pages/settings/employerprofile']);
+        } else {
+            this.router.navigate(['/pages/settings/userprofile']);
+        }
     }
 
     pageChange(page) {

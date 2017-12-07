@@ -24,32 +24,20 @@
                 <md-card class="companies-card companies-card-inner" *ngFor="let company of companies; let i = index" [ngClass]="{'color-second' : (i + 2) % 2 == 0, 'color-third' : (i + 3) % 3 == 0}">
                     <md-card-header class="companies-card-header">
                         <div md-card-avatar class="companies-header-image">
-                            <img mat-card-avatar [src]="company.labourId?.profilePicture?.thumb ? company.labourId.profilePicture?.thumb : 'assets/img/user.png'">
+                            <img mat-card-avatar [src]="company.profilePicture?.thumb ? company.profilePicture?.thumb : 'assets/img/user.png'">
                         </div>
-                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{company.labourId ? company.labourId.fullName ? company.labourId.fullName : company.labourId.lastName
-                            ? (company.labourId.firstName + ' ' + company.labourId.lastName) : company.labourId.firstName
-                            : ''}}</md-card-title>
-                        <md-card-subtitle style="font-weight: 500">{{ (company.distance / 1609.34).toFixed(1) + ' mile away' }}</md-card-subtitle>
+                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">{{ company.companyName }}</md-card-title>
+                        <md-card-subtitle style="font-weight: 500">
+                            <span style="font-weight: 500; color: #026eff; cursor: pointer; font-size: small" (click)="openProfile(company._id, company.userType)">View Profile</span>
+                        </md-card-subtitle>
                         <div class="companies-header-view">
                             <div>
                                 <i *ngIf="!company?.labourId?.isPhoneNumberHidden && !company.showPhone" (click)="showPhoneInfo(i)" class="fa fa-phone-square"></i>
                                 <i *ngIf="!company.showEmail" (click)="showEmailInfo(i)" class="fa fa-envelope"></i>
                             </div>
-                            <div *ngIf="company.showPhone">{{company.labourId?.countryCode + ' ' + company.labourId?.phoneNumber}}</div>
-                            <div *ngIf="company.showEmail">{{company.labourId?.email}}</div>
+                            <div *ngIf="company.showPhone">{{company.countryCode + ' ' + company.phoneNumber}}</div>
+                            <div *ngIf="company.showEmail">{{company.email}}</div>
                         </div>
-                    </md-card-header>
-                    <md-card-header style="margin-top: 5px" class="companies-card-header">
-                        <div md-card-avatar class="companies-header-image">
-                            <img mat-card-avatar [src]="company.jobId?.categoryId?.image?.thumb ? company.jobId?.categoryId?.image?.thumb : 'assets/img/image-placeholder.jpg'">
-                        </div>
-                        <md-card-title style="font-weight: 600; color: #1b1b1b; font-size: medium">
-                            {{ company.jobId.category ? company.jobId.category + ': ' + company.jobId.subCategory : company.jobId.category }}
-                        </md-card-title>
-                        <md-card-subtitle style="font-weight: 500">
-                            {{ showAddress(company?.labourAddress?.addressLine1, company?.labourAddress?.city, company?.labourAddress?.zipCode, company?.labourAddress?.state,
-                            company?.labourAddress?.country) }}
-                        </md-card-subtitle>
                     </md-card-header>
                 </md-card>
                 <div *ngIf="companies && companies.length == 0">

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Observable';
 import { AuthHttp, JwtHelper } from 'angular2-jwt';
 import * as io from 'socket.io-client';
 import { environment } from '../../../environment/environment';
+import { AuthService } from '../../../auth/service/auth-service/auth.service';
 
 @Injectable()
 export class BaMsgCenterService {
@@ -84,6 +85,11 @@ export class BaMsgCenterService {
         }
     ];
 
+    private url = environment.APP.API_URL;
+    private socket;
+    public user;
+    public jwtHelper: JwtHelper = new JwtHelper();
+
     public getMessages(): Array<Object> {
         return this._messages;
     }
@@ -92,13 +98,7 @@ export class BaMsgCenterService {
         return this._notifications;
     }
 
-    private url = environment.APP.API_URL;
-    private socket;
-    public user;
-    public jwtHelper: JwtHelper = new JwtHelper();
-
-    constructor() {
-
+    constructor(private authService: AuthService) {
         let token = localStorage.getItem('token');
         this.user = this.jwtHelper.decodeToken(token);
         let userType;
@@ -106,11 +106,15 @@ export class BaMsgCenterService {
             userType = this.user.userType;
         }
         let headerToken = token;
-        this.socket = io(this.url + '?accessToken=' + token + '&userType=' + userType, {
-            extraHeaders: {
-                Authorization: headerToken
-            }
-        });
+        if (this.authService.getSocketConnection()) {
+            this.socket = this.authService.getSocketConnection();
+        } else {
+            this.socket = io(this.url + '?accessToken=' + token + '&userType=' + userType, {
+                extraHeaders: {
+                    Authorization: headerToken
+                }
+            });
+        }
     }
 
     sendMessage(key, message) {
@@ -118,6 +122,9 @@ export class BaMsgCenterService {
     }
 
     getNotifications(socket) {
+        if (this.authService.getSocketConnection()) {
+            this.socket = this.authService.getSocketConnection();
+        }
         let observable = new Observable(observer => {
             this.socket.on(socket, (data) => {
                 observer.next(data);

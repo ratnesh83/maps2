@@ -57,6 +57,14 @@ export class MyNetworkService {
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
 
+    getAllCompaniesList(payload) {
+        let url;
+        url = environment.APP.API_URL + environment.APP.GET_COMPANIES;
+        this.authRequired = true;
+        this.utcOffset = false;
+        return this.apiService.getApi(url, this.authRequired, this.utcOffset);
+    }
+
     getAllCategories(payload) {
         let url;
         this.authRequired = false;

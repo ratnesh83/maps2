@@ -245,6 +245,10 @@ export class EditPost implements OnInit {
         }
     }
 
+    cancel() {
+        this.router.navigate(['/pages/posts/allposts']);
+    }
+
     updateJob() {
         this.submitted = true;
 
