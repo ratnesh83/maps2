@@ -204,8 +204,7 @@ export class UserService {
     }
 
     getCountryCodes(payload) {
-        let url;
-        url = 'assets/json/country.json';
+        let url = 'assets/json/country.json';
         this.authRequired = false;
         this.utcOffset = false;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
