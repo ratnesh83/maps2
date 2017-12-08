@@ -8,9 +8,9 @@ import { BaThemeSpinner } from '../../../../theme/services';
 
 
 @Component({
-  selector: 'delete-card-modal',
-  templateUrl: 'delete-card.html',
-  styleUrls:['delete-card.scss']
+    selector: 'delete-card-modal',
+    templateUrl: 'delete-card.html',
+    styleUrls: ['delete-card.scss']
 })
 
 export class DeleteCardModal {
@@ -22,23 +22,22 @@ export class DeleteCardModal {
     ) {
 
         this.store
-        .select('payment')
-        .subscribe((res: any) => {
-            console.log(res);
-            this.card = res.card;
-        });
+            .select('payment')
+            .subscribe((res: any) => {
+                this.card = res.card;
+            });
     }
     closeModal() {
         this.activeModal.close();
     }
-    setAsDefault(){
-        this.activeModal.close();        
+    setAsDefault() {
+        this.activeModal.close();
         this._spinner.show();
-        this.store.dispatch({ type: payment.actionTypes.SET_AS_DEFAULT,payload:{card:this.card}});  
+        this.store.dispatch({ type: payment.actionTypes.SET_AS_DEFAULT, payload: { card: this.card } });
     }
-    deleteCard(){
-        this.activeModal.close();  
-        this._spinner.show();        
-        this.store.dispatch({ type: payment.actionTypes.DELETE_CARD,payload:{card:this.card}});                  
+    deleteCard() {
+        this.activeModal.close();
+        this._spinner.show();
+        this.store.dispatch({ type: payment.actionTypes.DELETE_CARD, payload: { card: this.card } });
     }
 }

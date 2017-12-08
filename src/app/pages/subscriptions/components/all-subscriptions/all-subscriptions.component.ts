@@ -19,7 +19,7 @@ import { ToastrService, ToastrConfig } from 'ngx-toastr';
 @Component({
     selector: 'all-subscriptions',
     templateUrl: 'all-subscriptions.html',
-    styleUrls:['all-subscriptions.scss']
+    styleUrls: ['all-subscriptions.scss']
 })
 export class AllSubscriptions {
     @ViewChild('scrollBottom') private _scrollContainer: ElementRef;
@@ -125,11 +125,9 @@ export class AllSubscriptions {
         this.store
             .select('subscription')
             .subscribe((res: any) => {
-                console.log(res);
                 this.plans = res.data;
-                console.log(this.plans);
-                this.planCount =Object.keys(res).length;   
-                this.numbers = Array(this.planCount).fill(0).map((x,i)=>i);
+                this.planCount = Object.keys(res).length;
+                this.numbers = Array(this.planCount).fill(0).map((x, i) => i);
                 // this.subscriptions = res.subscriptions;
                 // this.count = res.count;
                 // this.length = this.count;
@@ -162,7 +160,7 @@ export class AllSubscriptions {
                 // }
 
             });
-            this.store.dispatch({type: subscription.actionTypes.GET_PLAN});            
+        this.store.dispatch({ type: subscription.actionTypes.GET_PLAN });
         this.onLoad();
     };
 
@@ -173,16 +171,16 @@ export class AllSubscriptions {
     };
 
     getAllSubscription() {
-    //     this.store.dispatch({
-    //         type: subscription.actionTypes.APP_GET_ALL_SUBSCRIPTIONS, payload: {
-    //             currentPage: this.page,
-    //             limit: this.pageSize,
-    //             role: this.role,
-    //             filter: this.filter,
-    //             value: this.value,
-    //             applicableFor: this.applicableFor
-    //         }
-    //     });
+        //     this.store.dispatch({
+        //         type: subscription.actionTypes.APP_GET_ALL_SUBSCRIPTIONS, payload: {
+        //             currentPage: this.page,
+        //             limit: this.pageSize,
+        //             role: this.role,
+        //             filter: this.filter,
+        //             value: this.value,
+        //             applicableFor: this.applicableFor
+        //         }
+        //     });
     }
 
     pageChange(page) {
@@ -583,9 +581,9 @@ export class AllSubscriptions {
             event.preventDefault();
         }
     }
-    pay(item){
-        localStorage.setItem('pay',item._id);
-        localStorage.setItem('amount',item.cost);        
+    pay(item) {
+        localStorage.setItem('pay', item._id);
+        localStorage.setItem('amount', item.cost);
         this.router.navigate(['/pages/payments']);
     }
 }

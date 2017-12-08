@@ -689,7 +689,6 @@ export class SettingEffects {
             }
                 , (error) => {
                     if (error.statusCode === 401 || error.statusCode === 403) {
-                        console.log('error');
                         this.store.dispatch({
                             type: app.actionTypes.APP_AUTHENTICATION_FAIL, payload: error
                         });
@@ -714,7 +713,6 @@ export class SettingEffects {
             this._spinner.show();
             this.store.dispatch(new setting.SaveCatAction({ selectedCategory: action.payload.selectedCategory, edit: action.payload.edit }));
             this.PostService.getAllSubCategories(action.payload).subscribe((result) => {
-                console.log(action.payload);
                 this._spinner.hide();
                 if (result.message == 'Action complete.' || result.statusCode == 200 || result.statusCode == 201) {
                     let payload = {
@@ -764,7 +762,6 @@ export class SettingEffects {
                 this._spinner.hide();
                 if (result.message == 'Action complete.' || result.statusCode == 200) {
                     let payload = result.data;
-                    console.log(payload);
                     this.store.dispatch(new setting.AppGetCategoriesSuccess(payload));
                 }
             }

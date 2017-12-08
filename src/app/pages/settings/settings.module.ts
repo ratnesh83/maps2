@@ -24,10 +24,9 @@ import {
     MdNativeDateModule,
     MdCheckboxModule,
 } from '@angular/material';
-
 import { AllSettings } from './components/all-settings/all-settings.component';
 import { EmployeeProfileEdit } from './components/employee-profile-edit/employee-profile-edit.component';
-
+import { OpenDocumentModal } from './components/open-document-modal/open-document-modal.component';
 import { Settings } from './settings.component';
 import { NgaModule } from '../../theme/nga.module';
 import { UserProfile } from './components/user-profile/user-profile.component';
@@ -68,9 +67,11 @@ import { AvailabilityCalendar } from './components/availability-calendar/availab
         EmployeeProfileEdit,
         UserProfile,
         UserProfileEdit,
-        AvailabilityCalendar
+        AvailabilityCalendar,
+        OpenDocumentModal
     ],
     entryComponents: [
+        OpenDocumentModal
     ],
 
 })

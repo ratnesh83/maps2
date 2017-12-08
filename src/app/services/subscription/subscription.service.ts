@@ -31,7 +31,7 @@ export class SubscriptionService {
         if (payload.subscription && payload.subscription != null) {
             url += '&subscriptionName=' + payload.subscription;
         }
-        
+
         this.authRequired = true;
         this.utcOffset = false;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
@@ -69,19 +69,17 @@ export class SubscriptionService {
         let url = environment.APP.API_URL + environment.APP.ADD_SUBSCRIPTION;
         return this.apiService.postFileApi(url, payload, this.authRequired, this.utcOffset);
     }
-    getPlans(){
-        console.log('3');
+    getPlans() {
         let url = environment.APP.API_URL + environment.APP.GET_PLAN;
         this.authRequired = true;
-        this.utcOffset = false;        
+        this.utcOffset = false;
         return this.apiService.getApi(url, this.authRequired, this.utcOffset);
     }
-    buyPlan(payload){
-        console.log('plan');
+    buyPlan(payload) {
         let url = environment.APP.API_URL + environment.APP.BUY_PLAN;
         this.authRequired = true;
-        this.utcOffset = false;        
-        return this.apiService.postFileApi(url,payload,this.authRequired, this.utcOffset);
+        this.utcOffset = false;
+        return this.apiService.postFileApi(url, payload, this.authRequired, this.utcOffset);
     }
 
 }

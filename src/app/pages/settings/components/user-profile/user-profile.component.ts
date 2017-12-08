@@ -1,15 +1,17 @@
 import { Component, ViewChild, ViewChildren, QueryList, ElementRef, Renderer } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MdDialog } from '@angular/material';
 import * as setting from '../../state/setting.actions';
 import * as app from '../../../../state/app.actions';
+import * as labor from '../../../labors/state/labor.actions';
 import { FormGroup, AbstractControl, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { OpenDocumentModal } from '../open-document-modal/open-document-modal.component';
 import { BaThemeSpinner } from '../../../../theme/services';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
 
 import 'style-loader!./user-profile.scss';
-import * as labor from '../../../labors/state/labor.actions';
 
 @Component({
     selector: 'user-profile',
@@ -42,21 +44,22 @@ export class UserProfile {
         private fb: FormBuilder,
         private toastrService: ToastrService,
         private renderer: Renderer,
-        private baThemeSpinner: BaThemeSpinner
-    ) { this.baThemeSpinner.show();
+        private baThemeSpinner: BaThemeSpinner,
+        public dialog: MdDialog
+    ) {
+        this.baThemeSpinner.show();
         this.settingStore = this.store
             .select('setting')
             .subscribe((res: any) => {
-                if(res.userDetails){
-                this.profile = res.userDetails[0];
-                this.documents  = res.userDetails[0].documents;
+                if (res.userDetails) {
+                    this.profile = res.userDetails[0];
+                    this.documents = res.userDetails[0].documents;
                 }
-                console.log(res);                
             });
 
-                
-        this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO_ID,payload:{role:'user'}});
-              
+
+        this.store.dispatch({ type: setting.actionTypes.GET_PROFILE_INFO_ID, payload: { role: 'user' } });
+
     };
     bringFileSelector(): boolean {
         this.renderer.invokeElementMethod(this._fileUpload.nativeElement, 'click');
@@ -93,7 +96,7 @@ export class UserProfile {
             jQuery('html, body').animate({ scrollTop: this._scrollContainerExp.nativeElement.scrollHeight + this._scrollContainerQual.nativeElement.scrollHeight }, { duration: 500 });
         }
     }
-        
+
     checkFileSize(size): boolean {
         if (size > 5000000) {
             return false;
@@ -113,32 +116,32 @@ export class UserProfile {
     ngOnInit() {
         this.jobItems = [
             {
-            title:'Labor required',
-            subTitle:'Construction: Concre',
-            imgPath:'assets/img/crane.svg',
-            rate:40,
-            location:'1245 West Broadway, Vancouver.',
+                title: 'Labor required',
+                subTitle: 'Construction: Concre',
+                imgPath: 'assets/img/crane.svg',
+                rate: 40,
+                location: '1245 West Broadway, Vancouver.',
             },
             {
-            title:'Labor required',
-            subTitle:'Construction: Concre',
-            imgPath:'assets/img/electrical.svg',
-            rate:40,
-            location:'1245 West Broadway, Vancouver.',
+                title: 'Labor required',
+                subTitle: 'Construction: Concre',
+                imgPath: 'assets/img/electrical.svg',
+                rate: 40,
+                location: '1245 West Broadway, Vancouver.',
             },
             {
-            title:'Labor required',
-            subTitle:'Construction: Concre',
-            imgPath:'assets/img/heart.svg',
-            rate:40,
-            location:'1245 West Broadway, Vancouver.',
+                title: 'Labor required',
+                subTitle: 'Construction: Concre',
+                imgPath: 'assets/img/heart.svg',
+                rate: 40,
+                location: '1245 West Broadway, Vancouver.',
             },
             {
-            title:'Labor required',
-            subTitle:'Construction: Concre',
-            imgPath:'assets/img/teeth.svg',
-            rate:40,
-            location:'1245 West Broadway, Vancouver.',
+                title: 'Labor required',
+                subTitle: 'Construction: Concre',
+                imgPath: 'assets/img/teeth.svg',
+                rate: 40,
+                location: '1245 West Broadway, Vancouver.',
             }
         ];
         this.products = [
@@ -158,20 +161,27 @@ export class UserProfile {
                 imgPath: 'assets/img/product_img_3.png'
             }
         ];
-        console.log(this.jobItems);
-        
+
     }
 
     ngOnDestroy() {
-       localStorage.removeItem('userId');
+        localStorage.removeItem('userId');
     }
-    
+
     ngAfterViewInit() {
         this.imageUploadChildrenArray = this._filesUpload.toArray();
         this._filesUpload.changes.subscribe(childern => {
             this.imageUploadChildrenArray = childern.toArray();
         });
     }
+
+    openDocument(document) {
+        if (document && document.toString() && (document.toString().toLowerCase().indexOf('.jpg') != -1 || document.toString().toLowerCase().indexOf('.jpeg') != -1) || document.toString().toLowerCase().indexOf('.png') != -1) {
+            let dialogRef = this.dialog.open(OpenDocumentModal);
+            dialogRef.componentInstance.document = document;
+        }
+    }
+
     _keyPressCsvNumber(event: any) {
         const pattern = /^[0-9,]*$/;
         let inputChar = event.target.value + String.fromCharCode(event.charCode);

@@ -2,9 +2,11 @@ import { Component, ViewChild, ViewChildren, QueryList, ElementRef, Renderer } f
 import { Store } from '@ngrx/store';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
+import { MdDialog } from '@angular/material';
 import * as setting from '../../state/setting.actions';
 import * as app from '../../../../state/app.actions';
 import { FormGroup, AbstractControl, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { OpenDocumentModal } from '../open-document-modal/open-document-modal.component';
 import { BaThemeSpinner } from '../../../../theme/services';
 import { IMultiSelectOption } from 'angular-2-dropdown-multiselect';
 import { ToastrService, ToastrConfig } from 'ngx-toastr';
@@ -65,12 +67,12 @@ export class EmployeeProfileEdit {
         private fb: FormBuilder,
         private toastrService: ToastrService,
         private renderer: Renderer,
-        private router: Router
+        private router: Router,
+        public dialog: MdDialog
     ) {
         this.settingStore = this.store
             .select('setting')
             .subscribe((res: any) => {
-                console.log(res);
                 this.profile = res;
                 this.profileName = res.fullName;
                 this.profileCompanyName = res.companyName;
@@ -119,11 +121,11 @@ export class EmployeeProfileEdit {
             fd.append('email', this.profileEmail);
         }
         fd.append('description', this.profileDescription);
-        
+
         if (this.selectedCategory) {
             fd.append('categoryId', this.selectedCategory);
         }
-        if (this.selectedSubCategory) {         
+        if (this.selectedSubCategory) {
             fd.append('subCategoryIds', JSON.stringify([this.selectedSubCategory]));
         }
 
@@ -254,7 +256,6 @@ export class EmployeeProfileEdit {
     }
     toogleEdit() {
         this.isEditMode = !this.isEditMode;
-        console.log(this.isEditMode);
     }
     getAddress(event) {
         let addressComponents = event.address_components;
@@ -294,7 +295,6 @@ export class EmployeeProfileEdit {
         this.state = state;
         this.zipCode = postal;
         this.country = country;
-        console.log(this.locationAddress);
     }
     getImage = (data: any): any => {
         let fileObject = data.target.files[0];
@@ -327,6 +327,13 @@ export class EmployeeProfileEdit {
                 type: setting.actionTypes.APP_GET_SUB_CATEGORIES,
                 payload: { id: data._id, selectedCategory: data, edit: editmode }
             });
+        }
+    }
+
+    openDocument(document) {
+        if (document && document.toString() && (document.toString().toLowerCase().indexOf('.jpg') != -1 || document.toString().toLowerCase().indexOf('.jpeg') != -1) || document.toString().toLowerCase().indexOf('.png') != -1) {
+            let dialogRef = this.dialog.open(OpenDocumentModal);
+            dialogRef.componentInstance.document = document;
         }
     }
 
