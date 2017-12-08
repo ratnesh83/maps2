@@ -329,4 +329,8 @@ export class EmployeeProfileEdit {
             });
         }
     }
+
+    cancel() {
+        this.isEditMode = false;
+    }
 }

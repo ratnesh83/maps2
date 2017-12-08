@@ -125,7 +125,8 @@
                     <button class="btn btn-lg btn-custom" *ngIf="!isEditMode" (click)="toogleEdit()">Edit Profile</button>
                     <button class="btn btn-lg btn-custom" *ngIf="!isEditMode" (click)="openCalendar()">Edit Calendar</button>
                     <button class="btn btn-lg btn-custom" *ngIf="!isEditMode">Change Password</button>
-                    <button class="btn btn-lg btn-custom" *ngIf="isEditMode" (click)="onSubmit()" href="">Save Profile</button>
+                    <button class="btn btn-lg btn-custom" *ngIf="isEditMode" (click)="onSubmit()" href="">Save</button>
+                    <button class="btn btn-lg btn-custom" *ngIf="isEditMode" (click)="cancel()" href="">Cancel</button>
                 </div>
             </div>
         </div>

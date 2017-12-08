@@ -679,4 +679,8 @@ export class UserProfileEdit {
         data.srcElement.value = null;
     }
 
+    cancel() {
+        this.isEditMode = false;
+    }
+
 }
