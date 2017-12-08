@@ -22,6 +22,7 @@ export class Documents {
     @ViewChildren('documentInput') public _document: QueryList<HTMLInputElement>;
     @ViewChildren('inputDocumentsName') public _documents: QueryList<HTMLInputElement>;
     @ViewChild('inputDocumentName') public _documentName: ElementRef;
+    @ViewChild('scrollBottom') private _scrollContainer: ElementRef;
     public storeData;
     public form: FormGroup;
     public profilePicture: AbstractControl;
@@ -225,6 +226,17 @@ export class Documents {
         control.push(this.initDocument());
         this.uploader.push(new FileUploader({ url: '' }));
         this.documentsUpload.push('');
+        setTimeout(() => {
+            if (this._scrollContainer) {
+                jQuery('html, body, div, scrollBottom').animate({ scrollTop: this._scrollContainer.nativeElement.scrollHeight }, { duration: 500 });
+            }
+        });
+        setTimeout(() => {
+            let length = control.length - 1 > 0 ? control.length - 1 : 0;
+            if (this.documentsArray[length]) {
+                this.documentsArray[length].nativeElement.focus();
+            }
+        }, 500);
     }
 
     removeDocument(index) {
@@ -251,21 +263,21 @@ export class Documents {
         let documents = [];
         let documentsName = [];
         for (let i = 0; i < control.value.length; i++) {
-            if(!control.value[i].documentName && i == 0) {
+            if (!control.value[i].documentName && i == 0) {
                 this.toastrService.clear();
                 this.toastrService.error('Document name is required', 'Error');
                 if (this.documentsArray[i]) {
                     this.documentsArray[i].nativeElement.focus();
                 }
                 return;
-            } else if(!control.value[i].documentName && control.value[i].document) {
+            } else if (!control.value[i].documentName && control.value[i].document) {
                 this.toastrService.clear();
                 this.toastrService.error('Document name is required', 'Error');
                 if (this.documentsArray[i]) {
                     this.documentsArray[i].nativeElement.focus();
                 }
                 return;
-            } else if(control.value[i].documentName && !control.value[i].document) {
+            } else if (control.value[i].documentName && !control.value[i].document) {
                 this.toastrService.clear();
                 this.toastrService.error('Document is required', 'Error');
                 return;
@@ -290,7 +302,7 @@ export class Documents {
         if (!this.profilePicture.value) {
             delete data.profilePicture;
         }
-        
+
         let formData = new FormData();
         formData.append('userId', this.userId);
         formData.append('stepNumber', '3');
@@ -298,7 +310,7 @@ export class Documents {
             formData.append('profilePicture', this.profilePictureUplaod);
         }
         formData.append('info', JSON.stringify(documentsName));
-        for(let i = 0; i < this.documentsUpload.length; i++) {
+        for (let i = 0; i < this.documentsUpload.length; i++) {
             formData.append('documents', this.documentsUpload[i]);
         }
 
