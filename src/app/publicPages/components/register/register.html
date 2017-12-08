@@ -49,7 +49,7 @@
                     <div class="col-12 col-sm-12 signup-radio">
                         <md-radio-group class="signup-radio-button row" [formControl]="signUpType" (change)="changeSignUpType(signUpType.value)">
                             <md-radio-button class="col-6 col-sm-6 text-center" color="primary" value="USER">
-                                <span class="hidden-xs-down">Sign up as </span>User</md-radio-button>
+                                <span class="hidden-xs-down">Sign up as </span>Regular User</md-radio-button>
                             <md-radio-button class="col-6 col-sm-6 text-center" color="primary" value="EMPLOYER">
                                 <span class="hidden-xs-down">Sign up as </span>Employer</md-radio-button>
                         </md-radio-group>
@@ -99,12 +99,14 @@
                 </div>
                 <div *ngIf="signUpType.value == 'USER'" class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input #inputExpertiseDescription type="text" class="form-control" [formControl]="expertiseDescription" placeholder="Expertise Description">
+                        <!-- <input #inputExpertiseDescription type="text" class="form-control" [formControl]="expertiseDescription" placeholder="Expertise Description"> -->
+                        <textarea #inputExpertiseDescription maxlength="300" [formControl]="expertiseDescription" class="form-control" placeholder="Expertise Description"></textarea>
                     </div>
                 </div>
                 <div *ngIf="signUpType.value == 'EMPLOYER'" class="form-group row">
                     <div class="col-12 col-sm-12">
-                        <input #inputDescription type="text" class="form-control" [formControl]="description" placeholder="Description">
+                        <!-- <input #inputDescription type="text" class="form-control" [formControl]="description" placeholder="Description"> -->
+                        <textarea #inputDescription maxlength="300" [formControl]="description" class="form-control" placeholder="Description"></textarea>
                     </div>
                 </div>
                 <div *ngIf="!socialId.value" class="form-group row">

@@ -397,13 +397,14 @@ export class Register {
                 delete data.socialMode;
             }
         } else if (this.signUpType.value == 'EMPLOYER') {
+            data.description = this.description.value;
             if (this.socialMode == null || this.socialMode == '' || this.socialMode == undefined) {
                 delete data.socialId;
                 delete data.socialMode;
             }
         }
 
-        if (this.description.value == null || this.description.value == '' || this.description.value == undefined) {
+        if (data.description == null || data.description == '' || data.description == undefined) {
             delete data.description;
         }
 
