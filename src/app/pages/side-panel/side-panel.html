@@ -9,7 +9,7 @@
                     <img mat-card-avatar [src]="company?.picture ? company?.picture : 'assets/img/user.png'">
                 </div>
                 <md-card-title class="left-notification-title">{{ company.name }}</md-card-title>
-                <md-card-subtitle class="left-notification-subtitle">joined {{ getDuration(company.createdAt) }} ago</md-card-subtitle>
+                <md-card-subtitle class="left-notification-subtitle">joined {{ company.createdAtFormatted }} ago</md-card-subtitle>
             </md-card-header>
             <div class="text-center" *ngIf="!topList">
                 <i class="fa fa-spinner fa-spin"></i>
@@ -26,7 +26,7 @@
                     <img mat-card-avatar [src]="user?.picture ? user?.picture : 'assets/img/user.png'">
                 </div>
                 <md-card-title class="left-notification-title">{{ user.name }}</md-card-title>
-                <md-card-subtitle class="left-notification-subtitle">joined {{ getDuration(user.createdAt) }} ago</md-card-subtitle>
+                <md-card-subtitle class="left-notification-subtitle">joined {{ user.createdAtFormatted }} ago</md-card-subtitle>
             </md-card-header>
             <div class="text-center" *ngIf="!topList">
                 <i class="fa fa-spinner fa-spin"></i>
@@ -43,7 +43,7 @@
                     <img mat-card-avatar [src]="job?.picture ? job?.picture : 'assets/img/image-placeholder.jpg'">
                 </div>
                 <md-card-title class="left-notification-title">{{ job.name }}</md-card-title>
-                <md-card-subtitle class="left-notification-subtitle">created {{ getDuration(job.createdAt) }} ago</md-card-subtitle>
+                <md-card-subtitle class="left-notification-subtitle">created {{ job.createdAtFormatted }} ago</md-card-subtitle>
             </md-card-header>
             <div class="text-center" *ngIf="!topList">
                 <i class="fa fa-spinner fa-spin"></i>

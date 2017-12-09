@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
+import { DatePipe } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../../services/notification/notification.service';
@@ -20,6 +21,7 @@ export class NotificationEffects {
         private store: Store<any>,
         private notificationService: NotificationService,
         private _spinner: BaThemeSpinner,
+        private datePipe: DatePipe,
         private router: Router
     ) { }
 
@@ -33,7 +35,7 @@ export class NotificationEffects {
                     let notificationType = (action.payload.type) ? action.payload.currentPage.type : 'all';
                     // creating state payload for next action
                     if (result && result.data && result.data.notification && result.data.notification.length > 0) {
-                        result.data.notification = result.data.notification.map(function (record, index) {
+                        result.data.notification = result.data.notification.map((record, index) => {
                             /* let currentTime = new Date(record.createdAt);
                             let currentOffset = currentTime.getTimezoneOffset();
                             let ISTOffset = currentOffset;
@@ -41,6 +43,7 @@ export class NotificationEffects {
                             let minutes = (createdAt.getMinutes() > 9) ? createdAt.getMinutes() : '0' + createdAt.getMinutes();
                             record.createdAt = createdAt.getDate() + '-' + (createdAt.getMonth() + 1) + '-' + createdAt.getFullYear() + ' ' + createdAt.getHours() + ':' + minutes; */
                             record.createdAt = new Date(record.createdAt);
+                            record.createdAtFormatted = this.notificationService.getDuration(new Date(record.createdAt)) ? this.notificationService.getDuration(new Date(record.createdAt)) + ' ago' : this.datePipe.transform(new Date(record.createdAt), 'MMM dd') + ' at ' + this.datePipe.transform(new Date(record.createdAt), 'h:mm a');
                             return record;
                         });
                     }
@@ -96,7 +99,7 @@ export class NotificationEffects {
                     let notificationType = (action.payload.type) ? action.payload.currentPage.type : 'all';
                     // creating state payload for next action
                     if (result && result.data && result.data.notification && result.data.notification.length > 0) {
-                        result.data.notification = result.data.notification.map(function (record, index) {
+                        result.data.notification = result.data.notification.map((record, index) => {
                             /* let currentTime = new Date(record.createdAt);
                             let currentOffset = currentTime.getTimezoneOffset();
                             let ISTOffset = currentOffset;
@@ -104,6 +107,7 @@ export class NotificationEffects {
                             let minutes = (createdAt.getMinutes() > 9) ? createdAt.getMinutes() : '0' + createdAt.getMinutes();
                             record.createdAt = createdAt.getDate() + '-' + (createdAt.getMonth() + 1) + '-' + createdAt.getFullYear() + ' ' + createdAt.getHours() + ':' + minutes; */
                             record.createdAt = new Date(record.createdAt);
+                            record.createdAtFormatted = this.notificationService.getDuration(new Date(record.createdAt)) ? this.notificationService.getDuration(new Date(record.createdAt)) + ' ago' : this.datePipe.transform(new Date(record.createdAt), 'MMM dd') + ' at ' + this.datePipe.transform(new Date(record.createdAt), 'h:mm a');
                             return record;
                         });
                     }

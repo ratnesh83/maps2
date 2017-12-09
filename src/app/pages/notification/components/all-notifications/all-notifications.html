@@ -13,8 +13,7 @@
                                 {{ notification.text }}
                             </md-card-title>
                             <md-card-subtitle style="margin-bottom: 0px; font-size: 13px">
-                                {{ getDuration(notification.createdAt) ? getDuration(notification.createdAt) + ' ago' : (notification.createdAt | date: 'MMMM
-                                dd') + ' at ' + (notification.createdAt | date: 'h:mm a') }}
+                                {{ notification.createdAtFormatted }}
                             </md-card-subtitle>
                         </md-card-header>
                     </md-card>

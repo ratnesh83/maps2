@@ -48,7 +48,7 @@ import * as request from '../../../requests/state/request.actions';
                                     </div>
                                 </div>
                             </div>
-                            <span style="max-width: 100%">{{ getDuration(msg.createdAt) ? getDuration(msg.createdAt) + ' ago' : (msg.createdAt | date: 'MMM dd') + ' at ' + (msg.createdAt | date: 'h:mm a') }}</span>
+                            <span style="max-width: 100%">{{ msg.createdAtFormatted }}</span>
                         </div>
                     </a>
                 </div>
@@ -176,8 +176,6 @@ export class TopNotifications {
     }
 
     read(data) {
-        // console.log("notification2...........................",this.notifications)
-        // this.store.dispatch({ type: notification.actionTypes.GET_ALL_NOTIFICATION, payload: {currentPage: this.page, limit: this.limit} });
         let eventType = data.flag;
         let id;
         let role;
