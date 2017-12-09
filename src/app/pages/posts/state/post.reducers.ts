@@ -23,7 +23,7 @@ export const post: ActionReducer<any> = (state = initialState, action: Action) =
         case 'APP_GET_CATEGORIES_SUCCESS':
             return Object.assign({}, state, { categories: action.payload });
 
-        case 'APP_GET_SUB_CATEGORIES_SUCCESS':
+        case 'APP_GET_SUB_CATEGORIES_POST_SUCCESS':
             return Object.assign({}, state, { subCategories: action.payload });
 
         case 'APP_GET_JOBS':

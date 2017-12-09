@@ -10,8 +10,8 @@ export const actionTypes = {
     APP_GET_LABORS_SUCCESS: 'APP_GET_LABORS_SUCCESS',
     APP_GET_JOB: 'APP_GET_JOB',
     APP_GET_JOB_SUCCESS: 'APP_GET_JOB_SUCCESS',
-    APP_GET_SUB_CATEGORIES: 'APP_GET_SUB_CATEGORIES',
-    APP_GET_SUB_CATEGORIES_SUCCESS: 'APP_GET_SUB_CATEGORIES_SUCCESS',
+    APP_GET_SUB_CATEGORIES_POST: 'APP_GET_SUB_CATEGORIES_POST',
+    APP_GET_SUB_CATEGORIES_POST_SUCCESS: 'APP_GET_SUB_CATEGORIES_POST_SUCCESS',
     APP_POST_JOB: 'APP_POST_JOB',
     APP_POST_JOB_SUCCESS: 'APP_POST_JOB_SUCCESS',
     APP_EDIT_POST: 'APP_EDIT_POST',
@@ -68,12 +68,12 @@ export class AppGetLaborsSuccess implements Action {
 }
 
 export class AppGetSubCategories implements Action {
-    type = actionTypes.APP_GET_SUB_CATEGORIES;
+    type = actionTypes.APP_GET_SUB_CATEGORIES_POST;
     constructor(public payload: credentials) { }
 }
 
 export class AppGetSubCategoriesSuccess implements Action {
-    type = actionTypes.APP_GET_SUB_CATEGORIES_SUCCESS;
+    type = actionTypes.APP_GET_SUB_CATEGORIES_POST_SUCCESS;
     constructor(public payload: credentials) { }
 }
 

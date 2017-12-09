@@ -208,7 +208,7 @@ export class PostJob implements OnInit {
             this.categoryId.setValue(data._id);
             this.subCategories = [];
             this.store.dispatch({
-                type: post.actionTypes.APP_GET_SUB_CATEGORIES,
+                type: post.actionTypes.APP_GET_SUB_CATEGORIES_POST,
                 payload: { id: data._id }
             });
         }

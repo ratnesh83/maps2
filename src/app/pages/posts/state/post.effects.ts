@@ -163,7 +163,7 @@ export class PostEffects {
 
     @Effect({ dispatch: false })
     getSubCategories$ = this.actions$
-        .ofType('APP_GET_SUB_CATEGORIES')
+        .ofType('APP_GET_SUB_CATEGORIES_POST')
         .do((action) => {
             this._spinner.show();
             this.PostService.getAllSubCategories(action.payload).subscribe((result) => {
@@ -191,7 +191,7 @@ export class PostEffects {
 
     @Effect({ dispatch: false })
     getSubCategoriesSuccess: Observable<Action> = this.actions$
-        .ofType('APP_GET_SUB_CATEGORIES_SUCCESS')
+        .ofType('APP_GET_SUB_CATEGORIES_POST_SUCCESS')
         .do((action) => {
 
         });
