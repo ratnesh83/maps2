@@ -105,6 +105,7 @@ export class AllJobs implements OnInit {
                             company = {
                                 name: this.topList.companyName[i].companyName,
                                 createdAt: this.topList.companyName[i].createdAt,
+                                createdAtFormatted: this.getDuration(this.topList.companyName[i].createdAt),
                                 picture: this.topList.companyName[i].profilePicture ? this.topList.companyName[i].profilePicture.thumb : 'assets/img/user.png'
                             };
                             this.companiesNotifications.push(company);
@@ -117,6 +118,7 @@ export class AllJobs implements OnInit {
                             labor = {
                                 name: this.topList.labours[i].fullName ? this.topList.labours[i].fullName : this.topList.labours[i].lastName ? this.topList.labours[i].firstName + ' ' + this.topList.labours[i].lastName : this.topList.labours[i].firstName,
                                 createdAt: this.topList.labours[i].createdAt,
+                                createdAtFormatted: this.getDuration(this.topList.labours[i].createdAt),
                                 picture: this.topList.labours[i].profilePicture ? this.topList.labours[i].profilePicture.thumb : 'assets/img/user.png'
                             };
                             this.laborsNotifications.push(labor);
@@ -129,6 +131,7 @@ export class AllJobs implements OnInit {
                             employer = {
                                 name: this.topList.employers[i].fullName ? this.topList.employers[i].fullName : this.topList.employers[i].lastName ? this.topList.employers[i].firstName + ' ' + this.topList.employers[i].lastName : this.topList.employers[i].firstName,
                                 createdAt: this.topList.employers[i].createdAt,
+                                createdAtFormatted: this.getDuration(this.topList.employers[i].createdAt),
                                 picture: this.topList.employers[i].profilePicture ? this.topList.employers[i].profilePicture.thumb : 'assets/img/user.png'
                             };
                             this.usersNotifications.push(employer);
@@ -141,6 +144,7 @@ export class AllJobs implements OnInit {
                             job = {
                                 name: this.topList.newJobs[i].title,
                                 createdAt: this.topList.newJobs[i].createdAt,
+                                createdAtFormatted: this.getDuration(this.topList.newJobs[i].createdAt),
                                 picture: this.topList.newJobs[i].categoryId ? this.topList.newJobs[i].categoryId.image.thumb : 'assets/img/image-placeholder.jpg'
                             };
                             this.jobsNotifications.push(job);
