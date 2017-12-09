@@ -66,18 +66,6 @@ export class PagesMenuService {
                         },
                     },
                     {
-                        path: 'feedbacks',
-                        data: {
-                            menu: {
-                                title: 'MY RATINGS',
-                                icon: 'icon-wrap fa fa-comments-o',
-                                selected: false,
-                                expanded: false,
-                                order: 100,
-                            }
-                        }
-                    },
-                    {
                         path: 'requests',
                         data: {
                             menu: {
@@ -89,6 +77,18 @@ export class PagesMenuService {
                                 auth: ['USER']
                             }
                         },
+                    },
+                    {
+                        path: 'feedbacks',
+                        data: {
+                            menu: {
+                                title: 'MY RATINGS',
+                                icon: 'icon-wrap fa fa-comments-o',
+                                selected: false,
+                                expanded: false,
+                                order: 100,
+                            }
+                        }
                     },
                     {
                         path: 'mynetworks',
