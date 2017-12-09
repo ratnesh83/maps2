@@ -39,7 +39,6 @@ export class AllLabors implements OnInit {
     public markers = [];
     public info;
     public laborStore;
-    public topListStore;
     public selectedCategory;
     public categories = [];
     public categoryId;
@@ -54,12 +53,6 @@ export class AllLabors implements OnInit {
     public bounds;
     public map: google.maps.Map;
     public zoom = 13;
-    public topList;
-
-    public companiesNotifications = [];
-    public jobsNotifications = [];
-    public usersNotifications = [];
-    public laborsNotifications = [];
 
     constructor(
         private store: Store<any>,
@@ -84,71 +77,6 @@ export class AllLabors implements OnInit {
             rate: 0,
             requiredLabourers: 0,
         };
-
-        this.topListStore = this.store
-            .select('topList')
-            .subscribe((res: any) => {
-                this.topList = res.topList;
-                this.companiesNotifications = [];
-                this.jobsNotifications = [];
-                this.usersNotifications = [];
-                this.laborsNotifications = [];
-                if (res.topList) {
-                    this.topList = res.topList;
-
-                    if (this.topList.companyName) {
-                        let company;
-                        for (let i = 0; i < this.topList.companyName.length; i++) {
-                            company = {
-                                name: this.topList.companyName[i].companyName,
-                                createdAt: this.topList.companyName[i].createdAt,
-                                createdAtFormatted: this.getDuration(this.topList.companyName[i].createdAt),
-                                picture: this.topList.companyName[i].profilePicture ? this.topList.companyName[i].profilePicture.thumb : 'assets/img/user.png'
-                            };
-                            this.companiesNotifications.push(company);
-                        }
-                    }
-
-                    if (this.topList.labours) {
-                        let labor;
-                        for (let i = 0; i < this.topList.labours.length; i++) {
-                            labor = {
-                                name: this.topList.labours[i].fullName ? this.topList.labours[i].fullName : this.topList.labours[i].lastName ? this.topList.labours[i].firstName + ' ' + this.topList.labours[i].lastName : this.topList.labours[i].firstName,
-                                createdAt: this.topList.labours[i].createdAt,
-                                createdAtFormatted: this.getDuration(this.topList.labours[i].createdAt),
-                                picture: this.topList.labours[i].profilePicture ? this.topList.labours[i].profilePicture.thumb : 'assets/img/user.png'
-                            };
-                            this.laborsNotifications.push(labor);
-                        }
-                    }
-
-                    if (this.topList.employers) {
-                        let employer;
-                        for (let i = 0; i < this.topList.employers.length; i++) {
-                            employer = {
-                                name: this.topList.employers[i].fullName ? this.topList.employers[i].fullName : this.topList.employers[i].lastName ? this.topList.employers[i].firstName + ' ' + this.topList.employers[i].lastName : this.topList.employers[i].firstName,
-                                createdAt: this.topList.employers[i].createdAt,
-                                createdAtFormatted: this.getDuration(this.topList.employers[i].createdAt),
-                                picture: this.topList.employers[i].profilePicture ? this.topList.employers[i].profilePicture.thumb : 'assets/img/user.png'
-                            };
-                            this.usersNotifications.push(employer);
-                        }
-                    }
-
-                    if (this.topList.newJobs) {
-                        let job;
-                        for (let i = 0; i < this.topList.newJobs.length; i++) {
-                            job = {
-                                name: this.topList.newJobs[i].title,
-                                createdAt: this.topList.newJobs[i].createdAt,
-                                createdAtFormatted: this.getDuration(this.topList.newJobs[i].createdAt),
-                                picture: this.topList.newJobs[i].categoryId ? this.topList.newJobs[i].categoryId.image.thumb : 'assets/img/image-placeholder.jpg'
-                            };
-                            this.jobsNotifications.push(job);
-                        }
-                    }
-                }
-            });
 
         this.laborStore = this.store
             .select('labor')
@@ -237,10 +165,6 @@ export class AllLabors implements OnInit {
     ngOnInit() {
         this.store.dispatch({
             type: labor.actionTypes.APP_GET_CATEGORIES_LABOR,
-            payload: {}
-        });
-        this.store.dispatch({
-            type: labor.actionTypes.APP_GET_TOP_LIST_COPY,
             payload: {}
         });
     }
@@ -412,9 +336,6 @@ export class AllLabors implements OnInit {
     ngOnDestroy() {
         if (this.laborStore) {
             this.laborStore.unsubscribe();
-        }
-        if (this.topListStore) {
-            this.topListStore.unsubscribe();
         }
     }
 

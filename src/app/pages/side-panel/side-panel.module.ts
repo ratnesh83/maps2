@@ -4,11 +4,14 @@ import { TopLists } from './side-panel.component';
 import { MdCardModule } from '@angular/material';
 
 @NgModule({
+    declarations: [
+        TopLists
+    ],
     imports: [
         CommonModule,
         MdCardModule
     ],
-    declarations: [
+    exports: [
         TopLists
     ],
     entryComponents: [ ]

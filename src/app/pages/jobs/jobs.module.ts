@@ -5,6 +5,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgPipesModule } from 'ngx-pipes';
 import { SelectModule } from 'ng2-select';
 import { NgaModule } from '../../theme/nga.module';
+import { TopListsModule } from '../side-panel/side-panel.module';
 import {
     FormsModule,
     ReactiveFormsModule
@@ -31,6 +32,7 @@ import { NguiMapModule } from '@ngui/map';
         FormsModule,
         ReactiveFormsModule,
         NgaModule,
+        TopListsModule,
         NgxPaginationModule,
         routing,
         NgbModalModule,

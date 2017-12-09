@@ -10,6 +10,7 @@ import { PopNotification } from './components/pop/pop-notification.component';
 import { AllNotifications } from './components/all-notifications/all-notifications.component';
 import { Notifications } from './notifications.component';
 import { NgaModule } from '../../theme/nga.module';
+import { TopListsModule } from '../side-panel/side-panel.module';
 import { MdCardModule, MdPaginatorModule, MdTooltipModule } from '@angular/material';
 
 @NgModule({
@@ -24,6 +25,7 @@ import { MdCardModule, MdPaginatorModule, MdTooltipModule } from '@angular/mater
         routing,
         NgbModalModule,
         NgaModule,
+        TopListsModule,
         NgPipesModule
     ],
     declarations: [
