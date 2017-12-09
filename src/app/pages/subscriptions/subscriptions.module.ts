@@ -4,6 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import { NgPipesModule } from 'ngx-pipes';
 import { NgaModule } from '../../theme/nga.module';
+import { TopListsModule } from '../side-panel/side-panel.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { routing } from './subscriptions.routing';
@@ -35,6 +36,7 @@ import {
         FormsModule,
         ReactiveFormsModule,
         NgaModule,
+        TopListsModule,
         MdTabsModule,
         MdButtonModule,
         MdIconModule,

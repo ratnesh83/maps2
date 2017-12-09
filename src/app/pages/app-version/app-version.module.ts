@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-
+import { TopListsModule } from '../side-panel/side-panel.module';
 import { NgPipesModule } from 'ngx-pipes';
 import { NgaModule } from '../../theme/nga.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,6 +24,7 @@ import {
         FormsModule,
         ReactiveFormsModule,
         NgaModule,
+        TopListsModule,
         NgxPaginationModule,
         routing,
         NgPipesModule,
