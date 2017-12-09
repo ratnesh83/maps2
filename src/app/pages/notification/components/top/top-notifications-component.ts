@@ -51,6 +51,19 @@ import * as request from '../../../requests/state/request.actions';
                             <span style="max-width: 100%">{{ msg.createdAtFormatted }}</span>
                         </div>
                     </a>
+                    <a *ngIf="notifications && notifications.length == 0" class="clearfix" style="cursor: default; background-color: transparent">
+                        <div class="msg-area">
+                            <div class="col-12 col-sm-12">
+                                <div class="row">
+                                    <div style="display: flex; padding: 0px" class="col-12 col-sm-12">
+                                        <div style="margin: auto; text-align: justify">
+                                            No notifications found.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
                 <a style="font-weight: 500; color: #474747" routerLink="notification/all-notifications">See all</a>
                 </div>
