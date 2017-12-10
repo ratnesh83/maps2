@@ -266,7 +266,7 @@ module.exports = function (env) {
             }),
 
             new CompressionPlugin({
-                test: /\.js$|\.css$|\.html$/
+                test: /\.js$|\.css$|\.html$|\.json$/
             })
         ],
 
