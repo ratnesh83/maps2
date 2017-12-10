@@ -178,9 +178,9 @@ module.exports = function (options) {
                 }
             }),
 
-            new CompressionPlugin({
-                test: /\.js/
-            })
+            /* new CompressionPlugin({
+                test: /\.js$|\.css$|\.html$/
+            }) */
         ],
         /**
          * Webpack Development Server configuration
