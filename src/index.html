@@ -1,56 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>
-        <%= htmlWebpackPlugin.options.title %>
-    </title>
-    <meta name="description" content="<%= htmlWebpackPlugin.options.metadata.description %>">
-    <% if (webpackConfig.htmlElements.headTags) { %>
-        <!-- Configured Head Tags  -->
-        <%= webpackConfig.htmlElements.headTags %>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDvIVQbdP34EXfGi0pDfHWetfGqIchpbSQ&libraries=places"></script>
+        <script>
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '1849952645284938',
+                    cookie: true,
+                    xfbml: true,
+                    version: 'v2.8'
+                });
+                FB.AppEvents.logPageView();
+            };
+            (function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (d.getElementById(id)) { return; }
+                js = d.createElement(s); js.id = id;
+                js.src = "https://connect.facebook.net/en_US/sdk.js";
+                fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));
+        </script>
+        <title>
+            <%= htmlWebpackPlugin.options.title %>
+        </title>
+        <meta name="description" content="<%= htmlWebpackPlugin.options.metadata.description %>">
+        <% if (webpackConfig.htmlElements.headTags) { %>
+            <!-- Configured Head Tags  -->
+            <%= webpackConfig.htmlElements.headTags %>
+                <% } %>
+                    <!-- base url -->
+                    <base href="<%= htmlWebpackPlugin.options.metadata.baseUrl %>">
+
+                    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+                    <script src="https://checkout.stripe.com/checkout.js"></script>
+                  
+                    <script type="text/javascript">
+                      Stripe.setPublishableKey('pk_test_KpMxAkuFN2P5cy1nTk06cke2');
+                    </script>
+    </head>
+
+    <body>
+        <app></app>
+        <div id="preloader">
+            <div></div>
+        </div>
+        <% if (htmlWebpackPlugin.options.metadata.isDevServer && htmlWebpackPlugin.options.metadata.HMR !== true) { %>
+            <!-- Webpack Dev Server reload -->
+            <script src="/webpack-dev-server.js"></script>
             <% } %>
-                <!-- base url -->
-                <base href="<%= htmlWebpackPlugin.options.metadata.baseUrl %>">
-</head>
-
-<body>
-    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDvIVQbdP34EXfGi0pDfHWetfGqIchpbSQ&libraries=places"></script>
-    <script>
-        window.fbAsyncInit = function () {
-            FB.init({
-                appId: '1849952645284938',
-                cookie: true,
-                xfbml: true,
-                version: 'v2.8'
-            });
-            FB.AppEvents.logPageView();
-        };
-        (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) { return; }
-            js = d.createElement(s); js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
-    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-    <script src="https://checkout.stripe.com/checkout.js"></script>
-
-    <script type="text/javascript">
-        Stripe.setPublishableKey('pk_test_KpMxAkuFN2P5cy1nTk06cke2');
-    </script>
-    <app></app>
-    <div id="preloader">
-        <div></div>
-    </div>
-    <% if (htmlWebpackPlugin.options.metadata.isDevServer && htmlWebpackPlugin.options.metadata.HMR !== true) { %>
-        <!-- Webpack Dev Server reload -->
-        <script src="/webpack-dev-server.js"></script>
-        <% } %>
-</body>
+    </body>
 
 </html>
