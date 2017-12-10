@@ -9,6 +9,8 @@ const AddAssetHtmlPlugin = require('add-asset-html-webpack-plugin');
 const DefinePlugin = require('webpack/lib/DefinePlugin');
 const NamedModulesPlugin = require('webpack/lib/NamedModulesPlugin');
 const LoaderOptionsPlugin = require('webpack/lib/LoaderOptionsPlugin');
+
+const CompressionPlugin = require('compression-webpack-plugin');
 /**
  * Webpack Constants
  */
@@ -174,6 +176,10 @@ module.exports = function (options) {
                         resourcePath: 'src'
                     }
                 }
+            }),
+
+            new CompressionPlugin({
+                test: /\.js/
             })
         ],
         /**
