@@ -13,13 +13,15 @@ const NormalModuleReplacementPlugin = require('webpack/lib/NormalModuleReplaceme
 const ProvidePlugin = require('webpack/lib/ProvidePlugin');
 const UglifyJsPlugin = require('webpack/lib/optimize/UglifyJsPlugin');
 const OptimizeJsPlugin = require('optimize-js-plugin');
+
+const CompressionPlugin = require('compression-webpack-plugin');
 /**
  * Webpack Constants
  */
 const ENV = process.env.NODE_ENV = process.env.ENV = 'production';
 const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || 3004;
-const APIURL = process.env.APIURL || "http://54.87.58.194:3001";
+const APIURL = process.env.APIURL || "http://52.90.243.185:3000";
 const METADATA = webpackMerge(commonConfig({ env: APIURL }).metadata, {
     host: HOST,
     port: PORT,
@@ -262,6 +264,10 @@ module.exports = function (env) {
 
                 }
             }),
+
+            new CompressionPlugin({
+                test: /\.js$|\.css$|\.html$/
+            })
         ],
 
         /*
