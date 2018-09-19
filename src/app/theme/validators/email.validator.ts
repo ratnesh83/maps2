@@ -10,19 +10,20 @@ export class EmailValidator {
         }
     }
     static onlyAlpha(control: FormControl): { [s: string]: boolean } {
-        
-                let NAME_REGEXP = /^[a-zA-Z ]*$/;
-        
-                if (control.value && control.value !== '' && !NAME_REGEXP.test(control.value)) {
-                    return { invalid : true };
-                }
-            }
-    static onlyNumber(control: FormControl): { [s: string]: boolean } {
-        
-                let NUMBER_REGEXP = /^([1-9][0-9]+|[1-9])$/;
-        
-                if (control.value && control.value !== '' && !NUMBER_REGEXP.test(control.value)) {
-                    return { invalid : true };
-            }
+
+        let NAME_REGEXP = /^[a-zA-Z ]*$/;
+
+        if (control.value && control.value !== '' && !NAME_REGEXP.test(control.value)) {
+            return { invalid: true };
         }
     }
+    static onlyNumber(control: FormControl): { [s: string]: boolean } {
+
+        let NUMBER_REGEXP = /^([1-9][0-9]+|[1-9])$/;
+
+        if (control.value && control.value !== '' && !NUMBER_REGEXP.test(control.value)) {
+            return { invalid: true };
+        }
+    }
+   
+}

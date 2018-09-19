@@ -786,7 +786,7 @@ export class SettingEffects {
     getCategoriesSuccess$: Observable<Action> = this.actions$
         .ofType('APP_GET_CATEGORIES_EDIT_SUCCESS')
         .do((action) => {
-
+            
         });
     constructor(
         private actions$: Actions,
